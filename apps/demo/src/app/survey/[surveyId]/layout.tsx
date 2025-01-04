@@ -49,7 +49,7 @@ export default async function Layout({
           surveySession={session ?? undefined}
         />
         <SidebarInset>
-          <SurveyHomeShell user={user}>
+          <SurveyHomeShell user={user} surveyId={surveyId}>
             <p className="text-lg font-medium">
               Thank you for completing the survey. You can now go to the
               textbook
