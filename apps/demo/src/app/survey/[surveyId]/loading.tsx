@@ -27,7 +27,7 @@ export default async function Loading() {
     <SidebarProvider>
       <SurveySidebar surveyId={surveyId} variant="inset" />
       <SidebarInset>
-        <SurveyHomeShell>
+        <SurveyHomeShell surveyId="">
           <Skeleton className="h-full w-full" />
         </SurveyHomeShell>
       </SidebarInset>
