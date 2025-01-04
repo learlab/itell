@@ -23,7 +23,7 @@ import {
 } from "@/lib/constants";
 import { isLastPage } from "@/lib/pages";
 import { getPageData, isPageAfter, nextPage } from "@/lib/pages/pages.server";
-import { updatePersonalizationSummaryStreak } from "@/lib/personalization";
+import { updatePersonalizationStreak } from "@/lib/personalization";
 import { authedProcedure } from "./utils";
 
 /**
@@ -124,13 +124,12 @@ export const createSummaryAction = authedProcedure
       if (canProceed) {
         shouldRevalidate = true;
 
-        const newPersonalization = updatePersonalizationSummaryStreak(
-          ctx.user,
-          {
-            isSummaryPassed: input.summary.isPassed,
+        const newPersonalization = updatePersonalizationStreak(ctx.user, {
+          summary: {
+            isPassed: input.summary.isPassed,
             isExcellent: isExcellent,
-          }
-        );
+          },
+        });
 
         const page = getPageData(input.summary.pageSlug);
         if (page) {
