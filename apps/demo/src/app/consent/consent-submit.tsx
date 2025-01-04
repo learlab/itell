@@ -7,7 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 
-export function ConsentForm({
+export function ConsentSubmit({
   action,
   value,
 }: {
@@ -16,7 +16,7 @@ export function ConsentForm({
 }) {
   return (
     <Form
-      action={(formData) => {
+      action={async (formData) => {
         const given = formData.get("agreement") === "yes";
         if (given) {
           toast.success("Consent given. Thank you!");
@@ -24,8 +24,8 @@ export function ConsentForm({
           toast.warning(
             "Consent not given. You will be redirected to the text anyway."
           );
+          action(given);
         }
-        action(given);
       }}
       className="flex flex-col gap-4"
     >
