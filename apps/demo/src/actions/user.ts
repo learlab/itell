@@ -16,6 +16,7 @@ import {
   focus_times,
   oauthAccounts,
   summaries,
+  survey_sessions,
   teachers,
   TeacherSchema,
   UpdateUserSchema,
@@ -133,6 +134,7 @@ export const resetUserAction = authedProcedure
       await tx
         .delete(constructed_responses_feedback)
         .where(eq(constructed_responses_feedback.userId, userId));
+      await tx.delete(survey_sessions).where(eq(summaries.userId, userId));
 
       return { pageSlug: firstPage.slug };
     });

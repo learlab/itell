@@ -101,7 +101,6 @@ function SingleChoiceQuestion({
     </RadioGroup>
   );
 }
-
 function SingleSelectQuestion({
   question,
   defaultValue,

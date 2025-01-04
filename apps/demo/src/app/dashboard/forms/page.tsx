@@ -62,7 +62,7 @@ export default async function FormsPage() {
     });
   }
 
-  const consentStatus = user.consentGiven ? "completed" : "pending";
+  const consentStatus = user.consentGiven !== null ? "completed" : "pending";
   const { intake: intakeStatus, outtake: outtakeStatus } =
     await getSurveyStatus(user);
 

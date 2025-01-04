@@ -157,19 +157,9 @@ const config = {
       description: "View your learning statistics",
     },
     {
-      title: "Summaries",
-      href: "/dashboard/summaries",
-      description: "Manage your summaries",
-    },
-    {
-      title: "Settings",
-      href: "/dashboard/settings",
-      description: "Configure personal settings",
-    },
-    {
-      title: "Class",
-      href: "/dashboard/class",
-      description: "Monitor student progress",
+      title: "Forms",
+      href: "/dashboard/forms",
+      description: "Help us improve iTELL",
     },
     {
       title: "Guide",

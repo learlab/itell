@@ -315,7 +315,9 @@ export function QuestionBoxStairs({
                 onPaste={(e) => {
                   if (isProduction) {
                     e.preventDefault();
-                    toast.warning("Copy & Paste is not allowed for question");
+                    toast.warning(
+                      "Copy & Paste is disallowed, please answer with your own words."
+                    );
                   }
                 }}
               />

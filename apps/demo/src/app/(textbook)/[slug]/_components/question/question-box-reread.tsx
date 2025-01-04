@@ -15,6 +15,7 @@ import { createQuestionAnswerAction } from "@/actions/question";
 import { InternalError } from "@/components/internal-error";
 import { useQuestionStore } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
+import { isAdmin } from "@/lib/auth/role";
 import { Condition, isProduction } from "@/lib/constants";
 import { SelectShouldBlur } from "@/lib/store/question-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
@@ -43,7 +44,7 @@ type State = {
 export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
   const store = useQuestionStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
-  const form = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [state, setState] = useState<State>({
     error: null,
@@ -54,7 +55,6 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
   const {
     action: onSubmit,
     isPending: _isPending,
-    isError,
     error,
   } = useActionStatus(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,14 +103,14 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
     shouldBlur && state.status === StatusReread.ANSWERED;
 
   useEffect(() => {
-    if (isError) {
+    if (error) {
       setState((state) => ({
         ...state,
         error: "Failed to evaluate answer, please try again later",
       }));
       reportSentry("evaluate constructed response", { error: error?.cause });
     }
-  }, [isError]);
+  }, [error]);
 
   if (!state.show) {
     return (
@@ -151,7 +151,7 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
           Answer the question
         </h2>
         <form
-          ref={form}
+          ref={formRef}
           aria-labelledby="form-question-heading"
           onSubmit={onSubmit}
           className="flex flex-col gap-4"
@@ -163,9 +163,11 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
               rows={3}
               className="rounded-md p-4 shadow-md lg:text-lg"
               onPaste={(e) => {
-                if (isProduction) {
+                if (isProduction && !isAdmin) {
                   e.preventDefault();
-                  toast.warning("Copy & Paste is not allowed for question");
+                  toast.warning(
+                    "Copy & Paste is disallowed, please answer with your own words."
+                  );
                 }
               }}
               onKeyDown={(e) => {
@@ -177,7 +179,7 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
 
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  form.current?.requestSubmit();
+                  formRef.current?.requestSubmit();
                 }
               }}
             />
