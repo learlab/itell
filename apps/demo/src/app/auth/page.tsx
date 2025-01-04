@@ -1,14 +1,29 @@
 import { type Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@itell/ui/alert-dialog";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { AuthForm, LogoutButton } from "@auth/auth-form";
 import { KnowledgeCarousel } from "@auth/knowledge-carousel";
 import { volume } from "#content";
-import { ChevronLeftIcon, CommandIcon } from "lucide-react";
+import { User } from "lucia";
+import { ChevronLeftIcon, CommandIcon, UserRoundX } from "lucide-react";
 
+import { deleteUserAction } from "@/actions/user";
 import { env } from "@/env.mjs";
 import { getSession } from "@/lib/auth";
+import { logout } from "@/lib/auth/actions";
 import { routes } from "@/lib/navigation";
 
 const ErrorDict: Record<string, string> = {
@@ -103,12 +118,13 @@ export default async function Page(props: {
             </Errorbox>
           ) : null}
           {user ? (
-            <div className="space-y-2 text-center">
+            <div className="flex flex-col gap-2 text-center">
               <p className="font-light">
                 You are logged in as{" "}
                 <span className="font-semibold">{user.name}</span>
               </p>
               <LogoutButton />
+              <DeleteUser />
             </div>
           ) : (
             <AuthForm joinClassCode={join_class_code} />
@@ -122,5 +138,39 @@ export default async function Page(props: {
         <KnowledgeCarousel />
       </div>
     </div>
+  );
+}
+
+function DeleteUser() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="outline" className="gap-2">
+          <UserRoundX className="size-4" />
+          <span>Delete Account</span>
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete Account?</AlertDialogTitle>
+          This will delete your account and all related data. This is for admin
+          testing only.
+          <AlertDialogDescription></AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={async () => {
+              "use server";
+              await deleteUserAction();
+              await logout();
+              redirect(routes.auth());
+            }}
+          >
+            Continue
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

@@ -140,6 +140,10 @@ export const resetUserAction = authedProcedure
     });
   });
 
+export const deleteUserAction = authedProcedure.handler(async ({ ctx }) => {
+  return await db.delete(users).where(eq(users.id, ctx.user.id));
+});
+
 /**
  * Get user by id
  */
