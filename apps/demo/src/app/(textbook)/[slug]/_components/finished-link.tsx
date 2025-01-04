@@ -49,7 +49,7 @@ export function FinishedLink({ href }: Props) {
         duration: 10000,
       }
     );
-  }, [visited, href]);
+  }, [visited, href, setVisited]);
 
   return (
     <SurveyLink

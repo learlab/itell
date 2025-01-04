@@ -10,7 +10,6 @@ import {
 } from "@itell/ui/card";
 import { Page } from "#content";
 import { type User } from "lucia";
-import { createPortal } from "react-dom";
 
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
@@ -53,7 +52,9 @@ export function PageAssignments({ page, pageStatus, user, condition }: Props) {
               pageStatus={pageStatus}
               page={page}
               streak={user.personalization.summary_streak}
-              available_summary_skips={user.personalization.available_summary_skips}
+              available_summary_skips={
+                user.personalization.available_summary_skips
+              }
             />
           </CardContent>
         </Card>

@@ -51,7 +51,6 @@ import {
 } from "@/lib/store/question-store";
 import {
   SelectError,
-  SelectInput,
   SelectIsNextPageVisible,
   SelectPrevInput,
   SelectResponse,
