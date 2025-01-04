@@ -20,6 +20,7 @@ export function ConsentSubmit({
         const given = formData.get("agreement") === "yes";
         if (given) {
           toast.success("Consent given. Thank you!");
+          action(given);
         } else {
           toast.warning(
             "Consent not given. You will be redirected to the text anyway."
