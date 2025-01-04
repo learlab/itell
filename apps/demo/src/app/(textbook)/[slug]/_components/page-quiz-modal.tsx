@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@itell/ui/dialog";
 import { useSelector } from "@xstate/store/react";
-import { BookCheckIcon, Router } from "lucide-react";
+import { BookCheckIcon } from "lucide-react";
 
 import {
   useQuizStore,
@@ -34,13 +34,14 @@ export function PageQuizModal({
   pageStatus: PageStatus;
 }) {
   const quizStore = useQuizStore();
-  const [pending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const router = useRouter();
   const summaryStore = useSummaryStore();
   const searchParams = useSearchParams();
   const quizOpen = useSelector(quizStore, SelectQuizOpen);
-  const open = searchParams?.get("quiz") === "true" || quizOpen;
   const quizFinished = useSelector(quizStore, SelectQuizFinished);
+  const open =
+    !quizFinished && (searchParams?.get("quiz") === "true" || quizOpen);
   return (
     <Dialog
       open={open}

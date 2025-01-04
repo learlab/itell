@@ -35,6 +35,24 @@ type Props = {
 };
 
 export function PageAssignments({ page, pageStatus, user, condition }: Props) {
+  if (page.assignments.length === 0) {
+    if (user.finished) {
+      return (
+        <AssignmentsShell>
+          <Card className="border-info">
+            <Suspense fallback={<FinishedPrompt.Skeleton />}>
+              <FinishedPrompt
+                href={routes.surveyHome({ surveyId: "outtake" })}
+              />
+            </Suspense>
+          </Card>
+        </AssignmentsShell>
+      );
+    }
+
+    return null;
+  }
+
   const canSkipSummary = user.personalization.available_summary_skips > 0;
   if (canSkipSummary) {
     return (
