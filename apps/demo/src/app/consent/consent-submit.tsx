@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 export function ConsentSubmit({
   action,
-  value,
+  value = "yes",
 }: {
   action: (val: boolean) => Promise<void>;
   value?: "yes" | "no";
@@ -38,16 +38,16 @@ export function ConsentSubmit({
       <RadioGroup name="agreement" required defaultValue={value}>
         <Label className="group flex flex-row-reverse items-center justify-end gap-4 xl:text-lg">
           <span className="underline-offset-2 group-has-[:checked]:underline">
-            I am under 18 and/or I do not agree to participate in the study.
-          </span>
-          <RadioGroupItem className="size-5 shrink-0" value="no" />
-        </Label>
-        <Label className="group flex flex-row-reverse items-center justify-end gap-4 xl:text-lg">
-          <span className="underline-offset-2 group-has-[:checked]:underline">
             I have read and understood the information above, I am 18 years or
             older, and I agree to participate in this study.{" "}
           </span>
           <RadioGroupItem className="size-5 shrink-0" value="yes" />
+        </Label>
+        <Label className="group flex flex-row-reverse items-center justify-end gap-4 xl:text-lg">
+          <span className="underline-offset-2 group-has-[:checked]:underline">
+            I am under 18 and/or I do not agree to participate in the study.
+          </span>
+          <RadioGroupItem className="size-5 shrink-0" value="no" />
         </Label>
       </RadioGroup>
       <Submit />
