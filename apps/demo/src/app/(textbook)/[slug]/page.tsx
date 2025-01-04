@@ -97,7 +97,7 @@ export default async function Page(props: {
               </p>
             ) : null}
 
-            {user && page.summary ? (
+            {user ? (
               <PageAssignments
                 page={page}
                 pageStatus={pageStatus}

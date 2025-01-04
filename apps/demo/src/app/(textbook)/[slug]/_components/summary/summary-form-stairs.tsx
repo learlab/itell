@@ -322,7 +322,7 @@ export function SummaryFormStairs({
         });
       }
     }
-  }, [isNextPageVisible]);
+  }, [isLast, isNextPageVisible, page.next_slug, response?.is_passed, router]);
 
   const { portals } = useDriver(driverObj, {
     pageSlug,
