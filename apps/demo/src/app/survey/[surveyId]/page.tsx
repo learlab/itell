@@ -43,7 +43,7 @@ export default async function SurveyHomePage(props: {
         surveySession={surveySession ?? undefined}
       />
       <SidebarInset>
-        <SurveyHomeShell user={user}>
+        <SurveyHomeShell surveyId={params.surveyId} user={user}>
           <h1 className="text-3xl font-semibold tracking-tight">
             {survey.survey_name}
           </h1>

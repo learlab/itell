@@ -10,9 +10,11 @@ import { UserAccountNav } from "@/components/user-account-nav";
 
 export function SurveyHomeShell({
   children,
+  surveyId,
   user,
 }: {
   children: React.ReactNode;
+  surveyId: string;
   user?: User;
 }) {
   return (
@@ -23,7 +25,7 @@ export function SurveyHomeShell({
           <ThemeToggle />
         </div>
         <div className="ml-auto flex items-center gap-2">
-          {user ? (
+          {user && surveyId !== "intake" ? (
             <>
               <ContinueReading
                 user={user}
