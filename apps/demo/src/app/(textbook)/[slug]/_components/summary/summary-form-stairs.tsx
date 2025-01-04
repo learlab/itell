@@ -268,7 +268,7 @@ export function SummaryFormStairs({
           rocketBlast(blastYPos);
         }
 
-        if (data.canProceed) {
+        if (data.canProceed || isLast) {
           if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
             quizStore.send({
               type: "toggleQuiz",

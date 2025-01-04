@@ -6,7 +6,6 @@ import {
   useDebounce,
   useIsMobile,
   useKeystroke,
-  usePortal,
   useTimer,
 } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
@@ -138,15 +137,15 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       setFinished(true);
       prevInput.current = input;
 
-      if (isLastPage(page)) {
-        toast.info("You have finished the entire textbook!");
-        return;
-      }
-
       if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
         quizStore.send({
           type: "toggleQuiz",
         });
+        return;
+      }
+
+      if (isLastPage(page)) {
+        toast.info("You have finished the entire textbook!");
         return;
       }
 

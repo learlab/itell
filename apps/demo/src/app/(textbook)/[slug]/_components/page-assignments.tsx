@@ -12,6 +12,7 @@ import { Page } from "#content";
 import { type User } from "lucia";
 
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
+import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
 import { FinishedPrompt } from "./finished-prompt";
 import { PageQuizModal } from "./page-quiz-modal";
@@ -42,7 +43,9 @@ export function PageAssignments({ page, pageStatus, user, condition }: Props) {
           <CardContent>
             {user.finished ? (
               <Suspense fallback={<FinishedPrompt.Skeleton />}>
-                <FinishedPrompt href="/outtake" />
+                <FinishedPrompt
+                  href={routes.surveyHome({ surveyId: "outtake" })}
+                />
               </Suspense>
             ) : null}
             {condition !== Condition.SIMPLE ? (
