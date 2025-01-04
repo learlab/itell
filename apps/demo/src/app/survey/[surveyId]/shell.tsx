@@ -25,18 +25,20 @@ export function SurveyHomeShell({
           <ThemeToggle />
         </div>
         <div className="ml-auto flex items-center gap-2">
-          {user && surveyId !== "intake" ? (
+          {user ? (
             <>
-              <ContinueReading
-                user={user}
-                text="Back to textbook"
-                variant="ghost"
-              >
-                <span className="inline-flex items-center gap-2">
-                  <ChevronLeft />
-                  <span>Back to Textbook</span>
-                </span>
-              </ContinueReading>
+              {surveyId !== "intake" && (
+                <ContinueReading
+                  user={user}
+                  text="Back to textbook"
+                  variant="ghost"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <ChevronLeft />
+                    <span>Back to Textbook</span>
+                  </span>
+                </ContinueReading>
+              )}
               <UserAccountNav user={user} />
             </>
           ) : (
