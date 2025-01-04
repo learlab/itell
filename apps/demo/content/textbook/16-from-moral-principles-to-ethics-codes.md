@@ -55,7 +55,7 @@ cri:
   answer: Debriefing is the process of informing research participants of the purpose of the study, revealing any deception, correcting misconceptions, and minimizing harm.
   slug: Ethics-Codes-3-1609t
 next_slug: 17-putting-ethics-into-practice
-order: 15
+order: 16
 parent:
   title: III. Research Ethics
   slug: iii-research-ethics

@@ -9,7 +9,7 @@ chunks:
   type: plain
 cri: []
 next_slug: understanding-psychological-measures
-order: 17
+order: 18
 parent:
   title: IV. Psychological Measurement
   slug: iv-psychological-measurement
