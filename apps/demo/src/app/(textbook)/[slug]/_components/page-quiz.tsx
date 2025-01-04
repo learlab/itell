@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 import { createEventAction } from "@/actions/event";
 import { NavigationButton } from "@/components/navigation-button";
 import { EventType } from "@/lib/constants";
+import { routes } from "@/lib/navigation";
 import { makePageHref } from "@/lib/utils";
 import type { PageData } from "@/lib/pages";
 
@@ -73,7 +74,9 @@ export function PageQuiz({
               Go to next page
             </NavigationButton>
           ) : (
-            <p>You have finished the entire textbook</p>
+            <NavigationButton href={routes.surveyHome({ surveyId: "outtake" })}>
+              Take Survey
+            </NavigationButton>
           )
         ) : (
           <Button pending={pending} disabled={pending}>

@@ -2,6 +2,7 @@ import { Spinner } from "@itell/ui/spinner";
 import { CheckCircleIcon, CircleIcon } from "lucide-react";
 
 import { getUserQuizAttempts } from "@/actions/event";
+import { getSurveyAction } from "@/actions/survey";
 import { quizPages } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 import { FinishedLink } from "./finished-link";
@@ -12,6 +13,8 @@ type Props = {
 
 export async function FinishedPrompt({ href }: Props) {
   const [attempts, err] = await getUserQuizAttempts();
+  const [session] = await getSurveyAction({ surveyId: "outtake" });
+  const outtakeDone = session && session?.finishedAt !== null;
   if (err) {
     return (
       <div className="mb-8 space-y-4 rounded-md border-2 border-info p-4 xl:text-lg xl:leading-relaxed">
@@ -35,13 +38,20 @@ export async function FinishedPrompt({ href }: Props) {
   return (
     <div className="mb-8 space-y-6 rounded-md border-2 border-info p-4 xl:text-lg xl:leading-relaxed">
       {allQuizFinished ? (
-        <>
+        outtakeDone ? (
           <p>
-            Congratulations! You have finished the entire textbook. Please
-            complete the outtake survey to finish the course.
+            Thank you for completing the textbook and surveys. You have finished
+            your study. You are welcome to review the textbook at anytime.
           </p>
-          <FinishedLink href={href} />
-        </>
+        ) : (
+          <>
+            <p>
+              Congratulations! You have finished the entire textbook. Please
+              complete the outtake survey to finish the course.
+            </p>
+            <FinishedLink href={href} />
+          </>
+        )
       ) : (
         <p>
           Congratulations! You have finished the entire textbook. Please also
@@ -84,7 +94,7 @@ function QuizList({
   );
 }
 
-FinishedPrompt.Skeleton = function () {
+FinishedPrompt.Skeleton = function Skeleton() {
   return (
     <div className="mb-8 space-y-6 rounded-md border-2 border-info p-4 xl:text-lg xl:leading-relaxed">
       <p className="flex items-center gap-2">
