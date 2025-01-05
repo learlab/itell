@@ -54,7 +54,7 @@ title: 1. Methods of Knowing
 
 1\. Describe the 5 methods of acquiring knowledge. 
 
-2\. Understand the benefits and problems with each.
+2\. Understand the benefits and problems with each.
 
 </i-callout>
 

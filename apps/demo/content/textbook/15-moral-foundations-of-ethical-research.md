@@ -45,7 +45,7 @@ cri:
   answer: Respecting their autonomy by obtaining and documenting informed consent.
   slug: Moral-Principles-1596t
 next_slug: 16-from-moral-principles-to-ethics-codes
-order: 14
+order: 15
 parent:
   title: III. Research Ethics
   slug: iii-research-ethics

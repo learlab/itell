@@ -5,7 +5,7 @@ chunks:
   slug: Research-Ethics-407pt
   type: plain
 - title: 'Vaccines Don''t Cause Autism: Healthcare Triage #12'
-  slug: Vaccines-Dont-Cause-Autism-Healthcare-Triage-#12-24
+  slug: Vaccines-Dont-Cause-Autism-Healthcare-Triage-#12-36
   type: video
 - title: References
   slug: References-408pt
@@ -13,7 +13,7 @@ chunks:
 cri:
 - question: What was the main conclusion of the numerous scientific studies conducted on the association between the MMR vaccine and autism?
   answer: There is no evidence to support the hypothesis that vaccines cause autism.
-  slug: Vaccines-Dont-Cause-Autism-Healthcare-Triage-#12-24
+  slug: Vaccines-Dont-Cause-Autism-Healthcare-Triage-#12-36
 next_slug: 15-moral-foundations-of-ethical-research
 order: 14
 parent:
@@ -30,7 +30,7 @@ In 1998 a medical journal called _The Lancet_ published an article of interest
 
 In this chapter we explore the ethics of scientific research in psychology. We begin with a general framework for thinking about the ethics of scientific research in psychology. Then we look at some specific ethical codes for biomedical and behavioral researchers —focusing on the Ethics Code of the American Psychological Association. Finally, we consider some practical tips for conducting ethical research in psychology.
 
-## Vaccines Don't Cause Autism: Healthcare Triage #12 {#Vaccines-Dont-Cause-Autism-Healthcare-Triage-#12-24} 
+## Vaccines Don't Cause Autism: Healthcare Triage #12 {#Vaccines-Dont-Cause-Autism-Healthcare-Triage-#12-36} 
 
 
 

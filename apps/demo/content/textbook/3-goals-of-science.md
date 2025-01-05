@@ -21,8 +21,8 @@ cri:
 - question: What are the three goals of science described in the passage?
   answer: The three goals of science are to describe, predict, and explain.
   slug: The-Three-Goals-of-Science-1443t
-next_slug: null
-order: 21
+next_slug: 4-science-and-common-sense
+order: 3
 parent:
   title: I. The Science of Psychology
   slug: i-the-science-of-psychology
