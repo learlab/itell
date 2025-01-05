@@ -1,5 +1,13 @@
 import React from "react";
 import { buttonVariants } from "@itell/ui/button";
+import { Card, CardContent } from "@itell/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@itell/ui/carousel";
 import { Checkbox } from "@itell/ui/checkbox";
 import { Input } from "@itell/ui/input";
 import { Label } from "@itell/ui/label";
@@ -26,8 +34,11 @@ import { cn } from "@itell/utils";
 import { type Survey } from "#content";
 import { z } from "zod";
 
-type BaseQuestionProps<TQuestion> = {
+import { LexTaleQuestion } from "./lextale-question";
+
+export type BaseQuestionProps<TQuestion> = {
   question: TQuestion;
+  isAdmin?: boolean;
   defaultValue?: any;
 };
 
@@ -40,7 +51,7 @@ const questionDataMap = {
   multiple_choice: z.array(z.string()),
   multiple_select: z.array(z.object({ label: z.string(), value: z.string() })),
   grid: z.record(z.string()),
-  lextale: z.array(z.string()),
+  lextale: z.record(z.boolean()),
 } as const;
 
 //  Object.values(questionDataMap) yields type error
@@ -56,24 +67,26 @@ export const SurveyQuestionDataSchema = z.union([
 ]);
 export type SurveyQuestionData = z.infer<typeof SurveyQuestionDataSchema>;
 export type SurveySubmission = Record<string, SurveyQuestionData>;
-type SurveyQuestion = Survey["sections"][0]["questions"][0];
+export type SurveyQuestion = Survey["sections"][0]["questions"][0];
 
-const StyledLabel = ({
+export function StyledLabel({
   children,
   className,
   ...props
-}: React.LabelHTMLAttributes<HTMLLabelElement>) => (
-  <Label
-    className={cn(
-      buttonVariants({ size: "lg", variant: "ghost" }),
-      "h-fit justify-start text-wrap py-3 pl-2 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base",
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </Label>
-);
+}: React.LabelHTMLAttributes<HTMLLabelElement>) {
+  return (
+    <Label
+      className={cn(
+        buttonVariants({ size: "lg", variant: "ghost" }),
+        "h-fit justify-start text-wrap py-3 pl-2 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </Label>
+  );
+}
 
 const parseSessionData = <T extends z.ZodType>(schema: T, data: any) => {
   const result = schema.safeParse(data);
@@ -245,29 +258,6 @@ function GridQuestion({
   );
 }
 
-function LexTaleQuestion({
-  question,
-  defaultValue,
-}: BaseQuestionProps<Extract<SurveyQuestion, { type: "lextale" }>>) {
-  return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-      {question.options.map((option) => (
-        <RadioGroup
-          name={`${question.id}--${option}`}
-          key={option}
-          className="flex flex-col gap-1.5"
-          defaultValue={defaultValue?.includes(option) ? option : undefined}
-        >
-          <StyledLabel key={option}>
-            <RadioGroupItem value={option} className="sr-only" />
-            <span>{option}</span>
-          </StyledLabel>
-        </RadioGroup>
-      ))}
-    </div>
-  );
-}
-
 const componentMap = {
   single_choice: SingleChoiceQuestion,
   single_select: SingleSelectQuestion,
@@ -282,9 +272,11 @@ const componentMap = {
 export function SurveyQuestionRenderer({
   question,
   sessionData,
+  isAdmin = false,
 }: {
   question: SurveyQuestion;
   sessionData?: SurveyQuestionData | null;
+  isAdmin?: boolean;
 }) {
   const Component = componentMap[question.type];
   const schema = questionDataMap[question.type];
@@ -295,5 +287,11 @@ export function SurveyQuestionRenderer({
     return null;
   }
 
-  return <Component question={question} defaultValue={defaultValue} />;
+  return (
+    <Component
+      question={question}
+      defaultValue={defaultValue}
+      isAdmin={isAdmin}
+    />
+  );
 }

@@ -769,7 +769,7 @@
       "title": "Is this a real word in English?",
       "questions": [
         {
-          "id": "intro",
+          "id": "LexTALE",
           "text": "This is a short assessment of your English lexical knowledge \n You will be presented with 60 strings of letters. Click on the string if you think it is a real word in English.",
           "type": "lextale",
           "options": [

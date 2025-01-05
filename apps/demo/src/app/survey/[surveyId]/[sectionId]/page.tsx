@@ -7,6 +7,7 @@ import { Survey } from "#content";
 import { getSurveyAction, upsertSurveyAction } from "@/actions/survey";
 import { SurveySession } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/auth/role";
 import { routes } from "@/lib/navigation";
 import ScrollToTop from "../scroll-to-top";
 import { getNextSectionId, getSurvey, getSurveySection } from "./data";
@@ -42,9 +43,11 @@ export default async function SurveyQuestionPage(props: {
   });
   const sectionData = session?.data?.[section.id];
 
-  const sectionIdx = survey.sections.findIndex(
-    (section) => section.id === params.sectionId
-  );
+  const unfinishedSections = getUnfinishedSections({
+    survey,
+    session,
+    sectionId: section.id,
+  });
 
   return (
     <div className="flex min-h-[100vh] flex-col">
@@ -73,11 +76,7 @@ export default async function SurveyQuestionPage(props: {
           action={async (formData: FormData) => {
             "use server";
             const submission = await formDataToSubmission(section, formData);
-            const unfinishedSections = getUnfinishedSections({
-              survey,
-              session,
-              sectionId: section.id,
-            });
+            console.log("submission", submission);
             const nextSectionId = getNextSectionId({
               sections: unfinishedSections,
               submission,
@@ -117,6 +116,7 @@ export default async function SurveyQuestionPage(props: {
                   key={question.id}
                   question={question}
                   sessionData={sectionData?.[question.id]}
+                  isAdmin={isAdmin(user.role)}
                 />
               </CardContent>
             </Card>
@@ -125,7 +125,11 @@ export default async function SurveyQuestionPage(props: {
           <footer className="flex items-center justify-between">
             <div className="ml-auto">
               <SurveySubmitButton
-                isLastPage={sectionIdx === survey.sections.length - 1}
+                isLastPage={
+                  unfinishedSections.length === 0 ||
+                  (unfinishedSections.length === 1 &&
+                    unfinishedSections[0].id === params.sectionId)
+                }
               />
             </div>
           </footer>
@@ -176,30 +180,46 @@ async function formDataToSubmission(
         ) as Array<{ value: string; label: string }>;
         break;
       case "lextale":
+        {
+          const result: Record<string, boolean> = {};
+          entries.forEach(([key, value]) => {
+            if (!key.startsWith(`${question.id}--`)) {
+              return;
+            }
+            const word = key.split("--")[1] as string;
+            const val = value === "yes" ? true : false;
+            result[word] = val;
+          });
+          submission[question.id] = result;
+        }
+        break;
       case "multiple_choice":
-        entries.forEach(([key, value]) => {
-          if (!key.startsWith(`${question.id}--`)) {
-            return;
-          }
-          if (!submission[question.id]) {
-            submission[question.id] = [] as string[];
-          }
-          (submission[question.id] as Array<string>).push(String(value));
-        });
+        {
+          const result = [] as string[];
+          entries.forEach(([key, value]) => {
+            if (!key.startsWith(`${question.id}--`)) {
+              return;
+            }
+            result.push(String(value));
+          });
+
+          submission[question.id] = result;
+        }
         break;
       case "grid":
-        entries.forEach(([key, value]) => {
-          if (!key.startsWith(`${question.id}--`)) {
-            return;
-          }
-          if (!submission[question.id]) {
-            submission[question.id] = {} as Record<string, string>;
-          }
+        {
+          const result = {} as Record<string, string>;
+          entries.forEach(([key, value]) => {
+            if (!key.startsWith(`${question.id}--`)) {
+              return;
+            }
 
-          const group = key.split("--")[1] as string;
-          (submission[question.id] as Record<string, string>)[group] =
-            String(value);
-        });
+            const group = key.split("--")[1] as string;
+            result[group] = String(value);
+          });
+
+          submission[question.id] = result;
+        }
         break;
     }
   });
