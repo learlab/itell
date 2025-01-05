@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { Button, buttonVariants } from "@itell/ui/button";
+import { buttonVariants } from "@itell/ui/button";
 import { Card, CardContent } from "@itell/ui/card";
 import {
   Carousel,
@@ -67,7 +67,7 @@ export function LexTaleQuestion({
     api?.scrollNext();
   };
 
-  const finish = () => {
+  const finish = async () => {
     setCurrent(words.length);
     api?.scrollTo(words.length - 1);
     startTransition(() => {
@@ -82,6 +82,12 @@ export function LexTaleQuestion({
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
+      {isAdmin && (
+        <AdminButton size={"lg"} type="button" onClick={finish}>
+          Finish
+        </AdminButton>
+      )}
+
       <span className="text-muted-foreground">
         {current + 1} / {words.length}
       </span>
@@ -148,11 +154,6 @@ export function LexTaleQuestion({
           <CarouselNext type="button" onClick={handleScrollNext} />
         )}
       </Carousel>
-      {isAdmin && (
-        <AdminButton size={"lg"} type="button" onClick={finish}>
-          Finish
-        </AdminButton>
-      )}
     </div>
   );
 }
