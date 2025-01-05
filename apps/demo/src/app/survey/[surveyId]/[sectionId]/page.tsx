@@ -49,6 +49,14 @@ export default async function SurveyQuestionPage(props: {
     sectionId: section.id,
   });
 
+  const requiredUnifinishedSections = unfinishedSections.filter(
+    (s) => !s.display_rules
+  );
+  const isLastPage =
+    requiredUnifinishedSections.length === 0 ||
+    (requiredUnifinishedSections.length === 1 &&
+      requiredUnifinishedSections[0].id === params.sectionId);
+
   return (
     <div className="flex min-h-[100vh] flex-col">
       <ScrollToTop />
@@ -76,7 +84,6 @@ export default async function SurveyQuestionPage(props: {
           action={async (formData: FormData) => {
             "use server";
             const submission = await formDataToSubmission(section, formData);
-            console.log("submission", submission);
             const nextSectionId = getNextSectionId({
               sections: unfinishedSections,
               submission,
@@ -124,13 +131,7 @@ export default async function SurveyQuestionPage(props: {
 
           <footer className="flex items-center justify-between">
             <div className="ml-auto">
-              <SurveySubmitButton
-                isLastPage={
-                  unfinishedSections.length === 0 ||
-                  (unfinishedSections.length === 1 &&
-                    unfinishedSections[0].id === params.sectionId)
-                }
-              />
+              <SurveySubmitButton isLastPage={isLastPage} />
             </div>
           </footer>
         </Form>
