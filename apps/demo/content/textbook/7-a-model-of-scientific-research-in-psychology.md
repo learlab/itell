@@ -32,7 +32,7 @@ cri:
   answer: Researchers found that people's ability to detect road hazards, reaction time, and maintain control of the vehicle were all impaired by cell phone use.
   slug: Cell-Phones-and-Driving-1496t
 next_slug: overview-of-the-scientific-method
-order: 6
+order: 5
 parent:
   title: II. Overview of the Scientific Method
   slug: ii-overview-of-the-scientific-method
