@@ -58,7 +58,7 @@ cri:
 - question: What is criterion validity and how is it assessed?
   answer: Criterion validity is the extent to which people's scores on a measure are correlated with other variables, and it is assessed by determining if scores on the measure are correlated with variables that one would expect them to be correlated with.
   slug: Validity-2-1675t
-next_slug: 21-practical-strategies-for-psychological-measurement
+next_slug: 3-goals-of-science
 order: 20
 parent:
   title: IV. Psychological Measurement
@@ -134,7 +134,7 @@ Face validity is at best a very weak kind of evidence that a measurement method 
 
 ### Criterion Validity  {#criterion-validity}
 
-**Criterion validity **is the extent to which people’s scores on a measure are correlated with other variables (known as criteria) that one would expect them to be correlated with. For example, people’s scores on a new measure of test anxiety should be negatively correlated with their performance on an important school exam. If it were found that people’s scores were in fact negatively correlated with their exam performance, then this would be a piece of evidence that these scores really represent people’s test anxiety. But if it were found that people scored equally well on the exam regardless of their test anxiety scores, then this would cast doubt on the validity of the measure.
+**Criterion validity** is the extent to which people’s scores on a measure are correlated with other variables (known as criteria) that one would expect them to be correlated with. For example, people’s scores on a new measure of test anxiety should be negatively correlated with their performance on an important school exam. If it were found that people’s scores were in fact negatively correlated with their exam performance, then this would be a piece of evidence that these scores really represent people’s test anxiety. But if it were found that people scored equally well on the exam regardless of their test anxiety scores, then this would cast doubt on the validity of the measure. 
 
 A **criterion** can be any variable that one has reason to think should be correlated with the construct being measured, and there will usually be many of them. For example, one would expect test anxiety scores to be negatively correlated with exam performance and course grades and positively correlated with general anxiety and with blood pressure during an exam. Or imagine that a researcher develops a new measure of physical risk taking. People’s scores on this measure should be correlated with their participation in “extreme” activities such as snowboarding and rock climbing, the number of speeding tickets they have received, and even the number of broken bones they have had over the years. When the criterion is measured at the same time as the construct, criterion validity is referred to as **concurrent validity**; however, when the criterion is measured at some point in the future (after the construct has been measured), it is referred to as **predictive validity** (because scores on the measure have “predicted” a future outcome).
 

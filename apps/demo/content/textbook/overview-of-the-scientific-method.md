@@ -9,7 +9,7 @@ chunks:
   type: plain
 cri: []
 next_slug: 8-finding-a-research-topic
-order: 7
+order: 6
 parent:
   title: II. Overview of the Scientific Method
   slug: ii-overview-of-the-scientific-method
