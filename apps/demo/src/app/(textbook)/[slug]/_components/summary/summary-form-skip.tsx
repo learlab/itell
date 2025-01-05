@@ -26,6 +26,8 @@ import { SelectIsNextPageVisible } from "@/lib/store/summary-store";
 import { makePageHref, reportSentry } from "@/lib/utils";
 import type { PageData } from "@/lib/pages";
 import type { FormEvent } from "react";
+import { createEventAction } from "@/actions/event";
+import { EventType } from "@/lib/constants";
 
 type Props = {
   pageStatus: PageStatus;
@@ -160,6 +162,17 @@ export const SummaryFormSkip = memo(({ pageStatus, page, streak, available_summa
         <StatusButton
           pending={isPending}
           disabled={pageFinished ? !page.next_slug : false}
+          onClick={() => {
+            if (!pageFinished) {
+              createEventAction({
+                type: EventType.REWARD_SPENT,
+                pageSlug: page.slug,
+                data: {
+                  rewardType: "summary-skip",
+                }
+              });
+            }
+          }}
         >
           {!pageFinished ? (
             <span className="inline-flex items-center gap-1">
