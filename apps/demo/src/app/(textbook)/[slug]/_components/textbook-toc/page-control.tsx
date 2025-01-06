@@ -59,7 +59,7 @@ export async function PageControl({
 
       <AnchorLink
         icon={<ArrowUpIcon className="size-4 xl:size-6" />}
-        text="Back to top"
+        text="Back"
         href={`#${Elements.PAGE_TITLE}`}
       />
     </div>

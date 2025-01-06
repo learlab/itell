@@ -34,7 +34,7 @@ export function GridQuestion({
     <div className="space-y-4">
       {isAdmin && (
         <AdminButton type="button" onClick={finish}>
-          Finish
+          Quick Fill
         </AdminButton>
       )}
       <Table className="caption-top">

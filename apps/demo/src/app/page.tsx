@@ -36,7 +36,7 @@ async function ActionButton() {
     return <TakeConsent />;
   }
 
-  return <ContinueReading user={user} className="w-44" />;
+  return <ContinueReading user={user} className="w-52" />;
 }
 
 function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {

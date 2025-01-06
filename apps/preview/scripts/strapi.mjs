@@ -45,15 +45,6 @@ const volumeFilter = qs.stringify({
             },
           },
         },
-        // Quiz: {
-        //   populate: {
-        //     Questions: {
-        //       populate: {
-        //         Answers: true,
-        //       },
-        //     },
-        //   },
-        // },
       },
     },
   },
@@ -75,8 +66,9 @@ const fetchVolume = async () => {
 
   console.log("volume fields", Object.keys(data.data));
   data.data.Pages.forEach((page, index) => {
+    console.log(`${index}: ${page["Slug"]}`);
     if (index === 0) {
-      // console.log("page fields", Object.keys(page));
+      console.log("page fields", Object.keys(page));
     }
     if (page.Quiz) {
       // console.log("quiz page", page["Title"]);

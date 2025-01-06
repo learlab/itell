@@ -8,14 +8,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@itell/ui/card";
+import { Skeleton } from "@itell/ui/skeleton";
 import { Page } from "#content";
+import { and, eq, inArray } from "drizzle-orm";
 import { type User } from "lucia";
 
+import { db } from "@/actions/db";
+import { survey_sessions } from "@/drizzle/schema";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
-import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
-import { FinishedPrompt } from "./finished-prompt";
+import { isLastPage, PageData } from "@/lib/pages";
+import { getPageData } from "@/lib/pages/pages.server";
+import { IntakePrompt } from "./intake-prompt";
+import { OuttakePrompt } from "./outtake-prompt";
 import { PageQuizModal } from "./page-quiz-modal";
+import { QuizPrompt } from "./quiz-prompt";
 import {
   FloatingSummary,
   ToggleShowFloatingSummary,
@@ -34,38 +41,83 @@ type Props = {
   condition: string;
 };
 
-export function PageAssignments({ page, pageStatus, user, condition }: Props) {
-  if (page.assignments.length === 0) {
-    if (user.finished) {
-      return (
-        <AssignmentsShell>
-          <Card className="border-info">
-            <Suspense fallback={<FinishedPrompt.Skeleton />}>
-              <FinishedPrompt
-                href={routes.surveyHome({ surveyId: "outtake" })}
-              />
-            </Suspense>
-          </Card>
-        </AssignmentsShell>
-      );
-    }
+// prompt for outtake survey if user reaches second to last page
+const isOuttakeReady = (userPage: PageData | null) => {
+  const outtakeReady =
+    isLastPage(userPage) ||
+    isLastPage(getPageData(userPage?.next_slug ?? null));
 
-    return null;
+  return outtakeReady;
+};
+
+const isQuizPromptReady = (userPage: PageData | null) => {
+  return isLastPage(userPage);
+};
+
+const getSurveyStatus = async (user: User) => {
+  const sessions = await db
+    .select()
+    .from(survey_sessions)
+    .where(
+      and(
+        eq(survey_sessions.userId, user.id),
+        inArray(survey_sessions.surveyId, ["intake", "outtake"])
+      )
+    );
+
+  const intakeSession = sessions.find(
+    (session) => session.surveyId === "intake"
+  );
+  const outtakeSession = sessions.find(
+    (session) => session.surveyId === "outtake"
+  );
+
+  return {
+    intakeDone: intakeSession && intakeSession.finishedAt !== null,
+    outtakeDone: outtakeSession && outtakeSession.finishedAt !== null,
+  };
+};
+
+export async function PageAssignments({
+  page,
+  pageStatus,
+  user,
+  condition,
+}: Props) {
+  const userPage = getPageData(user.pageSlug);
+  const { intakeDone, outtakeDone } = await getSurveyStatus(user);
+  const outtakeReady = isOuttakeReady(userPage);
+  const quizPromptReady = isQuizPromptReady(userPage);
+
+  if (!intakeDone) {
+    return (
+      <AssignmentsShell>
+        <IntakePrompt />
+      </AssignmentsShell>
+    );
+  }
+
+  if (outtakeReady && !outtakeDone) {
+    return (
+      <AssignmentsShell>
+        <OuttakePrompt />
+      </AssignmentsShell>
+    );
   }
 
   const canSkipSummary = user.personalization.available_summary_skips > 0;
+
   if (canSkipSummary) {
     return (
       <AssignmentsShell>
+        {quizPromptReady && (
+          <Suspense fallback={<QuizPrompt.Skeleton />}>
+            <QuizPrompt />
+          </Suspense>
+        )}
+
         <Card className="border-info">
           <CardContent>
-            {user.finished ? (
-              <Suspense fallback={<FinishedPrompt.Skeleton />}>
-                <FinishedPrompt
-                  href={routes.surveyHome({ surveyId: "outtake" })}
-                />
-              </Suspense>
-            ) : null}
             {condition !== Condition.SIMPLE ? (
               <PageQuizModal page={page} pageStatus={pageStatus} />
             ) : null}
@@ -83,74 +135,79 @@ export function PageAssignments({ page, pageStatus, user, condition }: Props) {
     );
   }
 
-  return (
-    <AssignmentsShell>
-      <Card className="border-info">
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2">
-            <span>Summary</span>
-            <ToggleShowFloatingSummary />
-          </CardTitle>
-          <CardDescription>
-            {pageStatus.unlocked ? (
+  if (page.assignments.length !== 0) {
+    return (
+      <AssignmentsShell>
+        {quizPromptReady && (
+          <Suspense fallback={<QuizPrompt.Skeleton />}>
+            <QuizPrompt />
+          </Suspense>
+        )}
+
+        <Card className="border-info">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span>Summary</span>
+              <ToggleShowFloatingSummary />
+            </CardTitle>
+            <CardDescription>
+              {pageStatus.unlocked ? (
+                <p>
+                  You have finished this page, you are still welcome to improve
+                  the summary.
+                </p>
+              ) : (
+                <p>
+                  You can unlock the next page by submitting{" "}
+                  <Link
+                    href={`#${SUMMARY_DESCRIPTION_ID}`}
+                    className="font-semibold text-info underline underline-offset-4"
+                  >
+                    a good summary
+                  </Link>{" "}
+                  of this page
+                </p>
+              )}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            {condition !== Condition.SIMPLE ? (
+              <PageQuizModal page={page} pageStatus={pageStatus} />
+            ) : null}
+            {condition === Condition.SIMPLE ? (
+              <SummaryFormSimple page={page} pageStatus={pageStatus} />
+            ) : null}
+            {condition === Condition.RANDOM_REREAD ? (
+              <SummaryFormReread
+                user={user}
+                page={page}
+                pageStatus={pageStatus}
+              />
+            ) : condition === Condition.STAIRS ? (
+              <SummaryFormStairs
+                user={user}
+                page={page}
+                pageStatus={pageStatus}
+                afterSubmit={
+                  <Suspense fallback={<SummaryCount.Skeleton />}>
+                    <SummaryCount pageSlug={page.slug} />
+                  </Suspense>
+                }
+              />
+            ) : null}
+            {condition !== Condition.SIMPLE ? (
               <>
-                You have finished this page, you are still welcome to improve
-                the summary.
+                <SummaryDescription condition={condition} />
+                <FloatingSummary />
               </>
-            ) : (
-              <>
-                You can unlock the next page by submitting{" "}
-                <Link
-                  href={`#${SUMMARY_DESCRIPTION_ID}`}
-                  className="font-semibold text-info underline underline-offset-4"
-                >
-                  a good summary
-                </Link>{" "}
-                of this page
-              </>
-            )}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {user.finished ? (
-            <Suspense fallback={<FinishedPrompt.Skeleton />}>
-              <FinishedPrompt href="/outtake" />
-            </Suspense>
-          ) : null}
-          {condition !== Condition.SIMPLE ? (
-            <PageQuizModal page={page} pageStatus={pageStatus} />
-          ) : null}
-          {condition === Condition.SIMPLE ? (
-            <SummaryFormSimple page={page} pageStatus={pageStatus} />
-          ) : null}
-          {condition === Condition.RANDOM_REREAD ? (
-            <SummaryFormReread
-              user={user}
-              page={page}
-              pageStatus={pageStatus}
-            />
-          ) : condition === Condition.STAIRS ? (
-            <SummaryFormStairs
-              user={user}
-              page={page}
-              pageStatus={pageStatus}
-              afterSubmit={
-                <Suspense fallback={<SummaryCount.Skeleton />}>
-                  <SummaryCount pageSlug={page.slug} />
-                </Suspense>
-              }
-            />
-          ) : null}
-          {condition !== Condition.SIMPLE ? (
-            <>
-              <SummaryDescription condition={condition} />
-              <FloatingSummary />
-            </>
-          ) : null}
-        </CardContent>
-      </Card>
-    </AssignmentsShell>
-  );
+            ) : null}
+          </CardContent>
+        </Card>
+      </AssignmentsShell>
+    );
+  }
+
+  return null;
 }
 
 function AssignmentsShell({ children }: { children: React.ReactNode }) {
@@ -158,7 +215,7 @@ function AssignmentsShell({ children }: { children: React.ReactNode }) {
     <section
       id={Elements.PAGE_ASSIGNMENTS}
       aria-labelledby="page-assignments-heading"
-      className="mt-6 border-t-2 pt-6"
+      className="mt-6 space-y-4 border-t-2 pt-6"
     >
       <h2 className="sr-only" id="page-assignments-heading">
         assignments
@@ -167,3 +224,11 @@ function AssignmentsShell({ children }: { children: React.ReactNode }) {
     </section>
   );
 }
+
+PageAssignments.Skeleton = function AssignmentsSkeleton() {
+  return (
+    <AssignmentsShell>
+      <Skeleton className="h-32" />
+    </AssignmentsShell>
+  );
+};

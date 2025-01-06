@@ -92,7 +92,7 @@ export function SummaryFormStairs({
 
   // for debugging
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
-  const requestBodyRef = useRef<any | null>(null);
+  const requestBodyRef = useRef<ApiRequest | null>(null);
   const summaryResponseRef = useRef<SummaryResponse | null>(null);
   const stairsDataRef = useRef<StairsQuestion | null>(null);
   const stairsAnsweredRef = useRef(false);
@@ -344,7 +344,7 @@ export function SummaryFormStairs({
         error: error.cause,
       });
     }
-  }, [error]);
+  }, [error, clearStages, summaryStore]);
 
   return (
     <>

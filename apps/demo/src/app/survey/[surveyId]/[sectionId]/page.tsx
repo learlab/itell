@@ -9,6 +9,7 @@ import { SurveySession } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
 import { isAdmin } from "@/lib/auth/role";
 import { routes } from "@/lib/navigation";
+import { firstPage } from "@/lib/pages/pages.server";
 import ScrollToTop from "../scroll-to-top";
 import { getNextSectionId, getSurvey, getSurveySection } from "./data";
 import { SurveyHeader } from "./survey-header";
@@ -98,7 +99,9 @@ export default async function SurveyQuestionPage(props: {
             });
 
             if (isFinished) {
-              return redirect(routes.home());
+              return redirect(
+                routes.textbook({ slug: user.pageSlug || firstPage.slug })
+              );
             } else {
               redirect(
                 routes.surveySection({
