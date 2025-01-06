@@ -65,7 +65,7 @@ cri:
   answer: In the 'Library Links' box in 'scholar preferences,' type the name of your college or university and choose the checkboxes that match.
   slug: Using-Google-Scholar-35
 next_slug: 9-generating-good-research-questions
-order: 8
+order: 7
 parent:
   title: II. Overview of the Scientific Method
   slug: ii-overview-of-the-scientific-method

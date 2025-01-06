@@ -8,7 +8,7 @@ chunks:
   slug: References-333pt
   type: plain
 cri: []
-next_slug: 7-a-model-of-scientific-research-in-psychology
+next_slug: 8-finding-a-research-topic
 order: 6
 parent:
   title: II. Overview of the Scientific Method

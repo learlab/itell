@@ -58,7 +58,7 @@ cri:
 - question: What is criterion validity and how is it assessed?
   answer: Criterion validity is the extent to which people's scores on a measure are correlated with other variables, and it is assessed by determining if scores on the measure are correlated with variables that one would expect them to be correlated with.
   slug: Validity-2-1675t
-next_slug: 21-practical-strategies-for-psychological-measurement
+next_slug: 3-goals-of-science
 order: 20
 parent:
   title: IV. Psychological Measurement
