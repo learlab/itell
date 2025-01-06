@@ -152,7 +152,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
         <AdminButton
           variant="ghost"
           className="flex w-full justify-start p-2 xl:text-lg"
-          badgeClassName="hidden sm:block top-1/2 -translate-x-1/2"
+          badgePosition="right"
         >
           <span className="inline-flex items-center gap-2 xl:gap-4">
             <SettingsIcon className="size-4 xl:size-6" />

@@ -17,6 +17,7 @@ import { Button } from "@itell/ui/button";
 import { UserRoundX } from "lucide-react";
 
 import { deleteUserAction } from "@/actions/user";
+import { AdminButton } from "@/components/admin-button";
 import { logout } from "@/lib/auth/actions";
 import { routes } from "@/lib/navigation";
 
@@ -26,10 +27,10 @@ export function DeleteAccount() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="gap-2">
+        <AdminButton variant="outline" className="gap-2" size={"lg"}>
           <UserRoundX className="size-4" />
           <span>Delete Account</span>
-        </Button>
+        </AdminButton>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
