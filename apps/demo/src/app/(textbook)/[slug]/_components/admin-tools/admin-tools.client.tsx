@@ -40,6 +40,7 @@ import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
 import { resetUserAction, updateUserAction } from "@/actions/user";
+import { AdminButton } from "@/components/admin-button";
 import { InternalError } from "@/components/internal-error";
 import { useQuestionStore } from "@/components/provider/page-provider";
 import { getUserCondition } from "@/lib/auth/conditions";
@@ -148,15 +149,16 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button
+        <AdminButton
           variant="ghost"
           className="flex w-full justify-start p-2 xl:text-lg"
+          badgeClassName="hidden sm:block top-1/2 -translate-x-1/2"
         >
           <span className="inline-flex items-center gap-2 xl:gap-4">
             <SettingsIcon className="size-4 xl:size-6" />
-            <span>Admin tools</span>
+            <span>Settings</span>
           </span>
-        </Button>
+        </AdminButton>
       </SheetTrigger>
       <SheetContent className="overflow-y-scroll">
         <SheetHeader>

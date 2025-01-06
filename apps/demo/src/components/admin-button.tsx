@@ -14,7 +14,7 @@ export function AdminButton({
       <Badge
         variant={"outline"}
         className={cn(
-          "absolute left-1/2 top-0 -translate-y-1/2 bg-secondary text-secondary-foreground",
+          "absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 bg-secondary text-secondary-foreground",
           badgeClassName
         )}
       >

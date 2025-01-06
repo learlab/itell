@@ -15,6 +15,7 @@ import { SidebarInset, SidebarProvider } from "@itell/ui/sidebar";
 import { User } from "lucia";
 
 import { deleteSurveyAction, getSurveyAction } from "@/actions/survey";
+import { AdminButton } from "@/components/admin-button";
 import { ContinueReading } from "@/components/continue-reading";
 import { getSession } from "@/lib/auth";
 import { isAdmin } from "@/lib/auth/role";
@@ -71,7 +72,7 @@ function DeleteSurvey({ surveyId }: { surveyId: string }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Delete Survey Record</Button>
+        <AdminButton variant={"outline"}>Delete Survey Record</AdminButton>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

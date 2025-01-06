@@ -25,7 +25,7 @@ type FormEntry = {
   status: "pending" | "completed" | "in-progress" | "not-applicable";
 };
 
-async function getSurveyStatus(user: User) {
+export async function getSurveyStatus(user: User) {
   const sessions = await db
     .select()
     .from(survey_sessions)

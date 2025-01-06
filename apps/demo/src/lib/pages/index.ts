@@ -9,6 +9,9 @@ export type PageData = {
   next_slug: string | null;
 };
 
-export const isLastPage = (page: { next_slug: string | null }) => {
+export const isLastPage = (page: { next_slug: string | null } | null) => {
+  if (page === null) {
+    return false;
+  }
   return page.next_slug === null;
 };

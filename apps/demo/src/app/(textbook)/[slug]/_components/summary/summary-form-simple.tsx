@@ -28,8 +28,7 @@ type Props = {
   page: PageData;
 };
 
-// eslint-disable-next-line react/display-name
-export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
+export function SummaryFormSimple({ pageStatus, page }: Props) {
   const questionStore = useQuestionStore();
   const quizStore = useQuizStore();
   const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
@@ -49,7 +48,7 @@ export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
         router.push(page.next_slug);
         return;
       }
-      const [_, err] = await incrementUserPageSlugAction({
+      const [, err] = await incrementUserPageSlugAction({
         currentPageSlug: page.slug,
       });
       if (err) {
@@ -64,7 +63,7 @@ export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
       }
 
       if (isLastPage(page)) {
-        toast.info("You have finished the entire textbook!", {
+        return toast.info("You have finished the entire textbook!", {
           duration: 100000,
         });
       }
@@ -133,4 +132,4 @@ export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
       {isDelayed ? <DelayMessage /> : null}
     </div>
   );
-});
+}

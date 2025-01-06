@@ -23,7 +23,7 @@ export const createEventAction = authedProcedure
     }
   });
 
-export const getUserQuizAttempts = authedProcedure.handler(async ({ ctx }) => {
+export const getQuizAttemps = authedProcedure.handler(async ({ ctx }) => {
   return await getUserQuizAttemptsHandler(ctx.user.id);
 });
 

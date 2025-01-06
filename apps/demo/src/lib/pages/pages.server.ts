@@ -6,6 +6,9 @@ import { groupBy } from "es-toolkit";
 import { PageData } from ".";
 
 export const getPageData = (slug: string | null): PageData | null => {
+  if (slug === null) {
+    return null;
+  }
   const index = pages.findIndex((s) => s.slug === slug);
   if (index === -1) {
     return null;
