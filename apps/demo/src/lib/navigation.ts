@@ -28,7 +28,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
           summary: z.string().optional(),
           quiz: z.boolean().optional(),
         })
-        .optional(),
+        .default({ summary: undefined, quiz: undefined }),
     }),
     dashboard: defineRoute("/dashboard", {
       search: z
