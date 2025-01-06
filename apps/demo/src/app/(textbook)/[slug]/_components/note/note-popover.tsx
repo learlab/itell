@@ -46,6 +46,7 @@ interface Props extends NoteData {
   pageSlug: string;
 }
 
+// eslint-disable-next-line react/display-name
 export const NotePopover = memo(
   ({
     id,
@@ -216,7 +217,7 @@ export const NotePopover = memo(
           }
         }
       }
-    }, [anchor]);
+    }, [anchor, local]);
 
     useEffect(() => {
       if (anchor && triggerRef.current) {
@@ -290,11 +291,10 @@ export const NotePopover = memo(
           ref={popoverRef}
           popover="auto"
           role="tooltip"
-          className="w-64 rounded-md p-4 pb-2 shadow-md hover:shadow-lg md:w-80"
-          style={{ background: noteColor }}
+          className="h-[200px] w-[400px] rounded-md border p-4 pb-2 shadow-md hover:shadow-lg md:w-80"
         >
           <form
-            className="w-full"
+            className="flex h-full w-full flex-col"
             onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
@@ -302,83 +302,86 @@ export const NotePopover = memo(
               handleColorChange(color);
             }}
           >
-            <Label>
+            <Label className="flex-1">
               <span className="sr-only">note text</span>
-              <Textarea
+              <textarea
                 name="input"
                 defaultValue={noteText}
+                placeholder="Add Note"
                 ref={textareaRef}
-                minRows={3}
-                className="block w-full resize-none bg-inherit font-normal focus:outline-none lg:text-lg"
+                className="h-full resize-none rounded-md bg-transparent text-sm outline-none"
               />
             </Label>
-            <footer className="flex justify-end gap-1">
-              <ColorPicker
-                id={id}
-                color={noteColor}
-                onChange={handleColorChange}
-              />
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <button
-                    type="button"
-                    className="p-2 hover:bg-muted/50"
-                    aria-label="delete note"
-                    onClick={() => popoverRef.current?.hidePopover()}
-                  >
-                    <TrashIcon className="size-4" />
-                  </button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you sure you want to delete this note?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel className="mt-0">
-                      Cancel
-                    </AlertDialogCancel>
-                    <Button
-                      disabled={pending}
-                      onClick={handleDelete}
-                      pending={pending}
-                    >
-                      Continue
-                    </Button>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
 
-              <button
-                type="button"
-                className="p-2 hover:bg-muted/50"
-                aria-label="save note"
-                onClick={handleUpsert}
-              >
-                <SaveIcon className="size-4" />
-              </button>
+            <footer className="flex items-center justify-between gap-1 border-t px-2 pt-2">
+              {!recordId ? (
+                <p className="text-sm text-muted-foreground">unsaved</p>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  last updated at{" "}
+                  <time>
+                    {(updatedAt ? updatedAt : new Date()).toLocaleString()}
+                  </time>
+                </p>
+              )}
+              {positionFailed ? (
+                <p className="text-sm text-muted-foreground">
+                  Can&apos;t find reference text for this note
+                </p>
+              ) : null}
+
+              <div className="flex items-center gap-1">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      type="button"
+                      className="p-2"
+                      aria-label="delete note"
+                      onClick={() => popoverRef.current?.hidePopover()}
+                    >
+                      <TrashIcon className="size-4" />
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to delete this note?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="mt-0">
+                        Cancel
+                      </AlertDialogCancel>
+                      <Button
+                        disabled={pending}
+                        onClick={handleDelete}
+                        pending={pending}
+                      >
+                        Continue
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <ColorPicker
+                  id={id}
+                  color={noteColor}
+                  onChange={handleColorChange}
+                />
+
+                <button
+                  type="button"
+                  className="p-2"
+                  aria-label="save note"
+                  onClick={handleUpsert}
+                >
+                  <SaveIcon className="size-4" />
+                </button>
+              </div>
             </footer>
           </form>
-
-          {!recordId ? (
-            <p className="text-sm text-muted-foreground">unsaved</p>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              last updated at{" "}
-              <time>
-                {(updatedAt ? updatedAt : new Date()).toLocaleString()}
-              </time>
-            </p>
-          )}
-          {positionFailed ? (
-            <p className="text-sm text-muted-foreground">
-              Can&apos;t find reference text for this note
-            </p>
-          ) : null}
         </div>
       </div>
     );
@@ -403,7 +406,7 @@ function ColorPicker({ id, color, onChange }: ColorPickerProps) {
     <div>
       <button
         type="button"
-        className="p-2 hover:bg-muted/50"
+        className="p-2"
         aria-label="change note color"
         // @ts-expect-error popoverTarget is not typed
         popovertarget={popoverId}
