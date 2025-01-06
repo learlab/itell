@@ -22,7 +22,7 @@ cri:
   answer: Psychologists suggest that people often hold incorrect beliefs about human behavior due to relying on mental shortcuts, confirmation bias, and a desire for certain beliefs to be true.
   slug: How-Could-We-Be-So-Wrong?-1445t
 next_slug: 5-experimental-and-clinical-psychologists
-order: 3
+order: 4
 parent:
   title: I. The Science of Psychology
   slug: i-the-science-of-psychology
