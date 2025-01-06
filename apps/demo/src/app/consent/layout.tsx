@@ -17,6 +17,7 @@ import { User } from "lucia";
 
 import { getSurveyAction } from "@/actions/survey";
 import { updateUserAction } from "@/actions/user";
+import { AdminButton } from "@/components/admin-button";
 import { ContinueReading } from "@/components/continue-reading";
 import { MainNav } from "@/components/main-nav";
 import { getSession } from "@/lib/auth";
@@ -43,7 +44,7 @@ export default async function ConsentLayout({
       <MainNav />
       <Card className="mx-auto mt-4 min-h-screen max-w-6xl">
         <CardContent className="relative flex flex-col gap-6 sm:flex-row lg:text-lg">
-          <aside className="top-20 flex h-fit basis-1/3 flex-col gap-2 sm:sticky">
+          <aside className="top-20 flex h-fit basis-1/3 flex-col gap-4 sm:sticky">
             {hasConsent ? (
               intakeDone ? (
                 <NoAction user={user} />
@@ -104,7 +105,9 @@ function DeleteConsent() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Delete Consent Record</Button>
+        <AdminButton variant="outline" size={"lg"}>
+          Delete Consent Record
+        </AdminButton>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -14,14 +14,15 @@ import { and, eq, inArray } from "drizzle-orm";
 import { type User } from "lucia";
 
 import { db } from "@/actions/db";
+import { NavigationButton } from "@/components/navigation-button";
 import { survey_sessions } from "@/drizzle/schema";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
+import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
 import { getPageData } from "@/lib/pages/pages.server";
-import { IntakePrompt } from "./intake-prompt";
-import { OuttakePrompt } from "./outtake-prompt";
 import { PageQuizModal } from "./page-quiz-modal";
+import { PreAssignmentPrompt } from "./pre-assignment-prompt";
 import { QuizPrompt } from "./quiz-prompt";
 import {
   FloatingSummary,
@@ -89,10 +90,32 @@ export async function PageAssignments({
   const outtakeReady = isOuttakeReady(userPage);
   const quizPromptReady = isQuizPromptReady(userPage);
 
+  if (!user.consentGiven) {
+    return (
+      <AssignmentsShell>
+        <PreAssignmentPrompt
+          title="Review Consent Form"
+          description="Please indicate your consent to participate in this study."
+        >
+          <NavigationButton href={routes.consent()}>
+            Consent Form
+          </NavigationButton>
+        </PreAssignmentPrompt>
+      </AssignmentsShell>
+    );
+  }
+
   if (!intakeDone) {
     return (
       <AssignmentsShell>
-        <IntakePrompt />
+        <PreAssignmentPrompt
+          title="Take Intake Survey"
+          description="Before starting the textbook, help us customize your learning experience by completing the intake survey."
+        >
+          <NavigationButton href={routes.surveyHome({ surveyId: "intake" })}>
+            Intake Survey
+          </NavigationButton>
+        </PreAssignmentPrompt>
       </AssignmentsShell>
     );
   }
@@ -100,7 +123,18 @@ export async function PageAssignments({
   if (outtakeReady && !outtakeDone) {
     return (
       <AssignmentsShell>
-        <OuttakePrompt />
+        <PreAssignmentPrompt
+          title="Take Outtake Survey"
+          description="
+            Great job making it close to the end of the textbook! Please help us
+            learn about your learning experience by completing the outtake
+            survey.
+          "
+        >
+          <NavigationButton href={routes.surveyHome({ surveyId: "outtake" })}>
+            Outtake Survey
+          </NavigationButton>
+        </PreAssignmentPrompt>
       </AssignmentsShell>
     );
   }

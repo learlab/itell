@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@itell/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@itell/ui/card";
 import { Skeleton } from "@itell/ui/skeleton";
 import { CheckCircleIcon, CircleIcon } from "lucide-react";
 
@@ -49,27 +49,29 @@ export async function QuizPrompt() {
 
   return (
     <Card>
-      <CardContent>
-        <p>
+      <CardHeader>
+        <CardDescription>
           You are close to finishing the entire textbook. Please make sure you
           also complete quizzes for all the following pages to receive full
           credit.
-        </p>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ul>
+          {pages.map((item) => (
+            <li key={item.href}>
+              <a href={item.href} className="flex items-center gap-2">
+                {item.finished ? (
+                  <CheckCircleIcon className="size-4 text-green-500" />
+                ) : (
+                  <CircleIcon className="size-4 text-muted-foreground" />
+                )}
+                <span>{item.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </CardContent>
-      <ul className="pl-4">
-        {pages.map((item) => (
-          <li key={item.href}>
-            <a href={item.href} className="flex items-center gap-2">
-              {item.finished ? (
-                <CheckCircleIcon className="size-4 text-green-500" />
-              ) : (
-                <CircleIcon className="size-4 text-muted-foreground" />
-              )}
-              <span>{item.title}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </Card>
   );
 }

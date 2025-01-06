@@ -37,7 +37,7 @@ export function UnlockAssignmentsButton({
         });
       }}
     >
-      <KeyIcon className="mr-2 h-4 w-4" />
+      <KeyIcon className="mr-2 size-4" />
       <span>Unlock assignments</span>
     </Button>
   );
