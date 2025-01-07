@@ -34,7 +34,6 @@ import { DelayMessage } from "@/components/delay-message";
 import {
   useChatStore,
   useQuestionStore,
-  useQuizStore,
   useSummaryStore,
 } from "@/components/provider/page-provider";
 import { Callout } from "@/components/ui/callout";
@@ -79,12 +78,7 @@ type ApiRequest = Parameters<
   typeof apiClient.api.summary.stairs.$post
 >[0]["json"];
 
-export function SummaryFormStairs({
-  user,
-  page,
-  pageStatus,
-  afterSubmit,
-}: Props) {
+export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const pageSlug = page.slug;
   const isLast = isLastPage(page);
   const router = useRouter();
@@ -102,7 +96,6 @@ export function SummaryFormStairs({
   const chatStore = useChatStore();
   const questionStore = useQuestionStore();
   const summaryStore = useSummaryStore();
-  const quizStore = useQuizStore();
 
   // states
   const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
@@ -266,15 +259,6 @@ export function SummaryFormStairs({
         if (data.isExcellent) {
           const blastYPos = window.innerHeight - 10;
           rocketBlast(blastYPos);
-        }
-
-        if (data.canProceed || isLast) {
-          if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-            quizStore.send({
-              type: "toggleQuiz",
-            });
-            return;
-          }
         }
 
         summaryStore.send({

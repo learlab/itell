@@ -8,7 +8,6 @@ import { type Page } from "#content";
 import { type PageStatus } from "@/lib/page-status";
 import { createChatStore } from "@/lib/store/chat-store";
 import { createQuestionStore } from "@/lib/store/question-store";
-import { createQuizStore } from "@/lib/store/quiz-store";
 import { createSummaryStore } from "@/lib/store/summary-store";
 import type { ChatStore } from "@/lib/store/chat-store";
 import type {
@@ -16,7 +15,6 @@ import type {
   QuestionSnapshot,
   QuestionStore,
 } from "@/lib/store/question-store";
-import type { QuizStore } from "@/lib/store/quiz-store";
 import type { SummaryStore } from "@/lib/store/summary-store";
 
 type Props = {
@@ -32,7 +30,6 @@ type State = {
   questionStore: QuestionStore;
   chatStore: ChatStore;
   summaryStore: SummaryStore;
-  quizStore: QuizStore;
 };
 const PageContext = createContext<State>({} as State);
 
@@ -77,13 +74,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     });
   }
 
-  const quizStoreRef = useRef<QuizStore>(undefined);
-  if (!quizStoreRef.current) {
-    quizStoreRef.current = createQuizStore({
-      pageStatus,
-    });
-  }
-
   useEffect(() => {
     let questionSubscription: Subscription | undefined;
     let quizSubscription: Subscription | undefined;
@@ -116,7 +106,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
         questionStore: questionStoreRef.current,
         chatStore: chatStoreRef.current,
         summaryStore: summaryStoreRef.current,
-        quizStore: quizStoreRef.current,
         chunks: slugs,
         condition,
       }}
@@ -149,11 +138,6 @@ export const useChatStore = () => {
 export const useQuestionStore = () => {
   const value = useContext(PageContext);
   return value.questionStore;
-};
-
-export const useQuizStore = () => {
-  const value = useContext(PageContext);
-  return value.quizStore;
 };
 
 const getPageQuestions = (page: Page): ChunkQuestion => {
