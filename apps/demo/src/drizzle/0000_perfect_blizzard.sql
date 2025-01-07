@@ -212,5 +212,6 @@ CREATE INDEX IF NOT EXISTS "events_user_id_idx" ON "events" USING btree ("user_i
 CREATE INDEX IF NOT EXISTS "events_type_idx" ON "events" USING btree ("event_type");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "notes_user_id_idx" ON "notes" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "notes_page_slug_idx" ON "notes" USING btree ("page_slug");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "quiz_answers_page_slug_idx" ON "quiz_answers" USING btree ("page_slug");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "sessions_user_id_idx" ON "sessions" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "summaries_user_id_idx" ON "summaries" USING btree ("user_id");

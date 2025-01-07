@@ -1,5 +1,5 @@
 {
-  "id": "a4c4eccc-0421-443e-994e-c1ccfab70826",
+  "id": "32db68ad-9a90-4d37-96d7-f97c46e153e8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -625,7 +625,23 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "quiz_answers_page_slug_idx": {
+          "name": "quiz_answers_page_slug_idx",
+          "columns": [
+            {
+              "expression": "page_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "quiz_answers_user_id_users_id_fk": {
           "name": "quiz_answers_user_id_users_id_fk",

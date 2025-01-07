@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader } from "@itell/ui/card";
 import { Skeleton } from "@itell/ui/skeleton";
 import { CheckCircleIcon, CircleIcon } from "lucide-react";
 
-import { getQuizAttemps } from "@/actions/event";
+import { getQuizAttemps } from "@/actions/quiz";
 import { routes } from "@/lib/navigation";
 import { quizPages } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
