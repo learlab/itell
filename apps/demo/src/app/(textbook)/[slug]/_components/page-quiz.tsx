@@ -5,9 +5,9 @@ import { Button } from "@itell/ui/button";
 import { Label } from "@itell/ui/label";
 import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 
-import { createEventAction } from "@/actions/event";
+import { createQuizAction } from "@/actions/quiz";
 import { NavigationButton } from "@/components/navigation-button";
-import { EventType } from "@/lib/constants";
+import { QuizData } from "@/drizzle/schema";
 import { routes } from "@/lib/navigation";
 import { makePageHref } from "@/lib/utils";
 import type { PageData } from "@/lib/pages";
@@ -28,16 +28,12 @@ export function PageQuiz({
     e.preventDefault();
     setPending(true);
     const formData = new FormData(e.currentTarget);
-    const answers = Array.from(formData.entries()).map(([key, value]) => [
-      key,
-      String(value),
-    ]);
-    await createEventAction({
-      type: EventType.QUIZ,
+    const submission: QuizData = Array.from(formData.entries()).map(
+      ([, value]) => String(value)
+    );
+    createQuizAction({
       pageSlug: page.slug,
-      data: {
-        answers,
-      },
+      data: submission,
     });
     setFinished(true);
     setPending(false);
@@ -45,23 +41,15 @@ export function PageQuiz({
   };
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-4">
-      {page.quiz.map((item, index) => (
-        <div key={index} className="grid gap-2">
-          <h4 className="mb-2 text-lg font-semibold">{item.question}</h4>
-          <RadioGroup name={index.toString()} required>
-            {item.answers.map((answer, answerIndex) => (
-              <div
-                key={answerIndex}
-                className="mb-2 flex items-center space-x-2"
-              >
-                <RadioGroupItem
-                  value={answer.answer}
-                  id={`q${String(index)}-a${String(answerIndex)}`}
-                />
-                <Label htmlFor={`q${String(index)}-a${String(answerIndex)}`}>
-                  {answer.answer}
-                </Label>
+    <form onSubmit={onSubmit} className="grid gap-4" id="page-quiz">
+      {page.quiz.map(({ question, answers }, qIndex) => (
+        <div key={question} className="grid gap-3">
+          <RadioGroup name={question} required className="gap-3">
+            <h4 className="mb-2 text-lg font-semibold">{question}</h4>
+            {answers.map(({ answer }, aIndex) => (
+              <div key={String(answer)} className="flex items-center gap-3">
+                <RadioGroupItem value={answer} id={`${qIndex}-${aIndex}`} />
+                <Label htmlFor={`${qIndex}-${aIndex}`}>{answer}</Label>
               </div>
             ))}
           </RadioGroup>
