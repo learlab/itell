@@ -15,6 +15,7 @@ import {
   events,
   focus_times,
   oauthAccounts,
+  quiz_answers,
   summaries,
   survey_sessions,
   teachers,
@@ -134,7 +135,10 @@ export const resetUserAction = authedProcedure
       await tx
         .delete(constructed_responses_feedback)
         .where(eq(constructed_responses_feedback.userId, userId));
-      await tx.delete(survey_sessions).where(eq(summaries.userId, userId));
+      await tx
+        .delete(survey_sessions)
+        .where(eq(survey_sessions.userId, userId));
+      await tx.delete(quiz_answers).where(eq(quiz_answers.userId, userId));
 
       return { pageSlug: firstPage.slug };
     });
