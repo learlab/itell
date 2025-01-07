@@ -28,6 +28,8 @@ export const EventType = {
   RANDOM_REREAD: "random_reread",
   SIMPLE: "simple",
   QUIZ: "quiz",
+  STREAK: "streak",
+  REWARD_SPENT: "reward-spent",
 } as const;
 
 export const Condition = {
