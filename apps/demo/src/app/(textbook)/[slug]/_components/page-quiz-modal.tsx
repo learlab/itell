@@ -14,6 +14,7 @@ import {
 import { useSelector } from "@xstate/store/react";
 import { BookCheckIcon } from "lucide-react";
 
+import { AdminButton } from "@/components/admin-button";
 import {
   useQuizStore,
   useSummaryStore,
@@ -73,6 +74,23 @@ export function PageQuizModal({
             the quiz.
           </DialogDescription>
         </DialogHeader>
+        <AdminButton
+          className="w-fit"
+          onClick={async () => {
+            const form = document.getElementById("page-quiz");
+            if (form) {
+              const radioGroups = form.querySelectorAll("[role='radiogroup']");
+              radioGroups.forEach((rg) => {
+                const btn = rg.querySelector("button");
+                if (btn) {
+                  btn.click();
+                }
+              });
+            }
+          }}
+        >
+          Quiz Fill
+        </AdminButton>
         <PageQuiz
           page={page}
           afterSubmit={() => {

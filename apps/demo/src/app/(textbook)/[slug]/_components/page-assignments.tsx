@@ -88,6 +88,7 @@ export async function PageAssignments({
   const userPage = getPageData(user.pageSlug);
   const { intakeDone, outtakeDone } = await getSurveyStatus(user);
   const outtakeReady = isOuttakeReady(userPage);
+  const isQuizReady = page.quiz && page.quiz.length > 0;
   const quizPromptReady = isQuizPromptReady(userPage);
 
   if (!user.consentGiven) {

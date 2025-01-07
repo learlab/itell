@@ -42,10 +42,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     `question-store-${page.slug}`,
     undefined
   );
-  const [quizFinished, setQuizFinished] = useLocalStorage<boolean | undefined>(
-    `quiz-finished-${page.slug}`,
-    page.quiz ? false : undefined
-  );
 
   const [showFloatingSummary, setShowFloatingSummary] = useLocalStorage(
     "show-floating-summary",
@@ -84,7 +80,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
   const quizStoreRef = useRef<QuizStore>(undefined);
   if (!quizStoreRef.current) {
     quizStoreRef.current = createQuizStore({
-      finished: quizFinished,
       pageStatus,
     });
   }
@@ -96,12 +91,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     if (questionStoreRef.current) {
       questionSubscription = questionStoreRef.current.subscribe((state) => {
         setSnapshot(state.context);
-      });
-    }
-
-    if (quizStoreRef.current) {
-      quizSubscription = quizStoreRef.current.on("finishQuiz", () => {
-        setQuizFinished(true);
       });
     }
 
@@ -119,7 +108,7 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
       quizSubscription?.unsubscribe();
       summarySubscription?.unsubscribe();
     };
-  }, [setQuizFinished, setShowFloatingSummary, setSnapshot]);
+  }, [setShowFloatingSummary, setSnapshot]);
 
   return (
     <PageContext.Provider
