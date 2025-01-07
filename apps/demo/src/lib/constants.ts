@@ -41,5 +41,6 @@ export const Tags = {
   GET_SESSION: "get-session",
   GET_ANSWER_STREAK: "get-answer-streak",
   GET_QUIZ_ATTEMPTS: "get-quiz-attempts",
+  GET_QUIZ_ANSWER: "get-quiz-answer",
   COUNT_SUMMARY: "count-summary",
 } as const;

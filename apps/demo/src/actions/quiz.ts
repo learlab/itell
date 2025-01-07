@@ -1,6 +1,6 @@
 "use server";
 
-import { desc, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 
@@ -24,6 +24,48 @@ export const createQuizAction = authedProcedure
       data: input.data,
     });
   });
+
+export const deleteQuizAction = authedProcedure
+  .input(
+    z.object({
+      pageSlug: z.string(),
+    })
+  )
+  .handler(async ({ input, ctx }) => {
+    return await db
+      .delete(quiz_answers)
+      .where(
+        and(
+          eq(quiz_answers.pageSlug, input.pageSlug),
+          eq(quiz_answers.userId, ctx.user.id)
+        )
+      );
+  });
+
+export const isQuizAnsweredAction = authedProcedure
+  .input(
+    z.object({
+      pageSlug: z.string(),
+    })
+  )
+  .handler(async ({ ctx, input }) => {
+    const count = await getQuizAnswerCountHandler(ctx.user.id, input.pageSlug);
+    return count > 0;
+  });
+
+const getQuizAnswerCountHandler = memoize(
+  async (userId: string, pageSlug: string) => {
+    const count = await db.$count(
+      quiz_answers,
+      and(eq(quiz_answers.pageSlug, pageSlug), eq(quiz_answers.userId, userId))
+    );
+    return count;
+  },
+  {
+    persist: false,
+    revalidateTags: (pageSlug) => [pageSlug, Tags.GET_QUIZ_ANSWER],
+  }
+);
 
 const correctAnswers = quizPages
   .flatMap((page) =>

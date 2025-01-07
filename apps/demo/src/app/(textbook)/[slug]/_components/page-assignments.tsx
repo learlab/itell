@@ -14,6 +14,7 @@ import { and, eq, inArray } from "drizzle-orm";
 import { type User } from "lucia";
 
 import { db } from "@/actions/db";
+import { isQuizAnsweredAction } from "@/actions/quiz";
 import { NavigationButton } from "@/components/navigation-button";
 import { survey_sessions } from "@/drizzle/schema";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
@@ -21,9 +22,9 @@ import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
 import { getPageData } from "@/lib/pages/pages.server";
-import { PageQuizModal } from "./page-quiz-modal";
+import { DeleteQuiz } from "./delete-quiz-answer";
 import { PreAssignmentPrompt } from "./pre-assignment-prompt";
-import { QuizPrompt } from "./quiz-prompt";
+import { PageQuiz } from "./quiz/page-quiz";
 import {
   FloatingSummary,
   ToggleShowFloatingSummary,
@@ -85,12 +86,22 @@ export async function PageAssignments({
   user,
   condition,
 }: Props) {
-  const userPage = getPageData(user.pageSlug);
   const { intakeDone, outtakeDone } = await getSurveyStatus(user);
+  const userPage = getPageData(user.pageSlug);
   const outtakeReady = isOuttakeReady(userPage);
-  const isQuizReady = page.quiz && page.quiz.length > 0;
-  const quizPromptReady = isQuizPromptReady(userPage);
+  const hasQuiz = page.quiz && page.quiz.length > 0;
 
+  let quizReady = false;
+  let quizAnswered = false;
+  if (hasQuiz) {
+    const [isQuizAnswered] = await isQuizAnsweredAction({
+      pageSlug: page.slug,
+    });
+    if (isQuizAnswered !== null) {
+      quizReady = !isQuizAnswered;
+      quizAnswered = isQuizAnswered;
+    }
+  }
   if (!user.consentGiven) {
     return (
       <AssignmentsShell>
@@ -140,22 +151,21 @@ export async function PageAssignments({
     );
   }
 
-  const canSkipSummary = user.personalization.available_summary_skips > 0;
-
-  if (canSkipSummary) {
+  if (quizReady) {
     return (
       <AssignmentsShell>
-        {quizPromptReady && (
-          <Suspense fallback={<QuizPrompt.Skeleton />}>
-            <QuizPrompt />
-          </Suspense>
-        )}
+        <PageQuiz page={page} user={user} />
+      </AssignmentsShell>
+    );
+  }
 
+  const canSkipSummary = user.personalization.available_summary_skips > 0;
+  if (condition !== Condition.SIMPLE && canSkipSummary) {
+    return (
+      <AssignmentsShell>
+        {quizAnswered && <DeleteQuiz pageSlug={page.slug} />}
         <Card className="border-info">
           <CardContent>
-            {condition !== Condition.SIMPLE ? (
-              <PageQuizModal page={page} pageStatus={pageStatus} />
-            ) : null}
             <SummaryFormSkip
               pageStatus={pageStatus}
               page={page}
@@ -173,12 +183,7 @@ export async function PageAssignments({
   if (page.assignments.length !== 0) {
     return (
       <AssignmentsShell>
-        {quizPromptReady && (
-          <Suspense fallback={<QuizPrompt.Skeleton />}>
-            <QuizPrompt />
-          </Suspense>
-        )}
-
+        {quizAnswered && <DeleteQuiz pageSlug={page.slug} />}
         <Card className="border-info">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
@@ -187,12 +192,12 @@ export async function PageAssignments({
             </CardTitle>
             <CardDescription>
               {pageStatus.unlocked ? (
-                <p>
+                <>
                   You have finished this page, you are still welcome to improve
                   the summary.
-                </p>
+                </>
               ) : (
-                <p>
+                <>
                   You can unlock the next page by submitting{" "}
                   <Link
                     href={`#${SUMMARY_DESCRIPTION_ID}`}
@@ -201,14 +206,11 @@ export async function PageAssignments({
                     a good summary
                   </Link>{" "}
                   of this page
-                </p>
+                </>
               )}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            {condition !== Condition.SIMPLE ? (
-              <PageQuizModal page={page} pageStatus={pageStatus} />
-            ) : null}
             {condition === Condition.SIMPLE ? (
               <SummaryFormSimple page={page} pageStatus={pageStatus} />
             ) : null}
