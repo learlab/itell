@@ -906,7 +906,7 @@
         {
           "id": "LexTALE",
           "type": "lextale",
-          "text": "This is a short assessment of your English lexical knowledge \n You will be presented with 60 strings of letters. Click on the string if you think it is a real word in English.",
+          "text": "This is a short assessment of your English lexical knowledge.\n You will be presented with 60 strings of letters. Click on the check mark if you think it is a real word in English and the X if you think it is not a real word.",
           "options": [
             "mensible",
             "scornful",
