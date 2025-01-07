@@ -2,6 +2,7 @@ import Form from "next/form";
 import { notFound, redirect } from "next/navigation";
 import { Errorbox } from "@itell/ui/callout";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
+import { Prose } from "@itell/ui/prose";
 import { Survey } from "#content";
 
 import { getSurveyAction, upsertSurveyAction } from "@/actions/survey";
@@ -80,6 +81,7 @@ export default async function SurveyQuestionPage(props: {
             answers.
           </p>
         )}
+        <Prose>{section.description}</Prose>
         <Form
           className="flex flex-col gap-8"
           action={async (formData: FormData) => {
@@ -114,13 +116,15 @@ export default async function SurveyQuestionPage(props: {
         >
           {section.questions.map((question) => (
             <Card key={question.id}>
-              <CardHeader>
-                <CardTitle>
-                  <legend className="text-lg font-medium tracking-tight xl:text-xl">
-                    {question.text}
-                  </legend>
-                </CardTitle>
-              </CardHeader>
+              {question.text && (
+                <CardHeader>
+                  <CardTitle>
+                    <legend className="text-lg font-medium tracking-tight xl:text-xl">
+                      {question.text}
+                    </legend>
+                  </CardTitle>
+                </CardHeader>
+              )}
               <CardContent>
                 <SurveyQuestionRenderer
                   key={question.id}
