@@ -24,7 +24,7 @@ const DisplayRulesSchema = s
 // Base question schema with common properties
 const BaseQuestionSchema = s.object({
   id: s.string(),
-  text: s.string(),
+  text: s.string().optional(),
   required: s.boolean(),
 });
 
@@ -84,6 +84,7 @@ const QuestionSchema = s.discriminatedUnion("type", [
 const SectionSchema = s.object({
   id: s.string(),
   title: s.string(),
+  description: s.string().optional(),
   questions: s.array(QuestionSchema),
   display_rules: DisplayRulesSchema,
 });

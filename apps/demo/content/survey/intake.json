@@ -4,6 +4,141 @@
   "survey_description": "Now, please tell us a little bit about yourself, and your access to technologies and the internet.",
   "sections": [
     {
+      "id": "pretest",
+      "title": "Pretest",
+      "description": "The following pretest will assess your prior knowledge of research methods in psychology. Please answer the true/false question as best as you can.",
+      "questions": [
+        {
+          "id": "Q00",
+          "text": "Basic research in psychology is conducted primarily to address some practical problem.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        },
+        {
+          "id": "Q01",
+          "text": "Psychological disorders and behavioral problems are considered part of the natural world and can be studied scientifically.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        },
+        {
+          "id": "Q02",
+          "text": "The purpose of publishing a research article is to conclusively answer questions about the world.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        },
+        {
+          "id": "Q03",
+          "text": "A Type I error occurs when researchers incorrectly conclude that there is an effect in the population when there is no real effect.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        },
+        {
+          "id": "Q04",
+          "text": "The APA Ethics Code allows for the use of deception in research as long as the deception is revealed to participants at the conclusion of the study.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        },
+        {
+          "id": "Q05",
+          "text": "Pre-screening procedures should be used to eliminate participants from a study.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        },
+        {
+          "id": "Q06",
+          "text": "The interval level of measurement has a true zero point, which allows for meaningful ratios between scores.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        },
+        {
+          "id": "Q07",
+          "text": "When creating your own measure, it is better to include multiple items to ensure reliability and content validity.",
+          "type": "single_choice",
+          "options": [
+            {
+              "text": "True",
+              "value": 1
+            },
+            {
+              "text": "False",
+              "value": 0
+            }
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
       "id": "tech_access",
       "title": "Technology Access",
       "questions": [
@@ -770,8 +905,8 @@
       "questions": [
         {
           "id": "LexTALE",
-          "text": "This is a short assessment of your English lexical knowledge \n You will be presented with 60 strings of letters. Click on the string if you think it is a real word in English.",
           "type": "lextale",
+          "text": "This is a short assessment of your English lexical knowledge \n You will be presented with 60 strings of letters. Click on the string if you think it is a real word in English.",
           "options": [
             "mensible",
             "scornful",
