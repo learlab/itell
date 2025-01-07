@@ -12,9 +12,11 @@ import { User } from "lucia";
 import { FileTextIcon } from "lucide-react";
 
 import { db } from "@/actions/db";
+import { isOuttakeReady } from "@/app/(textbook)/[slug]/_components/page-assignments";
 import { Meta } from "@/config/metadata";
 import { survey_sessions } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
+import { getPageData } from "@/lib/pages/pages.server";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { DashboardHeader, DashboardShell } from "../_components/shell";
 
@@ -44,7 +46,7 @@ async function getSurveyStatus(user: User) {
     intakeStatus = intake.finishedAt ? "completed" : "in-progress";
   }
 
-  if (user.finished) {
+  if (isOuttakeReady(getPageData(user.pageSlug))) {
     const outtake = sessions.find((session) => session.surveyId === "outtake");
     if (outtake) {
       outtakeStatus = outtake.finishedAt ? "completed" : "in-progress";

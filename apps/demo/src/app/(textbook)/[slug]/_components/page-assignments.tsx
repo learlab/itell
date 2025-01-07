@@ -43,7 +43,7 @@ type Props = {
 };
 
 // prompt for outtake survey if user reaches second to last page
-const isOuttakeReady = (userPage: PageData | null) => {
+export const isOuttakeReady = (userPage: PageData | null) => {
   const outtakeReady =
     isLastPage(userPage) ||
     isLastPage(getPageData(userPage?.next_slug ?? null));
