@@ -6,19 +6,8 @@
     {
       "id": "pretest",
       "title": "Pretest",
+      "description": "The following pretest will assess your prior knowledge of research methods in psychology. Please answer the true/false question as best as you can.",
       "questions": [
-        {
-          "id": "intro",
-          "text": "The following pretest will assess your prior knowledge of research methods in psychology. Please answer the true/false question as best as you can.",
-          "type": "single_choice",
-          "options": [
-            {
-              "text": "Let's go!",
-              "value": 0
-            }
-          ],
-          "required": false
-        },
         {
           "id": "Q00",
           "text": "Basic research in psychology is conducted primarily to address some practical problem.",
@@ -146,7 +135,7 @@
             }
           ],
           "required": true
-        }                                                
+        }
       ]
     },
     {
@@ -916,8 +905,8 @@
       "questions": [
         {
           "id": "LexTALE",
-          "text": "This is a short assessment of your English lexical knowledge \n You will be presented with 60 strings of letters. Click on the string if you think it is a real word in English.",
           "type": "lextale",
+          "text": "This is a short assessment of your English lexical knowledge \n You will be presented with 60 strings of letters. Click on the string if you think it is a real word in English.",
           "options": [
             "mensible",
             "scornful",
