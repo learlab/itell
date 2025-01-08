@@ -14,7 +14,7 @@ import { type User } from "lucia";
 
 import { isQuizAnsweredAction } from "@/actions/quiz";
 import { NavigationButton } from "@/components/navigation-button";
-import { getSurveyStatus } from "@/db/survey";
+import { getSurveyStatus, isOuttakeReady } from "@/db/survey";
 import { Condition, SUMMARY_DESCRIPTION_ID, Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
@@ -41,15 +41,6 @@ type Props = {
   condition: string;
 };
 
-// prompt for outtake survey if user reaches second to last page
-export const isOuttakeReady = (userPage: PageData | null) => {
-  const outtakeReady =
-    isLastPage(userPage) ||
-    isLastPage(getPageData(userPage?.next_slug ?? null));
-
-  return outtakeReady;
-};
-
 export async function PageAssignments({
   page,
   pageStatus,
@@ -57,8 +48,7 @@ export async function PageAssignments({
   condition,
 }: Props) {
   const { intakeDone, outtakeDone } = await getSurveyStatus(user);
-  const userPage = getPageData(user.pageSlug);
-  const outtakeReady = isOuttakeReady(userPage);
+  const outtakeReady = isOuttakeReady(user);
   const hasQuiz = page.quiz && page.quiz.length > 0;
 
   let quizReady = false;

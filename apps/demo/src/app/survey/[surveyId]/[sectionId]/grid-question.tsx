@@ -64,6 +64,7 @@ export function GridQuestion({
                     <span className="sr-only">{col.text}</span>
                     <input
                       type="radio"
+                      name={inputName(question.id, row.text)}
                       value={String(col.value)}
                       defaultChecked={
                         String(col.value) === defaultValue?.[String(row.text)]

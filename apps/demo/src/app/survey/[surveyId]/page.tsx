@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { buttonVariants } from "@itell/ui/button";
 import { SidebarInset, SidebarProvider } from "@itell/ui/sidebar";
 import { cn } from "@itell/utils";
-import { Survey } from "#content";
+import { type Survey as SurveyType } from "#content";
 
 import { NavigationButton } from "@/components/navigation-button";
 import { getSurveySessions } from "@/db/survey";
@@ -63,7 +63,10 @@ export default async function SurveyHomePage(props: {
   );
 }
 
-const getTargetSectionId = (survey: Survey, data: Record<string, unknown>) => {
+const getTargetSectionId = (
+  survey: SurveyType,
+  data: Record<string, unknown>
+) => {
   const visitedSections = Object.keys(data);
   const lastIdx = visitedSections.reduce((acc, sectionId) => {
     const idx = survey.sections.findIndex(

@@ -1,11 +1,12 @@
 import "server-only";
 
+import { cache } from "react";
 import { pages } from "#content";
 import { groupBy } from "es-toolkit";
 
 import { PageData } from ".";
 
-export const getPageData = (slug: string | null): PageData | null => {
+export const getPageData = cache((slug: string | null): PageData | null => {
   if (slug === null) {
     return null;
   }
@@ -22,7 +23,7 @@ export const getPageData = (slug: string | null): PageData | null => {
     order: page.order,
     quiz: page.quiz,
   };
-};
+});
 
 export const allPagesSorted = pages.sort((a, b) => {
   return a.order - b.order;
