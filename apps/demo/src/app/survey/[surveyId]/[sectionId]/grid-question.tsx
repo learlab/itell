@@ -18,22 +18,23 @@ export function GridQuestion({
   defaultValue,
   isAdmin,
 }: BaseQuestionProps<Extract<SurveyQuestion, { type: "grid" }>>) {
-  const finish = async () => {
-    const firstCol = question.columns[0].value;
-    question.rows.forEach((row) => {
-      const input = document.querySelector(
-        `input[name="${question.id}--${row.text}"][value="${firstCol}"]`
-      ) as HTMLInputElement;
-      if (input) {
-        input.checked = true;
-      }
-    });
-  };
-
   return (
     <div className="space-y-4">
       {isAdmin && (
-        <AdminButton type="button" onClick={finish}>
+        <AdminButton
+          type="button"
+          onClick={async () => {
+            const firstCol = question.columns[0].value;
+            question.rows.forEach((row) => {
+              const input = document.querySelector(
+                `input[name='${inputName(question.id, row.text)}'][value="${firstCol}"]`
+              ) as HTMLInputElement;
+              if (input) {
+                input.checked = true;
+              }
+            });
+          }}
+        >
           Quick Fill
         </AdminButton>
       )}
@@ -63,7 +64,6 @@ export function GridQuestion({
                     <span className="sr-only">{col.text}</span>
                     <input
                       type="radio"
-                      name={`${question.id}--${String(row.text)}`}
                       value={String(col.value)}
                       defaultChecked={
                         String(col.value) === defaultValue?.[String(row.text)]
@@ -85,4 +85,7 @@ export function GridQuestion({
       </Table>
     </div>
   );
+}
+function inputName(questionId: string, rowText: string) {
+  return `${questionId}--${rowText}`;
 }
