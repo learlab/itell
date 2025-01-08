@@ -14,11 +14,12 @@ import { cn } from "@itell/utils";
 import { CheckCircle, GalleryVerticalEnd } from "lucide-react";
 
 import { SurveySession } from "@/drizzle/schema";
+import { Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { getSurvey } from "./[sectionId]/data";
 
 export async function SurveySidebar({
-  surveyId = "intake",
+  surveyId = Survey.INTAKE,
   sectionId,
   surveySession,
   ...props
@@ -33,10 +34,13 @@ export async function SurveySidebar({
     return null;
   }
 
-  const sections = survey.sections.map((section) => ({
-    ...section,
-    finished: surveySession?.data?.[section.id] ?? false,
-  }));
+  const sections = survey.sections
+    // only display non-conditional sections
+    .filter((section) => !section.display_rules)
+    .map((section) => ({
+      ...section,
+      finished: surveySession?.data?.[section.id] ?? false,
+    }));
 
   return (
     <Sidebar {...props}>

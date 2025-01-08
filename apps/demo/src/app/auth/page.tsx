@@ -10,6 +10,7 @@ import { ChevronLeftIcon, CommandIcon } from "lucide-react";
 import { env } from "@/env.mjs";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
+import { DeleteAccount } from "./_components/delete-account";
 
 const ErrorDict: Record<string, string> = {
   oauth: "A problem occurred while logging in. Please try again later.",
@@ -103,12 +104,13 @@ export default async function Page(props: {
             </Errorbox>
           ) : null}
           {user ? (
-            <div className="space-y-2 text-center">
+            <div className="flex flex-col gap-2 text-center">
               <p className="font-light">
                 You are logged in as{" "}
                 <span className="font-semibold">{user.name}</span>
               </p>
               <LogoutButton />
+              <DeleteAccount />
             </div>
           ) : (
             <AuthForm joinClassCode={join_class_code} />

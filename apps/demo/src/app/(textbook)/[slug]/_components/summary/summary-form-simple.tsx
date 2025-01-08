@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "@itell/core/hooks";
 import { ErrorFeedback, ErrorType } from "@itell/core/summary";
@@ -13,10 +13,7 @@ import { useActionStatus } from "use-action-status";
 
 import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
-import {
-  useQuestionStore,
-  useQuizStore,
-} from "@/components/provider/page-provider";
+import { useQuestionStore } from "@/components/provider/page-provider";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
 import { SelectSummaryReady } from "@/lib/store/question-store";
@@ -28,10 +25,8 @@ type Props = {
   page: PageData;
 };
 
-// eslint-disable-next-line react/display-name
-export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
+export function SummaryFormSimple({ pageStatus, page }: Props) {
   const questionStore = useQuestionStore();
-  const quizStore = useQuizStore();
   const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
   const router = useRouter();
   const [finished, setFinished] = useState(pageStatus.unlocked);
@@ -49,22 +44,15 @@ export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
         router.push(page.next_slug);
         return;
       }
-      const [_, err] = await incrementUserPageSlugAction({
+      const [, err] = await incrementUserPageSlugAction({
         currentPageSlug: page.slug,
       });
       if (err) {
         throw new Error("increment user page slug action", { cause: err });
       }
 
-      if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-        quizStore.send({
-          type: "toggleQuiz",
-        });
-        return;
-      }
-
       if (isLastPage(page)) {
-        toast.info("You have finished the entire textbook!", {
+        return toast.info("You have finished the entire textbook!", {
           duration: 100000,
         });
       }
@@ -76,13 +64,13 @@ export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
   const isPending = useDebounce(_isPending, 100);
 
   useEffect(() => {
-    if (isError) {
+    if (error) {
       reportSentry("summary simple", {
         pageSlug: page.slug,
         error: error?.cause,
       });
     }
-  }, [isError]);
+  }, [error, page]);
 
   if (!isSummaryReady) {
     return (
@@ -133,4 +121,4 @@ export const SummaryFormSimple = memo(({ pageStatus, page }: Props) => {
       {isDelayed ? <DelayMessage /> : null}
     </div>
   );
-});
+}

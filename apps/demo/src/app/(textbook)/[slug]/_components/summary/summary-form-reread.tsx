@@ -6,7 +6,6 @@ import {
   useDebounce,
   useIsMobile,
   useKeystroke,
-  usePortal,
   useTimer,
 } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
@@ -28,10 +27,7 @@ import { useActionStatus } from "use-action-status";
 
 import { createSummaryAction } from "@/actions/summary";
 import { DelayMessage } from "@/components/delay-message";
-import {
-  useQuestionStore,
-  useQuizStore,
-} from "@/components/provider/page-provider";
+import { useQuestionStore } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
 import { Condition } from "@/lib/constants";
 import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
@@ -59,7 +55,6 @@ const driverObj = driver();
 export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const pageSlug = page.slug;
   const prevInput = useRef<string | undefined>(undefined);
-  const quizStore = useQuizStore();
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
   const [finished, setFinished] = useState(pageStatus.unlocked);
   const questionStore = useQuestionStore();
@@ -140,13 +135,6 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
 
       if (isLastPage(page)) {
         toast.info("You have finished the entire textbook!");
-        return;
-      }
-
-      if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-        quizStore.send({
-          type: "toggleQuiz",
-        });
         return;
       }
 

@@ -44,8 +44,7 @@ import {
 } from "./question-box-shell";
 import { QuestionExplainButton } from "./question-explain-button";
 import { QuestionFeedback } from "./question-feedback";
-import { borderColors, StatusStairs } from "./types";
-import type { QuestionScore } from "./types";
+import { borderColors, QuestionScore, StatusStairs } from "./types";
 
 type Props = {
   question: string;
@@ -91,12 +90,12 @@ export function QuestionBoxStairs({
   const {
     action: onSubmit,
     isPending: _isPending,
-    isError,
     error,
   } = useActionStatus(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const input = String(formData.get("input")).trim();
+
     if (input.length === 0) {
       setState((state) => ({ ...state, error: "Answer cannot be empty" }));
       return;
@@ -173,7 +172,7 @@ export function QuestionBoxStairs({
   const borderColor = borderColors[state.status];
 
   useEffect(() => {
-    if (isError) {
+    if (error) {
       setState((state) => ({
         ...state,
         status: StatusStairs.PASSED,
@@ -181,7 +180,7 @@ export function QuestionBoxStairs({
       }));
       reportSentry("evaluate constructed response", { error: error?.cause });
     }
-  }, [isError]);
+  }, [error]);
 
   if (collapsed) {
     return (
@@ -316,7 +315,9 @@ export function QuestionBoxStairs({
                 onPaste={(e) => {
                   if (isProduction) {
                     e.preventDefault();
-                    toast.warning("Copy & Paste is not allowed for question");
+                    toast.warning(
+                      "Copy & Paste is disallowed, please answer with your own words."
+                    );
                   }
                 }}
               />

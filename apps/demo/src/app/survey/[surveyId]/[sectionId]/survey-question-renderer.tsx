@@ -13,20 +13,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@itell/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@itell/ui/table";
 import { cn } from "@itell/utils";
 import { type Survey } from "#content";
 import { z } from "zod";
 
-type BaseQuestionProps<TQuestion> = {
+import { GridQuestion } from "./grid-question";
+import { LexTaleQuestion } from "./lextale-question";
+
+export type BaseQuestionProps<TQuestion> = {
   question: TQuestion;
+  isAdmin?: boolean;
   defaultValue?: any;
 };
 
@@ -39,7 +35,7 @@ const questionDataMap = {
   multiple_choice: z.array(z.string()),
   multiple_select: z.array(z.object({ label: z.string(), value: z.string() })),
   grid: z.record(z.string()),
-  toggle_group: z.array(z.string()),
+  lextale: z.record(z.boolean()),
 } as const;
 
 //  Object.values(questionDataMap) yields type error
@@ -51,27 +47,30 @@ export const SurveyQuestionDataSchema = z.union([
   questionDataMap.multiple_choice,
   questionDataMap.multiple_select,
   questionDataMap.grid,
-  questionDataMap.toggle_group,
+  questionDataMap.lextale,
 ]);
 export type SurveyQuestionData = z.infer<typeof SurveyQuestionDataSchema>;
-type SurveyQuestion = Survey["sections"][0]["questions"][0];
+export type SurveySubmission = Record<string, SurveyQuestionData>;
+export type SurveyQuestion = Survey["sections"][0]["questions"][0];
 
-const StyledLabel = ({
+export function StyledLabel({
   children,
   className,
   ...props
-}: React.LabelHTMLAttributes<HTMLLabelElement>) => (
-  <Label
-    className={cn(
-      buttonVariants({ size: "lg", variant: "ghost" }),
-      "h-fit justify-start text-wrap py-3 pl-2 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base",
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </Label>
-);
+}: React.LabelHTMLAttributes<HTMLLabelElement>) {
+  return (
+    <Label
+      className={cn(
+        buttonVariants({ size: "lg", variant: "ghost" }),
+        "h-fit justify-start text-wrap py-3 pl-2 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </Label>
+  );
+}
 
 const parseSessionData = <T extends z.ZodType>(schema: T, data: any) => {
   const result = schema.safeParse(data);
@@ -87,11 +86,11 @@ function SingleChoiceQuestion({
     <RadioGroup
       name={question.id}
       required={question.required}
-      className="flex flex-col gap-1.5"
+      className="flex flex-col gap-1.5 text-foreground"
       defaultValue={defaultValue}
     >
       {question.options.map((option) => (
-        <StyledLabel key={String(option.value)}>
+        <StyledLabel key={String(option.text)}>
           <RadioGroupItem value={String(option.text)} className="sr-only" />
           <span>{option.text}</span>
         </StyledLabel>
@@ -99,7 +98,6 @@ function SingleChoiceQuestion({
     </RadioGroup>
   );
 }
-
 function SingleSelectQuestion({
   question,
   defaultValue,
@@ -190,80 +188,6 @@ function MultiSelectQuestion({
   );
 }
 
-function GridQuestion({
-  question,
-  defaultValue,
-}: BaseQuestionProps<Extract<SurveyQuestion, { type: "grid" }>>) {
-  return (
-    <Table className="caption-top">
-      <TableHeader>
-        <TableRow>
-          <TableHead></TableHead>
-          {question.columns.map((col) => (
-            <TableHead key={String(col.value)}>
-              <span className="font-semibold">{col.text}</span>
-            </TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {question.rows.map((row) => (
-          <TableRow key={String(row.value)}>
-            <TableCell className="w-80 text-left lg:text-base xl:text-lg">
-              <legend>{row.text}</legend>
-            </TableCell>
-            {question.columns.map((col) => (
-              <TableCell key={String(col.value)}>
-                <label className="block h-full w-full cursor-pointer">
-                  <span className="sr-only">{col.text}</span>
-                  <input
-                    type="radio"
-                    name={`${question.id}--${String(row.text)}`}
-                    value={String(col.text)}
-                    defaultChecked={
-                      String(col.text) === defaultValue?.[row.text]
-                    }
-                    className="peer sr-only"
-                    required={true}
-                  />
-                  <span className="relative inline-block h-6 w-6 rounded-full border-2 border-gray-300 transition-colors duration-200 ease-in-out peer-checked:border-info peer-focus:ring-2 peer-focus:ring-info peer-focus:ring-offset-2">
-                    <span className="absolute inset-0 flex items-center justify-center">
-                      <span className="h-3 w-3 rounded-full bg-info opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100"></span>
-                    </span>
-                  </span>
-                </label>
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  );
-}
-
-function ToggleGroupQuestion({
-  question,
-  defaultValue,
-}: BaseQuestionProps<Extract<SurveyQuestion, { type: "toggle_group" }>>) {
-  return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-      {question.options.map((option) => (
-        <RadioGroup
-          name={`${question.id}--${option}`}
-          key={option}
-          className="flex flex-col gap-1.5"
-          defaultValue={defaultValue?.includes(option) ? option : undefined}
-        >
-          <StyledLabel key={option}>
-            <RadioGroupItem value={option} className="sr-only" />
-            <span>{option}</span>
-          </StyledLabel>
-        </RadioGroup>
-      ))}
-    </div>
-  );
-}
-
 const componentMap = {
   single_choice: SingleChoiceQuestion,
   single_select: SingleSelectQuestion,
@@ -272,15 +196,17 @@ const componentMap = {
   number_input: (props: any) => <InputQuestion {...props} type="number" />,
   text_input: (props: any) => <InputQuestion {...props} type="text" />,
   grid: GridQuestion,
-  toggle_group: ToggleGroupQuestion,
+  lextale: LexTaleQuestion,
 } as const;
 
 export function SurveyQuestionRenderer({
   question,
   sessionData,
+  isAdmin = false,
 }: {
   question: SurveyQuestion;
   sessionData?: SurveyQuestionData | null;
+  isAdmin?: boolean;
 }) {
   const Component = componentMap[question.type];
   const schema = questionDataMap[question.type];
@@ -291,5 +217,11 @@ export function SurveyQuestionRenderer({
     return null;
   }
 
-  return <Component question={question} defaultValue={defaultValue} />;
+  return (
+    <Component
+      question={question}
+      defaultValue={defaultValue}
+      isAdmin={isAdmin}
+    />
+  );
 }

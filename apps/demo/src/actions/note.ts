@@ -3,7 +3,7 @@
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { db } from "@/actions/db";
+import { db } from "@/db";
 import { CreateNoteSchema, notes, UpdateNoteSchema } from "@/drizzle/schema";
 import { authedProcedure } from "./utils";
 

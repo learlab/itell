@@ -1,0 +1,3 @@
+main .env.demo
+rmp .env.rmp
+.default .env.demo

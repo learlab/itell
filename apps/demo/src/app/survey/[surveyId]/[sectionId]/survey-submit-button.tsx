@@ -16,7 +16,7 @@ export function SurveySubmitButton({ isLastPage }: { isLastPage: boolean }) {
       onClick={() => {
         if (isLastPage) {
           toast.success(
-            "You have finished the survey. Redirecting you to the textbook."
+            "You have finished the survey. Redirecting to the textbook."
           );
         }
       }}

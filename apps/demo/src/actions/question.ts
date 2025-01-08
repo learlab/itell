@@ -3,7 +3,7 @@
 import { count, eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { db } from "@/actions/db";
+import { db } from "@/db";
 import {
   constructed_responses,
   constructed_responses_feedback,
@@ -12,7 +12,7 @@ import {
   users,
 } from "@/drizzle/schema";
 import { isProduction } from "@/lib/constants";
-import { updatePersonalizationCRIStreak } from "@/lib/personalization";
+import { updatePersonalizationStreak } from "@/lib/personalization";
 import { authedProcedure } from "./utils";
 
 /**
@@ -82,8 +82,10 @@ export const updateCRIStreakAction = authedProcedure
       return ctx.user.personalization.cri_streak;
     }
 
-    const newPersonalization = updatePersonalizationCRIStreak(ctx.user, {
-      isQuestionCorrect: input.isCorrect,
+    const newPersonalization = updatePersonalizationStreak(ctx.user, {
+      cri: {
+        isCorrect: input.isCorrect,
+      },
     });
 
     const updatedUser = await db

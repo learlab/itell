@@ -37,19 +37,19 @@ const ResourceLoader = dynamic(() =>
 );
 
 export default async function Page(props: {
-  params: Promise<{ slug: string }>;
+  params: Promise<unknown>;
+  searchParams: Promise<unknown>;
 }) {
   const params = await props.params;
   const { slug } = routes.textbook.$parseParams(params);
-  const { user } = await getSession();
   const page = getPage(slug);
-
   if (!page) {
     return notFound();
   }
 
   const pageSlug = page.slug;
 
+  const { user } = await getSession();
   const userId = user?.id ?? null;
   const userFinished = user?.finished ?? false;
   const userPageSlug = user?.pageSlug ?? null;
@@ -97,13 +97,15 @@ export default async function Page(props: {
               </p>
             ) : null}
 
-            {user && page.summary ? (
-              <PageAssignments
-                page={page}
-                pageStatus={pageStatus}
-                user={user}
-                condition={userCondition}
-              />
+            {user ? (
+              <Suspense fallback={<PageAssignments.Skeleton />}>
+                <PageAssignments
+                  page={page}
+                  pageStatus={pageStatus}
+                  user={user}
+                  condition={userCondition}
+                />
+              </Suspense>
             ) : null}
             <Pager
               pageIndex={page.order}

@@ -4,7 +4,7 @@ import { and, eq } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 
-import { db, first } from "@/actions/db";
+import { db, first } from "@/db";
 import { CreateFocusTimeSchema, events, focus_times } from "@/drizzle/schema";
 import {
   EventType,

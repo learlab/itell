@@ -2,16 +2,22 @@ import Form from "next/form";
 import { notFound, redirect } from "next/navigation";
 import { Errorbox } from "@itell/ui/callout";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
+import { Prose } from "@itell/ui/prose";
+import { Survey } from "#content";
 
-import { getSurveySectionAction, upsertSurveyAction } from "@/actions/survey";
+import { upsertSurveyAction } from "@/actions/survey";
+import { getSurveySessions } from "@/db/survey";
+import { SurveySession } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/auth/role";
 import { routes } from "@/lib/navigation";
+import { firstPage } from "@/lib/pages/pages.server";
 import ScrollToTop from "../scroll-to-top";
-import { getNextSection, getSurvey, getSurveySection } from "./data";
+import { getNextSectionId, getSurvey, getSurveySection } from "./data";
 import { SurveyHeader } from "./survey-header";
 import {
-  SurveyQuestionData,
   SurveyQuestionRenderer,
+  SurveySubmission,
 } from "./survey-question-renderer";
 import { SurveySubmitButton } from "./survey-submit-button";
 
@@ -34,15 +40,24 @@ export default async function SurveyQuestionPage(props: {
   if (!section || !survey) {
     return notFound();
   }
+  const session = await getSurveySessions(user, params.surveyId);
+  const sectionData = session?.data?.[section.id];
 
-  const [session, err] = await getSurveySectionAction({
-    surveyId: params.surveyId,
+  const unfinishedSections = getUnfinishedSections({
+    survey,
+    session,
     sectionId: section.id,
   });
 
-  const sectionIdx = survey.sections.findIndex(
-    (section) => section.id === params.sectionId
+  const requiredUnifinishedSections = unfinishedSections.filter(
+    (s) => !s.display_rules
   );
+
+  // will user finish survey after submitting this page
+  const isLastPage =
+    requiredUnifinishedSections.length === 0 ||
+    (requiredUnifinishedSections.length === 1 &&
+      requiredUnifinishedSections[0].id === params.sectionId);
 
   return (
     <div className="flex min-h-[100vh] flex-col">
@@ -51,56 +66,65 @@ export default async function SurveyQuestionPage(props: {
         surveyId={params.surveyId}
         surveyTitle={survey.survey_name}
         sectionTitle={section.title}
-        finished={!!session?.sectionData}
+        finished={!!sectionData}
       />
-      <div className="w-full flex-1 bg-muted p-6">
-        {err && (
-          <Errorbox>
-            Failed to get your submission history, you need to re-fill this
-            page.
-          </Errorbox>
+      <div className="w-full flex-1 space-y-4 bg-muted p-6">
+        {section.display_rules && (
+          <p>
+            Please answer the follow-up questions based on your previous
+            answers.
+          </p>
         )}
+        <Prose>{section.description}</Prose>
         <Form
           className="flex flex-col gap-8"
           action={async (formData: FormData) => {
             "use server";
-            const sectionData = await formDataToSectionJson(section, formData);
+            const submission = await formDataToSubmission(section, formData);
+            const nextSectionId = getNextSectionId({
+              sections: unfinishedSections,
+              submission,
+            });
+            // finished when there is no applicable section left
+            const isFinished = nextSectionId === null;
             await upsertSurveyAction({
               surveyId: params.surveyId,
               sectionId: section.id,
-              isFinished: sectionIdx === survey.sections.length - 1,
-              data: sectionData,
+              isFinished,
+              data: submission,
             });
 
-            const nextSection = getNextSection(params);
-            if (nextSection) {
+            if (isFinished) {
+              return redirect(
+                routes.textbook({ slug: user.pageSlug || firstPage.slug })
+              );
+            } else {
               redirect(
                 routes.surveySection({
                   surveyId: params.surveyId,
-                  sectionId: nextSection.id,
+                  sectionId: nextSectionId,
                 })
               );
-            }
-
-            if (sectionIdx === survey.sections.length - 1) {
-              redirect(routes.home());
             }
           }}
         >
           {section.questions.map((question) => (
             <Card key={question.id}>
-              <CardHeader>
-                <CardTitle>
-                  <legend className="text-lg font-medium tracking-tight xl:text-xl">
-                    {question.text}
-                  </legend>
-                </CardTitle>
-              </CardHeader>
+              {question.text && (
+                <CardHeader>
+                  <CardTitle>
+                    <legend className="text-lg font-medium tracking-tight xl:text-xl">
+                      {question.text}
+                    </legend>
+                  </CardTitle>
+                </CardHeader>
+              )}
               <CardContent>
                 <SurveyQuestionRenderer
                   key={question.id}
                   question={question}
-                  sessionData={session?.sectionData?.[question.id]}
+                  sessionData={sectionData?.[question.id]}
+                  isAdmin={isAdmin(user.role)}
                 />
               </CardContent>
             </Card>
@@ -108,9 +132,7 @@ export default async function SurveyQuestionPage(props: {
 
           <footer className="flex items-center justify-between">
             <div className="ml-auto">
-              <SurveySubmitButton
-                isLastPage={sectionIdx === survey.sections.length - 1}
-              />
+              <SurveySubmitButton isLastPage={isLastPage} />
             </div>
           </footer>
         </Form>
@@ -119,14 +141,32 @@ export default async function SurveyQuestionPage(props: {
   );
 }
 
-async function formDataToSectionJson(
+// the diff set of all sections and sections with a record
+function getUnfinishedSections({
+  survey,
+  session,
+  sectionId,
+}: {
+  survey: Survey;
+  session: SurveySession | null;
+  sectionId: string;
+}) {
+  const finishedSections = new Set(
+    [sectionId].concat(session?.data ? Object.keys(session.data) : [])
+  );
+  // NOTE: this may contain conditional sections that is not applicable
+  // and will be checked in getNextSectionId
+  return survey.sections.filter((x) => !finishedSections.has(x.id));
+}
+
+async function formDataToSubmission(
   section: ReturnType<typeof getSurveySection>,
   formData: FormData
 ) {
   if (!section) {
     return {};
   }
-  const output: Record<string, SurveyQuestionData> = {};
+  const submission: SurveySubmission = {};
   const entries = Array.from(formData.entries());
   section.questions.forEach((question) => {
     switch (question.type) {
@@ -134,41 +174,57 @@ async function formDataToSectionJson(
       case "number_input":
       case "text_input":
       case "single_choice":
-        output[question.id] = String(formData.get(question.id));
+        submission[question.id] = String(formData.get(question.id));
         break;
       case "multiple_select":
-        output[question.id] = JSON.parse(
+        submission[question.id] = JSON.parse(
           String(formData.get(question.id))
         ) as Array<{ value: string; label: string }>;
         break;
-      case "toggle_group":
+      case "lextale":
+        {
+          const result: Record<string, boolean> = {};
+          entries.forEach(([key, value]) => {
+            if (!key.startsWith(`${question.id}--`)) {
+              return;
+            }
+            const word = key.split("--")[1] as string;
+            const val = value === "yes" ? true : false;
+            result[word] = val;
+          });
+          submission[question.id] = result;
+        }
+        break;
       case "multiple_choice":
-        entries.forEach(([key, value]) => {
-          if (!key.startsWith(`${question.id}--`)) {
-            return;
-          }
-          if (!output[question.id]) {
-            output[question.id] = [] as string[];
-          }
-          (output[question.id] as Array<string>).push(String(value));
-        });
+        {
+          const result = [] as string[];
+          entries.forEach(([key, value]) => {
+            if (!key.startsWith(`${question.id}--`)) {
+              return;
+            }
+            result.push(String(value));
+          });
+
+          submission[question.id] = result;
+        }
         break;
       case "grid":
-        entries.forEach(([key, value]) => {
-          if (!key.startsWith(`${question.id}--`)) {
-            return;
-          }
-          if (!output[question.id]) {
-            output[question.id] = {} as Record<string, string>;
-          }
+        {
+          const result = {} as Record<string, string>;
+          entries.forEach(([key, value]) => {
+            if (!key.startsWith(`${question.id}--`)) {
+              return;
+            }
 
-          const group = key.split("--")[1] as string;
-          (output[question.id] as Record<string, string>)[group] =
-            String(value);
-        });
+            const group = key.split("--")[1] as string;
+            result[group] = String(value);
+          });
+
+          submission[question.id] = result;
+        }
         break;
     }
   });
 
-  return output;
+  return submission;
 }

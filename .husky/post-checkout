@@ -10,6 +10,7 @@ fi
 
 # Define the target directory
 DEMO_DIR="apps/demo"
+CONFIG_FILE=".branch-env-lookup"
 
 # Check if the demo directory exists
 if [ ! -d "$DEMO_DIR" ]; then
@@ -27,17 +28,12 @@ current_branch=$(git symbolic-ref --short HEAD)
 copy_env_file() {
   local source="$1"
   local dest="$2"
-  local fallback_source="$3"
 
   # Check if source file exists
   if [ ! -f "$source" ]; then
-    # If fallback source is provided and exists, use it instead
-    if [ -n "$fallback_source" ] && [ -f "$fallback_source" ]; then
-      source="$fallback_source"
-    else
-      # Silently exit if no valid source file is available
-      return 0
-    fi
+    echo "Warning: Source file $source not found!"
+    echo "Error: No valid env file found. Please check your .branch-env-lookup configuration."
+    return 1
   fi
 
   # Create backup of current .env
@@ -47,24 +43,58 @@ copy_env_file() {
 
   # Copy the contents
   cp "$source" "$dest"
-
   echo "Updated $dest with $source"
 }
 
-# Handle different branches
-case "$current_branch" in
-"main")
-  copy_env_file ".env.demo" ".env"
-  ;;
-"rmp")
-  # For rmp branch, try .env.rmp first, fallback to .env.demo if it doesn't exist
-  copy_env_file ".env.rmp" ".env" ".env.demo"
-  ;;
-*)
-  # For all other branches, use .env.demo
-  copy_env_file ".env.demo" ".env"
-  ;;
-esac
+# Function to get env file from config
+get_env_file() {
+  local branch="$1"
+  local config_file="$2"
+  local default_env=""
+  local branch_env=""
+
+  # Check if config file exists
+  if [ ! -f "$config_file" ]; then
+    echo "Warning: Config file $config_file not found!"
+    return 1
+  fi
+
+  # Read the config file and find matching branch or default
+  while IFS=' ' read -r pattern env_file || [ -n "$pattern" ]; do
+    # Skip empty lines and comments
+    [[ -z "$pattern" || "$pattern" =~ ^# ]] && continue
+
+    # Store default if found
+    if [ "$pattern" = ".default" ]; then
+      default_env="$env_file"
+      continue
+    fi
+
+    # Check for exact branch match
+    if [ "$pattern" = "$branch" ]; then
+      branch_env="$env_file"
+      break
+    fi
+  done <"$config_file"
+
+  # Return branch-specific env file if found, otherwise default
+  if [ -n "$branch_env" ]; then
+    echo "$branch_env"
+  elif [ -n "$default_env" ]; then
+    echo "$default_env"
+  else
+    return 1
+  fi
+}
+
+# Get the appropriate env file from config
+target_env=$(get_env_file "$current_branch" "$CONFIG_FILE")
+
+if [ $? -eq 0 ] && [ -n "$target_env" ]; then
+  copy_env_file "$target_env" ".env"
+else
+  echo "Warning: No matching env file found for branch $current_branch"
+fi
 
 # Return to the original directory
-cd - >/dev/null
+cd - >/dev/null || exit

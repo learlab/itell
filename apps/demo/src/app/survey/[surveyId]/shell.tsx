@@ -7,12 +7,15 @@ import { ContinueReading } from "@/components/continue-reading";
 import { SidebarTrigger } from "@/components/sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserAccountNav } from "@/components/user-account-nav";
+import { Survey } from "@/lib/constants";
 
 export function SurveyHomeShell({
   children,
+  surveyId,
   user,
 }: {
   children: React.ReactNode;
+  surveyId: string;
   user?: User;
 }) {
   return (
@@ -25,16 +28,15 @@ export function SurveyHomeShell({
         <div className="ml-auto flex items-center gap-2">
           {user ? (
             <>
-              <ContinueReading
-                user={user}
-                text="Back to textbook"
-                variant="ghost"
-              >
-                <span className="inline-flex items-center gap-2">
-                  <ChevronLeft />
+              {surveyId !== Survey.INTAKE && (
+                <ContinueReading
+                  user={user}
+                  text="Back to textbook"
+                  variant="ghost"
+                >
                   <span>Back to Textbook</span>
-                </span>
-              </ContinueReading>
+                </ContinueReading>
+              )}
               <UserAccountNav user={user} />
             </>
           ) : (

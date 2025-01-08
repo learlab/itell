@@ -34,7 +34,6 @@ import { DelayMessage } from "@/components/delay-message";
 import {
   useChatStore,
   useQuestionStore,
-  useQuizStore,
   useSummaryStore,
 } from "@/components/provider/page-provider";
 import { Callout } from "@/components/ui/callout";
@@ -51,7 +50,6 @@ import {
 } from "@/lib/store/question-store";
 import {
   SelectError,
-  SelectInput,
   SelectIsNextPageVisible,
   SelectPrevInput,
   SelectResponse,
@@ -80,12 +78,7 @@ type ApiRequest = Parameters<
   typeof apiClient.api.summary.stairs.$post
 >[0]["json"];
 
-export function SummaryFormStairs({
-  user,
-  page,
-  pageStatus,
-  afterSubmit,
-}: Props) {
+export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const pageSlug = page.slug;
   const isLast = isLastPage(page);
   const router = useRouter();
@@ -93,7 +86,7 @@ export function SummaryFormStairs({
 
   // for debugging
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
-  const requestBodyRef = useRef<any | null>(null);
+  const requestBodyRef = useRef<ApiRequest | null>(null);
   const summaryResponseRef = useRef<SummaryResponse | null>(null);
   const stairsDataRef = useRef<StairsQuestion | null>(null);
   const stairsAnsweredRef = useRef(false);
@@ -103,7 +96,6 @@ export function SummaryFormStairs({
   const chatStore = useChatStore();
   const questionStore = useQuestionStore();
   const summaryStore = useSummaryStore();
-  const quizStore = useQuizStore();
 
   // states
   const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
@@ -269,15 +261,6 @@ export function SummaryFormStairs({
           rocketBlast(blastYPos);
         }
 
-        if (data.canProceed) {
-          if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-            quizStore.send({
-              type: "toggleQuiz",
-            });
-            return;
-          }
-        }
-
         summaryStore.send({
           type: "finishPage",
           isNextPageVisible: data.canProceed ? !isLast : undefined,
@@ -323,7 +306,7 @@ export function SummaryFormStairs({
         });
       }
     }
-  }, [isNextPageVisible]);
+  }, [isLast, isNextPageVisible, page.next_slug, response?.is_passed, router]);
 
   const { portals } = useDriver(driverObj, {
     pageSlug,
@@ -345,7 +328,7 @@ export function SummaryFormStairs({
         error: error.cause,
       });
     }
-  }, [error]);
+  }, [error, clearStages, summaryStore]);
 
   return (
     <>

@@ -6,7 +6,9 @@ import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 import { createServerAction } from "zsa";
 
-import { db, findTeacher, findUser, first } from "@/actions/db";
+import { db, first } from "@/db";
+import { findTeacher } from "@/db/teacher";
+import { findUser } from "@/db/user";
 import {
   chat_messages,
   constructed_responses,
@@ -15,7 +17,9 @@ import {
   events,
   focus_times,
   oauthAccounts,
+  quiz_answers,
   summaries,
+  survey_sessions,
   teachers,
   TeacherSchema,
   UpdateUserSchema,
@@ -133,10 +137,18 @@ export const resetUserAction = authedProcedure
       await tx
         .delete(constructed_responses_feedback)
         .where(eq(constructed_responses_feedback.userId, userId));
+      await tx
+        .delete(survey_sessions)
+        .where(eq(survey_sessions.userId, userId));
+      await tx.delete(quiz_answers).where(eq(quiz_answers.userId, userId));
 
       return { pageSlug: firstPage.slug };
     });
   });
+
+export const deleteUserAction = authedProcedure.handler(async ({ ctx }) => {
+  return await db.delete(users).where(eq(users.id, ctx.user.id));
+});
 
 /**
  * Get user by id

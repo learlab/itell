@@ -7,7 +7,8 @@ import { type User } from "lucia";
 import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 
-import { db, findUser, first } from "@/actions/db";
+import { db, first } from "@/db";
+import { findUser } from "@/db/user";
 import {
   constructed_responses,
   events,

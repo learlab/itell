@@ -3,54 +3,39 @@ import { volume } from "#content";
 
 import "./styles.css";
 
+import { User } from "lucia";
+
 import { updateUserAction } from "@/actions/user";
-import { ContinueReading } from "@/components/continue-reading";
+import { getSurveySessions, isSurveySessionFinished } from "@/db/survey";
 import { getSession } from "@/lib/auth";
+import { Survey } from "@/lib/constants";
+import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
-import { ConsentForm } from "./form";
+import { ConsentSubmit } from "./consent-submit";
 
 export default async function ConsentPage() {
   const { user } = await getSession();
   if (!user) {
     return redirectWithSearchParams("/auth", { redirect_to: "/consent" });
   }
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-muted p-6">
-      <div className="text-muted-foreground lg:text-lg">
-        {user.consentGiven !== null ? (
-          <div className="flex flex-col gap-2">
-            <p>
-              You have completed the consent form, you can review it or go back
-              to the textbook.
-            </p>
-            <ContinueReading user={user} />
-          </div>
-        ) : (
-          <p>
-            Please complete the following consent form before you start on the
-            textbook.{" "}
-          </p>
-        )}
-      </div>
-      <ConsentText
-        value={
-          user.consentGiven === null
-            ? undefined
-            : user.consentGiven
-              ? "yes"
-              : "no"
-        }
-      />
-    </div>
+    <ConsentForm
+      user={user}
+      value={
+        user.consentGiven === null
+          ? undefined
+          : user.consentGiven
+            ? "yes"
+            : "no"
+      }
+    />
   );
 }
 
-function ConsentText({ value }: { value?: "yes" | "no" }) {
+function ConsentForm({ value, user }: { value?: "yes" | "no"; user: User }) {
   return (
-    <div
-      id="consent-form"
-      className="flex min-h-screen flex-col items-center justify-center bg-muted/70 p-6 text-foreground xl:text-lg"
-    >
+    <div id="consent-form">
       <div className="flex max-w-3xl flex-col gap-6 rounded-lg border-4 px-6 py-4 shadow-md">
         <div className="space-y-2">
           <h1 className="text-center text-3xl font-bold">
@@ -167,11 +152,23 @@ function ConsentText({ value }: { value?: "yes" | "no" }) {
         </FormSection>
 
         <FormSection id="agreement" title="Agreement">
-          <ConsentForm
+          <ConsentSubmit
             action={async (val) => {
               "use server";
               await updateUserAction({ consentGiven: val });
-              redirect("/");
+
+              if (!val) {
+                return redirect(routes.home());
+              }
+
+              const session = await getSurveySessions(user, Survey.INTAKE);
+              const intakeDone = isSurveySessionFinished(session);
+
+              if (intakeDone) {
+                redirect(routes.home());
+              } else {
+                redirect(routes.surveyHome({ surveyId: Survey.INTAKE }));
+              }
             }}
             value={value}
           />

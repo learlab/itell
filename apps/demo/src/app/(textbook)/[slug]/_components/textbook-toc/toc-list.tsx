@@ -12,9 +12,10 @@ import {
 } from "@itell/ui/accordion";
 import { cn } from "@itell/utils";
 import { type Page } from "#content";
+import { CheckCircle, CheckIcon, LockIcon } from "lucide-react";
 
 import { isProduction } from "@/lib/constants";
-import { PageStatus } from "@/lib/page-status";
+import { getPageStatus, PageStatus } from "@/lib/page-status";
 import { TocPageItem } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 import { type TocPagesWithStatus } from ".";
@@ -108,7 +109,7 @@ export function TocItem({
 }: TocItemProps) {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
-  const { visible, label, icon } = getPageState({
+  const { visible, label } = getPageState({
     status: item.status,
     title: item.title,
   });
@@ -135,7 +136,7 @@ export function TocItem({
           });
         }}
         className={cn(
-          "inline-flex w-full items-start justify-between text-balance p-2 text-left text-base lg:text-lg xl:gap-4 2xl:text-xl",
+          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base lg:text-lg xl:gap-4 2xl:text-xl",
           {
             "animate-pulse": pending,
             "text-base 2xl:text-lg": inGroup,
@@ -146,7 +147,13 @@ export function TocItem({
         aria-disabled={disabled}
       >
         <span className="flex-1">{item.title}</span>
-        <span className="hidden lg:inline">{icon}</span>
+        <span className="hidden shrink-0 lg:inline">
+          {item.status.unlocked ? (
+            <CheckCircle className="size-5 stroke-green-500" />
+          ) : item.status.latest ? null : (
+            <LockIcon className="size-5 stroke-muted-foreground" />
+          )}
+        </span>
       </Link>
     </li>
   );
@@ -163,6 +170,5 @@ const getPageState = ({
   const label = `${title} - ${
     status.unlocked ? "Unlocked" : visible ? "Visible" : "Locked"
   }`;
-  const icon = status.unlocked ? "✅" : status.latest ? "" : "🔒";
-  return { label, icon, visible };
+  return { label, visible };
 };

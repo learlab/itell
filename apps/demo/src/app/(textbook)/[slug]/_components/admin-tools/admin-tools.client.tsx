@@ -40,11 +40,12 @@ import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
 import { resetUserAction, updateUserAction } from "@/actions/user";
+import { AdminButton } from "@/components/admin-button";
 import { InternalError } from "@/components/internal-error";
 import { useQuestionStore } from "@/components/provider/page-provider";
 import { getUserCondition } from "@/lib/auth/conditions";
 import { Condition } from "@/lib/constants";
-import { updatePersonalizationSummaryStreak } from "@/lib/personalization";
+import { updatePersonalizationStreak } from "@/lib/personalization";
 import { makePageHref } from "@/lib/utils";
 
 type Props = {
@@ -88,14 +89,17 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
         ? String(formData.get("page-progress"))
         : undefined;
 
-    console.log("summary streak is", formData.get("summary-streak"));
     let newSummaryStreak =
       formData.get("summary-streak") !== ""
         ? Number(formData.get("summary-streak"))
         : 0;
-
+    let newCRIStreak =
+      formData.get("cri-streak") !== ""
+        ? Number(formData.get("cri-streak"))
+        : 0;
     // subtract one since we'll be treating things as if a new passing summary has been submitted
     newSummaryStreak = (newSummaryStreak ?? 0) - 1;
+    newCRIStreak = (newCRIStreak ?? 0) - 1;
 
     if (formData.get("page-unblur") === "on") {
       startTransition(() => {
@@ -109,21 +113,23 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
       [pageSlug]: newCondition,
     };
 
-    if (user.personalization) {
-      user.personalization.summary_streak = newSummaryStreak;
-    } else {
-      user.personalization = {
-        summary_streak: newSummaryStreak,
-      } as User["personalization"];
-    }
+    user.personalization = {
+      ...(user.personalization ?? {}),
+      summary_streak: newSummaryStreak,
+      cri_streak: newCRIStreak,
+    };
 
-    const newPersonalization = updatePersonalizationSummaryStreak(user, {
-      isSummaryPassed: true,
-      isExcellent: false,
+    const newPersonalization = updatePersonalizationStreak(user, {
+      summary: {
+        isPassed: true,
+        isExcellent: false,
+      },
+      cri: {
+        isCorrect: true,
+      },
     });
-    console.log("new personalization is", newPersonalization);
 
-    const [_, err] = await execute({
+    const [, err] = await execute({
       conditionAssignments: newConditionAssignments,
       pageSlug: newPageSlug,
       // always set finished to false, some changes are not shown for a finished user
@@ -143,15 +149,16 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button
+        <AdminButton
           variant="ghost"
           className="flex w-full justify-start p-2 xl:text-lg"
+          badgePosition="right"
         >
           <span className="inline-flex items-center gap-2 xl:gap-4">
             <SettingsIcon className="size-4 xl:size-6" />
-            <span>Admin tools</span>
+            <span>Settings</span>
           </span>
-        </Button>
+        </AdminButton>
       </SheetTrigger>
       <SheetContent className="overflow-y-scroll">
         <SheetHeader>
@@ -236,7 +243,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
           <fieldset className="flex flex-col gap-4 border p-4">
             <legend className="font-semibold">Streak</legend>
             <Label className="flex flex-col gap-2 font-normal">
-              <p className="font-semibold">Set your summary streak</p>
+              <span className="font-semibold">Summary Streak</span>
               <Select
                 name="summary-streak"
                 defaultValue={String(user.personalization.summary_streak ?? 0)}
@@ -247,7 +254,28 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Streak count</SelectLabel>
-                    {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+                    {streakLevels.map((value) => (
+                      <SelectItem key={value} value={value.toString()}>
+                        {value}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </Label>
+            <Label className="flex flex-col gap-2 font-normal">
+              <span className="font-semibold">CRI Streak</span>
+              <Select
+                name="cri-streak"
+                defaultValue={String(user.personalization.cri_streak ?? 0)}
+              >
+                <SelectTrigger className="h-fit text-left">
+                  <SelectValue placeholder="Select CRI streak" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Streak count</SelectLabel>
+                    {streakLevels.map((value) => (
                       <SelectItem key={value} value={value.toString()}>
                         {value}
                       </SelectItem>
@@ -270,6 +298,8 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
     </Sheet>
   );
 }
+
+const streakLevels = Array.from({ length: 10 }, (_, i) => i);
 
 function RestartTextbook() {
   const { isPending, isError, execute } = useServerAction(resetUserAction);

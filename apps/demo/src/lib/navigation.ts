@@ -5,6 +5,7 @@ import { z } from "zod";
 export const { routes, useSafeParams, useSafeSearchParams } =
   createNavigationConfig((defineRoute) => ({
     home: defineRoute("/"),
+    consent: defineRoute("/consent"),
     auth: defineRoute("/auth", {
       search: z
         .object({
@@ -25,8 +26,9 @@ export const { routes, useSafeParams, useSafeSearchParams } =
       search: z
         .object({
           summary: z.string().optional(),
+          quiz: z.boolean().optional(),
         })
-        .default({ summary: undefined }),
+        .default({ summary: undefined, quiz: undefined }),
     }),
     dashboard: defineRoute("/dashboard", {
       search: z

@@ -15,7 +15,6 @@ import {
 import { type User } from "lucia";
 import {
   ChevronDownIcon,
-  ChevronUpIcon,
   CompassIcon,
   FileBoxIcon,
   LineChartIcon,
@@ -35,14 +34,9 @@ const items = [
     icon: <LineChartIcon className="size-4" />,
   },
   {
-    text: "Summaries",
-    href: "/dashboard/summaries",
+    text: "Forms",
+    href: "/dashboard/forms",
     icon: <FileBoxIcon className="size-4" />,
-  },
-  {
-    text: "Settings",
-    href: "/dashboard/settings",
-    icon: <SettingsIcon className="size-4" />,
   },
   {
     text: "Guide",

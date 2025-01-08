@@ -19,14 +19,14 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@hono/zod-validator": "^0.2.2"
+    "@hono/zod-validator": "^0.2.2",
+    "hono": "^4.6.16"
   },
   "devDependencies": {
-    "@itell/tsconfig": "workspace:^",
-    "@itell/prettier-config": "workspace:^"
+    "@itell/prettier-config": "workspace:^",
+    "@itell/tsconfig": "workspace:^"
   },
   "peerDependencies": {
-    "hono": "^4.6.8",
     "zod": "^3.22.2"
   }
 }

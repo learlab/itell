@@ -51,8 +51,8 @@ cri:
 - question: What should researchers do after receiving institutional approval for their study?
   answer: Stick to the protocol submitted or seek additional approval for any major changes.
   slug: Follow-Through-1632t
-next_slug: page-23
-order: 16
+next_slug: psychological-measurement
+order: 17
 parent:
   title: III. Research Ethics
   slug: iii-research-ethics

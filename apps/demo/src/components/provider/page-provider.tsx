@@ -8,7 +8,6 @@ import { type Page } from "#content";
 import { type PageStatus } from "@/lib/page-status";
 import { createChatStore } from "@/lib/store/chat-store";
 import { createQuestionStore } from "@/lib/store/question-store";
-import { createQuizStore } from "@/lib/store/quiz-store";
 import { createSummaryStore } from "@/lib/store/summary-store";
 import type { ChatStore } from "@/lib/store/chat-store";
 import type {
@@ -16,7 +15,6 @@ import type {
   QuestionSnapshot,
   QuestionStore,
 } from "@/lib/store/question-store";
-import type { QuizStore } from "@/lib/store/quiz-store";
 import type { SummaryStore } from "@/lib/store/summary-store";
 
 type Props = {
@@ -32,7 +30,6 @@ type State = {
   questionStore: QuestionStore;
   chatStore: ChatStore;
   summaryStore: SummaryStore;
-  quizStore: QuizStore;
 };
 const PageContext = createContext<State>({} as State);
 
@@ -41,10 +38,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
   const [snapshot, setSnapshot] = useLocalStorage<QuestionSnapshot | undefined>(
     `question-store-${page.slug}`,
     undefined
-  );
-  const [quizFinished, setQuizFinished] = useLocalStorage<boolean | undefined>(
-    `quiz-finished-${page.slug}`,
-    page.quiz ? false : undefined
   );
 
   const [showFloatingSummary, setShowFloatingSummary] = useLocalStorage(
@@ -81,14 +74,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     });
   }
 
-  const quizStoreRef = useRef<QuizStore>(undefined);
-  if (!quizStoreRef.current) {
-    quizStoreRef.current = createQuizStore({
-      finished: quizFinished,
-      pageStatus,
-    });
-  }
-
   useEffect(() => {
     let questionSubscription: Subscription | undefined;
     let quizSubscription: Subscription | undefined;
@@ -96,12 +81,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     if (questionStoreRef.current) {
       questionSubscription = questionStoreRef.current.subscribe((state) => {
         setSnapshot(state.context);
-      });
-    }
-
-    if (quizStoreRef.current) {
-      quizSubscription = quizStoreRef.current.on("finishQuiz", () => {
-        setQuizFinished(true);
       });
     }
 
@@ -119,7 +98,7 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
       quizSubscription?.unsubscribe();
       summarySubscription?.unsubscribe();
     };
-  }, [setQuizFinished, setShowFloatingSummary, setSnapshot]);
+  }, [setShowFloatingSummary, setSnapshot]);
 
   return (
     <PageContext.Provider
@@ -127,7 +106,6 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
         questionStore: questionStoreRef.current,
         chatStore: chatStoreRef.current,
         summaryStore: summaryStoreRef.current,
-        quizStore: quizStoreRef.current,
         chunks: slugs,
         condition,
       }}
@@ -160,11 +138,6 @@ export const useChatStore = () => {
 export const useQuestionStore = () => {
   const value = useContext(PageContext);
   return value.questionStore;
-};
-
-export const useQuizStore = () => {
-  const value = useContext(PageContext);
-  return value.quizStore;
 };
 
 const getPageQuestions = (page: Page): ChunkQuestion => {
