@@ -10,14 +10,12 @@ import {
 } from "@itell/ui/card";
 import { Skeleton } from "@itell/ui/skeleton";
 import { Page } from "#content";
-import { and, eq, inArray } from "drizzle-orm";
 import { type User } from "lucia";
 
-import { db } from "@/actions/db";
 import { isQuizAnsweredAction } from "@/actions/quiz";
 import { NavigationButton } from "@/components/navigation-button";
-import { survey_sessions } from "@/drizzle/schema";
-import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
+import { getSurveyStatus } from "@/db/survey";
+import { Condition, SUMMARY_DESCRIPTION_ID, Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
@@ -50,34 +48,6 @@ export const isOuttakeReady = (userPage: PageData | null) => {
     isLastPage(getPageData(userPage?.next_slug ?? null));
 
   return outtakeReady;
-};
-
-const isQuizPromptReady = (userPage: PageData | null) => {
-  return isLastPage(userPage);
-};
-
-const getSurveyStatus = async (user: User) => {
-  const sessions = await db
-    .select()
-    .from(survey_sessions)
-    .where(
-      and(
-        eq(survey_sessions.userId, user.id),
-        inArray(survey_sessions.surveyId, ["intake", "outtake"])
-      )
-    );
-
-  const intakeSession = sessions.find(
-    (session) => session.surveyId === "intake"
-  );
-  const outtakeSession = sessions.find(
-    (session) => session.surveyId === "outtake"
-  );
-
-  return {
-    intakeDone: intakeSession && intakeSession.finishedAt !== null,
-    outtakeDone: outtakeSession && outtakeSession.finishedAt !== null,
-  };
 };
 
 export async function PageAssignments({
@@ -124,7 +94,9 @@ export async function PageAssignments({
           title="Take Intake Survey"
           description="Before starting the textbook, help us customize your learning experience by completing the intake survey."
         >
-          <NavigationButton href={routes.surveyHome({ surveyId: "intake" })}>
+          <NavigationButton
+            href={routes.surveyHome({ surveyId: Survey.INTAKE })}
+          >
             Intake Survey
           </NavigationButton>
         </PreAssignmentPrompt>
@@ -143,7 +115,9 @@ export async function PageAssignments({
             survey.
           "
         >
-          <NavigationButton href={routes.surveyHome({ surveyId: "outtake" })}>
+          <NavigationButton
+            href={routes.surveyHome({ surveyId: Survey.OUTTAKE })}
+          >
             Outtake Survey
           </NavigationButton>
         </PreAssignmentPrompt>

@@ -11,11 +11,13 @@ import { and, eq, inArray } from "drizzle-orm";
 import { User } from "lucia";
 import { FileTextIcon } from "lucide-react";
 
-import { db } from "@/actions/db";
 import { isOuttakeReady } from "@/app/(textbook)/[slug]/_components/page-assignments";
 import { Meta } from "@/config/metadata";
+import { db } from "@/db";
+import { getSurveySessions } from "@/db/survey";
 import { survey_sessions } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
+import { Survey } from "@/lib/constants";
 import { getPageData } from "@/lib/pages/pages.server";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { DashboardHeader, DashboardShell } from "../_components/shell";
@@ -28,26 +30,22 @@ type FormEntry = {
 };
 
 async function getSurveyStatus(user: User) {
-  const sessions = await db
-    .select()
-    .from(survey_sessions)
-    .where(
-      and(
-        eq(survey_sessions.userId, user.id),
-        inArray(survey_sessions.surveyId, ["intake", "outtake"])
-      )
-    );
-
+  const sessions = await getSurveySessions(user, [
+    Survey.INTAKE,
+    Survey.OUTTAKE,
+  ]);
   let intakeStatus: FormEntry["status"] = "pending";
   let outtakeStatus: FormEntry["status"] = "not-applicable";
 
-  const intake = sessions.find((session) => session.surveyId === "intake");
+  const intake = sessions.find((session) => session.surveyId === Survey.INTAKE);
   if (intake) {
     intakeStatus = intake.finishedAt ? "completed" : "in-progress";
   }
 
   if (isOuttakeReady(getPageData(user.pageSlug))) {
-    const outtake = sessions.find((session) => session.surveyId === "outtake");
+    const outtake = sessions.find(
+      (session) => session.surveyId === Survey.OUTTAKE
+    );
     if (outtake) {
       outtakeStatus = outtake.finishedAt ? "completed" : "in-progress";
     }

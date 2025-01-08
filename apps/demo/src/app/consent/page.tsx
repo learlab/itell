@@ -3,9 +3,12 @@ import { volume } from "#content";
 
 import "./styles.css";
 
-import { getSurveyAction } from "@/actions/survey";
+import { User } from "lucia";
+
 import { updateUserAction } from "@/actions/user";
+import { getSurveySessions, isSurveySessionFinished } from "@/db/survey";
 import { getSession } from "@/lib/auth";
+import { Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { ConsentSubmit } from "./consent-submit";
@@ -18,6 +21,7 @@ export default async function ConsentPage() {
 
   return (
     <ConsentForm
+      user={user}
       value={
         user.consentGiven === null
           ? undefined
@@ -29,7 +33,7 @@ export default async function ConsentPage() {
   );
 }
 
-function ConsentForm({ value }: { value?: "yes" | "no" }) {
+function ConsentForm({ value, user }: { value?: "yes" | "no"; user: User }) {
   return (
     <div id="consent-form">
       <div className="flex max-w-3xl flex-col gap-6 rounded-lg border-4 px-6 py-4 shadow-md">
@@ -157,13 +161,13 @@ function ConsentForm({ value }: { value?: "yes" | "no" }) {
                 return redirect(routes.home());
               }
 
-              const [session] = await getSurveyAction({ surveyId: "intake" });
-              const intakeDone = session && session.finishedAt !== null;
+              const session = await getSurveySessions(user, Survey.INTAKE);
+              const intakeDone = isSurveySessionFinished(session);
 
               if (intakeDone) {
                 redirect(routes.home());
               } else {
-                redirect(routes.surveyHome({ surveyId: "intake" }));
+                redirect(routes.surveyHome({ surveyId: Survey.INTAKE }));
               }
             }}
             value={value}

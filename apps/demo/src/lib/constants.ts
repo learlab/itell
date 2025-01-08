@@ -44,3 +44,8 @@ export const Tags = {
   GET_QUIZ_ANSWER: "get-quiz-answer",
   COUNT_SUMMARY: "count-summary",
 } as const;
+
+export const Survey = {
+  INTAKE: "intake",
+  OUTTAKE: "outtake",
+};

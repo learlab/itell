@@ -14,11 +14,12 @@ import { cn } from "@itell/utils";
 import { CheckCircle, GalleryVerticalEnd } from "lucide-react";
 
 import { SurveySession } from "@/drizzle/schema";
+import { Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { getSurvey } from "./[sectionId]/data";
 
 export async function SurveySidebar({
-  surveyId = "intake",
+  surveyId = Survey.INTAKE,
   sectionId,
   surveySession,
   ...props

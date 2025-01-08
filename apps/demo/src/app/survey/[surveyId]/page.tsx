@@ -4,8 +4,8 @@ import { SidebarInset, SidebarProvider } from "@itell/ui/sidebar";
 import { cn } from "@itell/utils";
 import { Survey } from "#content";
 
-import { getSurveyAction } from "@/actions/survey";
 import { NavigationButton } from "@/components/navigation-button";
+import { getSurveySessions } from "@/db/survey";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
@@ -29,7 +29,7 @@ export default async function SurveyHomePage(props: {
     return notFound();
   }
 
-  const [surveySession] = await getSurveyAction({ surveyId: params.surveyId });
+  const surveySession = await getSurveySessions(user, params.surveyId);
   const targetSectionId =
     !surveySession || !surveySession.data
       ? survey.sections[0].id

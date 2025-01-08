@@ -11,17 +11,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@itell/ui/alert-dialog";
-import { Button, buttonVariants } from "@itell/ui/button";
+import { buttonVariants } from "@itell/ui/button";
 import { Card, CardContent } from "@itell/ui/card";
 import { User } from "lucia";
 
-import { getSurveyAction } from "@/actions/survey";
 import { updateUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
 import { ContinueReading } from "@/components/continue-reading";
 import { MainNav } from "@/components/main-nav";
+import { getSurveySessions, isSurveySessionFinished } from "@/db/survey";
 import { getSession } from "@/lib/auth";
 import { isAdmin } from "@/lib/auth/role";
+import { Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
 
@@ -32,12 +33,14 @@ export default async function ConsentLayout({
 }) {
   const { user } = await getSession();
   if (!user) {
-    return redirectWithSearchParams("/auth", { redirect_to: "/consent" });
+    return redirectWithSearchParams(routes.auth(), {
+      redirect_to: routes.consent(),
+    });
   }
-  const [intakeSession] = await getSurveyAction({ surveyId: "intake" });
   const hasConsent = user.consentGiven === true;
   const consentDone = user.consentGiven !== null;
-  const intakeDone = intakeSession && intakeSession.finishedAt !== null;
+  const intakeSession = await getSurveySessions(user, Survey.INTAKE);
+  const intakeDone = isSurveySessionFinished(intakeSession);
 
   return (
     <>
@@ -81,7 +84,7 @@ function GoIntake() {
       </p>
       <Link
         className={buttonVariants()}
-        href={routes.surveyHome({ surveyId: "intake" })}
+        href={routes.surveyHome({ surveyId: Survey.INTAKE })}
       >
         Take Survey
       </Link>

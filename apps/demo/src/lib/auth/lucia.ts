@@ -2,7 +2,7 @@ import { DefaultPreferences } from "@itell/constants";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { Lucia } from "lucia";
 
-import { db } from "@/actions/db";
+import { db } from "@/db";
 import { sessions, users } from "@/drizzle/schema";
 import { isProduction } from "../constants";
 import type {
