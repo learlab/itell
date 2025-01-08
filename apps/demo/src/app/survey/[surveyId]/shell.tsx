@@ -34,10 +34,7 @@ export function SurveyHomeShell({
                   text="Back to textbook"
                   variant="ghost"
                 >
-                  <span className="inline-flex items-center gap-2">
-                    <ChevronLeft />
-                    <span>Back to Textbook</span>
-                  </span>
+                  <span>Back to Textbook</span>
                 </ContinueReading>
               )}
               <UserAccountNav user={user} />
