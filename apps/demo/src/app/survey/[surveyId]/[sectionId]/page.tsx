@@ -52,6 +52,8 @@ export default async function SurveyQuestionPage(props: {
   const requiredUnifinishedSections = unfinishedSections.filter(
     (s) => !s.display_rules
   );
+
+  // will user finish survey after submitting this page
   const isLastPage =
     requiredUnifinishedSections.length === 0 ||
     (requiredUnifinishedSections.length === 1 &&
