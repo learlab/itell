@@ -3,7 +3,7 @@
 import { count, eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { db } from "@/actions/db";
+import { db } from "@/db";
 import {
   constructed_responses,
   constructed_responses_feedback,

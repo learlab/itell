@@ -4,10 +4,10 @@ import { and, desc, eq, inArray } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 
+import { db } from "@/db";
 import { quiz_answers, QuizDataSchema, users } from "@/drizzle/schema";
 import { isProduction, Tags } from "@/lib/constants";
 import { quizPages } from "@/lib/pages/pages.server";
-import { db } from "./db";
 import { authedProcedure } from "./utils";
 
 export const createQuizAction = authedProcedure

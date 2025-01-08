@@ -5,7 +5,7 @@ import { and, count, desc, eq, isNotNull, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 
-import { db, first } from "@/actions/db";
+import { db, first } from "@/db";
 import {
   CreateSummarySchema,
   events,

@@ -6,7 +6,9 @@ import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 import { createServerAction } from "zsa";
 
-import { db, findTeacher, findUser, first } from "@/actions/db";
+import { db, first } from "@/db";
+import { findTeacher } from "@/db/teacher";
+import { findUser } from "@/db/user";
 import {
   chat_messages,
   constructed_responses,

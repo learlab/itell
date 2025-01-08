@@ -1,7 +1,9 @@
 import { SidebarInset, SidebarProvider } from "@itell/ui/sidebar";
 
-import { getSurveyAction } from "@/actions/survey";
+import { getSurveySessions } from "@/db/survey";
+import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
+import { redirectWithSearchParams } from "@/lib/utils";
 import { SurveySidebar } from "../survey-sidebar";
 
 export default async function SurveySectionLayout(props: {
@@ -9,7 +11,16 @@ export default async function SurveySectionLayout(props: {
   children: React.ReactNode;
 }) {
   const params = routes.surveySection.$parseParams(await props.params);
-  const [session] = await getSurveyAction({ surveyId: params.surveyId });
+  const { user } = await getSession();
+  if (!user) {
+    return redirectWithSearchParams("/auth", {
+      redirect_to: routes.surveySection({
+        surveyId: params.surveyId,
+        sectionId: params.sectionId,
+      }),
+    });
+  }
+  const session = await getSurveySessions(user, params.surveyId);
   return (
     <SidebarProvider>
       <SurveySidebar

@@ -7,6 +7,7 @@ import { ContinueReading } from "@/components/continue-reading";
 import { SidebarTrigger } from "@/components/sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserAccountNav } from "@/components/user-account-nav";
+import { Survey } from "@/lib/constants";
 
 export function SurveyHomeShell({
   children,
@@ -27,7 +28,7 @@ export function SurveyHomeShell({
         <div className="ml-auto flex items-center gap-2">
           {user ? (
             <>
-              {surveyId !== "intake" && (
+              {surveyId !== Survey.INTAKE && (
                 <ContinueReading
                   user={user}
                   text="Back to textbook"
