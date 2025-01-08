@@ -7,15 +7,11 @@ import {
   AccordionTrigger,
 } from "@itell/ui/accordion";
 import { Card, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
-import { and, eq, inArray } from "drizzle-orm";
 import { User } from "lucia";
 import { FileTextIcon } from "lucide-react";
 
-import { isOuttakeReady } from "@/app/(textbook)/[slug]/_components/page-assignments";
 import { Meta } from "@/config/metadata";
-import { db } from "@/db";
-import { getSurveySessions } from "@/db/survey";
-import { survey_sessions } from "@/drizzle/schema";
+import { getSurveySessions, isOuttakeReady } from "@/db/survey";
 import { getSession } from "@/lib/auth";
 import { Survey } from "@/lib/constants";
 import { getPageData } from "@/lib/pages/pages.server";
@@ -42,7 +38,7 @@ async function getSurveyStatus(user: User) {
     intakeStatus = intake.finishedAt ? "completed" : "in-progress";
   }
 
-  if (isOuttakeReady(getPageData(user.pageSlug))) {
+  if (isOuttakeReady(user)) {
     const outtake = sessions.find(
       (session) => session.surveyId === Survey.OUTTAKE
     );
