@@ -42,32 +42,6 @@ export const createQuestionFeedbackAction = authedProcedure
   });
 
 /**
- * Get question-answer statistics
- *
- * - all answers
- * - count answers by score
- */
-export const getAnswerStatsAction = authedProcedure.handler(async ({ ctx }) => {
-  return await db.transaction(async (tx) => {
-    const records = await tx
-      .select()
-      .from(constructed_responses)
-      .where(eq(constructed_responses.userId, ctx.user.id));
-
-    const byScore = await tx
-      .select({
-        count: count(),
-        score: constructed_responses.score,
-      })
-      .from(constructed_responses)
-      .where(eq(constructed_responses.userId, ctx.user.id))
-      .groupBy(constructed_responses.score);
-
-    return { records, byScore };
-  });
-});
-
-/**
  * Change streak of correctly answered questions for user
  */
 export const updateCRIStreakAction = authedProcedure

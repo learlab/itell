@@ -8,12 +8,22 @@ import { HtmlRenderer } from "@/components/html-renderer";
 import { MainNav } from "@/components/main-nav";
 import { MobilePopup } from "@/components/mobile-popup";
 import { TakeConsent } from "@/components/take-consent";
+import { WrongClassCodeToast } from "@/components/wrong-class-code-toast";
 import { getSession } from "@/lib/auth";
+import { routes } from "@/lib/navigation";
 
-export default function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<unknown>;
+}) {
+  const { invalid_class_code } = routes.home.$parseSearchParams(
+    await searchParams
+  );
   return (
     <>
       <MainNav read />
+      {invalid_class_code && <WrongClassCodeToast />}
       <main
         className="mx-auto max-w-3xl flex-1 space-y-6 px-6 py-8 md:px-10 lg:px-16"
         id={Elements.TEXTBOOK_MAIN}

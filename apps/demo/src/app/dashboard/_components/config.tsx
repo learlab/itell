@@ -16,7 +16,7 @@ export const dashboardConfig = {
       },
       {
         title: "Questions",
-        href: "/dashboard/teacher/questions",
+        href: "/dashboard/teacher/cri",
       },
       {
         title: "Settings",

@@ -80,32 +80,3 @@ export const createFocusTimeAction = authedProcedure
       });
     }
   });
-
-export const getFocusTimeAction = authedProcedure
-  .input(z.object({ pageSlug: z.string() }))
-  .handler(async ({ input, ctx }) => {
-    return await getFocusTimeHandler(ctx.user.id, input.pageSlug);
-  });
-
-const getFocusTimeHandler = memoize(
-  async (userId: string, pageSlug: string) => {
-    return first(
-      await db
-        .select()
-        .from(focus_times)
-        .where(
-          and(
-            eq(focus_times.userId, userId),
-            eq(focus_times.pageSlug, pageSlug)
-          )
-        )
-    );
-  },
-  {
-    persist: true,
-    duration: FOCUS_TIME_SAVE_INTERVAL / 1000,
-    revalidateTags: (userId, pageSlug) => ["get-focus-time", userId, pageSlug],
-    log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
-    logid: "Get focus time",
-  }
-);

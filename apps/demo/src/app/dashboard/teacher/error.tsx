@@ -2,10 +2,9 @@
 
 import { TeacherOnly } from "@/components/teacher-only";
 
-import { Meta } from "@/config/metadata";
 import { DashboardHeader, DashboardShell } from "../_components/shell";
 
-export default function () {
+export default function Error() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Class Information" />

@@ -241,41 +241,6 @@ export const getSummariesClassHandler = memoize(
 );
 
 /**
- * Get summary for current user, if summary id is not provided, return all summaries
- */
-export const getSummariesAction = authedProcedure
-  .input(z.object({ summaryId: z.number().optional() }))
-  .handler(async ({ input, ctx }) => {
-    return await getSummariesHandler(ctx.user.id, input.summaryId);
-  });
-
-export const getSummariesHandler = memoize(
-  async (userId: string, summaryId?: number) => {
-    return await db
-      .select()
-      .from(summaries)
-      .where(
-        and(
-          eq(summaries.userId, userId),
-          summaryId !== undefined ? eq(summaries.id, summaryId) : undefined
-        )
-      )
-      .orderBy(desc(summaries.updatedAt));
-  },
-  {
-    persist: false,
-    // @ts-expect-error bypass server action check
-    revalidateTags: async (userId, summaryId) => [
-      "get-summaries",
-      userId,
-      String(summaryId),
-    ],
-    log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
-    logid: "Get summaries",
-  }
-);
-
-/**
  * Count summaries by pass / fail for current user and page
  */
 export const countSummaryByPassingAction = authedProcedure

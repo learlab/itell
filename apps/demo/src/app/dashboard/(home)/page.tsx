@@ -4,8 +4,8 @@ import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { UserProgress } from "@dashboard/user-progress";
 import { UserStatistics } from "@dashboard/user-statistics";
 
-import { incrementViewAction } from "@/actions/dashboard";
 import { Meta } from "@/config/metadata";
+import { incrementView } from "@/db/dashboard";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
@@ -32,7 +32,11 @@ export default async function Page(props: Props) {
     readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
   }
 
-  incrementViewAction({ pageSlug: Meta.home.slug, data: searchParams });
+  incrementView({
+    userId: user.id,
+    pageSlug: Meta.home.slug,
+    data: searchParams,
+  });
 
   return (
     <DashboardShell>
@@ -41,6 +45,7 @@ export default async function Page(props: Props) {
         <CardContent className="space-y-4">
           <UserProgress pageSlug={user.pageSlug} finished={user.finished} />
           <UserStatistics
+            userId={user.id}
             classId={user.classId}
             pageSlug={user.pageSlug}
             readingTimeLevel={readingTimeLevel}

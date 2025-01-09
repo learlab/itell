@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { buttonVariants } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
@@ -8,40 +7,25 @@ import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { UserProgress } from "@dashboard/user-progress";
 import { UserStatistics } from "@dashboard/user-statistics";
 
-import { getTeacherAction, getUserAction } from "@/actions/user";
 import { Meta } from "@/config/metadata";
+import { findUser } from "@/db/user";
 import { type User } from "@/drizzle/schema";
-import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
 import { firstAssignmentPage, getPageData } from "@/lib/pages/pages.server";
+import { checkTeacher } from "../../teacher/check-teacher";
 
 interface PageProps {
   params: Promise<unknown>;
   searchParams?: Promise<unknown>;
 }
 
-export default async function (props: PageProps) {
+export default async function Page(props: PageProps) {
+  const teacher = await checkTeacher();
   const searchParams = await props.searchParams;
-  const params = await props.params;
-  const { user } = await getSession();
+  const { id } = routes.dashboardStudent.$parseParams(await props.params);
 
-  if (!user) {
-    return redirect("/auth");
-  }
-
-  const [teacher, error] = await getTeacherAction();
-  if (error) {
-    throw new Error("failed to get teacher", { cause: error });
-  }
-
-  const isTeacher = Boolean(teacher);
-  if (!isTeacher) {
-    throw new Error("teacher only");
-  }
-
-  const { id } = routes.student.$parseParams(params);
-  const [student, err] = await getUserAction({ userId: id });
-  if (!student || err) {
+  const student = await findUser(id);
+  if (!student || student.classId !== teacher.classId) {
     return (
       <DashboardShell>
         <DashboardHeader
@@ -73,7 +57,7 @@ function StudentProfile({
 }) {
   const page = getPageData(student.pageSlug);
   const { reading_time_level } =
-    routes.student.$parseSearchParams(searchParams);
+    routes.dashboardStudent.$parseSearchParams(searchParams);
   let readingTimeLevel = ReadingTimeChartLevel.week_1;
   if (
     Object.values(ReadingTimeChartLevel).includes(
@@ -117,6 +101,7 @@ function StudentProfile({
       </CardHeader>
       <CardContent>
         <UserStatistics
+          userId={student.id}
           classId={student.classId}
           pageSlug={student.pageSlug}
           readingTimeLevel={readingTimeLevel}

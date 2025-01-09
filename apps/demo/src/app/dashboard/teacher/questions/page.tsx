@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader } from "@itell/ui/card";
+import { CRIChart } from "@cri/cri-chart";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
-import { QuestionChart } from "@questions/question-chart";
 import pluralize from "pluralize";
 
-import { incrementViewAction } from "@/actions/dashboard";
 import { getAnswerStatsClassAction } from "@/actions/question";
 import { Meta } from "@/config/metadata";
-import { getScoreMeta } from "../../questions/get-label";
+import { incrementView } from "@/db/dashboard";
+import { getScoreMeta } from "../../cri/get-label";
 import { checkTeacher } from "../check-teacher";
 
 export default async function Page() {
@@ -16,7 +16,7 @@ export default async function Page() {
     return notFound();
   }
 
-  incrementViewAction({ pageSlug: Meta.questionsTeacher.slug });
+  incrementView({ userId: teacher.id, pageSlug: Meta.criTeacher.slug });
   const [data, err] = await getAnswerStatsClassAction({
     classId: teacher.classId,
   });
@@ -39,8 +39,8 @@ export default async function Page() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading={Meta.questionsTeacher.title}
-        text={Meta.questionsTeacher.description}
+        heading={Meta.criTeacher.title}
+        text={Meta.criTeacher.description}
       />
       <Card>
         <CardHeader>
@@ -50,7 +50,7 @@ export default async function Page() {
         </CardHeader>
         {count > 0 && (
           <CardContent className="space-y-4">
-            <QuestionChart data={chartData} />
+            <CRIChart data={chartData} />
           </CardContent>
         )}
       </Card>

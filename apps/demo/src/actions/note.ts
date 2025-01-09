@@ -28,20 +28,6 @@ export const updateNoteAction = authedProcedure
   });
 
 /**
- * Get notes for page
- */
-export const getNotesAction = authedProcedure
-  .input(z.object({ pageSlug: z.string() }))
-  .handler(async ({ input, ctx }) => {
-    return await db
-      .select()
-      .from(notes)
-      .where(
-        and(eq(notes.userId, ctx.user.id), eq(notes.pageSlug, input.pageSlug))
-      );
-  });
-
-/**
  * Delete a note
  */
 export const deleteNoteAction = authedProcedure

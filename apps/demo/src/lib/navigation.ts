@@ -4,8 +4,20 @@ import { z } from "zod";
 
 export const { routes, useSafeParams, useSafeSearchParams } =
   createNavigationConfig((defineRoute) => ({
-    home: defineRoute("/"),
-    consent: defineRoute("/consent"),
+    home: defineRoute("/", {
+      search: z
+        .object({
+          invalid_class_code: z.string().optional(),
+        })
+        .default({ invalid_class_code: undefined }),
+    }),
+    consent: defineRoute("/consent", {
+      search: z
+        .object({
+          invalid_class_code: z.string().optional(),
+        })
+        .default({ invalid_class_code: undefined }),
+    }),
     auth: defineRoute("/auth", {
       search: z
         .object({
@@ -30,6 +42,11 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ summary: undefined, quiz: undefined }),
     }),
+    summary: defineRoute("/summary/[id]", {
+      params: z.object({
+        id: z.number(),
+      }),
+    }),
     dashboard: defineRoute("/dashboard", {
       search: z
         .object({
@@ -41,21 +58,23 @@ export const { routes, useSafeParams, useSafeSearchParams } =
           join_class_code: undefined,
         }),
     }),
-    summaries: defineRoute("/dashboard/summaries", {
+    dashboardTeacher: defineRoute("/dashboard/teacher"),
+    dashboardForms: defineRoute("/dashboard/forms"),
+    dashboardSummaries: defineRoute("/dashboard/summaries", {
       search: z
         .object({
           page: z.string().optional(),
         })
         .default({ page: undefined }),
     }),
-    summariesTeacher: defineRoute("/dashboard/summaries/teacher", {
+    dashboardSummariesTeacher: defineRoute("/dashboard/summaries/teacher", {
       search: z
         .object({
           page: z.string().optional(),
         })
         .default({ page: undefined }),
     }),
-    student: defineRoute("/dashboard/student/[id]", {
+    dashboardStudent: defineRoute("/dashboard/student/[id]", {
       params: z.object({
         id: z.string(),
       }),
@@ -65,7 +84,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ reading_time_level: ReadingTimeChartLevel.week_1 }),
     }),
-    settings: defineRoute("/dashboard/settings", {
+    dashboardSettings: defineRoute("/dashboard/settings", {
       search: z
         .object({
           join_class_code: z.string().optional(),

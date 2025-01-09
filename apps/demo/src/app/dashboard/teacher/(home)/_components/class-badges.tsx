@@ -1,20 +1,19 @@
 import { DashboardBadge } from "@itell/ui/dashboard-badge";
 import { FileTextIcon, FlagIcon, PencilIcon } from "lucide-react";
 
-import { getOtherStatsAction } from "@/actions/dashboard";
 import { CreateErrorFallback } from "@/components/error-fallback";
+import { getOtherStats } from "@/db/dashboard";
 
 type Props = {
-  ids: string[];
+  userId: string;
+  otherIds: string[];
 };
 
-export async function ClassBadges({ ids }: Props) {
-  const [classStats, err] = await getOtherStatsAction({
-    ids,
+export async function ClassBadges({ userId, otherIds }: Props) {
+  const classStats = await getOtherStats({
+    userId,
+    otherIds,
   });
-  if (err) {
-    throw new Error("failed to get class statistics", { cause: err });
-  }
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -43,7 +42,7 @@ export async function ClassBadges({ ids }: Props) {
   );
 }
 
-ClassBadges.Skeleton = function () {
+ClassBadges.Skeleton = function ClassBadgesSkeleton() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <DashboardBadge.Skeletons />

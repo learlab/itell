@@ -2,18 +2,18 @@ import { notFound } from "next/navigation";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { incrementViewAction } from "@/actions/dashboard";
 import { Meta } from "@/config/metadata";
+import { incrementView } from "@/db/dashboard";
 import { checkTeacher } from "../check-teacher";
 import { ClassInfo } from "./_components/class-info";
 
-export default async function () {
+export default async function Page() {
   const teacher = await checkTeacher();
   if (!teacher) {
     return notFound();
   }
 
-  incrementViewAction({ pageSlug: Meta.homeTeacher.slug });
+  incrementView({ userId: teacher.id, pageSlug: Meta.homeTeacher.slug });
 
   return (
     <DashboardShell>

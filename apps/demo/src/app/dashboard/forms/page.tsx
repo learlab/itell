@@ -14,7 +14,7 @@ import { Meta } from "@/config/metadata";
 import { getSurveySessions, isOuttakeReady } from "@/db/survey";
 import { getSession } from "@/lib/auth";
 import { Survey } from "@/lib/constants";
-import { getPageData } from "@/lib/pages/pages.server";
+import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { DashboardHeader, DashboardShell } from "../_components/shell";
 
@@ -54,7 +54,7 @@ export default async function FormsPage() {
   const { user } = await getSession();
   if (!user) {
     return redirectWithSearchParams("/auth", {
-      redirect_to: "/dashboard/forms",
+      redirect_to: routes.dashboardForms(),
     });
   }
 

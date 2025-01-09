@@ -12,6 +12,7 @@ export const GET = async (req: Request) => {
   const url = new URL(req.url);
   const isDashboard = url.searchParams.get("dashboard") === "true";
   const isAuth = url.searchParams.get("auth") === "true";
+
   const heading = url.searchParams.get("title") ?? volume.title;
   const slug = url.searchParams.get("slug");
 
@@ -22,21 +23,29 @@ export const GET = async (req: Request) => {
       : slug
         ? `${env.NEXT_PUBLIC_HOST}/${slug}`
         : env.NEXT_PUBLIC_HOST;
-  const footer = isDashboard
-    ? "Learning statistics"
-    : isAuth
-      ? "Getting started"
-      : url.searchParams.get("title") && `A chapter from "${volume.title}"`;
+
+  console.log(url.searchParams.get("description"));
+  const footer =
+    url.searchParams.get("description") ||
+    (isDashboard
+      ? "Learning statistics"
+      : isAuth
+        ? "Getting started"
+        : slug
+          ? `A chapter from "${volume.title}"`
+          : "");
 
   const font = fetch(
-    new URL("../../../public/fonts/kaisei-tokumin-bold.ttf", import.meta.url)
+    new URL("/fonts/kaisei-tokumin-bold.ttf", env.NEXT_PUBLIC_HOST)
   ).then((res) => res.arrayBuffer());
 
-  const image = fetch(
-    new URL("../../../public/images/itell.png", import.meta.url)
-  ).then((res) => res.arrayBuffer());
+  const image = fetch(new URL("/images/itell.png", env.NEXT_PUBLIC_HOST)).then(
+    (res) => res.arrayBuffer()
+  );
   const fontData = await font;
+
   const imageData = await image;
+
   return new ImageResponse(
     (
       <div
@@ -58,6 +67,9 @@ export const GET = async (req: Request) => {
           }}
         >
           <p>{header}</p>
+          <p style={{ marginLeft: "auto" }}>
+            An intelligent textbook by LearLab
+          </p>
         </header>
         <div
           style={{
@@ -66,6 +78,7 @@ export const GET = async (req: Request) => {
             gap: "40px",
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             width="96"
             height="96"
@@ -86,11 +99,13 @@ export const GET = async (req: Request) => {
             {heading}
           </h1>
         </div>
+
         {isDashboard ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             height="250"
             style={{ marginTop: "auto", width: "100%" }}
-            // @ts-ignore
+            // @ts-expect-error imageData is an ArrayBuffer
             src={await fetch(
               new URL("../../../public/images/chart.png", import.meta.url)
             ).then((res) => res.arrayBuffer())}
@@ -106,13 +121,6 @@ export const GET = async (req: Request) => {
           }}
         >
           <p>{footer}</p>
-          <p
-            style={{
-              marginLeft: "auto",
-            }}
-          >
-            An intelligent textbook by LearLab
-          </p>
         </footer>
       </div>
     ),

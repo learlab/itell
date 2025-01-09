@@ -108,7 +108,6 @@ export const users = pgTable("users", {
 
 export type ConditionAssignments = Record<string, string>;
 export type User = InferSelectModel<typeof users>;
-export type CreateUserInput = InferInsertModel<typeof users>;
 export const UserPreferencesSchema = z
   .object({
     theme: z.string(),
@@ -128,13 +127,15 @@ export const PersonalizationDataSchema = z
   })
   .partial();
 
-const s = createInsertSchema(users);
 export const CreateUserSchema = createInsertSchema(users, {
   preferences: UserPreferencesSchema.optional(),
   personalization: PersonalizationDataSchema.optional(),
   conditionAssignments: z.record(z.string()),
 });
+export type CreateUserInput = z.infer<typeof CreateUserSchema>;
+
 export const UpdateUserSchema = CreateUserSchema.partial();
+export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
 
 export type UserPreferences = z.infer<typeof UserPreferencesSchema>;
 export type PersonalizationData = z.infer<typeof PersonalizationDataSchema>;

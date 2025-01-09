@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { Button } from "@itell/ui/button";
 import { Input } from "@itell/ui/input";
+import { Label } from "@itell/ui/label";
 import { JoinClassModal } from "@dashboard/join-class-modal";
 import { type User } from "lucia";
-import { useServerAction } from "zsa-react";
+import { useFormStatus } from "react-dom";
 
-import { getTeacherByClassAction } from "@/actions/dashboard";
-import { InternalError } from "@/components/internal-error";
+import { findTeacherByClass } from "@/db/teacher";
 import { useSafeSearchParams } from "@/lib/navigation";
 
 type Props = {
@@ -16,10 +16,7 @@ type Props = {
 };
 
 export function JoinClassForm({ user }: Props) {
-  const { join_class_code } = useSafeSearchParams("settings");
-  const { execute, isPending, isError } = useServerAction(
-    getTeacherByClassAction
-  );
+  const { join_class_code } = useSafeSearchParams("dashboardSettings");
   const [teacherName, setTeacherName] = useState<string | null | undefined>(
     undefined
   );
@@ -30,16 +27,12 @@ export function JoinClassForm({ user }: Props) {
     const formData = new FormData(e.currentTarget);
     const code = String(formData.get("code"));
 
-    const [teacher, err] = await execute({
-      classId: code,
-    });
-    if (!err) {
-      if (teacher) {
-        setTeacherName(teacher.name);
-        setClassId(code);
-      } else {
-        setTeacherName(null);
-      }
+    const teacher = await findTeacherByClass(code);
+    if (teacher) {
+      setTeacherName(teacher.name);
+      setClassId(code);
+    } else {
+      setTeacherName(null);
     }
   };
 
@@ -58,22 +51,17 @@ export function JoinClassForm({ user }: Props) {
         className="grid justify-items-start gap-2"
         onSubmit={onSubmit}
       >
-        <Input
-          name="code"
-          placeholder="Enter your class code here"
-          type="text"
-          required
-          defaultValue={join_class_code || ""}
-        />
-        {isError ? <InternalError /> : null}
-        <Button
-          disabled={isPending}
-          type="submit"
-          pending={isPending}
-          className="w-32"
-        >
-          Submit
-        </Button>
+        <Label>
+          <span className="sr-only">class code</span>
+          <Input
+            name="code"
+            placeholder="Enter your class code here"
+            type="text"
+            required
+            defaultValue={join_class_code || ""}
+          />
+        </Label>
+        <SubmitButton />
       </form>
       {/* dialog to confirm joining a class */}
       {teacherName ? (
@@ -89,7 +77,16 @@ export function JoinClassForm({ user }: Props) {
           using the exact code received from your teacher.
         </p>
       )}
-      {isError ? <InternalError /> : null}
     </div>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button disabled={pending} type="submit" pending={pending} className="w-32">
+      Submit
+    </Button>
   );
 }

@@ -18,32 +18,28 @@ import { getDatesBetween } from "@itell/utils";
 import { InfoIcon } from "lucide-react";
 import pluralize from "pluralize";
 
-import { countSummaryAction, getReadingTimeAction } from "@/actions/dashboard";
 import { CreateErrorFallback } from "@/components/error-fallback";
+import { getReadingTime } from "@/db/dashboard";
+import { routes } from "@/lib/navigation";
 import { ReadingTimeChart } from "./reading-time-chart";
 import { ReadingTimeControl } from "./reading-time-control";
 import type { ReadingTimeChartParams } from "@itell/core/dashboard";
 
 type Props = {
+  userId: string;
   params: ReadingTimeChartParams;
   name?: string;
 };
 
-export async function ReadingTime({ params, name }: Props) {
+export async function ReadingTime({ userId, params, name }: Props) {
   const startDate = subDays(new Date(), PrevDaysLookup[params.level]);
   const intervalDates = getDatesBetween(startDate, new Date());
-  const [[summaryCount, err1], [readingTimeGrouped, err2]] = await Promise.all([
-    countSummaryAction({ startDate }),
-    getReadingTimeAction({ startDate, intervalDates }),
-  ]);
 
-  if (err1) {
-    throw new Error(err1.message, { cause: err1 });
-  }
-
-  if (err2) {
-    throw new Error(err2.message, { cause: err2 });
-  }
+  const { readingTimeGrouped, summaryCount } = await getReadingTime({
+    userId,
+    startDate,
+    intervalDates,
+  });
 
   const { totalViewTime, chartData } = getReadingTimeChartData(
     readingTimeGrouped,
@@ -79,7 +75,10 @@ export async function ReadingTime({ params, name }: Props) {
         <CardDescription>
           {name ? name : "You"} spent {Math.round(totalViewTime / 60)} minutes
           reading the textbook, wrote{" "}
-          <Link className="font-semibold underline" href="/dashboard/summaries">
+          <Link
+            className="font-semibold underline"
+            href={routes.dashboardSummaries()}
+          >
             {pluralize("summary", summaryCount, true)}
           </Link>{" "}
           during {startDate.toLocaleDateString()} -{" "}
@@ -93,7 +92,7 @@ export async function ReadingTime({ params, name }: Props) {
   );
 }
 
-ReadingTime.Skeleton = function () {
+ReadingTime.Skeleton = function ReadingTimeSkeleton() {
   return <Skeleton className="h-[350px] w-full" />;
 };
 ReadingTime.ErrorFallback = CreateErrorFallback(

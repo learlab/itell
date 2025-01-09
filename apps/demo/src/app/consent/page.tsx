@@ -6,6 +6,7 @@ import "./styles.css";
 import { User } from "lucia";
 
 import { updateUserAction } from "@/actions/user";
+import { WrongClassCodeToast } from "@/components/wrong-class-code-toast";
 import { getSurveySessions, isSurveySessionFinished } from "@/db/survey";
 import { getSession } from "@/lib/auth";
 import { Survey } from "@/lib/constants";
@@ -13,23 +14,33 @@ import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { ConsentSubmit } from "./consent-submit";
 
-export default async function ConsentPage() {
+export default async function ConsentPage({
+  searchParams,
+}: {
+  searchParams: Promise<unknown>;
+}) {
+  const { invalid_class_code } = routes.consent.$parseSearchParams(
+    await searchParams
+  );
   const { user } = await getSession();
   if (!user) {
-    return redirectWithSearchParams("/auth", { redirect_to: "/consent" });
+    return redirectWithSearchParams("/auth", { redirect_to: routes.consent() });
   }
 
   return (
-    <ConsentForm
-      user={user}
-      value={
-        user.consentGiven === null
-          ? undefined
-          : user.consentGiven
-            ? "yes"
-            : "no"
-      }
-    />
+    <>
+      {invalid_class_code && <WrongClassCodeToast />}
+      <ConsentForm
+        user={user}
+        value={
+          user.consentGiven === null
+            ? undefined
+            : user.consentGiven
+              ? "yes"
+              : "no"
+        }
+      />
+    </>
   );
 }
 

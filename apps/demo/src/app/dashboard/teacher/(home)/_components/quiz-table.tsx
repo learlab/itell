@@ -1,7 +1,7 @@
 import { Skeleton } from "@itell/ui/skeleton";
 
-import { analyzeClassQuizAction } from "@/actions/quiz";
 import { CreateErrorFallback } from "@/components/error-fallback";
+import { analyzeClassQuiz } from "@/db/quiz";
 import { quizPages } from "@/lib/pages/pages.server";
 import { QuizTableClient } from "./quiz-table-client";
 
@@ -11,21 +11,16 @@ export type QuizColumns = {
   [key: string]: string | number;
 };
 
-const quizSlugs = quizPages.map((page) => page.slug);
-
 type Props = {
   classId: string;
   students: { name: string; id: string }[];
 };
 
 export async function ClassQuizTable({ students, classId }: Props) {
-  const [data, err] = await analyzeClassQuizAction({
-    studentIds: students.map((s) => s.id),
-    classId,
-  });
-  if (err) {
-    throw new Error("failed to get class quiz stats", { cause: err });
-  }
+  const data = await analyzeClassQuiz(
+    students.map((s) => s.id),
+    classId
+  );
 
   // loop through students instead of data to show all students in the table
   // for each student, generate the object {page1: correctCount, page2: correctCount, ...}

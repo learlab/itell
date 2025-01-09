@@ -4,9 +4,9 @@ import { DashboardNav } from "@dashboard/dashboard-nav";
 import { DashboardSidebar } from "@dashboard/dashboard-sidebar";
 import { volume } from "#content";
 
-import { getTeacherAction } from "@/actions/user";
 import { SidebarLayout } from "@/components/sidebar";
 import { SiteNav } from "@/components/site-nav";
+import { findTeacher } from "@/db/teacher";
 import { env } from "@/env.mjs";
 import { getSession } from "@/lib/auth";
 import {
@@ -49,6 +49,8 @@ export default async function DashboardLayout({
     return redirectWithSearchParams("auth");
   }
 
+  const c = await cookies();
+
   // if (user?.condition === Condition.SIMPLE) {
   // 	return (
   // 		<main className="flex items-center justify-center min-h-screen">
@@ -68,13 +70,14 @@ export default async function DashboardLayout({
   // 	);
   // }
 
-  const [teacher, _] = await getTeacherAction();
+  const teacher = await findTeacher(user.id);
   const isTeacher = Boolean(teacher);
-  const sidebarState = (await cookies()).get(SIDEBAR_STATE_COOKIE)?.value;
+  const sidebarState = c.get(SIDEBAR_STATE_COOKIE)?.value;
+
   return (
     <DashboardProvider
       defaultRole={
-        ((await cookies()).get(DASHBOARD_ROLE_COOKIE)?.value ??
+        (c.get(DASHBOARD_ROLE_COOKIE)?.value ??
           (isTeacher ? ClassRole.TEACHER : ClassRole.STUDENT)) as Role
       }
     >

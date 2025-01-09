@@ -12,14 +12,12 @@ import { Skeleton } from "@itell/ui/skeleton";
 import { Page } from "#content";
 import { type User } from "lucia";
 
-import { isQuizAnsweredAction } from "@/actions/quiz";
 import { NavigationButton } from "@/components/navigation-button";
+import { isQuizAnswered } from "@/db/quiz";
 import { getSurveyStatus, isOuttakeReady } from "@/db/survey";
 import { Condition, SUMMARY_DESCRIPTION_ID, Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
-import { isLastPage, PageData } from "@/lib/pages";
-import { getPageData } from "@/lib/pages/pages.server";
 import { DeleteQuiz } from "./delete-quiz-answer";
 import { PreAssignmentPrompt } from "./pre-assignment-prompt";
 import { PageQuiz } from "./quiz/page-quiz";
@@ -54,13 +52,8 @@ export async function PageAssignments({
   let quizReady = false;
   let quizAnswered = false;
   if (hasQuiz) {
-    const [isQuizAnswered] = await isQuizAnsweredAction({
-      pageSlug: page.slug,
-    });
-    if (isQuizAnswered !== null) {
-      quizReady = !isQuizAnswered;
-      quizAnswered = isQuizAnswered;
-    }
+    quizAnswered = await isQuizAnswered(user.id, page.slug);
+    quizReady = !quizAnswered;
   }
   if (!user.consentGiven) {
     return (

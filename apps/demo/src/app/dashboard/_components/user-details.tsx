@@ -1,54 +1,43 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { Alert, AlertTitle } from "@itell/ui/alert";
+import { Card, CardContent, CardFooter } from "@itell/ui/card";
 import { DashboardBadge } from "@itell/ui/dashboard-badge";
 import { Skeleton } from "@itell/ui/skeleton";
 import { cn, median } from "@itell/utils";
-import { FileTextIcon, FlagIcon, PencilIcon } from "lucide-react";
+import { BanIcon, FileTextIcon, FlagIcon, PencilIcon } from "lucide-react";
 import pluralize from "pluralize";
 
-import {
-  countStudentAction,
-  getOtherStatsAction,
-  getOtherUsersAction,
-  getUserStatsAction,
-} from "@/actions/dashboard";
 import { CreateErrorFallback } from "@/components/error-fallback";
 import { Spinner } from "@/components/spinner";
+import { getOtherStats, getUserStats } from "@/db/dashboard";
+import { countStudents } from "@/db/teacher";
+import { getOtherUsers } from "@/db/user";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
 import { UserRadarChart } from "./user-radar-chart";
-import { Card, CardContent, CardFooter } from "@itell/ui/card";
 
 type Props = {
+  userId: string;
   classId: string | null;
   pageSlug: string | null;
 };
 
-export async function UserDetails({ classId, pageSlug }: Props) {
-  const [otherUsers, err] = await getOtherUsersAction();
-  if (err) {
-    throw new Error("failed to get other users", { cause: err });
-  }
-
+export async function UserDetails({ userId, classId, pageSlug }: Props) {
+  const otherUsers = await getOtherUsers({ userId, classId });
   if (otherUsers.length === 0) {
     return (
-      <p className="text-muted-foreground">
-        Detailed statistics is currently unavailable.
-      </p>
+      <Alert>
+        <BanIcon className="size-4" />
+        <AlertTitle>Statistics currently unavailable</AlertTitle>
+      </Alert>
     );
   }
-  const [[userStats, err1], [otherStats, err2]] = await Promise.all([
-    getUserStatsAction(),
-    getOtherStatsAction({ ids: otherUsers.map((user) => user.id) }),
+
+  const [userStats, otherStats] = await Promise.all([
+    getUserStats(userId),
+    getOtherStats({ otherIds: otherUsers.map((user) => user.id), userId }),
   ]);
-
-  if (err1) {
-    throw new Error(err1.message, { cause: err1 });
-  }
-
-  if (err2) {
-    throw new Error(err2.message, { cause: err2 });
-  }
 
   const pageIndex = getPageData(pageSlug)?.order;
   const userProgress = pageIndex !== undefined ? pageIndex + 1 : 0;
@@ -126,8 +115,8 @@ export async function UserDetails({ classId, pageSlug }: Props) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <div className="col-span-1 flex lg:flex-col gap-4">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div className="col-span-1 flex gap-4 lg:flex-col">
         <DashboardBadge
           title="Total Summaries"
           icon={<PencilIcon className="size-4" />}
@@ -242,17 +231,17 @@ UserDetails.ErrorFallback = CreateErrorFallback(
 
 UserDetails.Skeleton = function UserDetailsSkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <div className="col-span-1 flex lg:flex-col gap-4">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div className="col-span-1 flex gap-4 lg:flex-col">
         <DashboardBadge.Skeletons />
       </div>
 
       <Card className="col-span-full lg:col-span-2">
         <CardContent>
-          <Skeleton className="w-full h-[300px]" />
+          <Skeleton className="h-[300px] w-full" />
         </CardContent>
         <CardFooter>
-          <Skeleton className="w-full h-6" />
+          <Skeleton className="h-6 w-full" />
         </CardFooter>
       </Card>
     </div>
@@ -260,10 +249,8 @@ UserDetails.Skeleton = function UserDetailsSkeleton() {
 };
 
 async function StudentCount({ classId }: { classId: string }) {
-  const [numStudents, err] = await countStudentAction({ classId });
-  if (!err) {
-    return <span>{pluralize("student", numStudents, true)}</span>;
-  }
+  const count = await countStudents(classId);
+  return <span>{pluralize("student", count, true)}</span>;
 }
 
 // function to scale the user's value relative to that of the others, which is treated as 1
