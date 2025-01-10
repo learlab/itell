@@ -51,7 +51,7 @@ export function PageStatusModal({ user, pageStatus }: Props) {
       return null;
     }
 
-    const href = makePageHref(user.pageSlug ?? firstAssignmentPage?.slug ?? null);
+    const href = makePageHref(user.pageSlug ?? "1-methods-of-knowing");
 
     // user with locked page
     return (
