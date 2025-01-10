@@ -31,7 +31,7 @@ type Props = {
   data: { name: string; value: number; fill: string }[];
 };
 
-export function QuestionChart({ data }: Props) {
+export function CRIChart({ data }: Props) {
   return (
     <>
       <p className="sr-only" id="question-chart-title">

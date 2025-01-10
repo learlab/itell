@@ -1,25 +1,25 @@
-import { redirect } from "next/navigation";
-
-import { getTeacherAction } from "@/actions/user";
 import { getSession } from "@/lib/auth";
 
 import "server-only";
 
+import { ErrorType } from "@itell/core/summary";
+
+import { findTeacher } from "@/db/teacher";
+import { Errors } from "@/lib/constants";
+import { routes } from "@/lib/navigation";
+import { redirectWithSearchParams } from "@/lib/utils";
+
 export const checkTeacher = async () => {
   const { user } = await getSession();
-
   if (!user) {
-    return redirect("/auth");
+    return redirectWithSearchParams("/auth", {
+      redirect_to: routes.dashboardTeacher(),
+    });
   }
 
-  const [teacher, error] = await getTeacherAction();
-  if (error) {
-    throw new Error("failed to get teacher", { cause: error });
-  }
-
-  const isTeacher = Boolean(teacher);
-  if (!isTeacher) {
-    throw new Error("teacher only");
+  const teacher = await findTeacher(user.id);
+  if (!teacher) {
+    throw new Error(Errors.TEAHCER_ONLY);
   }
 
   return teacher;

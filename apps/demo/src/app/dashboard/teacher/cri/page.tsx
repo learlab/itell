@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader } from "@itell/ui/card";
+import { CRIChart } from "@cri/cri-chart";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
-import { QuestionChart } from "@questions/question-chart";
 import pluralize from "pluralize";
 
-import { incrementViewAction } from "@/actions/dashboard";
-import { getAnswerStatsClassAction } from "@/actions/question";
 import { Meta } from "@/config/metadata";
-import { getScoreMeta } from "../../questions/get-label";
+import { getClassCRIStats } from "@/db/cri";
+import { incrementView } from "@/db/dashboard";
+import { getScoreMeta } from "../../cri/get-label";
 import { checkTeacher } from "../check-teacher";
 
 export default async function Page() {
@@ -16,14 +16,8 @@ export default async function Page() {
     return notFound();
   }
 
-  incrementViewAction({ pageSlug: Meta.questionsTeacher.slug });
-  const [data, err] = await getAnswerStatsClassAction({
-    classId: teacher.classId,
-  });
-  if (err) {
-    throw new Error("failed to get answer statistics", { cause: err });
-  }
-  const { byScore } = data;
+  incrementView({ userId: teacher.id, pageSlug: Meta.criTeacher.slug });
+  const { byScore } = await getClassCRIStats(teacher.classId);
   const count = byScore.reduce((acc, s) => acc + s.count, 0);
 
   const chartData = byScore.map((s) => {
@@ -38,19 +32,16 @@ export default async function Page() {
 
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={Meta.questionsTeacher.title}
-        text={Meta.questionsTeacher.description}
-      />
+      <DashboardHeader heading={Meta.criTeacher.title} text={Meta.criTeacher.description} />
       <Card>
         <CardHeader>
           <CardDescription>
-            {pluralize("question", count, true)} was answered in total
+            Your class answered {pluralize("question", count, true)} constructed response items.
           </CardDescription>
         </CardHeader>
         {count > 0 && (
           <CardContent className="space-y-4">
-            <QuestionChart data={chartData} />
+            <CRIChart data={chartData} />
           </CardContent>
         )}
       </Card>

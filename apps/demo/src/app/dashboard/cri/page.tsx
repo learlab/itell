@@ -1,18 +1,12 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@itell/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
+import { CRIChart } from "@cri/cri-chart";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
-import { QuestionChart } from "@questions/question-chart";
 import { groupBy } from "es-toolkit";
 import pluralize from "pluralize";
 
-import { incrementViewAction } from "@/actions/dashboard";
-import { getAnswerStatsAction } from "@/actions/question";
 import { Meta } from "@/config/metadata";
+import { getCRIStats } from "@/db/cri";
+import { incrementView } from "@/db/dashboard";
 import { type ConstructedResponse } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
 import { allPagesSorted, getPageData } from "@/lib/pages/pages.server";
@@ -35,13 +29,9 @@ export default async function Page() {
     return redirectWithSearchParams("/auth");
   }
 
-  incrementViewAction({ pageSlug: Meta.questions.slug });
+  incrementView({ userId: user.id, pageSlug: Meta.cri.slug });
 
-  const [data, err] = await getAnswerStatsAction();
-  if (err) {
-    throw new Error("failed to get answer statistics", { cause: err });
-  }
-  const { records, byScore } = data;
+  const { records, byScore } = await getCRIStats(user.id);
   const byPage = groupBy(records, (d) => d.pageSlug);
 
   const pages = Object.keys(byPage)
@@ -62,10 +52,7 @@ export default async function Page() {
 
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={Meta.questions.title}
-        text={Meta.questions.description}
-      />
+      <DashboardHeader heading={Meta.cri.title} text={Meta.cri.description} />
       <Card>
         <CardHeader>
           <CardDescription>
@@ -74,12 +61,12 @@ export default async function Page() {
         </CardHeader>
         {records.length > 0 && (
           <CardContent className="space-y-4">
-            <QuestionChart data={chartData} />
+            <CRIChart data={chartData} />
             <div className="grid gap-2">
               <h2 className="text-xl font-semibold">All Records</h2>
               <p className="text-sm text-muted-foreground">
-                Due to randomness in question placement, you may not receive the
-                same question set for a chapter
+                Due to randomness in question placement, you may not receive the same question set
+                for a chapter
               </p>
               <div className="grid gap-4">
                 {pages.map((page) => {
@@ -90,30 +77,26 @@ export default async function Page() {
                       <CardHeader>
                         <CardTitle>{page.title}</CardTitle>
                         <CardDescription className="text-muted-foreground">
-                          {pluralize("answer", answers.length, true)},{" "}
-                          {excellentAnswers.length} excellent
+                          {pluralize("answer", answers.length, true)}, {excellentAnswers.length}{" "}
+                          excellent
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-2 divide-y divide-border border">
-                        {questions[page.slug].map(
-                          ({ slug, question, answer }) => {
-                            const records = answers.filter(
-                              (a) => a.chunkSlug === slug
-                            );
-                            if (records.length === 0) {
-                              return null;
-                            }
-
-                            return (
-                              <AnswerItem
-                                key={slug}
-                                answers={records}
-                                question={question}
-                                refAnswer={answer}
-                              />
-                            );
+                        {questions[page.slug].map(({ slug, question, answer }) => {
+                          const records = answers.filter((a) => a.chunkSlug === slug);
+                          if (records.length === 0) {
+                            return null;
                           }
-                        )}
+
+                          return (
+                            <AnswerItem
+                              key={slug}
+                              answers={records}
+                              question={question}
+                              refAnswer={answer}
+                            />
+                          );
+                        })}
                       </CardContent>
                     </Card>
                   );

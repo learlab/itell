@@ -2,10 +2,36 @@ import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { createNavigationConfig } from "next-safe-navigation";
 import { z } from "zod";
 
-export const { routes, useSafeParams, useSafeSearchParams } =
-  createNavigationConfig((defineRoute) => ({
-    home: defineRoute("/"),
-    consent: defineRoute("/consent"),
+const classCodeValid = z.union([
+  z.boolean().optional(),
+  z
+    .string()
+    .optional()
+    .transform((val) => {
+      if (val === "undefined") return undefined;
+      if (val === "true") return true;
+      if (val === "false") return false;
+
+      return false;
+    }),
+]);
+
+export const { routes, useSafeParams, useSafeSearchParams } = createNavigationConfig(
+  (defineRoute) => ({
+    home: defineRoute("/", {
+      search: z
+        .object({
+          class_code_valid: classCodeValid,
+        })
+        .default({ class_code_valid: undefined }),
+    }),
+    consent: defineRoute("/consent", {
+      search: z
+        .object({
+          class_code_valid: classCodeValid,
+        })
+        .default({ class_code_valid: undefined }),
+    }),
     auth: defineRoute("/auth", {
       search: z
         .object({
@@ -30,6 +56,11 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ summary: undefined, quiz: undefined }),
     }),
+    summary: defineRoute("/summary/[id]", {
+      params: z.object({
+        id: z.number(),
+      }),
+    }),
     dashboard: defineRoute("/dashboard", {
       search: z
         .object({
@@ -41,21 +72,25 @@ export const { routes, useSafeParams, useSafeSearchParams } =
           join_class_code: undefined,
         }),
     }),
-    summaries: defineRoute("/dashboard/summaries", {
+    dashboardTeacher: defineRoute("/dashboard/teacher"),
+    dashboardCRI: defineRoute("/dashboard/cri"),
+    dashboardCRITeacher: defineRoute("/dashboard/teacher/cri"),
+    dashboardForms: defineRoute("/dashboard/forms"),
+    dashboardSummaries: defineRoute("/dashboard/summaries", {
       search: z
         .object({
           page: z.string().optional(),
         })
         .default({ page: undefined }),
     }),
-    summariesTeacher: defineRoute("/dashboard/summaries/teacher", {
+    dashboardSummariesTeacher: defineRoute("/dashboard/summaries/teacher", {
       search: z
         .object({
           page: z.string().optional(),
         })
         .default({ page: undefined }),
     }),
-    student: defineRoute("/dashboard/student/[id]", {
+    dashboardStudent: defineRoute("/dashboard/student/[id]", {
       params: z.object({
         id: z.string(),
       }),
@@ -65,7 +100,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ reading_time_level: ReadingTimeChartLevel.week_1 }),
     }),
-    settings: defineRoute("/dashboard/settings", {
+    dashboardSettings: defineRoute("/dashboard/settings", {
       search: z
         .object({
           join_class_code: z.string().optional(),
@@ -83,4 +118,5 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         sectionId: z.string(),
       }),
     }),
-  }));
+  })
+);

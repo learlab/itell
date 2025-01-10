@@ -1,17 +1,17 @@
-import { Card, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@itell/ui/alert";
+import { BanIcon } from "lucide-react";
 
 export const CreateErrorFallback = (
-  title = "An error occurred",
-  description = "Contact lear.lab.vu@gmail.com if the error persists"
+  title = "Internal error occurred",
+  description = "Contact lear.lab.vu@gmail.com if the problem persists"
 ) => {
   return function ErrorFeedback() {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-destructive">{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
-        </CardHeader>
-      </Card>
+      <Alert variant={"error"}>
+        <BanIcon className="size-4" />
+        <AlertTitle>{title}</AlertTitle>
+        <AlertDescription>{description}</AlertDescription>
+      </Alert>
     );
   };
 };

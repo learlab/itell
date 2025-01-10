@@ -119,7 +119,7 @@ export default async function Page(props: {
         <ChatLoader user={user} pageSlug={pageSlug} pageTitle={page.title} />
       </Suspense>
 
-      {user ? <NoteLoader pageSlug={pageSlug} /> : null}
+      {user ? <NoteLoader userId={user.id} pageSlug={pageSlug} /> : null}
 
       {isProduction ? (
         <PageStatusModal user={user} pageStatus={pageStatus} />

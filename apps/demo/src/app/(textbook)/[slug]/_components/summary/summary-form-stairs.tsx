@@ -3,12 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Elements } from "@itell/constants";
-import {
-  useDebounce,
-  useIsMobile,
-  useKeystroke,
-  useTimer,
-} from "@itell/core/hooks";
+import { useDebounce, useIsMobile, useKeystroke, useTimer } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
 import {
   ErrorFeedback,
@@ -26,10 +21,7 @@ import Confetti from "react-dom-confetti";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
-import {
-  createSummaryAction,
-  getSummaryScoreRequestAction,
-} from "@/actions/summary";
+import { createSummaryAction, getSummaryScoreRequestAction } from "@/actions/summary";
 import { DelayMessage } from "@/components/delay-message";
 import {
   useChatStore,
@@ -44,10 +36,7 @@ import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
 import { getHistory, SelectStairsAnswered } from "@/lib/store/chat-store";
-import {
-  getExcludedChunks,
-  SelectSummaryReady,
-} from "@/lib/store/question-store";
+import { getExcludedChunks, SelectSummaryReady } from "@/lib/store/question-store";
 import {
   SelectError,
   SelectIsNextPageVisible,
@@ -57,11 +46,7 @@ import {
 } from "@/lib/store/summary-store";
 import { makePageHref, reportSentry, scrollToElement } from "@/lib/utils";
 import { SummaryResponseFeedback } from "./summary-feedback";
-import {
-  getSummaryLocal,
-  saveSummaryLocal,
-  SummaryInput,
-} from "./summary-input";
+import { getSummaryLocal, saveSummaryLocal, SummaryInput } from "./summary-input";
 import { NextPageButton } from "./summary-next-page-button";
 import useDriver from "./use-driver";
 import type { StairsQuestion } from "@/lib/store/summary-store";
@@ -74,9 +59,7 @@ interface Props {
   afterSubmit?: React.ReactNode;
 }
 
-type ApiRequest = Parameters<
-  typeof apiClient.api.summary.stairs.$post
->[0]["json"];
+type ApiRequest = Parameters<typeof apiClient.api.summary.stairs.$post>[0]["json"];
 
 export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const pageSlug = page.slug;
@@ -167,9 +150,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
 
             console.log("summary response chunk", data, chunk);
 
-            const parsed = SummaryResponseSchema.safeParse(
-              JSON.parse(String(data))
-            );
+            const parsed = SummaryResponseSchema.safeParse(JSON.parse(String(data)));
             if (parsed.success) {
               summaryResponseRef.current = parsed.data;
               summaryStore.send({ type: "scored", response: parsed.data });
@@ -178,13 +159,10 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
               clearStages();
               summaryStore.send({ type: "fail", error: ErrorType.INTERNAL });
               // summaryResponse parsing failed, return early
-              reportSentry(
-                "first chunk of stairs summary response in wrong shape",
-                {
-                  body: requestBody,
-                  chunk: data,
-                }
-              );
+              reportSentry("first chunk of stairs summary response in wrong shape", {
+                body: requestBody,
+                chunk: data,
+              });
               return;
             }
           } else {
@@ -288,16 +266,14 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
       if (isLast) {
         toast.info("You have finished the entire textbook!");
       } else {
-        const title = response?.is_passed
-          ? "Good job summarizing 🎉"
-          : "You can now move on 👏";
+        const title = response?.is_passed ? "Good job summarizing 🎉" : "You can now move on 👏";
         toast(title, {
           className: "toast",
           description: "Move to the next page to continue reading",
           duration: 5000,
           action: page.next_slug
             ? {
-                label: "Proceed",
+                label: "Next",
                 onClick: () => {
                   router.push(makePageHref(page.next_slug));
                 },

@@ -3,9 +3,9 @@ import { Card, CardContent } from "@itell/ui/card";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { SummaryChart } from "@summaries/summary-chart";
 
-import { incrementViewAction } from "@/actions/dashboard";
 import { getSummariesClassAction } from "@/actions/summary";
 import { Meta } from "@/config/metadata";
+import { incrementView } from "@/db/dashboard";
 import { routes } from "@/lib/navigation";
 import { allPagesSorted } from "@/lib/pages/pages.server";
 import { SummaryListSelect } from "../../summaries/_components/summary-list-select";
@@ -18,9 +18,10 @@ export default async function Page(props: { searchParams: Promise<unknown> }) {
     return notFound();
   }
 
-  incrementViewAction({ pageSlug: Meta.summariesTeacher.slug });
+  incrementView({ userId: teacher.id, pageSlug: Meta.summariesTeacher.slug });
 
-  const { page } = routes.summariesTeacher.$parseSearchParams(searchParams);
+  const { page } =
+    routes.dashboardSummariesTeacher.$parseSearchParams(searchParams);
   const [summaries, err] = await getSummariesClassAction({
     classId: teacher.classId,
     pageSlug: page,

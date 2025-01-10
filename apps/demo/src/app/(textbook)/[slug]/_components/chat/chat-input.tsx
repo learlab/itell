@@ -64,14 +64,9 @@ export function ChatInput({ className, pageSlug, ...props }: ChatInputProps) {
           </button>
         </div>
 
-        <div
-          className="absolute inset-x-0 bottom-0 border-t border-border"
-          aria-hidden="true"
-        />
+        <div className="absolute inset-x-0 bottom-0 border-t border-border" aria-hidden="true" />
       </form>
-      {isError ? (
-        <InternalError className="px-2">Failed to save chat</InternalError>
-      ) : null}
+      {isError ? <InternalError>Failed to save chat</InternalError> : null}
     </div>
   );
 }

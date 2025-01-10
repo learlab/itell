@@ -16,6 +16,14 @@ export const ClassRole = {
   STUDENT: "student",
 } as const;
 
+export const Errors = {
+  INTERNAL: "InternalError",
+
+  // teacher related
+  TEAHCER_ONLY: "TeacherOnlyError",
+  STUDENT_NOT_EXISTS: "StudentNotExistsError",
+};
+
 export const EventType = {
   KEYSTROKE: "keystroke",
   CLICK: "click",

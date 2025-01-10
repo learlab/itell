@@ -7,15 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@itell/ui/card";
-import { Progress } from "@itell/ui/progress";
 import { Skeleton } from "@itell/ui/skeleton";
 import { median } from "@itell/utils";
 import { volume } from "#content";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { getClassStudentsAction } from "@/actions/dashboard";
 import { CreateErrorFallback } from "@/components/error-fallback";
 import { Spinner } from "@/components/spinner";
+import { getStudents } from "@/db/teacher";
 import {
   allPagesSorted,
   firstPage,
@@ -42,10 +41,7 @@ export async function ClassInfo({
   classId: string;
   userId: string;
 }) {
-  const [students, err] = await getClassStudentsAction({ classId });
-  if (err) {
-    throw new Error("failed to get students in the class", { cause: err });
-  }
+  const students = await getStudents(classId);
 
   if (students.length === 0) {
     return (
@@ -134,7 +130,10 @@ export async function ClassInfo({
           <h3 className="text-lg font-medium">Median Class Statistics</h3>
           <Suspense fallback={<ClassBadges.Skeleton />}>
             <ErrorBoundary fallback={<ClassBadges.ErrorFallback />}>
-              <ClassBadges ids={students.map((s) => s.id)} />
+              <ClassBadges
+                userId={userId}
+                otherIds={students.map((s) => s.id)}
+              />
             </ErrorBoundary>
           </Suspense>
         </div>
