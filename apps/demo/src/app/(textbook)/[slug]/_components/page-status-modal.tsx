@@ -17,6 +17,7 @@ import { type User } from "lucia";
 import { TakeConsent } from "@/components/take-consent";
 import { isProduction } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
+import { firstAssignmentPage } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 
 type Props = {
@@ -36,8 +37,8 @@ export function PageStatusModal({ user, pageStatus }: Props) {
         <Modal title="Please review the consent form first">
           <p>
             {" "}
-            Before starting on the textbook, please review the participation
-            policies in the consent form.
+            Before starting on the textbook, please review the participation policies in the consent
+            form.
           </p>
           <DialogFooter>
             <TakeConsent />
@@ -50,7 +51,7 @@ export function PageStatusModal({ user, pageStatus }: Props) {
       return null;
     }
 
-    const href = makePageHref(user.pageSlug);
+    const href = makePageHref(user.pageSlug ?? firstAssignmentPage?.slug ?? null);
 
     // user with locked page
     return (
@@ -107,9 +108,7 @@ function Modal({
       <DialogContent canClose={!isProduction}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description ? (
-            <DialogDescription>{description}</DialogDescription>
-          ) : null}
+          {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
         {children}
       </DialogContent>
