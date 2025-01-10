@@ -18,14 +18,8 @@ import { SurveyQuestionData } from "@/app/survey/[surveyId]/[sectionId]/survey-q
 import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 export const aal_level = pgEnum("aal_level", ["aal1", "aal2", "aal3"]);
-export const code_challenge_method = pgEnum("code_challenge_method", [
-  "s256",
-  "plain",
-]);
-export const factor_status = pgEnum("factor_status", [
-  "unverified",
-  "verified",
-]);
+export const code_challenge_method = pgEnum("code_challenge_method", ["s256", "plain"]);
+export const factor_status = pgEnum("factor_status", ["unverified", "verified"]);
 export const factor_type = pgEnum("factor_type", ["totp", "webauthn"]);
 export const one_time_token_type = pgEnum("one_time_token_type", [
   "confirmation_token",
@@ -35,12 +29,7 @@ export const one_time_token_type = pgEnum("one_time_token_type", [
   "email_change_token_current",
   "phone_change_token",
 ]);
-export const key_status = pgEnum("key_status", [
-  "default",
-  "valid",
-  "invalid",
-  "expired",
-]);
+export const key_status = pgEnum("key_status", ["default", "valid", "invalid", "expired"]);
 export const key_type = pgEnum("key_type", [
   "aead-ietf",
   "aead-det",
@@ -54,22 +43,8 @@ export const key_type = pgEnum("key_type", [
   "secretstream",
   "stream_xchacha20",
 ]);
-export const action = pgEnum("action", [
-  "INSERT",
-  "UPDATE",
-  "DELETE",
-  "TRUNCATE",
-  "ERROR",
-]);
-export const equality_op = pgEnum("equality_op", [
-  "eq",
-  "neq",
-  "lt",
-  "lte",
-  "gt",
-  "gte",
-  "in",
-]);
+export const action = pgEnum("action", ["INSERT", "UPDATE", "DELETE", "TRUNCATE", "ERROR"]);
+export const equality_op = pgEnum("equality_op", ["eq", "neq", "lt", "lte", "gt", "gte", "in"]);
 
 const CreatedAt = timestamp("created_at", {
   mode: "date",
@@ -98,16 +73,14 @@ export const users = pgTable("users", {
   preferences: jsonb("preferences").$type<UserPreferences>(),
   consentGiven: boolean("consent_given"),
   personalization: jsonb("personalization_data").$type<PersonalizationData>(),
-  conditionAssignments: jsonb("condition_assignments")
-    .$type<ConditionAssignments>()
-    .notNull(),
+  conditionAssignments: jsonb("condition_assignments").$type<ConditionAssignments>().notNull(),
   createdAt: CreatedAt,
   updatedAt: UpdatedAt,
 });
 
 export type ConditionAssignments = Record<string, string>;
 export type User = InferSelectModel<typeof users>;
-export type CreateUserInput = InferInsertModel<typeof users>;
+
 export const UserPreferencesSchema = z
   .object({
     theme: z.string(),
@@ -127,13 +100,15 @@ export const PersonalizationDataSchema = z
   })
   .partial();
 
-const s = createInsertSchema(users);
 export const CreateUserSchema = createInsertSchema(users, {
   preferences: UserPreferencesSchema.optional(),
   personalization: PersonalizationDataSchema.optional(),
   conditionAssignments: z.record(z.string()),
 });
+export type CreateUserInput = z.infer<typeof CreateUserSchema>;
+
 export const UpdateUserSchema = CreateUserSchema.partial();
+export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
 
 export type UserPreferences = z.infer<typeof UserPreferencesSchema>;
 export type PersonalizationData = z.infer<typeof PersonalizationDataSchema>;
@@ -183,10 +158,7 @@ export const events = pgTable(
     data: jsonb("data"),
     createdAt: CreatedAt,
   },
-  (table) => [
-    index("events_user_id_idx").on(table.userId),
-    index("events_type_idx").on(table.type),
-  ]
+  (table) => [index("events_user_id_idx").on(table.userId), index("events_type_idx").on(table.type)]
 );
 export const CreateEventSchema = createInsertSchema(events);
 
@@ -273,31 +245,24 @@ export const constructed_responses = pgTable(
   ]
 );
 
-export type ConstructedResponse = InferSelectModel<
-  typeof constructed_responses
->;
-export const CreateConstructedResponseSchema = createInsertSchema(
-  constructed_responses
-);
+export type ConstructedResponse = InferSelectModel<typeof constructed_responses>;
+export const CreateConstructedResponseSchema = createInsertSchema(constructed_responses);
 
-export const constructed_responses_feedback = pgTable(
-  "constructed_responses_feedback",
-  {
-    id: serial("id").primaryKey().notNull(),
-    userId: text("user_id")
-      .notNull()
-      .references(() => users.id, {
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      }),
-    pageSlug: text("page_slug").notNull(),
-    chunkSlug: text("chunk_slug").notNull(),
-    isPositive: boolean("is_positive").notNull(),
-    text: text("text").notNull(),
-    tags: text("tags").array().notNull(),
-    createdAt: CreatedAt,
-  }
-);
+export const constructed_responses_feedback = pgTable("constructed_responses_feedback", {
+  id: serial("id").primaryKey().notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+  pageSlug: text("page_slug").notNull(),
+  chunkSlug: text("chunk_slug").notNull(),
+  isPositive: boolean("is_positive").notNull(),
+  text: text("text").notNull(),
+  tags: text("tags").array().notNull(),
+  createdAt: CreatedAt,
+});
 export const CreateConstructedResponseFeedbackSchema = createInsertSchema(
   constructed_responses_feedback,
   {
