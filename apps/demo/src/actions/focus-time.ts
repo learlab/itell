@@ -1,16 +1,10 @@
 "use server";
 
 import { and, eq } from "drizzle-orm";
-import { memoize } from "nextjs-better-unstable-cache";
-import { z } from "zod";
 
 import { db, first } from "@/db";
 import { CreateFocusTimeSchema, events, focus_times } from "@/drizzle/schema";
-import {
-  EventType,
-  FOCUS_TIME_SAVE_INTERVAL,
-  isProduction,
-} from "@/lib/constants";
+import { EventType, isProduction } from "@/lib/constants";
 import { authedProcedure } from "./utils";
 import type { FocusTimeData } from "@/drizzle/schema";
 
@@ -39,12 +33,7 @@ export const createFocusTimeAction = authedProcedure
           await tx
             .select()
             .from(focus_times)
-            .where(
-              and(
-                eq(focus_times.userId, userId),
-                eq(focus_times.pageSlug, input.pageSlug)
-              )
-            )
+            .where(and(eq(focus_times.userId, userId), eq(focus_times.pageSlug, input.pageSlug)))
         );
 
         // update or insert focus_times record
@@ -64,12 +53,7 @@ export const createFocusTimeAction = authedProcedure
           await tx
             .update(focus_times)
             .set({ data: newData })
-            .where(
-              and(
-                eq(focus_times.userId, userId),
-                eq(focus_times.pageSlug, input.pageSlug)
-              )
-            );
+            .where(and(eq(focus_times.userId, userId), eq(focus_times.pageSlug, input.pageSlug)));
         } else {
           await tx.insert(focus_times).values({
             pageSlug: input.pageSlug,

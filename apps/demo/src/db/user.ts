@@ -8,9 +8,7 @@ import * as schema from "../drizzle/schema";
 
 export const findUser = memoize(
   async (id: string) => {
-    return first(
-      await db.select().from(schema.users).where(eq(schema.users.id, id))
-    );
+    return first(await db.select().from(schema.users).where(eq(schema.users.id, id)));
   },
   {
     persist: true,
@@ -29,18 +27,12 @@ type FindProviderArgs = {
 /**
  * Find user by oauth provider
  */
-export const findUserByProvider = async ({
-  provider_id,
-  provider_user_id,
-}: FindProviderArgs) => {
+export const findUserByProvider = async ({ provider_id, provider_user_id }: FindProviderArgs) => {
   const joined = first(
     await db
       .select()
       .from(schema.users)
-      .innerJoin(
-        schema.oauthAccounts,
-        eq(schema.users.id, schema.oauthAccounts.user_id)
-      )
+      .innerJoin(schema.oauthAccounts, eq(schema.users.id, schema.oauthAccounts.user_id))
       .where(
         and(
           eq(schema.oauthAccounts.provider_id, provider_id),
@@ -79,15 +71,8 @@ export const createUser = async ({
  *
  * This function does not call revalidateTag (which updateUserAction does)
  */
-export const updateUser = async (
-  userId: string,
-  values: schema.UpdateUserInput
-) => {
-  return await db
-    .update(schema.users)
-    .set(values)
-    .where(eq(schema.users.id, userId))
-    .returning();
+export const updateUser = async (userId: string, values: schema.UpdateUserInput) => {
+  return await db.update(schema.users).set(values).where(eq(schema.users.id, userId)).returning();
 };
 
 /**

@@ -24,43 +24,36 @@ export async function ClassQuizTable({ students, classId }: Props) {
 
   // loop through students instead of data to show all students in the table
   // for each student, generate the object {page1: correctCount, page2: correctCount, ...}
-  const byStudent = students.reduce<Record<string, Record<string, number>>>(
-    (acc, cur) => {
-      const entries = data.filter((d) => d.userId === cur.id);
+  const byStudent = students.reduce<Record<string, Record<string, number>>>((acc, cur) => {
+    const entries = data.filter((d) => d.userId === cur.id);
 
-      if (entries.length === 0) {
-        acc[cur.name] = {};
-        return acc;
-      }
-      const name = entries[0].name;
-
-      if (!acc[name]) {
-        acc[name] = {};
-      }
-
-      for (const entry of entries) {
-        acc[name][entry.pageSlug] = entry.count;
-      }
-
+    if (entries.length === 0) {
+      acc[cur.name] = {};
       return acc;
-    },
-    {}
-  );
+    }
+    const name = entries[0].name;
+
+    if (!acc[name]) {
+      acc[name] = {};
+    }
+
+    for (const entry of entries) {
+      acc[name][entry.pageSlug] = entry.count;
+    }
+
+    return acc;
+  }, {});
   const studentsArr = Object.entries(byStudent).map(([name, records]) => ({
     name,
     total: Object.keys(records).length,
-    ...Object.fromEntries(
-      quizPages.map((page) => [page.slug, records[page.slug] ?? -1])
-    ),
+    ...Object.fromEntries(quizPages.map((page) => [page.slug, records[page.slug] ?? -1])),
   }));
 
   return <QuizTableClient data={studentsArr} quizPages={quizPages} />;
 }
 
-ClassQuizTable.Skeleton = function () {
+ClassQuizTable.Skeleton = function TableSkeleton() {
   return <Skeleton className="h-80 w-full" />;
 };
 
-ClassQuizTable.ErrorFallback = CreateErrorFallback(
-  "Failed to get quiz statistics"
-);
+ClassQuizTable.ErrorFallback = CreateErrorFallback("Failed to get quiz statistics");

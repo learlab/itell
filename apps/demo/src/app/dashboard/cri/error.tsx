@@ -1,14 +1,13 @@
 "use client";
 
-import { DashboardHeader, DashboardShell } from "@dashboard/shell";
-
 import { DashboardError } from "@/components/dashboard-error";
 import { Meta } from "@/config/metadata";
+import { DashboardHeader, DashboardShell } from "../_components/shell";
 
 export default function Page({ error }: { error: Error }) {
   return (
     <DashboardShell>
-      <DashboardHeader heading={Meta.summaries.title} text={Meta.summaries.description} />
+      <DashboardHeader heading={Meta.cri.title} text={Meta.cri.description} />
       <DashboardError error={error} />
     </DashboardShell>
   );

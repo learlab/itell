@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@itell/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
 import { Separator } from "@itell/ui/separator";
 import { JoinClassModal } from "@dashboard/join-class-modal";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
@@ -27,8 +21,7 @@ export default async function Page(props: {
 }) {
   const searchParams = await props.searchParams;
   const { user } = await getSession();
-  const join_class_code =
-    routes.dashboardSettings.$parseSearchParams(searchParams).join_class_code;
+  const join_class_code = routes.dashboardSettings.$parseSearchParams(searchParams).join_class_code;
 
   if (!user) {
     return redirectWithSearchParams("/auth", searchParams);
@@ -63,10 +56,7 @@ export default async function Page(props: {
 
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={Meta.settings.title}
-        text={Meta.settings.description}
-      />
+      <DashboardHeader heading={Meta.settings.title} text={Meta.settings.description} />
       <Card>
         <CardHeader>
           <CardTitle>Edit your settings</CardTitle>

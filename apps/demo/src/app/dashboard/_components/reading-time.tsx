@@ -1,18 +1,8 @@
 import Link from "next/link";
 import { getReadingTimeChartData, PrevDaysLookup } from "@itell/core/dashboard";
 import { Button } from "@itell/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@itell/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@itell/ui/hover-card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@itell/ui/hover-card";
 import { Skeleton } from "@itell/ui/skeleton";
 import { getDatesBetween } from "@itell/utils";
 import { InfoIcon } from "lucide-react";
@@ -64,8 +54,7 @@ export async function ReadingTime({ userId, params, name }: Props) {
               </HoverCardTrigger>
               <HoverCardContent>
                 <p className="text-sm font-semibold">
-                  Measures how long a user has stayed in all textbook pages, in
-                  minutes
+                  Measures how long a user has stayed in all textbook pages, in minutes
                 </p>
               </HoverCardContent>
             </HoverCard>
@@ -73,16 +62,12 @@ export async function ReadingTime({ userId, params, name }: Props) {
           </div>
         </CardTitle>
         <CardDescription>
-          {name ? name : "You"} spent {Math.round(totalViewTime / 60)} minutes
-          reading the textbook, wrote{" "}
-          <Link
-            className="font-semibold underline"
-            href={routes.dashboardSummaries()}
-          >
+          {name ? name : "You"} spent {Math.round(totalViewTime / 60)} minutes reading the textbook,
+          wrote{" "}
+          <Link className="font-semibold underline" href={routes.dashboardSummaries()}>
             {pluralize("summary", summaryCount, true)}
           </Link>{" "}
-          during {startDate.toLocaleDateString()} -{" "}
-          {new Date().toLocaleDateString()}
+          during {startDate.toLocaleDateString()} - {new Date().toLocaleDateString()}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2 pl-2">
@@ -95,9 +80,7 @@ export async function ReadingTime({ userId, params, name }: Props) {
 ReadingTime.Skeleton = function ReadingTimeSkeleton() {
   return <Skeleton className="h-[350px] w-full" />;
 };
-ReadingTime.ErrorFallback = CreateErrorFallback(
-  "Failed to calculate total reading time"
-);
+ReadingTime.ErrorFallback = CreateErrorFallback("Failed to calculate total reading time");
 
 const subDays = (date: Date, days: number) => {
   const result = new Date(date);

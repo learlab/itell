@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@itell/utils";
+import { Alert, AlertDescription, AlertTitle } from "@itell/ui/alert";
 
 export function InternalError({
   className,
@@ -9,12 +9,9 @@ export function InternalError({
   children?: React.ReactNode;
 }) {
   return (
-    <div className={cn("tex-sm leading-snug text-destructive", className)}>
-      {children ? (
-        children
-      ) : (
-        <p>An internal error occurred. Please try again later.</p>
-      )}
-    </div>
+    <Alert variant={"error"} className={className}>
+      <AlertTitle>Operation failed</AlertTitle>
+      {children && <AlertDescription>{children}</AlertDescription>}
+    </Alert>
   );
 }

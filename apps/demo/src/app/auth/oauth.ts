@@ -94,17 +94,10 @@ export const createOAuthCallbackHandler = ({
       });
     }
 
-    const { state: storedState, codeVerifier: storedCodeVerifier } =
-      await getState();
+    const { state: storedState, codeVerifier: storedCodeVerifier } = await getState();
     const { dst, join_class_code } = await readAuthData();
 
-    if (
-      !code ||
-      !state ||
-      !storedState ||
-      !storedCodeVerifier ||
-      state !== storedState
-    ) {
+    if (!code || !state || !storedState || !storedCodeVerifier || state !== storedState) {
       return notFound();
     }
 
@@ -118,10 +111,9 @@ export const createOAuthCallbackHandler = ({
         provider_user_id: oauthUser.id,
       });
 
-      const teacher = join_class_code
-        ? await findTeacherByClass(join_class_code)
-        : null;
-      const invalidClassCode = join_class_code && !teacher;
+      const teacher = join_class_code ? await findTeacherByClass(join_class_code) : null;
+
+      const class_code_valid = join_class_code ? Boolean(teacher) : undefined;
 
       if (!user) {
         const pageConditions = getPageConditions(allPagesSorted);
@@ -133,9 +125,7 @@ export const createOAuthCallbackHandler = ({
             image: oauthUser.image,
             email: oauthUser.email,
             conditionAssignments: pageConditions,
-            role: env.ADMINS?.includes(oauthUser.email ?? "")
-              ? "admin"
-              : "user",
+            role: env.ADMINS?.includes(oauthUser.email ?? "") ? "admin" : "user",
             classId: teacher ? join_class_code : null,
           },
           provider_id: providerId,
@@ -152,11 +142,7 @@ export const createOAuthCallbackHandler = ({
 
       const session = await lucia.createSession(user.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
-      (await cookies()).set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes
-      );
+      (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
       // redirect, which can be
       // - consent form if user has not given consent
@@ -167,14 +153,14 @@ export const createOAuthCallbackHandler = ({
         user.consentGiven === null
           ? routes.consent({
               search: {
-                invalid_class_code: invalidClassCode ? "true" : undefined,
+                class_code_valid,
               },
             })
           : dst !== "/"
             ? dst
             : routes.home({
                 search: {
-                  invalid_class_code: invalidClassCode ? "true" : undefined,
+                  class_code_valid,
                 },
               });
 

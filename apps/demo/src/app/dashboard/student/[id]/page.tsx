@@ -10,6 +10,7 @@ import { UserStatistics } from "@dashboard/user-statistics";
 import { Meta } from "@/config/metadata";
 import { findUser } from "@/db/user";
 import { type User } from "@/drizzle/schema";
+import { Errors } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { firstAssignmentPage, getPageData } from "@/lib/pages/pages.server";
 import { checkTeacher } from "../../teacher/check-teacher";
@@ -26,44 +27,22 @@ export default async function Page(props: PageProps) {
 
   const student = await findUser(id);
   if (!student || student.classId !== teacher.classId) {
-    return (
-      <DashboardShell>
-        <DashboardHeader
-          heading={Meta.student.title}
-          text={Meta.student.description}
-        />
-        <Errorbox>The student does not exist in your class</Errorbox>
-      </DashboardShell>
-    );
+    throw new Error(Errors.STUDENT_NOT_EXISTS);
   }
 
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={Meta.student.title}
-        text={Meta.student.description}
-      />
+      <DashboardHeader heading={Meta.student.title} text={Meta.student.description} />
       <StudentProfile student={student} searchParams={searchParams} />
     </DashboardShell>
   );
 }
 
-function StudentProfile({
-  student,
-  searchParams,
-}: {
-  student: User;
-  searchParams: unknown;
-}) {
+function StudentProfile({ student, searchParams }: { student: User; searchParams: unknown }) {
   const page = getPageData(student.pageSlug);
-  const { reading_time_level } =
-    routes.dashboardStudent.$parseSearchParams(searchParams);
+  const { reading_time_level } = routes.dashboardStudent.$parseSearchParams(searchParams);
   let readingTimeLevel = ReadingTimeChartLevel.week_1;
-  if (
-    Object.values(ReadingTimeChartLevel).includes(
-      reading_time_level as ReadingTimeChartLevel
-    )
-  ) {
+  if (Object.values(ReadingTimeChartLevel).includes(reading_time_level as ReadingTimeChartLevel)) {
     readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
   }
   return (
@@ -83,10 +62,7 @@ function StudentProfile({
             <p>joined at {student.createdAt.toLocaleString("en-us")}</p>
           </div>
           <div className="text-center">
-            <UserProgress
-              pageSlug={student.pageSlug}
-              finished={student.finished}
-            />
+            <UserProgress pageSlug={student.pageSlug} finished={student.finished} />
           </div>
 
           <div className="flex justify-between">

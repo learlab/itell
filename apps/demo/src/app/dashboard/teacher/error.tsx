@@ -1,14 +1,15 @@
 "use client";
 
-import { TeacherOnly } from "@/components/teacher-only";
+import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 
-import { DashboardHeader, DashboardShell } from "../_components/shell";
+import { DashboardError } from "@/components/dashboard-error";
+import { Meta } from "@/config/metadata";
 
-export default function Error() {
+export default function Page({ error }: { error: Error }) {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Class Information" />
-      <TeacherOnly />
+      <DashboardHeader heading={Meta.homeTeacher.title} text={Meta.homeTeacher.description} />
+      <DashboardError error={error} />
     </DashboardShell>
   );
 }

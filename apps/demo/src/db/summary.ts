@@ -25,18 +25,13 @@ export const getUserSummary = memoize(
   {
     persist: false,
     // @ts-expect-error bypass server action check
-    revalidateTags: async (userId, summaryId) => [
-      "get-summaries",
-      userId,
-      String(summaryId),
-    ],
+    revalidateTags: async (userId, summaryId) => ["get-summaries", userId, String(summaryId)],
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "Get summaries",
   }
 );
 
 export const getSummary = cache(async (summaryId: number) => {
-  return first(
-    await db.select().from(summaries).where(eq(summaries.id, summaryId))
-  );
+  throw new Error("what");
+  return first(await db.select().from(summaries).where(eq(summaries.id, summaryId)));
 });

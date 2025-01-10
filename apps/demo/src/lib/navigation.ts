@@ -2,21 +2,21 @@ import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { createNavigationConfig } from "next-safe-navigation";
 import { z } from "zod";
 
-export const { routes, useSafeParams, useSafeSearchParams } =
-  createNavigationConfig((defineRoute) => ({
+export const { routes, useSafeParams, useSafeSearchParams } = createNavigationConfig(
+  (defineRoute) => ({
     home: defineRoute("/", {
       search: z
         .object({
-          invalid_class_code: z.string().optional(),
+          class_code_valid: z.boolean().optional(),
         })
-        .default({ invalid_class_code: undefined }),
+        .default({ class_code_valid: undefined }),
     }),
     consent: defineRoute("/consent", {
       search: z
         .object({
-          invalid_class_code: z.string().optional(),
+          class_code_valid: z.boolean().optional(),
         })
-        .default({ invalid_class_code: undefined }),
+        .default({ class_code_valid: undefined }),
     }),
     auth: defineRoute("/auth", {
       search: z
@@ -102,4 +102,5 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         sectionId: z.string(),
       }),
     }),
-  }));
+  })
+);
