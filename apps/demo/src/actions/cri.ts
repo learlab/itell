@@ -22,11 +22,11 @@ export const createQuestionAnswerAction = authedProcedure
   .input(CreateConstructedResponseSchema.omit({ userId: true }))
   .handler(async ({ input, ctx }) => {
     if (isProduction) {
-      return await db.insert(constructed_responses).values({
-        ...input,
-        userId: ctx.user.id,
-      });
     }
+    return await db.insert(constructed_responses).values({
+      ...input,
+      userId: ctx.user.id,
+    });
   });
 
 /**
@@ -71,39 +71,4 @@ export const updateCRIStreakAction = authedProcedure
       });
 
     return updatedUser[0].personalization?.cri_streak ?? 0;
-  });
-
-/**
- * Get streak of correctly answered questions for user
- */
-
-export const getUserQuestionStreakAction = authedProcedure.handler(
-  async ({ ctx }) => {
-    return ctx.user.personalization.cri_streak;
-  }
-);
-
-/**
- * Get question-answer statistics for class
- */
-export const getAnswerStatsClassAction = authedProcedure
-  .input(
-    z.object({
-      classId: z.string(),
-    })
-  )
-  .handler(async ({ input }) => {
-    return await db.transaction(async (tx) => {
-      const byScore = await tx
-        .select({
-          count: count(),
-          score: constructed_responses.score,
-        })
-        .from(constructed_responses)
-        .leftJoin(users, eq(users.id, constructed_responses.userId))
-        .where(eq(users.classId, input.classId))
-        .groupBy(constructed_responses.score);
-
-      return { byScore };
-    });
   });

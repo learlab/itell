@@ -8,17 +8,17 @@ export async function DashboardNav() {
   const { user } = await getSession();
 
   return (
-    <div className="flex h-[var(--nav-height)] justify-between gap-4 px-6 md:gap-10">
-      <div className="flex items-center gap-4">
+    <div className="flex h-[var(--nav-height)] items-center justify-between gap-4 px-6 md:gap-10">
+      <SidebarTrigger />
+      <div className="ml-auto flex items-center gap-4">
         <ContinueReading
           user={user}
           text="Back to textbook"
           variant="outline"
           className="hidden md:block"
         />
-        <SidebarTrigger />
+        {user ? <DashboardNavMenu user={user} /> : null}
       </div>
-      {user ? <DashboardNavMenu user={user} /> : null}
     </div>
   );
 }

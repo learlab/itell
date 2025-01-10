@@ -4,8 +4,8 @@ import { CRIChart } from "@cri/cri-chart";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import pluralize from "pluralize";
 
-import { getAnswerStatsClassAction } from "@/actions/question";
 import { Meta } from "@/config/metadata";
+import { getClassCRIStats } from "@/db/cri";
 import { incrementView } from "@/db/dashboard";
 import { getScoreMeta } from "../../cri/get-label";
 import { checkTeacher } from "../check-teacher";
@@ -17,13 +17,7 @@ export default async function Page() {
   }
 
   incrementView({ userId: teacher.id, pageSlug: Meta.criTeacher.slug });
-  const [data, err] = await getAnswerStatsClassAction({
-    classId: teacher.classId,
-  });
-  if (err) {
-    throw new Error("failed to get answer statistics", { cause: err });
-  }
-  const { byScore } = data;
+  const { byScore } = await getClassCRIStats(teacher.classId);
   const count = byScore.reduce((acc, s) => acc + s.count, 0);
 
   const chartData = byScore.map((s) => {
@@ -38,14 +32,11 @@ export default async function Page() {
 
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={Meta.criTeacher.title}
-        text={Meta.criTeacher.description}
-      />
+      <DashboardHeader heading={Meta.criTeacher.title} text={Meta.criTeacher.description} />
       <Card>
         <CardHeader>
           <CardDescription>
-            {pluralize("question", count, true)} was answered in total
+            Your class answered {pluralize("question", count, true)} constructed response items.
           </CardDescription>
         </CardHeader>
         {count > 0 && (

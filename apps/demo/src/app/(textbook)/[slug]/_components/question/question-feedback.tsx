@@ -3,27 +3,16 @@
 import { useState } from "react";
 import { Button } from "@itell/ui/button";
 import { Checkbox } from "@itell/ui/checkbox";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@itell/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@itell/ui/dialog";
 import { Label } from "@itell/ui/label";
+import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 import { TextArea } from "@itell/ui/textarea";
-import {
-  MessageCircleCodeIcon,
-  SendHorizontalIcon,
-  ThumbsDown,
-  ThumbsUp,
-} from "lucide-react";
+import { MessageCircleCodeIcon, SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
-import { createQuestionFeedbackAction } from "@/actions/question";
+import { createQuestionFeedbackAction } from "@/actions/cri";
 import { InternalError } from "@/components/internal-error";
-import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 
 type Props = {
   chunkSlug: string;
@@ -47,7 +36,11 @@ export function QuestionFeedback({ pageSlug, chunkSlug }: Props) {
           setOpen(true);
         }}
       >
-        <button type="button" aria-label="Provide feedback">
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground underline"
+        >
+          <span>Provide feedback</span>
           <MessageCircleCodeIcon className="size-4" />
         </button>
       </DialogTrigger>
@@ -75,9 +68,7 @@ export function QuestionFeedback({ pageSlug, chunkSlug }: Props) {
             });
             if (!err) {
               setOpen(false);
-              toast.success(
-                "Thanks for your feedback. We'll review it shortly."
-              );
+              toast.success("Thanks for your feedback. We'll review it shortly.");
             }
             setPending(false);
           }}
@@ -88,9 +79,7 @@ export function QuestionFeedback({ pageSlug, chunkSlug }: Props) {
             className="flex gap-4"
             required
             value={isPositive ? "yes" : "no"}
-            onValueChange={(value) =>
-              setIsPositive(value === "yes" ? true : false)
-            }
+            onValueChange={(value) => setIsPositive(value === "yes" ? true : false)}
           >
             <Label className="flex items-center gap-2">
               <RadioGroupItem value="yes" />
@@ -112,7 +101,7 @@ export function QuestionFeedback({ pageSlug, chunkSlug }: Props) {
           </Label>
 
           <div className="flex flex-col gap-3">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               (Optional) Select the tags that best describe the feedback:
             </p>
             {allTags.map((tag) => (

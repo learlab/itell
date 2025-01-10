@@ -112,12 +112,11 @@ export const createOAuthCallbackHandler = ({
       });
 
       const teacher = join_class_code ? await findTeacherByClass(join_class_code) : null;
-
-      const class_code_valid = join_class_code ? Boolean(teacher) : undefined;
+      let class_code_valid: boolean | undefined = undefined;
 
       if (!user) {
         const pageConditions = getPageConditions(allPagesSorted);
-
+        class_code_valid = join_class_code ? Boolean(teacher) : undefined;
         const newUser = await createUser({
           user: {
             id: generateIdFromEntropySize(16),
@@ -135,8 +134,11 @@ export const createOAuthCallbackHandler = ({
         user = newUser;
       } else {
         // for existing users without a class id, update their record
-        if (teacher && !user.classId) {
-          updateUser(user.id, { classId: join_class_code });
+        if (!user.classId) {
+          class_code_valid = Boolean(teacher);
+          if (teacher) {
+            updateUser(user.id, { classId: join_class_code });
+          }
         }
       }
 
@@ -151,18 +153,26 @@ export const createOAuthCallbackHandler = ({
       // - homepage (fallback)
       const url =
         user.consentGiven === null
-          ? routes.consent({
-              search: {
-                class_code_valid,
-              },
-            })
+          ? routes.consent(
+              class_code_valid !== undefined
+                ? {
+                    search: {
+                      class_code_valid,
+                    },
+                  }
+                : {}
+            )
           : dst !== "/"
             ? dst
-            : routes.home({
-                search: {
-                  class_code_valid,
-                },
-              });
+            : routes.home(
+                class_code_valid !== undefined
+                  ? {
+                      search: {
+                        class_code_valid,
+                      },
+                    }
+                  : {}
+              );
 
       return new Response(null, {
         status: 303,

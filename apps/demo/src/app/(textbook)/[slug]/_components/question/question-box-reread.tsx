@@ -11,7 +11,7 @@ import { PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
-import { createQuestionAnswerAction } from "@/actions/question";
+import { createQuestionAnswerAction } from "@/actions/cri";
 import { InternalError } from "@/components/internal-error";
 import { useQuestionStore } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
@@ -20,11 +20,7 @@ import { Condition, isProduction } from "@/lib/constants";
 import { SelectShouldBlur } from "@/lib/store/question-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
 import { FinishQuestionButton } from "./finish-question-button";
-import {
-  QuestionBoxContent,
-  QuestionBoxHeader,
-  QuestionBoxShell,
-} from "./question-box-shell";
+import { QuestionBoxContent, QuestionBoxHeader, QuestionBoxShell } from "./question-box-shell";
 import { StatusReread } from "./types";
 import type { QuestionScore } from "./types";
 
@@ -99,8 +95,7 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
   });
   const isPending = useDebounce(_isPending, 100);
 
-  const isNextButtonDisplayed =
-    shouldBlur && state.status === StatusReread.ANSWERED;
+  const isNextButtonDisplayed = shouldBlur && state.status === StatusReread.ANSWERED;
 
   useEffect(() => {
     if (error) {
@@ -141,8 +136,8 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
         <div role="status">
           {state.status === StatusReread.ANSWERED && (
             <p className="text-sm text-muted-foreground">
-              Thanks for completing this question. You can move on to the next
-              section or refine your answer.
+              Thanks for completing this question. You can move on to the next section or refine
+              your answer.
             </p>
           )}
         </div>
@@ -165,9 +160,7 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
               onPaste={(e) => {
                 if (isProduction && !isAdmin) {
                   e.preventDefault();
-                  toast.warning(
-                    "Copy & Paste is disallowed, please answer with your own words."
-                  );
+                  toast.warning("Copy & Paste is disallowed, please answer with your own words.");
                 }
               }}
               onKeyDown={(e) => {
@@ -207,8 +200,7 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
               </StatusButton>
             ) : null}
 
-            {state.status !== StatusReread.UNANSWERED &&
-            isNextButtonDisplayed ? (
+            {state.status !== StatusReread.UNANSWERED && isNextButtonDisplayed ? (
               <FinishQuestionButton
                 pageSlug={pageSlug}
                 chunkSlug={chunkSlug}

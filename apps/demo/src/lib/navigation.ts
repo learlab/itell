@@ -2,19 +2,33 @@ import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { createNavigationConfig } from "next-safe-navigation";
 import { z } from "zod";
 
+const classCodeValid = z.union([
+  z.boolean().optional(),
+  z
+    .string()
+    .optional()
+    .transform((val) => {
+      if (val === "undefined") return undefined;
+      if (val === "true") return true;
+      if (val === "false") return false;
+
+      return false;
+    }),
+]);
+
 export const { routes, useSafeParams, useSafeSearchParams } = createNavigationConfig(
   (defineRoute) => ({
     home: defineRoute("/", {
       search: z
         .object({
-          class_code_valid: z.boolean().optional(),
+          class_code_valid: classCodeValid,
         })
         .default({ class_code_valid: undefined }),
     }),
     consent: defineRoute("/consent", {
       search: z
         .object({
-          class_code_valid: z.boolean().optional(),
+          class_code_valid: classCodeValid,
         })
         .default({ class_code_valid: undefined }),
     }),
@@ -59,6 +73,8 @@ export const { routes, useSafeParams, useSafeSearchParams } = createNavigationCo
         }),
     }),
     dashboardTeacher: defineRoute("/dashboard/teacher"),
+    dashboardCRI: defineRoute("/dashboard/cri"),
+    dashboardCRITeacher: defineRoute("/dashboard/teacher/cri"),
     dashboardForms: defineRoute("/dashboard/forms"),
     dashboardSummaries: defineRoute("/dashboard/summaries", {
       search: z

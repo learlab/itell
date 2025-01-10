@@ -1,7 +1,24 @@
 import { count, eq } from "drizzle-orm";
 
-import { constructed_responses } from "@/drizzle/schema";
+import { constructed_responses, users } from "@/drizzle/schema";
 import { db } from ".";
+
+/**
+ * Get CRI statistics for class
+ */
+export const getClassCRIStats = async (classId: string) => {
+  const byScore = await db
+    .select({
+      count: count(),
+      score: constructed_responses.score,
+    })
+    .from(constructed_responses)
+    .leftJoin(users, eq(users.id, constructed_responses.userId))
+    .where(eq(users.classId, classId))
+    .groupBy(constructed_responses.score);
+
+  return { byScore };
+};
 
 /**
  * Get CRI statistics

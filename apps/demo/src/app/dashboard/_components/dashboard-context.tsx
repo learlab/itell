@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-  useTransition,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { ClassRole, DASHBOARD_ROLE_COOKIE } from "@/lib/constants";
@@ -15,11 +9,9 @@ import { setCookie } from "@/lib/cookie";
 export type Role = (typeof ClassRole)[keyof typeof ClassRole];
 type DashboardContextType = {
   role: Role;
-  onRoleChange: (_: Role) => void;
+  switchRole: (_: Role) => void;
 };
-const DashboardContext = createContext<DashboardContextType>(
-  {} as DashboardContextType
-);
+const DashboardContext = createContext<DashboardContextType>({} as DashboardContextType);
 
 const routeMappings: Record<Role, Record<string, string | undefined>> = {
   teacher: {
@@ -41,12 +33,16 @@ export function DashboardProvider({
   children: React.ReactNode;
   defaultRole?: Role;
 }) {
-  const [role, setRole] = useState(defaultRole ?? ClassRole.STUDENT);
   const pathname = usePathname();
+  const [role, setRole] = useState(
+    pathname && pathname.startsWith("/dashboard/teacher")
+      ? ClassRole.TEACHER
+      : (defaultRole ?? ClassRole.STUDENT)
+  );
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
-  const onRoleChange = useCallback(
+  const switchRole = useCallback(
     (role: Role) => {
       setRole(role);
       setCookie(DASHBOARD_ROLE_COOKIE, role);
@@ -63,11 +59,8 @@ export function DashboardProvider({
   );
 
   return (
-    <DashboardContext.Provider value={{ role, onRoleChange }}>
-      <div
-        className="group flex flex-col"
-        data-pending={pending ? "" : undefined}
-      >
+    <DashboardContext.Provider value={{ role, switchRole }}>
+      <div className="group flex flex-col" data-pending={pending ? "" : undefined}>
         {children}
       </div>
     </DashboardContext.Provider>
