@@ -16,6 +16,7 @@ import { type User } from "lucia";
 
 import { isProduction } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
+import { firstAssignmentPage } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 
 type Props = {
@@ -34,7 +35,7 @@ export function PageStatusModal({ user, pageStatus }: Props) {
       return null;
     }
 
-    const href = makePageHref(user.pageSlug);
+    const href = makePageHref(user.pageSlug ?? firstAssignmentPage?.slug ?? null);
 
     // user with locked page
     return (
@@ -91,9 +92,7 @@ function Modal({
       <DialogContent canClose={!isProduction}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description ? (
-            <DialogDescription>{description}</DialogDescription>
-          ) : null}
+          {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
         {children}
       </DialogContent>
