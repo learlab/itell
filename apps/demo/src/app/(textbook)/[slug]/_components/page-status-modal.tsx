@@ -17,7 +17,6 @@ import { type User } from "lucia";
 import { TakeConsent } from "@/components/take-consent";
 import { isProduction } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
-import { firstAssignmentPage } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 
 type Props = {
@@ -51,7 +50,7 @@ export function PageStatusModal({ user, pageStatus }: Props) {
       return null;
     }
 
-    const href = makePageHref(user.pageSlug ?? firstAssignmentPage?.slug ?? null);
+    const href = makePageHref(user.pageSlug ?? "1-methods-of-knowing");
 
     // user with locked page
     return (
