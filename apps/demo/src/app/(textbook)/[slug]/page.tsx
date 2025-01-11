@@ -20,21 +20,15 @@ import { MobilePopup } from "@/components/mobile-popup";
 import { PageProvider } from "@/components/provider/page-provider";
 import { getSession } from "@/lib/auth";
 import { getUserCondition } from "@/lib/auth/conditions";
-import {
-  Condition,
-  isProduction,
-  PAGE_HEADER_PIN_COOKIE,
-} from "@/lib/constants";
+import { Condition, isProduction, PAGE_HEADER_PIN_COOKIE } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { getPageStatus } from "@/lib/page-status";
-import { getPage } from "@/lib/pages/pages.server";
+import { firstAssignmentPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
 
-const ResourceLoader = dynamic(() =>
-  import("./resource-loader").then((mod) => mod.ResourceLoader)
-);
+const ResourceLoader = dynamic(() => import("./resource-loader").then((mod) => mod.ResourceLoader));
 
 export default async function Page(props: {
   params: Promise<unknown>;
@@ -53,9 +47,7 @@ export default async function Page(props: {
   const userId = user?.id ?? null;
   const userFinished = user?.finished ?? false;
   const userPageSlug = user?.pageSlug ?? null;
-  const userCondition = user
-    ? getUserCondition(user, pageSlug)
-    : Condition.STAIRS;
+  const userCondition = user ? getUserCondition(user, pageSlug) : Condition.STAIRS;
   const pageStatus = getPageStatus({
     pageSlug,
     userPageSlug,
@@ -69,11 +61,7 @@ export default async function Page(props: {
       <TextbookWrapper>
         <div id={Elements.TEXTBOOK_NAV}>
           <ScrollArea className="h-full w-full px-6 py-2">
-            <TextbookToc
-              page={page}
-              userPageSlug={userPageSlug}
-              userFinished={userFinished}
-            />
+            <TextbookToc page={page} userPageSlug={userPageSlug} userFinished={userFinished} />
           </ScrollArea>
         </div>
 
@@ -81,9 +69,7 @@ export default async function Page(props: {
           <PageHeader
             page={page}
             pageStatus={pageStatus}
-            pin={
-              (await cookies()).get(PAGE_HEADER_PIN_COOKIE)?.value === "true"
-            }
+            pin={(await cookies()).get(PAGE_HEADER_PIN_COOKIE)?.value === "true"}
           />
           <div className="col-span-1 col-start-2 mt-4 flex flex-col gap-4">
             <PageTitle>{page.title}</PageTitle>
@@ -107,10 +93,7 @@ export default async function Page(props: {
                 />
               </Suspense>
             ) : null}
-            <Pager
-              pageIndex={page.order}
-              userPageSlug={user?.pageSlug ?? null}
-            />
+            <Pager pageIndex={page.order} userPageSlug={user?.pageSlug ?? null} />
           </div>
         </PageContentWrapper>
       </TextbookWrapper>
@@ -122,7 +105,11 @@ export default async function Page(props: {
       {user ? <NoteLoader userId={user.id} pageSlug={pageSlug} /> : null}
 
       {isProduction ? (
-        <PageStatusModal user={user} pageStatus={pageStatus} />
+        <PageStatusModal
+          user={user}
+          pageStatus={pageStatus}
+          fallbackPageSlug={firstAssignmentPage?.slug ?? null}
+        />
       ) : null}
       <ChunkControl
         userId={userId}
