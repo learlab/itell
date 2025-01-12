@@ -14,12 +14,12 @@ import { useActionStatus } from "use-action-status";
 import { createEventAction } from "@/actions/event";
 import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { Confetti } from "@/components/ui/confetti";
 import { EventType } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { PageData } from "@/lib/pages";
 import type { FormEvent } from "react";
@@ -34,7 +34,7 @@ type Props = {
 // eslint-disable-next-line react/display-name
 export const SummaryFormSkip = memo(
   ({ pageStatus, page, streak, available_summary_skips }: Props) => {
-    const questionStore = useQuestionStore();
+    const questionStore = useCRIStore();
     const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
     const router = useRouter();
     const [pageFinished, setPageFinished] = useState(pageStatus.unlocked);

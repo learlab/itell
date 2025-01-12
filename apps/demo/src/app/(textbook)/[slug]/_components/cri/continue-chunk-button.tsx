@@ -7,10 +7,10 @@ import { MoveDownIcon } from "lucide-react";
 import { motion } from "motion/react";
 
 import { createEventAction } from "@/actions/event";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { buttonAnimationProps } from "@/lib/animations";
 import { EventType } from "@/lib/constants";
-import { SelectChunkStatus } from "@/lib/store/question-store";
+import { SelectChunkStatus } from "@/lib/store/cri-store";
 import type { Button } from "@itell/ui/button";
 
 interface Props extends React.ComponentPropsWithRef<typeof Button> {
@@ -20,7 +20,7 @@ interface Props extends React.ComponentPropsWithRef<typeof Button> {
 }
 
 export function ContinueChunkButton({ chunkSlug, pageSlug, condition }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const status = useSelector(store, SelectChunkStatus);
   const disabled = status[chunkSlug].hasQuestion && !status[chunkSlug].status;
 

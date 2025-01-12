@@ -4,15 +4,9 @@ import { Button } from "@itell/ui/button";
 import { useSelector } from "@xstate/store/react";
 
 import { createEventAction } from "@/actions/event";
-import {
-  useChunks,
-  useQuestionStore,
-} from "@/components/provider/page-provider";
+import { useChunks, useCRIStore } from "@/components/provider/page-provider";
 import { EventType } from "@/lib/constants";
-import {
-  SelectCurrentChunk,
-  SelectSummaryReady,
-} from "@/lib/store/question-store";
+import { SelectCurrentChunk, SelectSummaryReady } from "@/lib/store/cri-store";
 
 type Props = {
   chunkSlug: string;
@@ -25,7 +19,7 @@ export function FinishQuestionButton({
   pageSlug,
   condition,
 }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
   const isSummaryReady = useSelector(store, SelectSummaryReady);
   const chunks = useChunks();

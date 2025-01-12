@@ -13,14 +13,18 @@ import { useActionStatus } from "use-action-status";
 
 import { createQuestionAnswerAction } from "@/actions/cri";
 import { InternalError } from "@/components/internal-error";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
 import { isAdmin } from "@/lib/auth/role";
 import { Condition, isProduction } from "@/lib/constants";
-import { SelectShouldBlur } from "@/lib/store/question-store";
+import { SelectShouldBlur } from "@/lib/store/cri-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
 import { FinishQuestionButton } from "./finish-question-button";
-import { QuestionBoxContent, QuestionBoxHeader, QuestionBoxShell } from "./question-box-shell";
+import {
+  QuestionBoxContent,
+  QuestionBoxHeader,
+  QuestionBoxShell,
+} from "./question-box-shell";
 import { StatusReread } from "./types";
 import type { QuestionScore } from "./types";
 
@@ -38,7 +42,7 @@ type State = {
 };
 
 export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -95,7 +99,8 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
   });
   const isPending = useDebounce(_isPending, 100);
 
-  const isNextButtonDisplayed = shouldBlur && state.status === StatusReread.ANSWERED;
+  const isNextButtonDisplayed =
+    shouldBlur && state.status === StatusReread.ANSWERED;
 
   useEffect(() => {
     if (error) {
@@ -136,8 +141,8 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
         <div role="status">
           {state.status === StatusReread.ANSWERED && (
             <p className="text-sm text-muted-foreground">
-              Thanks for completing this question. You can move on to the next section or refine
-              your answer.
+              Thanks for completing this question. You can move on to the next
+              section or refine your answer.
             </p>
           )}
         </div>
@@ -156,11 +161,13 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
             <TextArea
               name="input"
               rows={3}
-              className="rounded-md p-4 shadow-md lg:text-lg"
+              className="rounded-md p-4 shadow-md xl:text-lg"
               onPaste={(e) => {
                 if (isProduction && !isAdmin) {
                   e.preventDefault();
-                  toast.warning("Copy & Paste is disallowed, please answer with your own words.");
+                  toast.warning(
+                    "Copy & Paste is disallowed, please answer with your own words."
+                  );
                 }
               }}
               onKeyDown={(e) => {
@@ -200,7 +207,8 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
               </StatusButton>
             ) : null}
 
-            {state.status !== StatusReread.UNANSWERED && isNextButtonDisplayed ? (
+            {state.status !== StatusReread.UNANSWERED &&
+            isNextButtonDisplayed ? (
               <FinishQuestionButton
                 pageSlug={pageSlug}
                 chunkSlug={chunkSlug}

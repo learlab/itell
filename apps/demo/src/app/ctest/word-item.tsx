@@ -88,7 +88,7 @@ interface LetterProps {
 function Letter({ letter }: LetterProps) {
   return (
     <Input
-      className="size-8 bg-muted px-1.5 text-center text-base text-muted-foreground lg:text-lg"
+      className="size-8 bg-muted px-1.5 text-center text-base text-muted-foreground xl:text-lg"
       type="text"
       defaultValue={letter}
       data-is-target={false}
@@ -152,7 +152,7 @@ function LetterInput({ letter, onNext, onPrev, ref }: LetterInputProps) {
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       className={cn(
-        "size-8 bg-muted px-1.5 text-center text-base focus-visible:ring-info lg:text-lg",
+        "size-8 bg-muted px-1.5 text-center text-base focus-visible:ring-info xl:text-lg",
         isCorrect === true
           ? "border-green-400 bg-green-50"
           : isCorrect === false

@@ -4,11 +4,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
 import { Button } from "@itell/ui/button";
 import { CardFooter } from "@itell/ui/card";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@itell/ui/hover-card";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@itell/ui/hover-card";
 import { Label } from "@itell/ui/label";
 import { StatusButton } from "@itell/ui/status-button";
 import { TextArea } from "@itell/ui/textarea";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@itell/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
@@ -16,16 +25,23 @@ import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
 
-import { createQuestionAnswerAction, updateCRIStreakAction } from "@/actions/cri";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import {
+  createQuestionAnswerAction,
+  updateCRIStreakAction,
+} from "@/actions/cri";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { Confetti } from "@/components/ui/confetti";
 import { apiClient } from "@/lib/api-client";
 // import { apiClient } from "@/lib/api-client";
 import { Condition, isProduction } from "@/lib/constants";
-import { SelectShouldBlur } from "@/lib/store/question-store";
+import { SelectShouldBlur } from "@/lib/store/cri-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
 import { FinishQuestionButton } from "./finish-question-button";
-import { QuestionBoxContent, QuestionBoxHeader, QuestionBoxShell } from "./question-box-shell";
+import {
+  QuestionBoxContent,
+  QuestionBoxHeader,
+  QuestionBoxShell,
+} from "./question-box-shell";
 import { QuestionExplainButton } from "./question-explain-button";
 import { QuestionFeedback } from "./question-feedback";
 import { borderColors, QuestionScore, StatusStairs } from "./types";
@@ -43,8 +59,13 @@ type State = {
   input: string;
 };
 
-export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Props) {
-  const store = useQuestionStore();
+export function QuestionBoxStairs({
+  question,
+  answer,
+  chunkSlug,
+  pageSlug,
+}: Props) {
+  const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const form = useRef<HTMLFormElement>(null);
 
@@ -145,7 +166,8 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
   const isPending = useDebounce(_isPending, 100);
 
   const status = state.status;
-  const isNextButtonDisplayed = shouldBlur && status !== StatusStairs.UNANSWERED;
+  const isNextButtonDisplayed =
+    shouldBlur && status !== StatusStairs.UNANSWERED;
 
   const borderColor = borderColors[state.status];
 
@@ -204,7 +226,10 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>You have answered {streak} questions correctly in a row, good job!</p>
+                    <p>
+                      You have answered {streak} questions correctly in a row,
+                      good job!
+                    </p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -216,18 +241,22 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
           <div role="status">
             {status === StatusStairs.BOTH_INCORRECT && (
               <p className="text-sm text-destructive-foreground">
-                <b>iTELL AI says:</b> You likely got a part of the answer wrong. Please try again.
+                <b>iTELL AI says:</b> You likely got a part of the answer wrong.
+                Please try again.
               </p>
             )}
 
             {status === StatusStairs.SEMI_CORRECT && (
               <p className="text-sm text-warning">
-                <b>iTELL AI says:</b> You may have missed something, but you were generally close.
+                <b>iTELL AI says:</b> You may have missed something, but you
+                were generally close.
               </p>
             )}
 
             {status === StatusStairs.BOTH_CORRECT ? (
-              <p className="text-center text-xl text-emerald-600">Your answer is correct!</p>
+              <p className="text-center text-xl text-emerald-600">
+                Your answer is correct!
+              </p>
             ) : null}
           </div>
 
@@ -236,7 +265,8 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
           </h3>
 
           <div className="flex items-center gap-2">
-            {(status === StatusStairs.SEMI_CORRECT || status === StatusStairs.BOTH_INCORRECT) && (
+            {(status === StatusStairs.SEMI_CORRECT ||
+              status === StatusStairs.BOTH_INCORRECT) && (
               <QuestionExplainButton
                 chunkSlug={chunkSlug}
                 pageSlug={pageSlug}
@@ -269,7 +299,7 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
               <TextArea
                 name="input"
                 rows={3}
-                className="rounded-md p-4 shadow-md lg:text-lg"
+                className="rounded-md p-4 shadow-md xl:text-lg"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && e.shiftKey) {
                     e.preventDefault();
@@ -285,7 +315,9 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
                 onPaste={(e) => {
                   if (isProduction) {
                     e.preventDefault();
-                    toast.warning("Copy & Paste is disallowed, please answer with your own words.");
+                    toast.warning(
+                      "Copy & Paste is disallowed, please answer with your own words."
+                    );
                   }
                 }}
               />
@@ -317,7 +349,8 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
                     </StatusButton>
                   )}
 
-                  {status !== StatusStairs.UNANSWERED && isNextButtonDisplayed ? (
+                  {status !== StatusStairs.UNANSWERED &&
+                  isNextButtonDisplayed ? (
                     <FinishQuestionButton
                       chunkSlug={chunkSlug}
                       pageSlug={pageSlug}
@@ -327,7 +360,9 @@ export function QuestionBoxStairs({ question, answer, chunkSlug, pageSlug }: Pro
                 </>
               )}
             </div>
-            {state.error ? <p className="text-center text-sm text-red-500">{state.error}</p> : null}
+            {state.error ? (
+              <p className="text-center text-sm text-red-500">{state.error}</p>
+            ) : null}
           </form>
         </QuestionBoxContent>
 

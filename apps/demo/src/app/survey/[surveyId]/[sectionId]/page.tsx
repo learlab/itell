@@ -1,6 +1,6 @@
 import Form from "next/form";
 import { notFound, redirect } from "next/navigation";
-import { Errorbox } from "@itell/ui/callout";
+import { Alert, AlertDescription } from "@itell/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
 import { Prose } from "@itell/ui/prose";
 import { Survey } from "#content";
@@ -75,7 +75,13 @@ export default async function SurveyQuestionPage(props: {
             answers.
           </p>
         )}
-        <Prose>{section.description}</Prose>
+        {section.description && (
+          <Alert variant={"info"}>
+            <AlertDescription className="xl:text-lg">
+              {section.description}
+            </AlertDescription>
+          </Alert>
+        )}
         <Form
           className="flex flex-col gap-8"
           action={async (formData: FormData) => {

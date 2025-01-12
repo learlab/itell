@@ -5,9 +5,9 @@ import { useSelector } from "@xstate/store/react";
 import { KeyIcon } from "lucide-react";
 
 import { createEventAction } from "@/actions/event";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { EventType } from "@/lib/constants";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 
 export function UnlockAssignmentsButton({
   pageSlug,
@@ -18,7 +18,7 @@ export function UnlockAssignmentsButton({
   chunkSlug: string;
   condition: string;
 }) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const isSummaryReady = useSelector(store, SelectSummaryReady);
 
   return (

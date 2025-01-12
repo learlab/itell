@@ -7,14 +7,14 @@ import { type Page } from "#content";
 
 import { type PageStatus } from "@/lib/page-status";
 import { createChatStore } from "@/lib/store/chat-store";
-import { createQuestionStore } from "@/lib/store/question-store";
+import { createCRIStore } from "@/lib/store/cri-store";
 import { createSummaryStore } from "@/lib/store/summary-store";
 import type { ChatStore } from "@/lib/store/chat-store";
 import type {
   ChunkQuestion,
-  QuestionSnapshot,
-  QuestionStore,
-} from "@/lib/store/question-store";
+  CRISnapshot,
+  CRIStore,
+} from "@/lib/store/cri-store";
 import type { SummaryStore } from "@/lib/store/summary-store";
 
 type Props = {
@@ -27,7 +27,7 @@ type Props = {
 type State = {
   condition: string;
   chunks: string[];
-  questionStore: QuestionStore;
+  criStore: CRIStore;
   chatStore: ChatStore;
   summaryStore: SummaryStore;
 };
@@ -35,23 +35,25 @@ const PageContext = createContext<State>({} as State);
 
 export function PageProvider({ children, condition, page, pageStatus }: Props) {
   const slugs = page.chunks.map(({ slug }) => slug);
-  const [snapshot, setSnapshot] = useLocalStorage<QuestionSnapshot | undefined>(
+  const [snapshot, setSnapshot] = useLocalStorage<CRISnapshot | undefined>(
     `question-store-${page.slug}`,
     undefined
   );
 
-  const [showFloatingSummary, setShowFloatingSummary] = useLocalStorage(
-    "show-floating-summary",
-    false
+  const [showFloatingSummary, setShowFloatingSummary] = useLocalStorage<
+    boolean | undefined
+  >(
+    `show-floating-summary-${page.slug}`,
+    pageStatus.latest ? undefined : false
   );
 
   const chunkQuestion = useMemo(() => {
     return getPageQuestions(page);
   }, [page]);
 
-  const questionStoreRef = useRef<QuestionStore>(undefined);
-  if (!questionStoreRef.current) {
-    questionStoreRef.current = createQuestionStore(
+  const criStoreRef = useRef<CRIStore>(undefined);
+  if (!criStoreRef.current) {
+    criStoreRef.current = createCRIStore(
       {
         chunks: page.chunks,
         pageStatus,
@@ -75,11 +77,11 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
   }
 
   useEffect(() => {
-    let questionSubscription: Subscription | undefined;
+    let criSubscription: Subscription | undefined;
     let quizSubscription: Subscription | undefined;
     let summarySubscription: Subscription | undefined;
-    if (questionStoreRef.current) {
-      questionSubscription = questionStoreRef.current.subscribe((state) => {
+    if (criStoreRef.current) {
+      criSubscription = criStoreRef.current.subscribe((state) => {
         setSnapshot(state.context);
       });
     }
@@ -94,7 +96,7 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     }
 
     return () => {
-      questionSubscription?.unsubscribe();
+      criSubscription?.unsubscribe();
       quizSubscription?.unsubscribe();
       summarySubscription?.unsubscribe();
     };
@@ -103,7 +105,7 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
   return (
     <PageContext.Provider
       value={{
-        questionStore: questionStoreRef.current,
+        criStore: criStoreRef.current,
         chatStore: chatStoreRef.current,
         summaryStore: summaryStoreRef.current,
         chunks: slugs,
@@ -135,9 +137,9 @@ export const useChatStore = () => {
   return value.chatStore;
 };
 
-export const useQuestionStore = () => {
+export const useCRIStore = () => {
   const value = useContext(PageContext);
-  return value.questionStore;
+  return value.criStore;
 };
 
 const getPageQuestions = (page: Page): ChunkQuestion => {

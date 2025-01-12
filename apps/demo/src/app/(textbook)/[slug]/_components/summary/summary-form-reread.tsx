@@ -27,13 +27,13 @@ import { useActionStatus } from "use-action-status";
 
 import { createSummaryAction } from "@/actions/summary";
 import { DelayMessage } from "@/components/delay-message";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
 import { Condition } from "@/lib/constants";
 import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry, scrollToElement } from "@/lib/utils";
 import {
   getSummaryLocal,
@@ -57,7 +57,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const prevInput = useRef<string | undefined>(undefined);
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
   const [finished, setFinished] = useState(pageStatus.unlocked);
-  const questionStore = useQuestionStore();
+  const questionStore = useCRIStore();
   const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
   const isMobile = useIsMobile();
 

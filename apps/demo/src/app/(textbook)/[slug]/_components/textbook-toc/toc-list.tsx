@@ -12,10 +12,10 @@ import {
 } from "@itell/ui/accordion";
 import { cn } from "@itell/utils";
 import { type Page } from "#content";
-import { CheckCircle, CheckIcon, LockIcon } from "lucide-react";
+import { CheckCircle, LockIcon } from "lucide-react";
 
 import { isProduction } from "@/lib/constants";
-import { getPageStatus, PageStatus } from "@/lib/page-status";
+import { PageStatus } from "@/lib/page-status";
 import { TocPageItem } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 import { type TocPagesWithStatus } from ".";
@@ -62,7 +62,7 @@ export function TextbookTocList({ page, pages }: Props) {
                 className="pb-0"
               >
                 <AccordionItem value={item.slug} className="border-none">
-                  <AccordionTrigger className="px-2 py-4 text-left text-base hover:bg-accent hover:no-underline lg:text-lg 2xl:text-xl">
+                  <AccordionTrigger className="px-2 py-4 text-left text-base hover:bg-accent hover:no-underline xl:text-lg 2xl:text-xl">
                     {item.title}
                   </AccordionTrigger>
                   <AccordionContent className="pb-0">
@@ -136,7 +136,7 @@ export function TocItem({
           });
         }}
         className={cn(
-          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base lg:text-lg xl:gap-4 2xl:text-xl",
+          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base xl:text-lg xl:gap-4 2xl:text-xl",
           {
             "animate-pulse": pending,
             "text-base 2xl:text-lg": inGroup,

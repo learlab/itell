@@ -42,7 +42,7 @@ import { useServerAction } from "zsa-react";
 import { resetUserAction, updateUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
 import { InternalError } from "@/components/internal-error";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { getUserCondition } from "@/lib/auth/conditions";
 import { Condition } from "@/lib/constants";
 import { updatePersonalizationStreak } from "@/lib/personalization";
@@ -76,7 +76,7 @@ const conditions = [
 ];
 
 export function AdminToolsClient({ user, pageSlug, pages }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const condition = getUserCondition(user, pageSlug);
   const [open, setOpen] = useState(false);
   const { execute, isPending, isError } = useServerAction(updateUserAction);
@@ -85,11 +85,18 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newPageSlug =
-      formData.get("page-progress") !== "" ? String(formData.get("page-progress")) : undefined;
+      formData.get("page-progress") !== ""
+        ? String(formData.get("page-progress"))
+        : undefined;
 
     let newSummaryStreak =
-      formData.get("summary-streak") !== "" ? Number(formData.get("summary-streak")) : 0;
-    let newCRIStreak = formData.get("cri-streak") !== "" ? Number(formData.get("cri-streak")) : 0;
+      formData.get("summary-streak") !== ""
+        ? Number(formData.get("summary-streak"))
+        : 0;
+    let newCRIStreak =
+      formData.get("cri-streak") !== ""
+        ? Number(formData.get("cri-streak"))
+        : 0;
     // subtract one since we'll be treating things as if a new passing summary has been submitted
     newSummaryStreak = (newSummaryStreak ?? 0) - 1;
     newCRIStreak = (newCRIStreak ?? 0) - 1;
@@ -157,8 +164,9 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
         <SheetHeader>
           <SheetTitle>Configure ITELL</SheetTitle>
           <SheetDescription className="text-left">
-            You can view this because you are recognized as an admin. Click &quot;Apply
-            Changes&quot; at the bottom to reload the page with the new settings.
+            You can view this because you are recognized as an admin. Click
+            &quot;Apply Changes&quot; at the bottom to reload the page with the
+            new settings.
           </SheetDescription>
         </SheetHeader>
         <form className="grid gap-8 py-4" onSubmit={onSubmit}>
@@ -171,10 +179,16 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
               aria-label="Select feedback type"
             >
               {conditions.map(({ label, description, value }) => (
-                <Label key={label} className="flex items-center justify-between gap-6 font-normal">
+                <Label
+                  key={label}
+                  className="flex items-center justify-between gap-6 font-normal"
+                >
                   <div className="space-y-2 text-balance">
                     <p className="font-semibold">{label}</p>
-                    <p className="text-sm text-muted-foreground" id={`desc-${value}`}>
+                    <p
+                      className="text-sm text-muted-foreground"
+                      id={`desc-${value}`}
+                    >
                       {description}
                     </p>
                   </div>
@@ -192,7 +206,10 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
             <legend className="font-semibold">Progress</legend>
             <Label className="flex flex-col gap-2 font-normal">
               <p className="font-semibold">Set your progress to a page</p>
-              <Select name="page-progress" defaultValue={user.pageSlug ?? undefined}>
+              <Select
+                name="page-progress"
+                defaultValue={user.pageSlug ?? undefined}
+              >
                 <SelectTrigger className="h-fit text-left">
                   <SelectValue placeholder="Select page" />
                 </SelectTrigger>
@@ -214,7 +231,8 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
               <div className="flex flex-col gap-2 text-balance">
                 <p className="font-semibold">Unblur current page</p>
                 <p className="text-sm text-muted-foreground" id="unblur-desc">
-                  Unblur all chunks from the current page and unlock summary submission
+                  Unblur all chunks from the current page and unlock summary
+                  submission
                 </p>
               </div>
               <Switch name="page-unblur" aria-describedby="unblur-desc" />
@@ -247,7 +265,10 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
             </Label>
             <Label className="flex flex-col gap-2 font-normal">
               <span className="font-semibold">CRI Streak</span>
-              <Select name="cri-streak" defaultValue={String(user.personalization.cri_streak ?? 0)}>
+              <Select
+                name="cri-streak"
+                defaultValue={String(user.personalization.cri_streak ?? 0)}
+              >
                 <SelectTrigger className="h-fit text-left">
                   <SelectValue placeholder="Select CRI streak" />
                 </SelectTrigger>
@@ -293,8 +314,9 @@ function RestartTextbook() {
           <AlertDialogDescription asChild>
             <div className="grid gap-2">
               <p className="text-sm text-muted-foreground">
-                This action will reset your progress to the first page and delete all of your data,
-                including summaries, chat messages, question answers, etc.
+                This action will reset your progress to the first page and
+                delete all of your data, including summaries, chat messages,
+                question answers, etc.
               </p>
               {isError ? <InternalError /> : null}
             </div>
@@ -310,7 +332,9 @@ function RestartTextbook() {
                 return toast.error(err.data);
               }
               localStorage.clear();
-              window.location.href = data.pageSlug ? makePageHref(data.pageSlug) : "/";
+              window.location.href = data.pageSlug
+                ? makePageHref(data.pageSlug)
+                : "/";
             }}
             pending={isPending}
           >
