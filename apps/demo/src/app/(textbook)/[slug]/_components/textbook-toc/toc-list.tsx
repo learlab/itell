@@ -4,18 +4,13 @@ import { startTransition, useOptimistic, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Elements } from "@itell/constants";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@itell/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@itell/ui/accordion";
 import { cn } from "@itell/utils";
 import { type Page } from "#content";
-import { CheckCircle, CheckIcon, LockIcon } from "lucide-react";
+import { CheckCircle, LockIcon } from "lucide-react";
 
 import { isProduction } from "@/lib/constants";
-import { getPageStatus, PageStatus } from "@/lib/page-status";
+import { PageStatus } from "@/lib/page-status";
 import { TocPageItem } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 import { type TocPagesWithStatus } from ".";
@@ -32,10 +27,7 @@ export function TextbookTocList({ page, pages }: Props) {
       <a className="sr-only" href={`#${Elements.TEXTBOOK_MAIN}`}>
         skip to main content
       </a>
-      <ol
-        aria-label="List of chapters"
-        className="leading-relaxed tracking-tight"
-      >
+      <ol aria-label="List of chapters" className="leading-relaxed tracking-tight">
         {pages.map((item) => {
           if (!item.group) {
             return (
@@ -100,13 +92,7 @@ type TocItemProps = {
   className?: string;
 };
 
-export function TocItem({
-  item,
-  inGroup,
-  activePage,
-  className,
-  onClick,
-}: TocItemProps) {
+export function TocItem({ item, inGroup, activePage, className, onClick }: TocItemProps) {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
   const { visible, label } = getPageState({
@@ -159,16 +145,8 @@ export function TocItem({
   );
 }
 
-const getPageState = ({
-  status,
-  title,
-}: {
-  status: PageStatus;
-  title: string;
-}) => {
+const getPageState = ({ status, title }: { status: PageStatus; title: string }) => {
   const visible = status.latest || status.unlocked;
-  const label = `${title} - ${
-    status.unlocked ? "Unlocked" : visible ? "Visible" : "Locked"
-  }`;
+  const label = `${title} - ${status.unlocked ? "Unlocked" : visible ? "Visible" : "Locked"}`;
   return { label, visible };
 };
