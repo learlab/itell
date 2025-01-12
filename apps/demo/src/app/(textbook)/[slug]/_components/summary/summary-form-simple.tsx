@@ -13,10 +13,10 @@ import { useActionStatus } from "use-action-status";
 
 import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { FormEvent } from "react";
 
@@ -26,7 +26,7 @@ type Props = {
 };
 
 export function SummaryFormSimple({ pageStatus, page }: Props) {
-  const questionStore = useQuestionStore();
+  const questionStore = useCRIStore();
   const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
   const router = useRouter();
   const [finished, setFinished] = useState(pageStatus.unlocked);

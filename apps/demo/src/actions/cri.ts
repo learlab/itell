@@ -1,6 +1,6 @@
 "use server";
 
-import { count, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/db";
@@ -11,7 +11,6 @@ import {
   CreateConstructedResponseSchema,
   users,
 } from "@/drizzle/schema";
-import { isProduction } from "@/lib/constants";
 import { updatePersonalizationStreak } from "@/lib/personalization";
 import { authedProcedure } from "./utils";
 
@@ -21,8 +20,6 @@ import { authedProcedure } from "./utils";
 export const createQuestionAnswerAction = authedProcedure
   .input(CreateConstructedResponseSchema.omit({ userId: true }))
   .handler(async ({ input, ctx }) => {
-    if (isProduction) {
-    }
     return await db.insert(constructed_responses).values({
       ...input,
       userId: ctx.user.id,

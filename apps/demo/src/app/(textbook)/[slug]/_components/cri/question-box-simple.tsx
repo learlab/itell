@@ -4,15 +4,9 @@ import { Button } from "@itell/ui/button";
 import { useSelector } from "@xstate/store/react";
 
 import { createEventAction } from "@/actions/event";
-import {
-  useChunks,
-  useQuestionStore,
-} from "@/components/provider/page-provider";
+import { useChunks, useCRIStore } from "@/components/provider/page-provider";
 import { Condition, EventType } from "@/lib/constants";
-import {
-  SelectCurrentChunk,
-  SelectSummaryReady,
-} from "@/lib/store/question-store";
+import { SelectCurrentChunk, SelectSummaryReady } from "@/lib/store/cri-store";
 import { QuestionBoxContent, QuestionBoxShell } from "./question-box-shell";
 
 type Props = {
@@ -28,7 +22,7 @@ export function QuestionBoxSimple({
   pageSlug,
   chunkSlug,
 }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
   const isSummaryReady = useSelector(store, SelectSummaryReady);
   const disabled = isSummaryReady || currentChunk !== chunkSlug;

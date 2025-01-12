@@ -46,7 +46,7 @@ export default async function ConsentLayout({
     <>
       <MainNav />
       <Card className="mx-auto mt-4 min-h-screen max-w-6xl">
-        <CardContent className="relative flex flex-col gap-6 sm:flex-row lg:text-lg">
+        <CardContent className="relative flex flex-col gap-6 sm:flex-row xl:text-lg">
           <aside className="top-20 flex h-fit basis-1/3 flex-col gap-4 sm:sticky">
             {hasConsent ? (
               intakeDone ? (

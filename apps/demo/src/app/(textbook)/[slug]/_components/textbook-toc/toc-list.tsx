@@ -54,7 +54,7 @@ export function TextbookTocList({ page, pages }: Props) {
                 className="pb-0"
               >
                 <AccordionItem value={item.slug} className="border-none">
-                  <AccordionTrigger className="px-2 py-4 text-left text-base hover:bg-accent hover:no-underline lg:text-lg 2xl:text-xl">
+                  <AccordionTrigger className="px-2 py-4 text-left text-base hover:bg-accent hover:no-underline xl:text-lg 2xl:text-xl">
                     {item.title}
                   </AccordionTrigger>
                   <AccordionContent className="pb-0">
@@ -122,7 +122,7 @@ export function TocItem({ item, inGroup, activePage, className, onClick }: TocIt
           });
         }}
         className={cn(
-          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base lg:text-lg xl:gap-4 2xl:text-xl",
+          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base xl:text-lg xl:gap-4 2xl:text-xl",
           {
             "animate-pulse": pending,
             "text-base 2xl:text-lg": inGroup,

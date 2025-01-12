@@ -5,12 +5,12 @@ import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { MoveUpIcon } from "lucide-react";
 
-import { useQuestionStore } from "@/components/provider/page-provider";
-import { SelectCurrentChunk } from "@/lib/store/question-store";
+import { useCRIStore } from "@/components/provider/page-provider";
+import { SelectCurrentChunk } from "@/lib/store/cri-store";
 import { scrollToElement } from "@/lib/utils";
 
 export function ScrollBackButton() {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
 
   const scrollToCurrentChunk = () => {

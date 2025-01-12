@@ -7,25 +7,27 @@ import type { SnapshotFromStore } from "@xstate/store";
 
 export type Question = { answer: string; question: string };
 export type SelectedQuestions = Record<string, Question>;
-export type QuestionStore = ReturnType<typeof createQuestionStore>;
-export type QuestionSnapshot = {
+
+export type CRISnapshot = {
   currentChunk: string;
   chunkStatus: ChunkStatus;
   isSummaryReady: boolean;
   shouldBlur: boolean;
 };
 
+// if a chunk contains a CRI
 export type ChunkQuestion = Record<string, boolean>;
 
+export type CRIStore = ReturnType<typeof createCRIStore>;
 type Props = {
   pageStatus: PageStatus;
   chunks: Page["chunks"];
   chunkQuestion: ChunkQuestion;
 };
 
-export const createQuestionStore = (
+export const createCRIStore = (
   { pageStatus, chunks, chunkQuestion }: Props,
-  snapshot?: QuestionSnapshot
+  snapshot?: CRISnapshot
 ) => {
   const lastIndex = chunks.length - 1;
   const slugs = chunks.map(({ slug }) => slug);
@@ -34,7 +36,7 @@ export const createQuestionStore = (
     chunks.find(({ type }) => type === "regular")?.slug ??
     chunks[chunks.length - 1].slug;
 
-  const initialState: QuestionSnapshot = {
+  const initialState: CRISnapshot = {
     currentChunk: snapshot?.currentChunk ?? initialChunk,
     chunkStatus:
       snapshot?.chunkStatus ??
@@ -105,7 +107,7 @@ export const createQuestionStore = (
   });
 };
 
-export const getExcludedChunks = (store: QuestionStore) => {
+export const getExcludedChunks = (store: CRIStore) => {
   const snap = store.getSnapshot();
   return Object.entries(snap.context.chunkStatus)
     .filter(([_, { status }]) => status === "passed")
@@ -121,7 +123,7 @@ type ChunkStatus = Record<
   }
 >;
 
-type Selector<T> = (_: SnapshotFromStore<QuestionStore>) => T;
+type Selector<T> = (_: SnapshotFromStore<CRIStore>) => T;
 
 export const SelectChunkStatus: Selector<ChunkStatus> = (state) =>
   state.context.chunkStatus;

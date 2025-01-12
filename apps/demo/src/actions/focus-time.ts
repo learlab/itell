@@ -55,6 +55,7 @@ export const createFocusTimeAction = authedProcedure
             .set({ data: newData })
             .where(and(eq(focus_times.userId, userId), eq(focus_times.pageSlug, input.pageSlug)));
         } else {
+          // no focus time record exists
           await tx.insert(focus_times).values({
             pageSlug: input.pageSlug,
             data: input.data as FocusTimeData,

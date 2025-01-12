@@ -1,12 +1,12 @@
 "use client";
 
-import { QuestionBoxReread } from "@textbook/question/question-box-reread";
-import { QuestionBoxSimple } from "@textbook/question/question-box-simple";
-import { QuestionBoxStairs } from "@textbook/question/question-box-stairs";
+import { QuestionBoxReread } from "@textbook/cri/question-box-reread";
+import { QuestionBoxSimple } from "@textbook/cri/question-box-simple";
+import { QuestionBoxStairs } from "@textbook/cri/question-box-stairs";
 import { useSelector } from "@xstate/store/react";
 
 import { Condition } from "@/lib/constants";
-import { useCondition, useQuestionStore } from "../provider/page-provider";
+import { useCondition, useCRIStore } from "../provider/page-provider";
 
 type Props = {
   question: string;
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function Question({ question, answer, chunkSlug, pageSlug }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const condition = useCondition();
   const chunkStatus = useSelector(
     store,

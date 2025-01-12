@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Elements } from "@itell/constants";
-import { useLocalStorage } from "@itell/core/hooks";
 import { Label } from "@itell/ui/label";
 import { TextArea } from "@itell/ui/textarea";
 import {
@@ -13,20 +12,112 @@ import {
 } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
-import { ArrowDownIcon, PinIcon, Store, XIcon } from "lucide-react";
+import { ArrowDownIcon, PinIcon, XIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 import {
-  useQuestionStore,
+  useCRIStore,
   useSummaryStore,
 } from "@/components/provider/page-provider";
-import { PageStatus } from "@/lib/page-status";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 import {
   SelectInput,
+  SelectResponse,
   SelectShowFloatingSummary,
 } from "@/lib/store/summary-store";
 import { scrollToElement } from "@/lib/utils";
+import { SummaryFeedbackDetails } from "./summary-feedback";
+
+const PAGE_ASSIGNMENTS_ID = Elements.PAGE_ASSIGNMENTS;
+
+function useIntersectionState() {
+  const [seen, setSeen] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const seenObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !seen) {
+          setSeen(true);
+        }
+      },
+      { threshold: 0.6 }
+    );
+
+    const visibilityObserver = new IntersectionObserver(
+      (entries) => {
+        setVisible(entries[0].isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    const element = document.getElementById(PAGE_ASSIGNMENTS_ID);
+    if (element) {
+      seenObserver.observe(element);
+      visibilityObserver.observe(element);
+    }
+
+    return () => {
+      seenObserver.disconnect();
+      visibilityObserver.disconnect();
+    };
+  }, [seen]);
+
+  return { seen, visible };
+}
+
+function useElementDimensions() {
+  const [dimensions, setDimensions] = useState({ left: 0, width: 0 });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const element = document.getElementById(PAGE_ASSIGNMENTS_ID);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const floatingWidth = rect.width * 0.8;
+        const leftOffset = rect.left + (rect.width - floatingWidth) / 2;
+        setDimensions({
+          left: leftOffset,
+          width: floatingWidth,
+        });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  return dimensions;
+}
+
+const FloatingSummaryHeader = () => {
+  const summaryStore = useSummaryStore();
+  return (
+    <header className="flex items-center justify-end px-4 py-2">
+      <div className="flex gap-2">
+        <button
+          aria-label="Close floating summary"
+          onClick={() =>
+            summaryStore.send({ type: "toggleShowFloatingSummary" })
+          }
+          className="px-1"
+        >
+          <XIcon className="size-4" />
+        </button>
+        <button
+          aria-label="Jump to summary submission"
+          onClick={() =>
+            scrollToElement(document.getElementById(PAGE_ASSIGNMENTS_ID)!)
+          }
+          className="px-1"
+        >
+          <ArrowDownIcon className="size-4" />
+        </button>
+      </div>
+    </header>
+  );
+};
 
 export function ToggleShowFloatingSummary() {
   const summaryStore = useSummaryStore();
@@ -61,26 +152,19 @@ export function ToggleShowFloatingSummary() {
 
 export function FloatingSummary() {
   const summaryStore = useSummaryStore();
-  const questionStore = useQuestionStore();
+  const questionStore = useCRIStore();
   const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
   const input = useSelector(summaryStore, SelectInput);
-  const [assignmentsVisible, setAssignmentsVisible] = useState(false);
   const userShow = useSelector(summaryStore, SelectShowFloatingSummary);
-  const show = isSummaryReady && !assignmentsVisible && userShow;
+  const summaryResponse = useSelector(summaryStore, SelectResponse);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setAssignmentsVisible(true);
-      } else {
-        setAssignmentsVisible(false);
-      }
-    });
+  const { seen: assignmentsSeen, visible: assignmentsVisible } =
+    useIntersectionState();
+  const dimensions = useElementDimensions();
 
-    const el = document.getElementById("page-assignments");
-    if (el) observer.observe(el);
-    return () => observer.disconnect();
-  }, [setAssignmentsVisible]);
+  const floatingReady =
+    isSummaryReady && !assignmentsVisible && assignmentsSeen;
+  const show = floatingReady && userShow !== false;
 
   if (!show) return null;
 
@@ -88,42 +172,30 @@ export function FloatingSummary() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-12 left-1/3 z-30 w-2/5 rounded-md border"
+          className="fixed bottom-4 z-30 rounded-lg border bg-background shadow-md"
+          id="floating-summary"
+          style={{
+            left: dimensions.left,
+            width: dimensions.width,
+          }}
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
         >
-          <header className="flex items-center justify-between px-4 py-2 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <p>Your summary</p>
-            <div className="flex gap-2">
-              <button
-                aria-label="Close floating summary"
-                onClick={() =>
-                  summaryStore.send({ type: "toggleShowFloatingSummary" })
-                }
-              >
-                <XIcon className="size-4" />
-              </button>
-              <button
-                aria-label="Jump to summary submission"
-                onClick={() => {
-                  scrollToElement(
-                    document.getElementById(Elements.PAGE_ASSIGNMENTS)!
-                  );
-                }}
-              >
-                <ArrowDownIcon className="size-4" />
-              </button>
+          <FloatingSummaryHeader />
+          {summaryResponse && (
+            <div className="px-4">
+              <SummaryFeedbackDetails response={summaryResponse} />
             </div>
-          </header>
+          )}
           <form className="bg-card px-4 py-2">
             <Label className="flex flex-col gap-3">
               <span className="sr-only">Your summary</span>
               <TextArea
                 value={input}
-                rows={8}
-                placeholder="Write your summary here"
-                className="font-normal lg:text-lg"
+                rows={6}
+                placeholder="This page is about ..."
+                className="font-normal xl:text-lg"
                 onChange={(e) =>
                   summaryStore.send({ type: "setInput", input: e.target.value })
                 }

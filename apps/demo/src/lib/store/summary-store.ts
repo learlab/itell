@@ -17,7 +17,7 @@ export const createSummaryStore = ({
   showFloatingSummary,
 }: {
   pageStatus: PageStatus;
-  showFloatingSummary: boolean;
+  showFloatingSummary: boolean | undefined;
 }) => {
   return createStoreWithProducer(produce, {
     context: {
@@ -45,7 +45,7 @@ export const createSummaryStore = ({
       setInput: (context, event: { input: string }) => {
         context.input = event.input;
       },
-      toggleShowFloatingSummary: (context, event: any, { emit }) => {
+      toggleShowFloatingSummary: (context, _event: any, { emit }) => {
         context.showFloatingSummary = !context.showFloatingSummary;
         emit({ type: "toggleShowFloatingSummary" });
       },
@@ -77,5 +77,6 @@ export const SelectStairs: Selector<StairsQuestion | null> = (state) =>
   state.context.stairsQuestion;
 export const SelectError: Selector<ErrorType | null> = (state) =>
   state.context.error;
-export const SelectShowFloatingSummary: Selector<boolean> = (state) =>
-  state.context.showFloatingSummary;
+export const SelectShowFloatingSummary: Selector<boolean | undefined> = (
+  state
+) => state.context.showFloatingSummary;

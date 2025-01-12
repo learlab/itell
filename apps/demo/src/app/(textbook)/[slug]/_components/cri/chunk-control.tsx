@@ -7,15 +7,12 @@ import { getChunkElement } from "@itell/utils";
 import { LoginButton } from "@auth/auth-form";
 import { useSelector } from "@xstate/store/react";
 
-import {
-  useChunks,
-  useQuestionStore,
-} from "@/components/provider/page-provider";
+import { useChunks, useCRIStore } from "@/components/provider/page-provider";
 import {
   SelectChunkStatus,
   SelectCurrentChunk,
   SelectShouldBlur,
-} from "@/lib/store/question-store";
+} from "@/lib/store/cri-store";
 import { ContinueChunkButton } from "./continue-chunk-button";
 import { ScrollBackButton } from "./scroll-back-button";
 import { UnlockAssignmentsButton } from "./unlock-assignments-button";
@@ -33,7 +30,7 @@ export function ChunkControl({
   condition,
   hasAssignments,
 }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
   const chunks = useChunks();
   const status = useSelector(store, SelectChunkStatus);
@@ -94,6 +91,7 @@ export function ChunkControl({
     el.appendChild(buttonContainer);
   };
 
+  // initial blur
   useEffect(() => {
     chunks.forEach((chunkSlug, chunkIndex) => {
       const el = getChunkElement(chunkSlug, "data-chunk-slug");
@@ -124,7 +122,7 @@ export function ChunkControl({
     return () => {
       removePortals();
     };
-  }, []);
+  }, [chunks]);
 
   useEffect(() => {
     const currentChunkElement = getChunkElement(
