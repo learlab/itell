@@ -17,7 +17,7 @@ import { authedProcedure } from "./utils";
 /**
  * Create constructed response item
  */
-export const createQuestionAnswerAction = authedProcedure
+export const createCRIAnswerAction = authedProcedure
   .input(CreateConstructedResponseSchema.omit({ userId: true }))
   .handler(async ({ input, ctx }) => {
     return await db.insert(constructed_responses).values({
@@ -29,7 +29,7 @@ export const createQuestionAnswerAction = authedProcedure
 /**
  * Create constructed response feedback
  */
-export const createQuestionFeedbackAction = authedProcedure
+export const createCRIFeedbackAction = authedProcedure
   .input(CreateConstructedResponseFeedbackSchema.omit({ userId: true }))
   .handler(async ({ input, ctx }) => {
     return await db.insert(constructed_responses_feedback).values({
@@ -38,21 +38,20 @@ export const createQuestionFeedbackAction = authedProcedure
     });
   });
 
+export const getCRIStreakAction = authedProcedure.handler(async ({ ctx }) => {
+  return ctx.user.personalization.cri_streak;
+});
+
 /**
  * Change streak of correctly answered questions for user
  */
 export const updateCRIStreakAction = authedProcedure
   .input(
     z.object({
-      isCorrect: z.boolean().optional(),
+      isCorrect: z.boolean(),
     })
   )
   .handler(async ({ ctx, input }) => {
-    if (input.isCorrect === undefined) {
-      // Return current streak, to fill the initial streak render for QuestionBoxStairs
-      return ctx.user.personalization.cri_streak;
-    }
-
     const newPersonalization = updatePersonalizationStreak(ctx.user, {
       cri: {
         isCorrect: input.isCorrect,

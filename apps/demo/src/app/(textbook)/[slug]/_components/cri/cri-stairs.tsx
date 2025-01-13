@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
+import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { CardFooter } from "@itell/ui/card";
 import {
@@ -20,30 +21,26 @@ import {
 } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
-import { Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
+import { BanIcon, Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
 
 import {
-  createQuestionAnswerAction,
+  createCRIAnswerAction,
+  getCRIStreakAction,
   updateCRIStreakAction,
 } from "@/actions/cri";
 import { useCRIStore } from "@/components/provider/page-provider";
 import { Confetti } from "@/components/ui/confetti";
 import { apiClient } from "@/lib/api-client";
-// import { apiClient } from "@/lib/api-client";
 import { Condition, isProduction } from "@/lib/constants";
 import { SelectShouldBlur } from "@/lib/store/cri-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
-import { FinishQuestionButton } from "./finish-question-button";
-import {
-  QuestionBoxContent,
-  QuestionBoxHeader,
-  QuestionBoxShell,
-} from "./question-box-shell";
-import { QuestionExplainButton } from "./question-explain-button";
-import { QuestionFeedback } from "./question-feedback";
+import { ExplainCRIButton } from "./cri-explain-button";
+import { CRIFeedback } from "./cri-feedback";
+import { CRIContent, CRIHeader, CRIShell } from "./cri-shell";
+import { FinishCRIButton } from "./finish-cri-button";
 import { borderColors, QuestionScore, StatusStairs } from "./types";
 
 type Props = {
@@ -59,25 +56,20 @@ type State = {
   input: string;
 };
 
-export function QuestionBoxStairs({
-  question,
-  answer,
-  chunkSlug,
-  pageSlug,
-}: Props) {
+export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
   const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const form = useRef<HTMLFormElement>(null);
 
   const {
-    execute: updateStreak,
     data: streak,
     setOptimistic: setStreak,
-  } = useServerAction(updateCRIStreakAction);
+    execute: getStreak,
+  } = useServerAction(getCRIStreakAction);
+  const { execute: updateStreak } = useServerAction(updateCRIStreakAction);
 
   useEffect(() => {
-    // get initial streak
-    updateStreak({});
+    getStreak();
   }, []);
 
   const [collapsed, setCollapsed] = useState(!shouldBlur);
@@ -122,7 +114,7 @@ export function QuestionBoxStairs({
     }
     const response = await res.json();
     const score = response.score as QuestionScore;
-    createQuestionAnswerAction({
+    createCRIAnswerAction({
       text: input,
       chunkSlug,
       pageSlug,
@@ -184,8 +176,8 @@ export function QuestionBoxStairs({
 
   if (collapsed) {
     return (
-      <QuestionBoxShell>
-        <QuestionBoxContent>
+      <CRIShell>
+        <CRIContent>
           <p className="my-2 text-[0.9em] font-light">
             You can skip the following question or click to reveal.
           </p>
@@ -199,8 +191,8 @@ export function QuestionBoxStairs({
               Reveal optional question
             </Button>
           </div>
-        </QuestionBoxContent>
-      </QuestionBoxShell>
+        </CRIContent>
+      </CRIShell>
     );
   }
 
@@ -208,12 +200,12 @@ export function QuestionBoxStairs({
     <>
       <Confetti active={status === StatusStairs.BOTH_CORRECT} />
 
-      <QuestionBoxShell
+      <CRIShell
         className={cn(borderColor, {
           shake: state.status === StatusStairs.BOTH_INCORRECT,
         })}
       >
-        <QuestionBoxHeader
+        <CRIHeader
           isOptional={!shouldBlur}
           question={question}
           headerRight={
@@ -237,7 +229,7 @@ export function QuestionBoxStairs({
           }
         />
 
-        <QuestionBoxContent>
+        <CRIContent>
           <div role="status">
             {status === StatusStairs.BOTH_INCORRECT && (
               <p className="text-sm text-destructive-foreground">
@@ -267,7 +259,7 @@ export function QuestionBoxStairs({
           <div className="flex items-center gap-2">
             {(status === StatusStairs.SEMI_CORRECT ||
               status === StatusStairs.BOTH_INCORRECT) && (
-              <QuestionExplainButton
+              <ExplainCRIButton
                 chunkSlug={chunkSlug}
                 pageSlug={pageSlug}
                 input={state.input}
@@ -326,7 +318,7 @@ export function QuestionBoxStairs({
             <div className="flex flex-col items-center gap-2 sm:flex-row">
               {status === StatusStairs.BOTH_CORRECT && isNextButtonDisplayed ? (
                 // when answer is both correct and next button should be displayed
-                <FinishQuestionButton
+                <FinishCRIButton
                   chunkSlug={chunkSlug}
                   pageSlug={pageSlug}
                   condition={Condition.STAIRS}
@@ -351,7 +343,7 @@ export function QuestionBoxStairs({
 
                   {status !== StatusStairs.UNANSWERED &&
                   isNextButtonDisplayed ? (
-                    <FinishQuestionButton
+                    <FinishCRIButton
                       chunkSlug={chunkSlug}
                       pageSlug={pageSlug}
                       condition={Condition.STAIRS}
@@ -361,20 +353,23 @@ export function QuestionBoxStairs({
               )}
             </div>
             {state.error ? (
-              <p className="text-center text-sm text-red-500">{state.error}</p>
+              <Alert variant={"error"}>
+                <BanIcon />
+                <AlertTitle>{state.error}</AlertTitle>
+              </Alert>
             ) : null}
           </form>
-        </QuestionBoxContent>
+        </CRIContent>
 
         <CardFooter>
           <div className="flex items-center gap-1.5">
             <p className="text-sm text-muted-foreground">
               iTELL evaluation is based on AI and may not always be accurate.{" "}
             </p>
-            <QuestionFeedback pageSlug={pageSlug} chunkSlug={chunkSlug} />
+            <CRIFeedback pageSlug={pageSlug} chunkSlug={chunkSlug} />
           </div>
         </CardFooter>
-      </QuestionBoxShell>
+      </CRIShell>
     </>
   );
 }

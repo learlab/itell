@@ -57,8 +57,8 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const prevInput = useRef<string | undefined>(undefined);
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
   const [finished, setFinished] = useState(pageStatus.unlocked);
-  const questionStore = useCRIStore();
-  const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+  const criStore = useCRIStore();
+  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const isMobile = useIsMobile();
 
   const randomChunkSlug = useMemo(() => {

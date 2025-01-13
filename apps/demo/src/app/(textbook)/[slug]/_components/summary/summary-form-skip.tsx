@@ -34,8 +34,8 @@ type Props = {
 // eslint-disable-next-line react/display-name
 export const SummaryFormSkip = memo(
   ({ pageStatus, page, streak, available_summary_skips }: Props) => {
-    const questionStore = useCRIStore();
-    const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+    const criStore = useCRIStore();
+    const isSummaryReady = useSelector(criStore, SelectSummaryReady);
     const router = useRouter();
     const [pageFinished, setPageFinished] = useState(pageStatus.unlocked);
 

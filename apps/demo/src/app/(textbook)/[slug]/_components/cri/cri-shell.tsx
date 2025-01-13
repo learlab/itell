@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
 import { cn } from "@itell/utils";
 
-export function QuestionBoxShell({
+export function CRIShell({
   children,
   className,
   ...rest
@@ -13,7 +13,7 @@ export function QuestionBoxShell({
   );
 }
 
-export function QuestionBoxHeader({
+export function CRIHeader({
   children,
   question,
   isOptional,
@@ -43,7 +43,7 @@ export function QuestionBoxHeader({
   );
 }
 
-export function QuestionBoxContent({
+export function CRIContent({
   children,
   className,
   ...rest

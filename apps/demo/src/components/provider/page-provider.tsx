@@ -11,9 +11,9 @@ import { createCRIStore } from "@/lib/store/cri-store";
 import { createSummaryStore } from "@/lib/store/summary-store";
 import type { ChatStore } from "@/lib/store/chat-store";
 import type {
-  ChunkQuestion,
   CRISnapshot,
   CRIStore,
+  PageCRIStatus,
 } from "@/lib/store/cri-store";
 import type { SummaryStore } from "@/lib/store/summary-store";
 
@@ -47,8 +47,8 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     pageStatus.latest ? undefined : false
   );
 
-  const chunkQuestion = useMemo(() => {
-    return getPageQuestions(page);
+  const pageCRIStatus = useMemo(() => {
+    return getPageCRIStatus(page);
   }, [page]);
 
   const criStoreRef = useRef<CRIStore>(undefined);
@@ -57,7 +57,7 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
       {
         chunks: page.chunks,
         pageStatus,
-        chunkQuestion,
+        status: pageCRIStatus,
       },
       snapshot
     );
@@ -142,17 +142,17 @@ export const useCRIStore = () => {
   return value.criStore;
 };
 
-const getPageQuestions = (page: Page): ChunkQuestion => {
+const getPageCRIStatus = (page: Page): PageCRIStatus => {
   if (page.cri.length === 0) {
     return {};
   }
 
-  const chunkQuestion: ChunkQuestion = Object.fromEntries(
+  const status: PageCRIStatus = Object.fromEntries(
     page.chunks.map((chunk) => [chunk, false])
   );
 
   if (page.chunks.length > 0) {
-    let withQuestion = false;
+    let withCRI = false;
     page.cri.forEach((item) => {
       const baseProb = 1 / 3;
 
@@ -166,22 +166,20 @@ const getPageQuestions = (page: Page): ChunkQuestion => {
       // }
 
       if (Math.random() < baseProb) {
-        chunkQuestion[item.slug] = true;
-        if (!withQuestion) {
-          withQuestion = true;
+        status[item.slug] = true;
+        if (!withCRI) {
+          withCRI = true;
         }
       }
     });
 
-    // Each page will have at least one question
+    // Each page will have at least one CRI
+    if (!withCRI) {
+      const randomCRI = page.cri[Math.floor(Math.random() * page.cri.length)];
 
-    if (!withQuestion) {
-      const randomQuestion =
-        page.cri[Math.floor(Math.random() * page.cri.length)];
-
-      chunkQuestion[randomQuestion.slug] = true;
+      status[randomCRI.slug] = true;
     }
   }
 
-  return chunkQuestion;
+  return status;
 };

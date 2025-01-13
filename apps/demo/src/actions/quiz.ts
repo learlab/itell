@@ -31,5 +31,10 @@ export const deleteQuizAction = authedProcedure
   .handler(async ({ input, ctx }) => {
     return await db
       .delete(quiz_answers)
-      .where(and(eq(quiz_answers.pageSlug, input.pageSlug), eq(quiz_answers.userId, ctx.user.id)));
+      .where(
+        and(
+          eq(quiz_answers.pageSlug, input.pageSlug),
+          eq(quiz_answers.userId, ctx.user.id)
+        )
+      );
   });

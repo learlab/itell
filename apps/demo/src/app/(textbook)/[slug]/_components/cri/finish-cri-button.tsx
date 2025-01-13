@@ -14,11 +14,7 @@ type Props = {
   condition: string;
 };
 
-export function FinishQuestionButton({
-  chunkSlug,
-  pageSlug,
-  condition,
-}: Props) {
+export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
   const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
   const isSummaryReady = useSelector(store, SelectSummaryReady);

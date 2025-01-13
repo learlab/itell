@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { Button } from "@itell/ui/button";
 import { Checkbox } from "@itell/ui/checkbox";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@itell/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@itell/ui/dialog";
 import { Label } from "@itell/ui/label";
 import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 import { TextArea } from "@itell/ui/textarea";
@@ -11,7 +16,7 @@ import { MessageCircleCodeIcon, SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
-import { createQuestionFeedbackAction } from "@/actions/cri";
+import { createCRIFeedbackAction } from "@/actions/cri";
 import { InternalError } from "@/components/internal-error";
 
 type Props = {
@@ -19,14 +24,14 @@ type Props = {
   pageSlug: string;
 };
 
-export function QuestionFeedback({ pageSlug, chunkSlug }: Props) {
+export function CRIFeedback({ pageSlug, chunkSlug }: Props) {
   const [isPositive, setIsPositive] = useState(true);
   const allTags = isPositive
     ? ["informative", "supportive", "helpful"]
     : ["nonsensical", "inaccurate", "harmful"];
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
-  const { isError, execute } = useServerAction(createQuestionFeedbackAction);
+  const { isError, execute } = useServerAction(createCRIFeedbackAction);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -68,7 +73,9 @@ export function QuestionFeedback({ pageSlug, chunkSlug }: Props) {
             });
             if (!err) {
               setOpen(false);
-              toast.success("Thanks for your feedback. We'll review it shortly.");
+              toast.success(
+                "Thanks for your feedback. We'll review it shortly."
+              );
             }
             setPending(false);
           }}
@@ -79,7 +86,9 @@ export function QuestionFeedback({ pageSlug, chunkSlug }: Props) {
             className="flex gap-4"
             required
             value={isPositive ? "yes" : "no"}
-            onValueChange={(value) => setIsPositive(value === "yes" ? true : false)}
+            onValueChange={(value) =>
+              setIsPositive(value === "yes" ? true : false)
+            }
           >
             <Label className="flex items-center gap-2">
               <RadioGroupItem value="yes" />

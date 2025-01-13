@@ -1,4 +1,4 @@
-import { JSX, RefObject, useEffect, useRef } from "react";
+import { JSX, RefObject, useEffect } from "react";
 import { Elements } from "@itell/constants";
 import { usePortal } from "@itell/core/hooks";
 import { SummaryResponse } from "@itell/core/summary";
@@ -137,12 +137,10 @@ const useDriver = (driverObj: Driver, config: Config) => {
           document.getElementById(Elements.STAIRS_ANSWER_LINK)?.remove();
         }
 
-        const assignments = document.getElementById(Elements.PAGE_ASSIGNMENTS);
-        if (assignments) {
-          setTimeout(() => {
-            scrollToElement(assignments);
-          }, 100);
-        }
+        // reserve some time for rendering
+        setTimeout(() => {
+          scrollToElement(Elements.PAGE_ASSIGNMENTS);
+        }, 100);
 
         document.getElementById(Elements.SUMMARY_INPUT)?.focus();
       },

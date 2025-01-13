@@ -19,12 +19,8 @@ import { isAdmin } from "@/lib/auth/role";
 import { Condition, isProduction } from "@/lib/constants";
 import { SelectShouldBlur } from "@/lib/store/cri-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
-import { FinishQuestionButton } from "./finish-question-button";
-import {
-  QuestionBoxContent,
-  QuestionBoxHeader,
-  QuestionBoxShell,
-} from "./question-box-shell";
+import { CRIContent, CRIHeader, CRIShell } from "./cri-shell";
+import { FinishCRIButton } from "./finish-cri-button";
 import { StatusReread } from "./types";
 import type { QuestionScore } from "./types";
 
@@ -41,7 +37,7 @@ type State = {
   error: string | null;
 };
 
-export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
+export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
   const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const formRef = useRef<HTMLFormElement>(null);
@@ -114,8 +110,8 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
 
   if (!state.show) {
     return (
-      <QuestionBoxShell>
-        <QuestionBoxContent>
+      <CRIShell>
+        <CRIContent>
           <p className="my-2 text-[0.9em] font-light">
             You can skip the following question or click to reveal.
           </p>
@@ -129,15 +125,15 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
               Reveal optional question
             </Button>
           </div>
-        </QuestionBoxContent>
-      </QuestionBoxShell>
+        </CRIContent>
+      </CRIShell>
     );
   }
 
   return (
-    <QuestionBoxShell>
-      <QuestionBoxHeader isOptional={!shouldBlur} question={question} />
-      <QuestionBoxContent>
+    <CRIShell>
+      <CRIHeader isOptional={!shouldBlur} question={question} />
+      <CRIContent>
         <div role="status">
           {state.status === StatusReread.ANSWERED && (
             <p className="text-sm text-muted-foreground">
@@ -209,7 +205,7 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
 
             {state.status !== StatusReread.UNANSWERED &&
             isNextButtonDisplayed ? (
-              <FinishQuestionButton
+              <FinishCRIButton
                 pageSlug={pageSlug}
                 chunkSlug={chunkSlug}
                 condition={Condition.RANDOM_REREAD}
@@ -217,7 +213,7 @@ export function QuestionBoxReread({ question, chunkSlug, pageSlug }: Props) {
             ) : null}
           </div>
         </form>
-      </QuestionBoxContent>
-    </QuestionBoxShell>
+      </CRIContent>
+    </CRIShell>
   );
 }

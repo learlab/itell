@@ -16,17 +16,17 @@ export type CRISnapshot = {
 };
 
 // if a chunk contains a CRI
-export type ChunkQuestion = Record<string, boolean>;
+export type PageCRIStatus = Record<string, boolean>;
 
 export type CRIStore = ReturnType<typeof createCRIStore>;
 type Props = {
   pageStatus: PageStatus;
   chunks: Page["chunks"];
-  chunkQuestion: ChunkQuestion;
+  status: PageCRIStatus;
 };
 
 export const createCRIStore = (
-  { pageStatus, chunks, chunkQuestion }: Props,
+  { pageStatus, chunks, status }: Props,
   snapshot?: CRISnapshot
 ) => {
   const lastIndex = chunks.length - 1;
@@ -44,7 +44,7 @@ export const createCRIStore = (
         chunks.map(({ slug, type }) => [
           slug,
           {
-            hasQuestion: Boolean(chunkQuestion[slug]),
+            hasQuestion: Boolean(status[slug]),
             status: type === "regular" ? undefined : "completed",
           },
         ])
@@ -98,7 +98,7 @@ export const createCRIStore = (
         slugs.map((slug) => [
           slug,
           {
-            hasQuestion: chunkQuestion[slug],
+            hasQuestion: status[slug],
             status: undefined,
           },
         ])
@@ -110,7 +110,7 @@ export const createCRIStore = (
 export const getExcludedChunks = (store: CRIStore) => {
   const snap = store.getSnapshot();
   return Object.entries(snap.context.chunkStatus)
-    .filter(([_, { status }]) => status === "passed")
+    .filter(([, { status }]) => status === "passed")
     .map(([slug]) => slug);
 };
 

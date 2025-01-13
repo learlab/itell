@@ -125,8 +125,8 @@ export function ToggleShowFloatingSummary() {
 
 export function FloatingSummary() {
   const summaryStore = useSummaryStore();
-  const questionStore = useCRIStore();
-  const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+  const criStore = useCRIStore();
+  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const input = useSelector(summaryStore, SelectInput);
   const userShow = useSelector(summaryStore, SelectShowFloatingSummary);
   const summaryResponse = useSelector(summaryStore, SelectResponse);

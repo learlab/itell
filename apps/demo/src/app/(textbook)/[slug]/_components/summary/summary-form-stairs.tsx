@@ -91,11 +91,11 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
 
   // stores
   const chatStore = useChatStore();
-  const questionStore = useCRIStore();
+  const criStore = useCRIStore();
   const summaryStore = useSummaryStore();
 
   // states
-  const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const response = useSelector(summaryStore, SelectResponse);
   const prevInput = useSelector(summaryStore, SelectPrevInput);
   const isNextPageVisible = useSelector(summaryStore, SelectIsNextPageVisible);
@@ -135,7 +135,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         page_slug: pageSlug,
         focus_time: data.focusTimes?.data,
         chat_history: getHistory(chatStore),
-        excluded_chunks: getExcludedChunks(questionStore),
+        excluded_chunks: getExcludedChunks(criStore),
         score_history: data.contentScoreHistory.filter(Boolean),
       };
       requestBodyRef.current = requestBody;
