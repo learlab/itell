@@ -38,20 +38,24 @@ following folder structure: (omitting some folders for brevity)
 
 ```bash
 apps/
-  app-1/
+  demo/
     package.json
-  app-2/
+  special-volume/
 packages
   package-1/
   package-2/
 package.json
 ```
 
-Go the specific volume folder you are working on. For example, if you are
-working on the `app-1` volume, change directory into `apps/app-1/`.
+The `apps` folder contains the frontend code for our volumes. You will most
+likely be working with `apps/demo` all the time, which serves the demo volume.
+In cases where certain volume needs a special feature that should not be added
+to demo and other volumes, you may go to `apps/specific-volume`.
+
+Assuming you are working with the demo volume, run:
 
 ```bash
-cd apps/app-1
+cd apps/demo
 ```
 
 Create a new file `.env` in the volume folder. Fill in the necessary environment
@@ -73,11 +77,11 @@ building internal libraries, initializing the database, etc. It should finish in
 less than 5 minutes, the logs at the end looks like
 
 ```
-@itell/app-1:build: ○  (Static)   prerendered as static content
-@itell/app-1:build: ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
-@itell/app-1:build: ƒ  (Dynamic)  server-rendered on demand
-@itell/app-1:build:
-@itell/app-1:build:
+@itell/demo:build: ○  (Static)   prerendered as static content
+@itell/demo:build: ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+@itell/demo:build: ƒ  (Dynamic)  server-rendered on demand
+@itell/demo:build:
+@itell/demo:build:
 
  Tasks:    10 successful, 10 total
 Cached:    0 cached, 10 total
@@ -105,7 +109,8 @@ The next time you want to start the development server, you only need to run
 # install dependencies
 pnpm install
 # go to the volume directory
-cd apps/app-1
+cd apps/demo
+
 # fill in the .env file and initialize the database
 pnpm drizzle-kit migrate
 # build
@@ -114,6 +119,93 @@ pnpm run build:deps
 # start the development server
 pnpm run dev
 ```
+
+### Working with multiple volumes
+
+> [!NOTE] Feel free to skip this section if you don't need to change volumes
+> other than the demo.
+
+The `apps/demo` volume in the `main` branch is our master volume and should
+always contain the most up-to-date features. To synchronize other volumes, we
+use git branching. Different volumes reside in different branches and we use
+`git merge` to coordinate changes between them. Vercel deployments are also
+connecting to different branches.
+
+There is a bash script `setup-protect-merge.sh` in the root directory that
+enhances git for this workflow, run it before you start working on a new volume
+
+```bash
+./setup-protect-merge.sh
+```
+
+The script add a new command git command called `protect-merge` that is a
+enhanced version of the `merge` command. For example, if you have want to update
+the `chevron` volume with the changes in main, you would run
+
+```bash
+git switch chevron # suppose this is the branch for the chevron volume
+git protect-merge main
+
+# switch back to main and work on the next feature
+git switch main
+```
+
+The difference between `protect-merge` and `merge` is that `protect-merge`
+respects a custom `keep-ours` merge attribute configured in `.gitattributes`,
+
+```bash
+# .gitattributes
+apps/demo/content/**/* merge=keep-ours
+apps/demo/src/config/metadata.ts merge=keep-ours
+apps/demo/src/lib/auth/conditions.ts merge=keep-ours
+apps/demo/src/drizzle/**/* merge=keep-ours
+```
+
+`protect-merge` will first run `git merge`, and if any of the changed files is
+listed in `.gitattributes` with a `keep-ours` annotation, it will revert the
+file to its original content in the current branch. This is helpful because
+certain files are volume-specific and should **not** be synced with the demo
+volume, e.g., textbook markdown files, metadata, database schemas, and
+experiment designs. For other feature files that should be synced,
+`protect-merge` just act like a normal merge.
+
+The usual workflow with the branching model is
+
+- if your changes apply to all volumes: go to the main branch, add your changes
+  and commit it. Go to the branches for other volumes, run
+  `git protect-merge main`, commit it. Finally multiple pull requests for each
+  branch.
+
+- if your changes apply to a subset of volumes: go to the respective volume
+  branches, commit changes and create pull requests. Consider and discuss if the
+  changed file should be added to `.gitattributes` or it could be overwritten by
+  the merge run by other developers.
+
+If requirements for a volume is too complicated to fit in the branching model,
+the last resort is starting a new directory in `apps/`. This is not recommended
+because it is a fundamentally a different project and requires manual syncing.
+
+There is another git setup that changes `.env` when you switch branches, which
+is automatically set up by `pnpm setup` or after `pnpm install`. When you run
+`git switch`, it looks for a file `.branch-env-lookup` in `apps/demo` whose
+content is
+
+```bash
+# .branch-env-lookup
+main .env.demo
+rmp .env.rmp
+.default .env.demo
+```
+
+This specifies which file to copy over to `.env` when you switch branches, note
+you need to create files such as `.env.demo` and `.env.rmp` yourself. The
+current setting is
+
+- when switching to `main`: copy `.env.demo` to `.env`
+
+- when switching to `rmp`: copy `.env.rmp` to `.env`
+
+- when switching to other branches: copy `.env.demo` to `.env`
 
 ## With Dev Containers
 
