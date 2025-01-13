@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { and, count, desc, eq, isNotNull, sql } from "drizzle-orm";
+import { and, count, eq, isNotNull, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 import { z } from "zod";
 
@@ -163,25 +163,31 @@ export const createSummaryAction = authedProcedure
   });
 
 /**
- * Get data to make the summary scoring request
+ * Get data for summary scoring request (stairs)
  *
+ * keep this as a server action as it is called client side by summary-form-stairs
  */
-export const getSummaryScoreRequestAction = authedProcedure
+export const getStairsHistory = authedProcedure
   .input(z.object({ pageSlug: z.string() }))
   .handler(async ({ input, ctx }) => {
     return await db.transaction(async (tx) => {
       const contentScoreHistory = (
         await tx
           .select({
-            content: summaries.contentScore,
+            content: sql<number>`${summaries.contentScore}`,
           })
           .from(summaries)
-          .where(and(eq(summaries.userId, ctx.user.id)))
+          .where(
+            and(
+              eq(summaries.userId, ctx.user.id),
+              isNotNull(summaries.contentScore)
+            )
+          )
       ).map((v) => v.content);
 
       const focusTimes = first(
         await tx
-          .select()
+          .select({ data: focus_times.data })
           .from(focus_times)
           .where(
             and(
@@ -197,48 +203,6 @@ export const getSummaryScoreRequestAction = authedProcedure
       };
     });
   });
-
-/**
- * Get summary for class
- */
-export const getSummariesClassAction = authedProcedure
-  .input(z.object({ classId: z.string(), pageSlug: z.string().optional() }))
-  .handler(async ({ input }) => {
-    return await getSummariesClassHandler(input.classId, input.pageSlug);
-  });
-export const getSummariesClassHandler = memoize(
-  async (classId: string, pageSlug?: string) => {
-    return await db
-      .select({
-        id: summaries.id,
-        text: summaries.text,
-        pageSlug: summaries.pageSlug,
-        isPassed: summaries.isPassed,
-        createdAt: summaries.createdAt,
-        updatedAt: summaries.updatedAt,
-      })
-      .from(summaries)
-      .leftJoin(users, eq(users.id, summaries.userId))
-      .where(
-        and(
-          eq(users.classId, classId),
-          pageSlug !== undefined ? eq(summaries.pageSlug, pageSlug) : undefined
-        )
-      )
-      .orderBy(desc(summaries.updatedAt));
-  },
-  {
-    persist: false,
-    // @ts-expect-error bypass server action check
-    revalidateTags: async (classId, pageSlug) => [
-      "get-summaries-class",
-      classId,
-      pageSlug ?? "",
-    ],
-    log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
-    logid: "Get summaries class",
-  }
-);
 
 /**
  * Count summaries by pass / fail for current user and page

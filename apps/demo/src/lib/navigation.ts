@@ -16,8 +16,8 @@ const classCodeValid = z.union([
     }),
 ]);
 
-export const { routes, useSafeParams, useSafeSearchParams } = createNavigationConfig(
-  (defineRoute) => ({
+export const { routes, useSafeParams, useSafeSearchParams } =
+  createNavigationConfig((defineRoute) => ({
     home: defineRoute("/", {
       search: z
         .object({
@@ -83,7 +83,7 @@ export const { routes, useSafeParams, useSafeSearchParams } = createNavigationCo
         })
         .default({ page: undefined }),
     }),
-    dashboardSummariesTeacher: defineRoute("/dashboard/summaries/teacher", {
+    dashboardSummariesTeacher: defineRoute("/dashboard/teacher/summaries", {
       search: z
         .object({
           page: z.string().optional(),
@@ -118,5 +118,4 @@ export const { routes, useSafeParams, useSafeSearchParams } = createNavigationCo
         sectionId: z.string(),
       }),
     }),
-  })
-);
+  }));

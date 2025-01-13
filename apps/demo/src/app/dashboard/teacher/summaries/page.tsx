@@ -3,9 +3,9 @@ import { Card, CardContent } from "@itell/ui/card";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { SummaryChart } from "@summaries/summary-chart";
 
-import { getSummariesClassAction } from "@/actions/summary";
 import { Meta } from "@/config/metadata";
 import { incrementView } from "@/db/dashboard";
+import { getClassSummaryStats } from "@/db/summary";
 import { routes } from "@/lib/navigation";
 import { allPagesSorted } from "@/lib/pages/pages.server";
 import { SummaryListSelect } from "../../summaries/_components/summary-list-select";
@@ -22,43 +22,20 @@ export default async function Page(props: { searchParams: Promise<unknown> }) {
 
   const { page } =
     routes.dashboardSummariesTeacher.$parseSearchParams(searchParams);
-  const [summaries, err] = await getSummariesClassAction({
-    classId: teacher.classId,
-    pageSlug: page,
-  });
-  if (err) {
-    throw new Error("failed to get summaries", { cause: err });
-  }
-
-  const summariesByPassing = summaries.reduce(
-    (acc, summary) => {
-      if (summary.isPassed) {
-        acc.passed += 1;
-      } else {
-        acc.failed += 1;
-      }
-
-      if (summary.updatedAt < acc.startDate) {
-        acc.startDate = summary.createdAt;
-      }
-
-      if (summary.updatedAt > acc.endDate) {
-        acc.endDate = summary.createdAt;
-      }
-
-      return acc;
-    },
-    { passed: 0, failed: 0, startDate: new Date(), endDate: new Date() }
+  const { passed, failed, startDate, endDate } = await getClassSummaryStats(
+    teacher.classId,
+    page
   );
+
   const chartData = [
     {
       name: "passed",
-      value: summariesByPassing.passed,
+      value: passed,
       fill: "var(--color-passed)",
     },
     {
       name: "failed",
-      value: summariesByPassing.failed,
+      value: failed,
       fill: "var(--color-failed)",
     },
   ];
@@ -75,16 +52,15 @@ export default async function Page(props: { searchParams: Promise<unknown> }) {
             <SummaryChart
               chartTitle="All Summaries from Class"
               data={chartData}
-              startDate={summariesByPassing.startDate.toLocaleDateString()}
-              endDate={summariesByPassing.endDate.toLocaleDateString()}
-              totalCount={summaries.length}
+              startDate={startDate}
+              endDate={startDate}
+              totalCount={failed + passed}
             />
             <div className="space-y-4">
               <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
                 <SummaryListSelect defaultValue={page} pages={allPagesSorted} />
                 <p className="text-sm text-muted-foreground">
-                  {summariesByPassing.passed} passed,{" "}
-                  {summariesByPassing.failed} failed
+                  {passed} passed, {failed} failed
                 </p>
               </div>
             </div>

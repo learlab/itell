@@ -19,7 +19,11 @@ export const isQuizAnswered = memoize(
   },
   {
     persist: false,
-    revalidateTags: (userId, pageSlug) => [userId, pageSlug, Tags.GET_QUIZ_ANSWER],
+    revalidateTags: (userId, pageSlug) => [
+      userId,
+      pageSlug,
+      Tags.GET_QUIZ_ANSWER,
+    ],
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "quiz-answered",
     suppressWarnings: true,
@@ -40,9 +44,14 @@ const correctAnswers = quizPages
     return acc;
   }, {});
 
-const getCorrectCount = (answers: string[], correctAnswers: Array<string | null>) => {
+const getCorrectCount = (
+  answers: string[],
+  correctAnswers: Array<string | null>
+) => {
   if (answers.length !== correctAnswers.length) return 0;
-  const correctCount = answers.filter((answer, index) => answer === correctAnswers[index]).length;
+  const correctCount = answers.filter(
+    (answer, index) => answer === correctAnswers[index]
+  ).length;
   return correctCount;
 };
 
@@ -60,7 +69,11 @@ export const analyzeClassQuiz = memoize(
       .from(quiz_answers)
       .leftJoin(users, eq(quiz_answers.userId, users.id))
       .where(inArray(quiz_answers.userId, studentIds))
-      .orderBy(quiz_answers.userId, quiz_answers.pageSlug, desc(quiz_answers.createdAt));
+      .orderBy(
+        quiz_answers.userId,
+        quiz_answers.pageSlug,
+        desc(quiz_answers.createdAt)
+      );
 
     const analyzedResults = results.map((result) => {
       const pageCorrectAnswers = correctAnswers[result.pageSlug];
