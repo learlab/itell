@@ -26,8 +26,8 @@ type Props = {
 };
 
 export function SummaryFormSimple({ pageStatus, page }: Props) {
-  const questionStore = useCRIStore();
-  const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+  const criStore = useCRIStore();
+  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const router = useRouter();
   const [finished, setFinished] = useState(pageStatus.unlocked);
 

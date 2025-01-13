@@ -61,8 +61,10 @@ cd apps/demo
 Create a new file `.env` in the volume folder. Fill in the necessary environment
 variables, see [instructions](./vercel.md)
 
-> [!IMPORTANT] Replace the `DATABASE_URL` value in `.env` with the URL of your
-> postgres database, this string looks like
+> [!IMPORTANT]
+>
+> Replace `DATABASE_URL` in `.env` with the URL of your postgres database, this
+> string looks like
 > `DATABASE_URL=postgresql://postgres:<username>@localhost:5432/<dbname>`
 
 After you have `.env` set up, you can initialize your database and build the
@@ -100,9 +102,6 @@ This will print a localhost URL where you can view the app in your browser.
 The next time you want to start the development server, you only need to run
 `pnpm run dev` in the volume folder. No need to run the other commands again.
 
-> [!NOTE] If you need to switch between multiple projects, you also need to
-> configure your Git `git config --global merge.ours.driver true`
-
 ### All commands
 
 ```bash
@@ -122,14 +121,16 @@ pnpm run dev
 
 ### Working with multiple volumes
 
-> [!NOTE] Feel free to skip this section if you don't need to change volumes
-> other than the demo.
+> [!NOTE]
+>
+> Feel free to skip this section if you don't need to change volumes other than
+> the demo.
 
 The `apps/demo` volume in the `main` branch is our master volume and should
 always contain the most up-to-date features. To synchronize other volumes, we
-use git branching. Different volumes reside in different branches and we use
-`git merge` to coordinate changes between them. Vercel deployments are also
-connecting to different branches.
+use git branching. Different volumes reside in different branches we run merges
+from time to time to coordinate changes between them. Vercel deployments are
+also connecting to different branches.
 
 There is a bash script `setup-protect-merge.sh` in the root directory that
 enhances git for this workflow, run it before you start working on a new volume
@@ -171,15 +172,18 @@ experiment designs. For other feature files that should be synced,
 
 The usual workflow with the branching model is
 
-- if your changes apply to all volumes: go to the main branch, add your changes
-  and commit it. Go to the branches for other volumes, run
-  `git protect-merge main`, commit it. Finally multiple pull requests for each
-  branch.
+- if your changes apply to all volumes
 
-- if your changes apply to a subset of volumes: go to the respective volume
-  branches, commit changes and create pull requests. Consider and discuss if the
-  changed file should be added to `.gitattributes` or it could be overwritten by
-  the merge run by other developers.
+  - go to the main branch, add your changes and commit it. Go to the branches
+    for other volumes, run `git protect-merge main`, commit it. Finally multiple
+    pull requests for each branch.
+
+- if your changes apply to a subset of volumes
+
+  - go to the respective volume branches, commit changes and create pull
+    requests. Consider and discuss if the changed file should be added to
+    `.gitattributes` or it could be overwritten by the merge run by other
+    developers.
 
 If requirements for a volume is too complicated to fit in the branching model,
 the last resort is starting a new directory in `apps/`. This is not recommended

@@ -7,7 +7,7 @@ import { createEventAction } from "@/actions/event";
 import { useChunks, useCRIStore } from "@/components/provider/page-provider";
 import { Condition, EventType } from "@/lib/constants";
 import { SelectCurrentChunk, SelectSummaryReady } from "@/lib/store/cri-store";
-import { QuestionBoxContent, QuestionBoxShell } from "./question-box-shell";
+import { CRIContent, CRIShell } from "./cri-shell";
 
 type Props = {
   question: string;
@@ -16,12 +16,7 @@ type Props = {
   chunkSlug: string;
 };
 
-export function QuestionBoxSimple({
-  question,
-  answer,
-  pageSlug,
-  chunkSlug,
-}: Props) {
+export function CRISimple({ question, answer, pageSlug, chunkSlug }: Props) {
   const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
   const isSummaryReady = useSelector(store, SelectSummaryReady);
@@ -30,8 +25,8 @@ export function QuestionBoxSimple({
   const isLastQuestion = chunkSlug === chunks[chunks.length - 1];
 
   return (
-    <QuestionBoxShell>
-      <QuestionBoxContent className="prose-p:my-2">
+    <CRIShell>
+      <CRIContent className="prose-p:my-2">
         <p className="text-muted-foreground">
           Below is a question related to the content you just read. When you
           finished reading its answer, click the finish button below to move on.
@@ -79,7 +74,7 @@ export function QuestionBoxSimple({
             </Button>
           </div>
         </form>
-      </QuestionBoxContent>
-    </QuestionBoxShell>
+      </CRIContent>
+    </CRIShell>
   );
 }
