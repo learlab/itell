@@ -128,9 +128,9 @@ pnpm run dev
 
 The `apps/demo` volume in the `main` branch is our master volume and should
 always contain the most up-to-date features. To synchronize other volumes, we
-use git branching. Different volumes reside in different branches and we use
-`git merge` to coordinate changes between them. Vercel deployments are also
-connecting to different branches.
+use git branching. Different volumes reside in different branches we run merges
+from time to time to coordinate changes between them. Vercel deployments are
+also connecting to different branches.
 
 There is a bash script `setup-protect-merge.sh` in the root directory that
 enhances git for this workflow, run it before you start working on a new volume
