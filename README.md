@@ -132,6 +132,13 @@ use git branching. Different volumes reside in different branches we run merges
 from time to time to coordinate changes between them. Vercel deployments are
 also connecting to different branches.
 
+The mental model is: while you are operating on multiple volumes, 95% of the
+business logic is the same, they may only differ in some critical lines in a
+small subset of important files, such as condition assignments, log in options,
+etc. You should not need to create a separate project in `apps` for every
+volume. Instead use `apps/demo` as your workbench, and when it's necessary bring
+the changes to other branches by switching to it and merge with the main branch.
+
 There is a bash script `setup-protect-merge.sh` in the root directory that
 enhances git for this workflow, run it before you start working on a new volume
 
