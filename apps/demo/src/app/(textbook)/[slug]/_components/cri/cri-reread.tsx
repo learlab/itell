@@ -11,7 +11,7 @@ import { PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
-import { createQuestionAnswerAction } from "@/actions/cri";
+import { createCRIAnswerAction } from "@/actions/cri";
 import { InternalError } from "@/components/internal-error";
 import { useCRIStore } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
@@ -85,7 +85,7 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
       status: StatusReread.ANSWERED,
     }));
 
-    createQuestionAnswerAction({
+    createCRIAnswerAction({
       text: input,
       condition: Condition.RANDOM_REREAD,
       chunkSlug,
