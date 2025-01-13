@@ -43,12 +43,20 @@ export const redirectWithSearchParams = (
   return redirect(url.toString());
 };
 
-export const scrollToElement = (element: HTMLElement) => {
+export const scrollToElement = (
+  x: HTMLElement | string,
+  opts?: { offset?: number }
+) => {
   // offset to account for the sticky header
-  const yOffset = -70;
-  const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-
-  window.scrollTo({ top: y, behavior: "smooth" });
+  const yOffset = opts?.offset ?? -70;
+  let target = typeof x === "string" ? null : x;
+  if (typeof x === "string") {
+    target = document.getElementById(x);
+    if (target) {
+      const y = target.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  }
 };
 
 export const reportSentry = (msg: string, extra: any) => {

@@ -91,34 +91,6 @@ function useElementDimensions() {
   return dimensions;
 }
 
-const FloatingSummaryHeader = () => {
-  const summaryStore = useSummaryStore();
-  return (
-    <header className="flex items-center justify-end px-4 py-2">
-      <div className="flex gap-2">
-        <button
-          aria-label="Close floating summary"
-          onClick={() =>
-            summaryStore.send({ type: "toggleShowFloatingSummary" })
-          }
-          className="px-1"
-        >
-          <XIcon className="size-4" />
-        </button>
-        <button
-          aria-label="Jump to summary submission"
-          onClick={() =>
-            scrollToElement(document.getElementById(PAGE_ASSIGNMENTS_ID)!)
-          }
-          className="px-1"
-        >
-          <ArrowDownIcon className="size-4" />
-        </button>
-      </div>
-    </header>
-  );
-};
-
 export function ToggleShowFloatingSummary() {
   const summaryStore = useSummaryStore();
   const userShow = useSelector(summaryStore, SelectShowFloatingSummary);
@@ -135,15 +107,16 @@ export function ToggleShowFloatingSummary() {
           >
             <PinIcon
               className={cn("size-4 rotate-45 transition-all", {
-                "rotate-0": !userShow,
+                // same shape for true and undefined
+                "rotate-0": userShow === false,
               })}
             />
           </button>
         </TooltipTrigger>
         <TooltipContent>
-          {userShow
-            ? "Hide floating summary"
-            : "Show a floating summary input when you scrolls up"}
+          {userShow === false
+            ? "Show a floating window of summary input when you scrolls up"
+            : "Hide floating summary window"}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -172,7 +145,7 @@ export function FloatingSummary() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-4 z-30 rounded-lg border bg-background shadow-md"
+          className="fixed bottom-4 z-30"
           id="floating-summary"
           style={{
             left: dimensions.left,
@@ -182,13 +155,32 @@ export function FloatingSummary() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
         >
-          <FloatingSummaryHeader />
           {summaryResponse && (
             <div className="px-4">
               <SummaryFeedbackDetails response={summaryResponse} />
             </div>
           )}
-          <form className="bg-card px-4 py-2">
+          <form className="relative rounded-lg bg-background shadow-md">
+            <header className="absolute right-2 top-2 z-40 flex items-center justify-end">
+              <button
+                aria-label="Close floating summary"
+                onClick={() =>
+                  summaryStore.send({ type: "toggleShowFloatingSummary" })
+                }
+                type="button"
+                className="px-1"
+              >
+                <XIcon className="size-4" />
+              </button>
+              <button
+                aria-label="Jump to summary submission"
+                onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
+                type="button"
+                className="px-1"
+              >
+                <ArrowDownIcon className="size-4" />
+              </button>
+            </header>
             <Label className="flex flex-col gap-3">
               <span className="sr-only">Your summary</span>
               <TextArea
