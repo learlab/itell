@@ -95,8 +95,7 @@ export async function PageAssignments({
           description="
             Great job making it close to the end of the textbook! Please help us
             learn about your learning experience by completing the outtake
-            survey.
-          "
+            survey."
         >
           <NavigationButton
             href={routes.surveyHome({ surveyId: Survey.OUTTAKE })}
@@ -184,7 +183,7 @@ export async function PageAssignments({
                 pageStatus={pageStatus}
                 afterSubmit={
                   <Suspense fallback={<SummaryCount.Skeleton />}>
-                    <SummaryCount pageSlug={page.slug} />
+                    <SummaryCount pageSlug={page.slug} userId={user.id} />
                   </Suspense>
                 }
               />

@@ -18,6 +18,7 @@ import {
 } from "@itell/core/summary";
 import { driver } from "@itell/driver.js";
 import { Button } from "@itell/ui/button";
+import { Errorbox } from "@itell/ui/callout";
 import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { type User } from "lucia";
@@ -26,17 +27,13 @@ import Confetti from "react-dom-confetti";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
-import {
-  createSummaryAction,
-  getSummaryScoreRequestAction,
-} from "@/actions/summary";
+import { createSummaryAction, getStairsHistory } from "@/actions/summary";
 import { DelayMessage } from "@/components/delay-message";
 import {
   useChatStore,
   useCRIStore,
   useSummaryStore,
 } from "@/components/provider/page-provider";
-import { Callout } from "@/components/ui/callout";
 import { rocketBlast } from "@/lib/animations";
 import { apiClient } from "@/lib/api-client";
 import { Condition } from "@/lib/constants";
@@ -110,7 +107,6 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   } = useActionStatus(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
       clearStages();
       summaryStore.send({ type: "submit" });
       addStage("Scoring");
@@ -126,9 +122,9 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         return;
       }
 
-      const [data, err] = await getSummaryScoreRequestAction({ pageSlug });
+      const [data, err] = await getStairsHistory({ pageSlug });
       if (err) {
-        throw new Error("get focus time action", { cause: err });
+        throw new Error("get stairs history", { cause: err });
       }
       const requestBody: ApiRequest = {
         summary: input,
@@ -136,7 +132,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         focus_time: data.focusTimes?.data,
         chat_history: getHistory(chatStore),
         excluded_chunks: getExcludedChunks(criStore),
-        score_history: data.contentScoreHistory.filter(Boolean),
+        score_history: data.contentScoreHistory,
       };
       requestBodyRef.current = requestBody;
       const response = await apiClient.api.summary.stairs.$post({
@@ -367,9 +363,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           aria-labelledby="summary-form-heading"
         >
           {submissionError ? (
-            <Callout variant="warning" title="Error">
-              {ErrorFeedback[submissionError]}
-            </Callout>
+            <Errorbox title={ErrorFeedback[submissionError]} />
           ) : null}
           {isDelayed ? <DelayMessage /> : null}
 

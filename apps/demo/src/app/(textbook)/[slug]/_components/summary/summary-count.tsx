@@ -2,31 +2,30 @@ import Link from "next/link";
 import { Skeleton } from "@itell/ui/skeleton";
 import pluralize from "pluralize";
 
-import { countSummaryByPassingAction } from "@/actions/summary";
+import { countSummary } from "@/db/summary";
+import { routes } from "@/lib/navigation";
 
 type Props = {
+  userId: string;
   pageSlug: string;
 };
 
-export async function SummaryCount({ pageSlug }: Props) {
-  const [data, err] = await countSummaryByPassingAction({ pageSlug });
-  if (err) {
-    return null;
-  }
-  const summaryCount = data.failed + data.passed;
+export async function SummaryCount({ userId, pageSlug }: Props) {
+  const { failed, passed } = await countSummary(userId, pageSlug);
+  const total = failed + passed;
 
   return (
     <Link
       className="text-sm text-muted-foreground underline-offset-4 hover:underline xl:text-base"
-      href="/dashboard/summaries"
+      href={routes.dashboardSummaries()}
       aria-label="past summary submissions for this page"
     >
       <span>
-        {pluralize("summary", summaryCount, true)} were written
-        {summaryCount > 0 ? (
+        {pluralize("summary", total, true)} were written
+        {total > 0 ? (
           <span>
             {", "}
-            {data.passed} passed, {data.failed} failed.
+            {passed} passed, {failed} failed.
           </span>
         ) : null}
       </span>
