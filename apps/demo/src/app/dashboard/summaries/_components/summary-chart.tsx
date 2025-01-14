@@ -33,8 +33,8 @@ const chartConfig = {
 type Props = {
   data: { name: string; value: number; fill: string }[];
   totalCount: number;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
   chartTitle?: string;
 };
 
@@ -49,9 +49,12 @@ export function SummaryChart({
     <Card>
       <CardHeader className="items-center pb-0">
         <CardTitle>{chartTitle}</CardTitle>
-        <CardDescription>
-          {startDate}- {endDate}
-        </CardDescription>
+        {startDate && endDate && (
+          <CardDescription>
+            {new Date(startDate).toLocaleDateString()}-{" "}
+            {new Date(endDate).toLocaleDateString()}
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent className="pb-0">
         <p className="sr-only" id="summary-chart-title">

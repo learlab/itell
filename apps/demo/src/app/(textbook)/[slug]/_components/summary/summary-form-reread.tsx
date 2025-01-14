@@ -27,16 +27,13 @@ import { useActionStatus } from "use-action-status";
 
 import { createSummaryAction } from "@/actions/summary";
 import { DelayMessage } from "@/components/delay-message";
-import {
-  useQuestionStore,
-  useQuizStore,
-} from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
 import { Condition } from "@/lib/constants";
 import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry, scrollToElement } from "@/lib/utils";
 import {
   getSummaryLocal,
@@ -58,11 +55,10 @@ const driverObj = driver();
 export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const pageSlug = page.slug;
   const prevInput = useRef<string | undefined>(undefined);
-  const quizStore = useQuizStore();
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
   const [finished, setFinished] = useState(pageStatus.unlocked);
-  const questionStore = useQuestionStore();
-  const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+  const criStore = useCRIStore();
+  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const isMobile = useIsMobile();
 
   const randomChunkSlug = useMemo(() => {
@@ -136,13 +132,6 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       finishStage("Saving");
       setFinished(true);
       prevInput.current = input;
-
-      if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-        quizStore.send({
-          type: "toggleQuiz",
-        });
-        return;
-      }
 
       if (isLastPage(page)) {
         toast.info("You have finished the entire textbook!");

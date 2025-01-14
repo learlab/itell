@@ -14,15 +14,12 @@ import { useActionStatus } from "use-action-status";
 import { createEventAction } from "@/actions/event";
 import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
-import {
-  useQuestionStore,
-  useQuizStore,
-} from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { Confetti } from "@/components/ui/confetti";
 import { EventType } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { PageData } from "@/lib/pages";
 import type { FormEvent } from "react";
@@ -37,9 +34,8 @@ type Props = {
 // eslint-disable-next-line react/display-name
 export const SummaryFormSkip = memo(
   ({ pageStatus, page, streak, available_summary_skips }: Props) => {
-    const questionStore = useQuestionStore();
-    const quizStore = useQuizStore();
-    const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+    const criStore = useCRIStore();
+    const isSummaryReady = useSelector(criStore, SelectSummaryReady);
     const router = useRouter();
     const [pageFinished, setPageFinished] = useState(pageStatus.unlocked);
 
@@ -59,13 +55,6 @@ export const SummaryFormSkip = memo(
         });
         if (err) {
           throw new Error("increment user page slug action", { cause: err });
-        }
-
-        if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-          quizStore.send({
-            type: "toggleQuiz",
-          });
-          return;
         }
 
         if (isLastPage(page)) {

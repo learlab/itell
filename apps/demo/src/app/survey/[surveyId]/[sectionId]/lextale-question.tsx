@@ -73,7 +73,7 @@ export function LexTaleQuestion({
     startTransition(() => {
       words.forEach((w) => {
         const input = document.querySelector(
-          `input[name='${question.id}--${w}'][value='no']`
+          `input[name='${inputName(question.id, w)}'][value='no']`
         ) as HTMLInputElement;
         input.checked = true;
       });
@@ -107,7 +107,7 @@ export function LexTaleQuestion({
                 <CardContent className="relative flex aspect-square flex-col items-center justify-center gap-4">
                   <span className="text-4xl font-extrabold">{word}</span>
                   <RadioGroup
-                    name={`${question.id}--${word}`}
+                    name={inputName(question.id, word)}
                     required={true}
                     className="absolute bottom-4 flex items-center justify-between"
                     defaultValue={
@@ -156,4 +156,8 @@ export function LexTaleQuestion({
       </Carousel>
     </div>
   );
+}
+
+function inputName(questionId: string, word: string) {
+  return `${questionId}--${word}`;
 }

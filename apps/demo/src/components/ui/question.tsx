@@ -1,12 +1,12 @@
 "use client";
 
-import { QuestionBoxReread } from "@textbook/question/question-box-reread";
-import { QuestionBoxSimple } from "@textbook/question/question-box-simple";
-import { QuestionBoxStairs } from "@textbook/question/question-box-stairs";
+import { CRIReread } from "@textbook/cri/cri-reread";
+import { CRISimple } from "@textbook/cri/cri-simple";
+import { CRIStairs } from "@textbook/cri/cri-stairs";
 import { useSelector } from "@xstate/store/react";
 
 import { Condition } from "@/lib/constants";
-import { useCondition, useQuestionStore } from "../provider/page-provider";
+import { useCondition, useCRIStore } from "../provider/page-provider";
 
 type Props = {
   question: string;
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function Question({ question, answer, chunkSlug, pageSlug }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const condition = useCondition();
   const chunkStatus = useSelector(
     store,
@@ -28,7 +28,7 @@ export function Question({ question, answer, chunkSlug, pageSlug }: Props) {
   return (
     <div className="question-container my-6">
       {condition === Condition.STAIRS && (
-        <QuestionBoxStairs
+        <CRIStairs
           question={question}
           answer={answer}
           chunkSlug={chunkSlug}
@@ -36,7 +36,7 @@ export function Question({ question, answer, chunkSlug, pageSlug }: Props) {
         />
       )}
       {condition === Condition.RANDOM_REREAD && (
-        <QuestionBoxReread
+        <CRIReread
           question={question}
           answer={answer}
           chunkSlug={chunkSlug}
@@ -44,7 +44,7 @@ export function Question({ question, answer, chunkSlug, pageSlug }: Props) {
         />
       )}
       {condition === Condition.SIMPLE && (
-        <QuestionBoxSimple
+        <CRISimple
           question={question}
           answer={answer}
           chunkSlug={chunkSlug}

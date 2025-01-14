@@ -2,46 +2,25 @@ import { Card, CardContent, CardDescription, CardHeader } from "@itell/ui/card";
 import { Skeleton } from "@itell/ui/skeleton";
 import { CheckCircleIcon, CircleIcon } from "lucide-react";
 
-import { getQuizAttemps } from "@/actions/event";
+import { CreateErrorFallback } from "@/components/error-fallback";
+import { getUserQuizzes } from "@/db/quiz";
 import { routes } from "@/lib/navigation";
 import { quizPages } from "@/lib/pages/pages.server";
-import { makePageHref } from "@/lib/utils";
 
-export async function QuizPrompt() {
-  const [attempts, err] = await getQuizAttemps();
+export async function QuizPrompt({ userId }: { userId: string }) {
+  const quizzes = await getUserQuizzes(userId);
   const pages = quizPages.map((p) => ({
     title: p.title,
     href: routes.textbook({ slug: p.slug, search: { quiz: true } }),
-    finished: attempts?.find((a) => a.pageSlug === p.slug) !== undefined,
+    finished: quizzes?.find((a) => a.pageSlug === p.slug) !== undefined,
   }));
-
-  if (err) {
-    return (
-      <Card>
-        <CardContent>
-          <p>
-            You are close to finishing to entire textbook. We had trouble
-            finding your quiz completion stauts. Please make sure you have
-            finished all the quizzes to receive full credit.
-          </p>
-          <ul className="pl-4">
-            {pages.map((page) => (
-              <li key={page.href}>
-                <a href={page.href}>{page.title}</a>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-    );
-  }
 
   const allQuizFinished = pages.every((p) => p.finished);
   if (allQuizFinished) {
     return (
       <Card>
         <CardContent>
-          <p>Are quizzes are finished 🎉</p>
+          <p>You have finished all quizzes. 🎉</p>
         </CardContent>
       </Card>
     );
@@ -51,9 +30,8 @@ export async function QuizPrompt() {
     <Card>
       <CardHeader>
         <CardDescription>
-          You are close to finishing the entire textbook. Please make sure you
-          also complete quizzes for all the following pages to receive full
-          credit.
+          You are close to finishing the entire textbook. Please make sure you also complete quizzes
+          for all the following pages to receive full credit.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -75,6 +53,8 @@ export async function QuizPrompt() {
     </Card>
   );
 }
+
+QuizPrompt.ErrorFallback = CreateErrorFallback("Failed to retrieve previous quiz submissions");
 
 QuizPrompt.Skeleton = function QuizPromptSkeleton() {
   return <Skeleton className="h-12" />;

@@ -26,7 +26,7 @@ const roles = [
 ];
 
 export function RoleSwitcher() {
-  const { role, onRoleChange } = useDashboard();
+  const { role, switchRole } = useDashboard();
   const activeRole = role === ClassRole.TEACHER ? roles[0] : roles[1];
 
   return (
@@ -36,26 +36,17 @@ export function RoleSwitcher() {
           <div className="flex h-5 w-5 items-center justify-center rounded-sm bg-primary text-primary-foreground">
             <activeRole.icon className="h-3.5 w-3.5 shrink-0" />
           </div>
-          <div className="line-clamp-1 flex-1 pr-2 font-medium">
-            {activeRole.label}
-          </div>
+          <div className="line-clamp-1 flex-1 pr-2 font-medium">{activeRole.label}</div>
           <ChevronsUpDown className="ml-auto h-4 w-4 text-muted-foreground/50" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-64"
-        align="start"
-        side="right"
-        sideOffset={4}
-      >
-        <DropdownMenuLabel className="text-xs text-muted-foreground">
-          Roles
-        </DropdownMenuLabel>
+      <DropdownMenuContent className="w-64" align="start" side="right" sideOffset={4}>
+        <DropdownMenuLabel className="text-xs text-muted-foreground">Roles</DropdownMenuLabel>
         {roles.map((role) => (
           <DropdownMenuItem
             key={role.name}
             onClick={() => {
-              onRoleChange(role.name);
+              switchRole(role.name);
             }}
             className="items-start gap-2 px-1.5"
           >

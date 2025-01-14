@@ -7,16 +7,14 @@ import { type Page } from "#content";
 
 import { type PageStatus } from "@/lib/page-status";
 import { createChatStore } from "@/lib/store/chat-store";
-import { createQuestionStore } from "@/lib/store/question-store";
-import { createQuizStore } from "@/lib/store/quiz-store";
+import { createCRIStore } from "@/lib/store/cri-store";
 import { createSummaryStore } from "@/lib/store/summary-store";
 import type { ChatStore } from "@/lib/store/chat-store";
 import type {
-  ChunkQuestion,
-  QuestionSnapshot,
-  QuestionStore,
-} from "@/lib/store/question-store";
-import type { QuizStore } from "@/lib/store/quiz-store";
+  CRISnapshot,
+  CRIStore,
+  PageCRIStatus,
+} from "@/lib/store/cri-store";
 import type { SummaryStore } from "@/lib/store/summary-store";
 
 type Props = {
@@ -29,40 +27,37 @@ type Props = {
 type State = {
   condition: string;
   chunks: string[];
-  questionStore: QuestionStore;
+  criStore: CRIStore;
   chatStore: ChatStore;
   summaryStore: SummaryStore;
-  quizStore: QuizStore;
 };
 const PageContext = createContext<State>({} as State);
 
 export function PageProvider({ children, condition, page, pageStatus }: Props) {
   const slugs = page.chunks.map(({ slug }) => slug);
-  const [snapshot, setSnapshot] = useLocalStorage<QuestionSnapshot | undefined>(
+  const [snapshot, setSnapshot] = useLocalStorage<CRISnapshot | undefined>(
     `question-store-${page.slug}`,
     undefined
   );
-  const [quizFinished, setQuizFinished] = useLocalStorage<boolean | undefined>(
-    `quiz-finished-${page.slug}`,
-    page.quiz ? false : undefined
+
+  const [showFloatingSummary, setShowFloatingSummary] = useLocalStorage<
+    boolean | undefined
+  >(
+    `show-floating-summary-${page.slug}`,
+    pageStatus.latest ? undefined : false
   );
 
-  const [showFloatingSummary, setShowFloatingSummary] = useLocalStorage(
-    "show-floating-summary",
-    false
-  );
-
-  const chunkQuestion = useMemo(() => {
-    return getPageQuestions(page);
+  const pageCRIStatus = useMemo(() => {
+    return getPageCRIStatus(page);
   }, [page]);
 
-  const questionStoreRef = useRef<QuestionStore>(undefined);
-  if (!questionStoreRef.current) {
-    questionStoreRef.current = createQuestionStore(
+  const criStoreRef = useRef<CRIStore>(undefined);
+  if (!criStoreRef.current) {
+    criStoreRef.current = createCRIStore(
       {
         chunks: page.chunks,
         pageStatus,
-        chunkQuestion,
+        status: pageCRIStatus,
       },
       snapshot
     );
@@ -81,27 +76,13 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     });
   }
 
-  const quizStoreRef = useRef<QuizStore>(undefined);
-  if (!quizStoreRef.current) {
-    quizStoreRef.current = createQuizStore({
-      finished: quizFinished,
-      pageStatus,
-    });
-  }
-
   useEffect(() => {
-    let questionSubscription: Subscription | undefined;
+    let criSubscription: Subscription | undefined;
     let quizSubscription: Subscription | undefined;
     let summarySubscription: Subscription | undefined;
-    if (questionStoreRef.current) {
-      questionSubscription = questionStoreRef.current.subscribe((state) => {
+    if (criStoreRef.current) {
+      criSubscription = criStoreRef.current.subscribe((state) => {
         setSnapshot(state.context);
-      });
-    }
-
-    if (quizStoreRef.current) {
-      quizSubscription = quizStoreRef.current.on("finishQuiz", () => {
-        setQuizFinished(true);
       });
     }
 
@@ -115,19 +96,18 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     }
 
     return () => {
-      questionSubscription?.unsubscribe();
+      criSubscription?.unsubscribe();
       quizSubscription?.unsubscribe();
       summarySubscription?.unsubscribe();
     };
-  }, [setQuizFinished, setShowFloatingSummary, setSnapshot]);
+  }, [setShowFloatingSummary, setSnapshot]);
 
   return (
     <PageContext.Provider
       value={{
-        questionStore: questionStoreRef.current,
+        criStore: criStoreRef.current,
         chatStore: chatStoreRef.current,
         summaryStore: summaryStoreRef.current,
-        quizStore: quizStoreRef.current,
         chunks: slugs,
         condition,
       }}
@@ -157,27 +137,22 @@ export const useChatStore = () => {
   return value.chatStore;
 };
 
-export const useQuestionStore = () => {
+export const useCRIStore = () => {
   const value = useContext(PageContext);
-  return value.questionStore;
+  return value.criStore;
 };
 
-export const useQuizStore = () => {
-  const value = useContext(PageContext);
-  return value.quizStore;
-};
-
-const getPageQuestions = (page: Page): ChunkQuestion => {
+const getPageCRIStatus = (page: Page): PageCRIStatus => {
   if (page.cri.length === 0) {
     return {};
   }
 
-  const chunkQuestion: ChunkQuestion = Object.fromEntries(
+  const status: PageCRIStatus = Object.fromEntries(
     page.chunks.map((chunk) => [chunk, false])
   );
 
   if (page.chunks.length > 0) {
-    let withQuestion = false;
+    let withCRI = false;
     page.cri.forEach((item) => {
       const baseProb = 1 / 3;
 
@@ -191,22 +166,20 @@ const getPageQuestions = (page: Page): ChunkQuestion => {
       // }
 
       if (Math.random() < baseProb) {
-        chunkQuestion[item.slug] = true;
-        if (!withQuestion) {
-          withQuestion = true;
+        status[item.slug] = true;
+        if (!withCRI) {
+          withCRI = true;
         }
       }
     });
 
-    // Each page will have at least one question
+    // Each page will have at least one CRI
+    if (!withCRI) {
+      const randomCRI = page.cri[Math.floor(Math.random() * page.cri.length)];
 
-    if (!withQuestion) {
-      const randomQuestion =
-        page.cri[Math.floor(Math.random() * page.cri.length)];
-
-      chunkQuestion[randomQuestion.slug] = true;
+      status[randomCRI.slug] = true;
     }
   }
 
-  return chunkQuestion;
+  return status;
 };

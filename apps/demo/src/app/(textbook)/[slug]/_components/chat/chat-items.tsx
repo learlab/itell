@@ -3,7 +3,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { type Message } from "@itell/core/chat";
-import { useAnimatedText } from "@itell/core/hooks";
 import { Avatar, AvatarFallback, AvatarImage } from "@itell/ui/avatar";
 import { Button } from "@itell/ui/button";
 import { cn, getChunkElement } from "@itell/utils";

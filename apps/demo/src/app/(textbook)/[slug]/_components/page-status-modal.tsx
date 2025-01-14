@@ -22,9 +22,10 @@ import { makePageHref } from "@/lib/utils";
 type Props = {
   user: User | null;
   pageStatus: PageStatus;
+  fallbackPageSlug: string | null;
 };
 
-export function PageStatusModal({ user, pageStatus }: Props) {
+export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
   const { latest, unlocked } = pageStatus;
   if (unlocked) {
     return null;
@@ -34,11 +35,7 @@ export function PageStatusModal({ user, pageStatus }: Props) {
     if (user.consentGiven === null) {
       return (
         <Modal title="Please review the consent form first">
-          <p>
-            {" "}
-            Before starting on the textbook, please review the participation
-            policies in the consent form.
-          </p>
+          <p>Please review our policies before continuing.</p>
           <DialogFooter>
             <TakeConsent />
           </DialogFooter>
@@ -50,7 +47,7 @@ export function PageStatusModal({ user, pageStatus }: Props) {
       return null;
     }
 
-    const href = makePageHref(user.pageSlug);
+    const href = makePageHref(user.pageSlug ?? fallbackPageSlug);
 
     // user with locked page
     return (
@@ -107,9 +104,7 @@ function Modal({
       <DialogContent canClose={!isProduction}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description ? (
-            <DialogDescription>{description}</DialogDescription>
-          ) : null}
+          {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
         {children}
       </DialogContent>

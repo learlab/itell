@@ -6,10 +6,10 @@ import { SummaryChart } from "@summaries/summary-chart";
 import { SummaryList } from "@summaries/summary-list";
 import { firstPage } from "tests/utils";
 
-import { incrementViewAction } from "@/actions/dashboard";
-import { getSummariesAction } from "@/actions/summary";
 import { NavigationButton } from "@/components/navigation-button";
 import { Meta } from "@/config/metadata";
+import { incrementView } from "@/db/dashboard";
+import { getUserSummary } from "@/db/summary";
 import { Summary } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
@@ -24,13 +24,10 @@ export default async function Page(props: { searchParams: Promise<unknown> }) {
     return redirect("/auth");
   }
 
-  incrementViewAction({ pageSlug: Meta.summaries.slug });
+  incrementView({ userId: user.id, pageSlug: Meta.summaries.slug });
 
-  const { page } = routes.summaries.$parseSearchParams(searchParams);
-  const [summaries, err] = await getSummariesAction({});
-  if (err) {
-    throw new Error("failed to get summaries", { cause: err });
-  }
+  const { page } = routes.dashboardSummaries.$parseSearchParams(searchParams);
+  const summaries = await getUserSummary({ userId: user.id });
 
   if (summaries.length === 0) {
     return (

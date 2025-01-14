@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@itell/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
 import { Separator } from "@itell/ui/separator";
 import { JoinClassModal } from "@dashboard/join-class-modal";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
@@ -12,13 +6,11 @@ import { JoinClassForm } from "@settings/join-class";
 import { Profile } from "@settings/profile";
 import { QuitClass } from "@settings/quit-class";
 
-import {
-  getTeacherByClassAction,
-  incrementViewAction,
-} from "@/actions/dashboard";
 import { updateUserAction } from "@/actions/user";
 import { SettingsForm } from "@/app/dashboard/settings/_components/settings-form";
 import { Meta } from "@/config/metadata";
+import { incrementView } from "@/db/dashboard";
+import { findTeacherByClass } from "@/db/teacher";
 import { getSession } from "@/lib/auth";
 import { isProduction } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
@@ -29,64 +21,42 @@ export default async function Page(props: {
 }) {
   const searchParams = await props.searchParams;
   const { user } = await getSession();
-  const join_class_code =
-    routes.settings.$parseSearchParams(searchParams).join_class_code;
+  const join_class_code = routes.dashboardSettings.$parseSearchParams(searchParams).join_class_code;
 
   if (!user) {
-    return redirectWithSearchParams("auth", searchParams);
+    return redirectWithSearchParams("/auth", searchParams);
   }
 
-  incrementViewAction({ pageSlug: Meta.settings.slug, data: searchParams });
+  incrementView({
+    userId: user.id,
+    pageSlug: Meta.settings.slug,
+    data: searchParams,
+  });
 
   let teacherName: string | null = null;
   let userClassId: string | null = user.classId;
 
   if (user.classId) {
-    const [data, err] = await getTeacherByClassAction({
-      classId: user.classId,
-    });
-    if (err) {
-      throw new Error("failed to get teacher by class", { cause: err });
-    }
-    if (data) {
-      teacherName = data.name;
+    const teacher = await findTeacherByClass(user.classId);
+    if (teacher) {
+      teacherName = teacher.name;
     } else {
-      const [_, err] = await updateUserAction({ id: user.id, classId: null });
+      const [, err] = await updateUserAction({ id: user.id, classId: null });
       if (err) {
         throw new Error("failed to update user class id", { cause: err });
       }
       userClassId = null;
     }
   } else if (join_class_code) {
-    const [data, err] = await getTeacherByClassAction({
-      classId: join_class_code,
-    });
-    if (err) {
-      throw new Error("failed to get teacher by class", { cause: err });
-    }
-    if (data) {
-      teacherName = data.name;
-    }
-  }
-
-  if (user.classId) {
-    const [data, err] = await getTeacherByClassAction({
-      classId: user.classId,
-    });
-    if (err) {
-      throw new Error("failed to get teacher by class", { cause: err });
-    }
-    if (data) {
-      teacherName = data.name;
+    const teacher = await findTeacherByClass(join_class_code);
+    if (teacher) {
+      teacherName = teacher.name;
     }
   }
 
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={Meta.settings.title}
-        text={Meta.settings.description}
-      />
+      <DashboardHeader heading={Meta.settings.title} text={Meta.settings.description} />
       <Card>
         <CardHeader>
           <CardTitle>Edit your settings</CardTitle>

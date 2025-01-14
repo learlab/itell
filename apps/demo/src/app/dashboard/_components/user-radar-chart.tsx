@@ -15,7 +15,6 @@ import {
   Radar,
 } from "recharts";
 
-import { type OtherStats, type UserStats } from "@/actions/dashboard";
 import type { ChartConfig } from "@itell/ui/chart";
 
 const chartConfig = {
@@ -50,7 +49,7 @@ type Props = {
 };
 
 export function UserRadarChart({ data }: Props) {
-  const chartData = Object.entries(data).map(([key, value]) => value);
+  const chartData = Object.entries(data).map(([, value]) => value);
   return (
     <>
       <div className="sr-only" id="radar-chart-title">
@@ -219,12 +218,4 @@ const getRelativePct = (a: number, b: number) => {
   }
 
   return Math.round(((a - b) / Math.abs(b)) * 100);
-};
-
-const scale = (a: number, b: number) => {
-  if (Math.abs(b) < Number.EPSILON) {
-    return a === 0 ? 0 : 2;
-  }
-
-  return a / Math.abs(b);
 };

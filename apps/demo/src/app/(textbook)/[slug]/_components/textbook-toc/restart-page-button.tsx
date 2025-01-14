@@ -4,12 +4,12 @@ import { useTransition } from "react";
 import { Button } from "@itell/ui/button";
 import { RotateCcwIcon } from "lucide-react";
 
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { clearSummaryLocal } from "../summary/summary-input";
 
 export function RestartPageButton({ pageSlug }: { pageSlug: string }) {
   const [pending, startTransition] = useTransition();
-  const store = useQuestionStore();
+  const store = useCRIStore();
   return (
     <Button
       className="flex w-full items-center justify-start p-2 xl:text-lg"

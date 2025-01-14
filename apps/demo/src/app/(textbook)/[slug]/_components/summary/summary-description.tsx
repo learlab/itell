@@ -25,6 +25,7 @@ export function SummaryDescription({ condition }: { condition: string }) {
         jump to summary submission
       </a>
       <HtmlRenderer
+        className="xl:text-base"
         components={{
           "i-image": Image,
           "i-accordion": Accordion,

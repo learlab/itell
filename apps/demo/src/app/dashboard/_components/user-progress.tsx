@@ -26,7 +26,7 @@ export function UserProgress({
   return (
     <div className="leading-none space-y-2">
       <p className="sr-only">user&apos;s reading progress</p>
-      <p className="font-semibold lg:text-lg">
+      <p className="font-semibold xl:text-lg">
         {displayProgress}% completed, {unlockedPages}/{validPages.length}{" "}
         {pluralize("page", validPages.length)}
       </p>

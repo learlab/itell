@@ -34,7 +34,7 @@ export function PreAssignmentPrompt({
         <CardContent>{children}</CardContent>
       </Card>
     ));
-  }, [title, children]);
+  }, []);
 
   return (
     <Card>

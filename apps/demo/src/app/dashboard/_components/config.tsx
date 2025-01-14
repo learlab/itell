@@ -1,44 +1,40 @@
-import {
-  BarChartIcon,
-  FileEditIcon,
-  MessageCircleQuestion,
-  SettingsIcon,
-} from "lucide-react";
+import { BarChartIcon, FileEditIcon, MessageCircleQuestion, SettingsIcon } from "lucide-react";
 
 import { type MobileNavItem } from "@/components/mobile-nav";
+import { routes } from "@/lib/navigation";
 
 export const dashboardConfig = {
   mobileNav: {
     teacher: [
       {
         title: "Summaries",
-        href: "/dashboard/teacher/summaries",
+        href: routes.dashboardSummariesTeacher(),
       },
       {
         title: "Questions",
-        href: "/dashboard/teacher/questions",
+        href: routes.dashboardCRITeacher(),
       },
       {
         title: "Settings",
-        href: "/dashboard/settings",
+        href: routes.dashboardSettings(),
       },
     ],
     student: [
       {
         title: "Summaries",
-        href: "/dashboard/summaries",
+        href: routes.dashboardSummaries(),
       },
       {
         title: "Questions",
-        href: "/dashboard/questions",
+        href: routes.dashboard(),
       },
       {
         title: "Settings",
-        href: "/dashboard/settings",
+        href: routes.dashboardSettings(),
       },
       {
         title: "Forms",
-        href: "/dashboard/forms",
+        href: routes.dashboardForms(),
       },
     ],
   },
@@ -46,49 +42,49 @@ export const dashboardConfig = {
     teacher: [
       {
         title: "Overview",
-        href: "/dashboard/teacher",
+        href: routes.dashboardTeacher(),
         icon: BarChartIcon,
       },
       {
         title: "Summaries",
-        href: "/dashboard/teacher/summaries",
+        href: routes.dashboardSummariesTeacher(),
         icon: FileEditIcon,
       },
       {
         title: "Questions",
-        href: "/dashboard/teacher/questions",
+        href: routes.dashboardCRITeacher(),
         icon: MessageCircleQuestion,
       },
       {
         title: "Settings",
-        href: "/dashboard/settings",
+        href: routes.dashboardSettings(),
         icon: SettingsIcon,
       },
     ],
     student: [
       {
         title: "Overview",
-        href: "/dashboard",
+        href: routes.dashboard(),
         icon: BarChartIcon,
       },
       {
         title: "Summaries",
-        href: "/dashboard/summaries",
+        href: routes.dashboardSummaries(),
         icon: FileEditIcon,
       },
       {
         title: "Questions",
-        href: "/dashboard/questions",
+        href: routes.dashboardCRI(),
         icon: MessageCircleQuestion,
       },
       {
         title: "Settings",
-        href: "/dashboard/settings",
+        href: routes.dashboardSettings(),
         icon: SettingsIcon,
       },
       {
         title: "Forms",
-        href: "/dashboard/forms",
+        href: routes.dashboardForms(),
         icon: FileEditIcon,
       },
     ],

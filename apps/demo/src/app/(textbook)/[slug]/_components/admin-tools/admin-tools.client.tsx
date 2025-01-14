@@ -42,7 +42,7 @@ import { useServerAction } from "zsa-react";
 import { resetUserAction, updateUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
 import { InternalError } from "@/components/internal-error";
-import { useQuestionStore } from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { getUserCondition } from "@/lib/auth/conditions";
 import { Condition } from "@/lib/constants";
 import { updatePersonalizationStreak } from "@/lib/personalization";
@@ -76,7 +76,7 @@ const conditions = [
 ];
 
 export function AdminToolsClient({ user, pageSlug, pages }: Props) {
-  const store = useQuestionStore();
+  const store = useCRIStore();
   const condition = getUserCondition(user, pageSlug);
   const [open, setOpen] = useState(false);
   const { execute, isPending, isError } = useServerAction(updateUserAction);
@@ -286,13 +286,12 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
             </Label>
           </fieldset>
 
-          <footer className="flex justify-end">
+          <footer className="flex flex-col gap-2">
+            {isError ? <InternalError /> : null}
             <Button type="submit" disabled={isPending} pending={isPending}>
               Apply Changes
             </Button>
           </footer>
-
-          {isError ? <InternalError /> : null}
         </form>
       </SheetContent>
     </Sheet>

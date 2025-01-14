@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { buttonVariants } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
@@ -8,78 +7,42 @@ import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { UserProgress } from "@dashboard/user-progress";
 import { UserStatistics } from "@dashboard/user-statistics";
 
-import { getTeacherAction, getUserAction } from "@/actions/user";
 import { Meta } from "@/config/metadata";
+import { findUser } from "@/db/user";
 import { type User } from "@/drizzle/schema";
-import { getSession } from "@/lib/auth";
+import { Errors } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { firstAssignmentPage, getPageData } from "@/lib/pages/pages.server";
+import { checkTeacher } from "../../teacher/check-teacher";
 
 interface PageProps {
   params: Promise<unknown>;
   searchParams?: Promise<unknown>;
 }
 
-export default async function (props: PageProps) {
+export default async function Page(props: PageProps) {
+  const teacher = await checkTeacher();
   const searchParams = await props.searchParams;
-  const params = await props.params;
-  const { user } = await getSession();
+  const { id } = routes.dashboardStudent.$parseParams(await props.params);
 
-  if (!user) {
-    return redirect("/auth");
-  }
-
-  const [teacher, error] = await getTeacherAction();
-  if (error) {
-    throw new Error("failed to get teacher", { cause: error });
-  }
-
-  const isTeacher = Boolean(teacher);
-  if (!isTeacher) {
-    throw new Error("teacher only");
-  }
-
-  const { id } = routes.student.$parseParams(params);
-  const [student, err] = await getUserAction({ userId: id });
-  if (!student || err) {
-    return (
-      <DashboardShell>
-        <DashboardHeader
-          heading={Meta.student.title}
-          text={Meta.student.description}
-        />
-        <Errorbox>The student does not exist in your class</Errorbox>
-      </DashboardShell>
-    );
+  const student = await findUser(id);
+  if (!student || student.classId !== teacher.classId) {
+    throw new Error(Errors.STUDENT_NOT_EXISTS);
   }
 
   return (
     <DashboardShell>
-      <DashboardHeader
-        heading={Meta.student.title}
-        text={Meta.student.description}
-      />
+      <DashboardHeader heading={Meta.student.title} text={Meta.student.description} />
       <StudentProfile student={student} searchParams={searchParams} />
     </DashboardShell>
   );
 }
 
-function StudentProfile({
-  student,
-  searchParams,
-}: {
-  student: User;
-  searchParams: unknown;
-}) {
+function StudentProfile({ student, searchParams }: { student: User; searchParams: unknown }) {
   const page = getPageData(student.pageSlug);
-  const { reading_time_level } =
-    routes.student.$parseSearchParams(searchParams);
+  const { reading_time_level } = routes.dashboardStudent.$parseSearchParams(searchParams);
   let readingTimeLevel = ReadingTimeChartLevel.week_1;
-  if (
-    Object.values(ReadingTimeChartLevel).includes(
-      reading_time_level as ReadingTimeChartLevel
-    )
-  ) {
+  if (Object.values(ReadingTimeChartLevel).includes(reading_time_level as ReadingTimeChartLevel)) {
     readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
   }
   return (
@@ -99,10 +62,7 @@ function StudentProfile({
             <p>joined at {student.createdAt.toLocaleString("en-us")}</p>
           </div>
           <div className="text-center">
-            <UserProgress
-              pageSlug={student.pageSlug}
-              finished={student.finished}
-            />
+            <UserProgress pageSlug={student.pageSlug} finished={student.finished} />
           </div>
 
           <div className="flex justify-between">
@@ -117,6 +77,7 @@ function StudentProfile({
       </CardHeader>
       <CardContent>
         <UserStatistics
+          userId={student.id}
           classId={student.classId}
           pageSlug={student.pageSlug}
           readingTimeLevel={readingTimeLevel}

@@ -10,11 +10,7 @@ type Props = {
   needRevision: boolean;
 };
 
-export function SummaryResponseFeedback({
-  response,
-  needRevision,
-  className,
-}: Props) {
+export function SummaryResponseFeedback({ response, needRevision, className }: Props) {
   return (
     <div
       className={cn(
@@ -31,9 +27,8 @@ export function SummaryResponseFeedback({
         </p>
         {response.is_passed ? (
           <p>
-            When revising your summary, please make substantial changes to the
-            entire summary. If only small changes are made, you will be asked to
-            make additional revisions.
+            When revising your summary, please make substantial changes to the entire summary. If
+            only small changes are made, you will be asked to make additional revisions.
           </p>
         ) : null}
       </header>
@@ -44,8 +39,10 @@ export function SummaryResponseFeedback({
 
 export function SummaryFeedbackDetails({
   response,
+  className,
 }: {
   response: SummaryResponse;
+  className?: string;
 }) {
   const terms = Array.from(
     response.suggested_keyphrases ? new Set(response.suggested_keyphrases) : []
@@ -54,7 +51,8 @@ export function SummaryFeedbackDetails({
     <div
       className={cn(
         "grid gap-1.5 border-l-4 px-4",
-        response.is_passed ? "border-info" : "border-warning"
+        response.is_passed ? "border-info" : "border-warning",
+        className
       )}
       role="status"
     >
@@ -65,10 +63,7 @@ export function SummaryFeedbackDetails({
           </strong>{" "}
           <ul className="m-0 space-y-1 p-0">
             {terms.map((term) => (
-              <li
-                className="flex items-center gap-2 text-accent-foreground"
-                key={term}
-              >
+              <li className="flex items-center gap-2 text-accent-foreground" key={term}>
                 <Lightbulb className="size-4" aria-hidden="true" />
                 {term}
               </li>

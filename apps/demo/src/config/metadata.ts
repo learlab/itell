@@ -8,6 +8,11 @@ export const Meta = {
     description: "Understand your learning journey",
     slug: "dashboard",
   },
+  guide: {
+    title: "iTELL User Guide",
+    description: "Learn how to use iTELL",
+    slug: "guide",
+  },
   homeTeacher: {
     title: "Class Statistics",
     description: "View students' progress",
@@ -23,12 +28,12 @@ export const Meta = {
     description: "Class summary statistics",
     slug: "summaries-teacher",
   },
-  questions: {
+  cri: {
     title: "Question Answering",
     description: "Answer assessment questions throughout the read",
     slug: "constructed-response",
   },
-  questionsTeacher: {
+  criTeacher: {
     title: "Question Answering",
     description: "Class question statistics",
     slug: "constructed-response-teacher",

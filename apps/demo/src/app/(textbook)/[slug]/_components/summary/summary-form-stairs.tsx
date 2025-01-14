@@ -18,6 +18,7 @@ import {
 } from "@itell/core/summary";
 import { driver } from "@itell/driver.js";
 import { Button } from "@itell/ui/button";
+import { Errorbox } from "@itell/ui/callout";
 import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { type User } from "lucia";
@@ -26,18 +27,13 @@ import Confetti from "react-dom-confetti";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
-import {
-  createSummaryAction,
-  getSummaryScoreRequestAction,
-} from "@/actions/summary";
+import { createSummaryAction, getStairsHistory } from "@/actions/summary";
 import { DelayMessage } from "@/components/delay-message";
 import {
   useChatStore,
-  useQuestionStore,
-  useQuizStore,
+  useCRIStore,
   useSummaryStore,
 } from "@/components/provider/page-provider";
-import { Callout } from "@/components/ui/callout";
 import { rocketBlast } from "@/lib/animations";
 import { apiClient } from "@/lib/api-client";
 import { Condition } from "@/lib/constants";
@@ -45,10 +41,7 @@ import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
 import { getHistory, SelectStairsAnswered } from "@/lib/store/chat-store";
-import {
-  getExcludedChunks,
-  SelectSummaryReady,
-} from "@/lib/store/question-store";
+import { getExcludedChunks, SelectSummaryReady } from "@/lib/store/cri-store";
 import {
   SelectError,
   SelectIsNextPageVisible,
@@ -79,12 +72,7 @@ type ApiRequest = Parameters<
   typeof apiClient.api.summary.stairs.$post
 >[0]["json"];
 
-export function SummaryFormStairs({
-  user,
-  page,
-  pageStatus,
-  afterSubmit,
-}: Props) {
+export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const pageSlug = page.slug;
   const isLast = isLastPage(page);
   const router = useRouter();
@@ -100,12 +88,11 @@ export function SummaryFormStairs({
 
   // stores
   const chatStore = useChatStore();
-  const questionStore = useQuestionStore();
+  const criStore = useCRIStore();
   const summaryStore = useSummaryStore();
-  const quizStore = useQuizStore();
 
   // states
-  const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const response = useSelector(summaryStore, SelectResponse);
   const prevInput = useSelector(summaryStore, SelectPrevInput);
   const isNextPageVisible = useSelector(summaryStore, SelectIsNextPageVisible);
@@ -120,7 +107,6 @@ export function SummaryFormStairs({
   } = useActionStatus(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
       clearStages();
       summaryStore.send({ type: "submit" });
       addStage("Scoring");
@@ -136,17 +122,17 @@ export function SummaryFormStairs({
         return;
       }
 
-      const [data, err] = await getSummaryScoreRequestAction({ pageSlug });
+      const [data, err] = await getStairsHistory({ pageSlug });
       if (err) {
-        throw new Error("get focus time action", { cause: err });
+        throw new Error("get stairs history", { cause: err });
       }
       const requestBody: ApiRequest = {
         summary: input,
         page_slug: pageSlug,
         focus_time: data.focusTimes?.data,
         chat_history: getHistory(chatStore),
-        excluded_chunks: getExcludedChunks(questionStore),
-        score_history: data.contentScoreHistory.filter(Boolean),
+        excluded_chunks: getExcludedChunks(criStore),
+        score_history: data.contentScoreHistory,
       };
       requestBodyRef.current = requestBody;
       const response = await apiClient.api.summary.stairs.$post({
@@ -268,15 +254,6 @@ export function SummaryFormStairs({
           rocketBlast(blastYPos);
         }
 
-        if (data.canProceed || isLast) {
-          if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-            quizStore.send({
-              type: "toggleQuiz",
-            });
-            return;
-          }
-        }
-
         summaryStore.send({
           type: "finishPage",
           isNextPageVisible: data.canProceed ? !isLast : undefined,
@@ -313,7 +290,7 @@ export function SummaryFormStairs({
           duration: 5000,
           action: page.next_slug
             ? {
-                label: "Proceed",
+                label: "Next",
                 onClick: () => {
                   router.push(makePageHref(page.next_slug));
                 },
@@ -386,9 +363,7 @@ export function SummaryFormStairs({
           aria-labelledby="summary-form-heading"
         >
           {submissionError ? (
-            <Callout variant="warning" title="Error">
-              {ErrorFeedback[submissionError]}
-            </Callout>
+            <Errorbox title={ErrorFeedback[submissionError]} />
           ) : null}
           {isDelayed ? <DelayMessage /> : null}
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "@itell/core/hooks";
 import { ErrorFeedback, ErrorType } from "@itell/core/summary";
@@ -13,13 +13,10 @@ import { useActionStatus } from "use-action-status";
 
 import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
-import {
-  useQuestionStore,
-  useQuizStore,
-} from "@/components/provider/page-provider";
+import { useCRIStore } from "@/components/provider/page-provider";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/question-store";
+import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { FormEvent } from "react";
 
@@ -29,9 +26,8 @@ type Props = {
 };
 
 export function SummaryFormSimple({ pageStatus, page }: Props) {
-  const questionStore = useQuestionStore();
-  const quizStore = useQuizStore();
-  const isSummaryReady = useSelector(questionStore, SelectSummaryReady);
+  const criStore = useCRIStore();
+  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const router = useRouter();
   const [finished, setFinished] = useState(pageStatus.unlocked);
 
@@ -55,13 +51,6 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
         throw new Error("increment user page slug action", { cause: err });
       }
 
-      if (page.quiz && page.quiz.length > 0 && !pageStatus.unlocked) {
-        quizStore.send({
-          type: "toggleQuiz",
-        });
-        return;
-      }
-
       if (isLastPage(page)) {
         return toast.info("You have finished the entire textbook!", {
           duration: 100000,
@@ -75,13 +64,13 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
   const isPending = useDebounce(_isPending, 100);
 
   useEffect(() => {
-    if (isError) {
+    if (error) {
       reportSentry("summary simple", {
         pageSlug: page.slug,
         error: error?.cause,
       });
     }
-  }, [isError]);
+  }, [error, page]);
 
   if (!isSummaryReady) {
     return (

@@ -1,48 +1,46 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Badge } from "@itell/ui/badge";
 import { SummaryBackButton } from "@summary/summary-back-button";
 import { SummaryOperations } from "@summary/summary-operations";
 import { SummaryReviseButton } from "@summary/summary-revise-button";
 
-import { incrementViewAction } from "@/actions/dashboard";
-import { getSummariesAction } from "@/actions/summary";
 import { PageLink } from "@/components/page-link";
 import { Meta } from "@/config/metadata";
+import { incrementView } from "@/db/dashboard";
+import { getSummary } from "@/db/summary";
 import { getSession } from "@/lib/auth";
+import { routes } from "@/lib/navigation";
 import { allPagesSorted } from "@/lib/pages/pages.server";
+import { redirectWithSearchParams } from "@/lib/utils";
 
 interface PageProps {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<unknown>;
 }
 
 export default async function SummaryPage(props: PageProps) {
-  const params = await props.params;
-  const summaryId = Number(params.id);
+  const { id: summaryId } = routes.summary.$parseParams(await props.params);
   const { user } = await getSession();
   if (!user) {
-    return redirect("/auth");
-  }
-  const [data, err] = await getSummariesAction({
-    summaryId,
-  });
-
-  if (err) {
-    throw new Error("failed to get summary", { cause: err });
+    return redirectWithSearchParams("/auth", {
+      redirect_to: routes.summary({ id: summaryId }),
+    });
   }
 
-  if (data.length === 0) {
+  const summary = await getSummary(summaryId);
+  if (!summary) {
     return notFound();
   }
 
-  const summary = data[0];
   const page = allPagesSorted.find((page) => page.slug === summary.pageSlug);
   if (!page) {
     return notFound();
   }
 
-  incrementViewAction({ pageSlug: Meta.student.slug, data: { id: user.id } });
+  incrementView({
+    userId: user.id,
+    pageSlug: Meta.summaries.slug,
+    data: { summaryId },
+  });
 
   return (
     <>
@@ -61,7 +59,7 @@ export default async function SummaryPage(props: PageProps) {
             </Badge>
           </div>
           <p className="text-sm tracking-tight text-muted-foreground">
-            Click on the title to review this page's content.
+            Click on the title to review this page&apos;s content.
           </p>
         </div>
         <div className="grid gap-2">

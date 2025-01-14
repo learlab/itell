@@ -5,12 +5,7 @@ import { Elements } from "@itell/constants";
 import { useDebounce } from "@itell/core/hooks";
 import { levenshteinDistance } from "@itell/core/summary";
 import { Label } from "@itell/ui/label";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@itell/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn, numOfWords } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { InfoIcon } from "lucide-react";
@@ -92,10 +87,7 @@ export const SummaryInput = ({
   return (
     <div className="relative">
       {distance !== undefined ? <Distance distance={distance} /> : null}
-      <p
-        aria-hidden="true"
-        className="z-1 absolute bottom-2 right-2 text-sm font-light opacity-70"
-      >
+      <p aria-hidden="true" className="z-1 absolute bottom-2 right-2 text-sm font-light opacity-70">
         {pluralize("word", numOfWords(input ?? ""), true)}
       </p>
 
@@ -108,7 +100,7 @@ export const SummaryInput = ({
           ref={ref as RefObject<HTMLTextAreaElement>}
           value={input}
           disabled={disabled}
-          placeholder="Write your summary here"
+          placeholder="This page is about ..."
           onChange={(e) => {
             summaryStore.send({
               type: "setInput",
@@ -123,7 +115,7 @@ export const SummaryInput = ({
             }
           }}
           className={cn(
-            "flex min-h-[80px] w-full resize-none rounded-md border border-input bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 lg:text-lg",
+            "flex min-h-[80px] w-full resize-none rounded-md border border-input bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 xl:text-lg",
             ""
           )}
         />
@@ -161,9 +153,7 @@ function Distance({ distance }: { distance: number }) {
         />
         <div className="absolute inset-0 flex items-center justify-between px-3">
           <span className="z-10 text-sm font-medium">Uniqueness</span>
-          <span className="z-10 text-sm font-medium">
-            {Math.min(distance, 100).toFixed(1)}%
-          </span>
+          <span className="z-10 text-sm font-medium">{Math.min(distance, 100).toFixed(1)}%</span>
         </div>
       </div>
       <TooltipProvider>
@@ -172,8 +162,8 @@ function Distance({ distance }: { distance: number }) {
             <InfoIcon className="size-6 flex-shrink-0" />
           </TooltipTrigger>
           <TooltipContent className="w-64">
-            Revise your summary to make it more unique to your previous summary
-            (pass the threshold indicated by the blue bar).
+            Revise your summary to make it more unique to your previous summary (pass the threshold
+            indicated by the blue bar).
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

@@ -7,16 +7,14 @@ import {
   AccordionTrigger,
 } from "@itell/ui/accordion";
 import { Card, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
-import { and, eq, inArray } from "drizzle-orm";
 import { User } from "lucia";
 import { FileTextIcon } from "lucide-react";
 
-import { db } from "@/actions/db";
-import { isOuttakeReady } from "@/app/(textbook)/[slug]/_components/page-assignments";
 import { Meta } from "@/config/metadata";
-import { survey_sessions } from "@/drizzle/schema";
+import { getSurveySessions, isOuttakeReady } from "@/db/survey";
 import { getSession } from "@/lib/auth";
-import { getPageData } from "@/lib/pages/pages.server";
+import { Survey } from "@/lib/constants";
+import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { DashboardHeader, DashboardShell } from "../_components/shell";
 
@@ -28,26 +26,22 @@ type FormEntry = {
 };
 
 async function getSurveyStatus(user: User) {
-  const sessions = await db
-    .select()
-    .from(survey_sessions)
-    .where(
-      and(
-        eq(survey_sessions.userId, user.id),
-        inArray(survey_sessions.surveyId, ["intake", "outtake"])
-      )
-    );
-
+  const sessions = await getSurveySessions(user, [
+    Survey.INTAKE,
+    Survey.OUTTAKE,
+  ]);
   let intakeStatus: FormEntry["status"] = "pending";
   let outtakeStatus: FormEntry["status"] = "not-applicable";
 
-  const intake = sessions.find((session) => session.surveyId === "intake");
+  const intake = sessions.find((session) => session.surveyId === Survey.INTAKE);
   if (intake) {
     intakeStatus = intake.finishedAt ? "completed" : "in-progress";
   }
 
-  if (isOuttakeReady(getPageData(user.pageSlug))) {
-    const outtake = sessions.find((session) => session.surveyId === "outtake");
+  if (isOuttakeReady(user)) {
+    const outtake = sessions.find(
+      (session) => session.surveyId === Survey.OUTTAKE
+    );
     if (outtake) {
       outtakeStatus = outtake.finishedAt ? "completed" : "in-progress";
     }
@@ -60,7 +54,7 @@ export default async function FormsPage() {
   const { user } = await getSession();
   if (!user) {
     return redirectWithSearchParams("/auth", {
-      redirect_to: "/dashboard/forms",
+      redirect_to: routes.dashboardForms(),
     });
   }
 

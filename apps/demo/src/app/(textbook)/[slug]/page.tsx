@@ -6,13 +6,13 @@ import { Elements } from "@itell/constants";
 import { PageTitle } from "@itell/ui/page-title";
 import { ScrollArea } from "@itell/ui/scroll-area";
 import { ChatLoader } from "@textbook/chat-loader";
+import { ChunkControl } from "@textbook/cri/chunk-control";
 import { EventTracker } from "@textbook/event-tracker";
 import { NoteLoader } from "@textbook/note/note-loader";
 import { PageAssignments } from "@textbook/page-assignments";
 import { PageContent } from "@textbook/page-content";
 import { PageStatusModal } from "@textbook/page-status-modal";
 import { Pager } from "@textbook/pager";
-import { ChunkControl } from "@textbook/question/chunk-control";
 import { SelectionPopover } from "@textbook/selection-popover";
 import { TextbookToc } from "@textbook/textbook-toc";
 
@@ -27,7 +27,7 @@ import {
 } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { getPageStatus } from "@/lib/page-status";
-import { getPage } from "@/lib/pages/pages.server";
+import { firstAssignmentPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
@@ -119,10 +119,14 @@ export default async function Page(props: {
         <ChatLoader user={user} pageSlug={pageSlug} pageTitle={page.title} />
       </Suspense>
 
-      {user ? <NoteLoader pageSlug={pageSlug} /> : null}
+      {user ? <NoteLoader userId={user.id} pageSlug={pageSlug} /> : null}
 
       {isProduction ? (
-        <PageStatusModal user={user} pageStatus={pageStatus} />
+        <PageStatusModal
+          user={user}
+          pageStatus={pageStatus}
+          fallbackPageSlug={firstAssignmentPage?.slug ?? null}
+        />
       ) : null}
       <ChunkControl
         userId={userId}

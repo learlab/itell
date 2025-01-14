@@ -1,11 +1,12 @@
 import Form from "next/form";
 import { notFound, redirect } from "next/navigation";
-import { Errorbox } from "@itell/ui/callout";
+import { Alert, AlertDescription } from "@itell/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
 import { Prose } from "@itell/ui/prose";
 import { Survey } from "#content";
 
-import { getSurveyAction, upsertSurveyAction } from "@/actions/survey";
+import { upsertSurveyAction } from "@/actions/survey";
+import { getSurveySessions } from "@/db/survey";
 import { SurveySession } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
 import { isAdmin } from "@/lib/auth/role";
@@ -39,10 +40,7 @@ export default async function SurveyQuestionPage(props: {
   if (!section || !survey) {
     return notFound();
   }
-
-  const [session, err] = await getSurveyAction({
-    surveyId: params.surveyId,
-  });
+  const session = await getSurveySessions(user, params.surveyId);
   const sectionData = session?.data?.[section.id];
 
   const unfinishedSections = getUnfinishedSections({
@@ -54,6 +52,8 @@ export default async function SurveyQuestionPage(props: {
   const requiredUnifinishedSections = unfinishedSections.filter(
     (s) => !s.display_rules
   );
+
+  // will user finish survey after submitting this page
   const isLastPage =
     requiredUnifinishedSections.length === 0 ||
     (requiredUnifinishedSections.length === 1 &&
@@ -69,19 +69,19 @@ export default async function SurveyQuestionPage(props: {
         finished={!!sectionData}
       />
       <div className="w-full flex-1 space-y-4 bg-muted p-6">
-        {err && (
-          <Errorbox>
-            Failed to get your submission history, you need to re-fill this
-            page.
-          </Errorbox>
-        )}
         {section.display_rules && (
           <p>
             Please answer the follow-up questions based on your previous
             answers.
           </p>
         )}
-        <Prose>{section.description}</Prose>
+        {section.description && (
+          <Alert variant={"info"}>
+            <AlertDescription className="xl:text-lg">
+              {section.description}
+            </AlertDescription>
+          </Alert>
+        )}
         <Form
           className="flex flex-col gap-8"
           action={async (formData: FormData) => {

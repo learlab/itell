@@ -1,15 +1,12 @@
-import { getNotesAction } from "@/actions/note";
+import { getNotes } from "@/db/note";
 import { NoteList } from "./note-list";
 
 type Props = {
+  userId: string;
   pageSlug: string;
 };
 
-export async function NoteLoader({ pageSlug }: Props) {
-  const [data, err] = await getNotesAction({ pageSlug });
-  if (!err) {
-    return <NoteList notes={data} pageSlug={pageSlug} />;
-  }
-
-  return null;
+export async function NoteLoader({ userId, pageSlug }: Props) {
+  const data = await getNotes(userId, pageSlug);
+  return <NoteList notes={data} pageSlug={pageSlug} />;
 }

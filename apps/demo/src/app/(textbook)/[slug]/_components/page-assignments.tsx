@@ -10,20 +10,17 @@ import {
 } from "@itell/ui/card";
 import { Skeleton } from "@itell/ui/skeleton";
 import { Page } from "#content";
-import { and, eq, inArray } from "drizzle-orm";
 import { type User } from "lucia";
 
-import { db } from "@/actions/db";
 import { NavigationButton } from "@/components/navigation-button";
-import { survey_sessions } from "@/drizzle/schema";
-import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
+import { isQuizAnswered } from "@/db/quiz";
+import { getSurveyStatus, isOuttakeReady } from "@/db/survey";
+import { Condition, SUMMARY_DESCRIPTION_ID, Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
-import { isLastPage, PageData } from "@/lib/pages";
-import { getPageData } from "@/lib/pages/pages.server";
-import { PageQuizModal } from "./page-quiz-modal";
+import { DeleteQuiz } from "./delete-quiz-answer";
 import { PreAssignmentPrompt } from "./pre-assignment-prompt";
-import { QuizPrompt } from "./quiz-prompt";
+import { PageQuiz } from "./quiz/page-quiz";
 import {
   FloatingSummary,
   ToggleShowFloatingSummary,
@@ -42,54 +39,22 @@ type Props = {
   condition: string;
 };
 
-// prompt for outtake survey if user reaches second to last page
-export const isOuttakeReady = (userPage: PageData | null) => {
-  const outtakeReady =
-    isLastPage(userPage) ||
-    isLastPage(getPageData(userPage?.next_slug ?? null));
-
-  return outtakeReady;
-};
-
-const isQuizPromptReady = (userPage: PageData | null) => {
-  return isLastPage(userPage);
-};
-
-const getSurveyStatus = async (user: User) => {
-  const sessions = await db
-    .select()
-    .from(survey_sessions)
-    .where(
-      and(
-        eq(survey_sessions.userId, user.id),
-        inArray(survey_sessions.surveyId, ["intake", "outtake"])
-      )
-    );
-
-  const intakeSession = sessions.find(
-    (session) => session.surveyId === "intake"
-  );
-  const outtakeSession = sessions.find(
-    (session) => session.surveyId === "outtake"
-  );
-
-  return {
-    intakeDone: intakeSession && intakeSession.finishedAt !== null,
-    outtakeDone: outtakeSession && outtakeSession.finishedAt !== null,
-  };
-};
-
 export async function PageAssignments({
   page,
   pageStatus,
   user,
   condition,
 }: Props) {
-  const userPage = getPageData(user.pageSlug);
   const { intakeDone, outtakeDone } = await getSurveyStatus(user);
-  const outtakeReady = isOuttakeReady(userPage);
-  const quizPromptReady = isQuizPromptReady(userPage);
+  const outtakeReady = isOuttakeReady(user);
+  const hasQuiz = page.quiz && page.quiz.length > 0;
 
+  let quizReady = false;
+  let quizAnswered = false;
+  if (hasQuiz) {
+    quizAnswered = await isQuizAnswered(user.id, page.slug);
+    quizReady = !quizAnswered;
+  }
   if (!user.consentGiven) {
     return (
       <AssignmentsShell>
@@ -112,7 +77,9 @@ export async function PageAssignments({
           title="Take Intake Survey"
           description="Before starting the textbook, help us customize your learning experience by completing the intake survey."
         >
-          <NavigationButton href={routes.surveyHome({ surveyId: "intake" })}>
+          <NavigationButton
+            href={routes.surveyHome({ surveyId: Survey.INTAKE })}
+          >
             Intake Survey
           </NavigationButton>
         </PreAssignmentPrompt>
@@ -128,10 +95,11 @@ export async function PageAssignments({
           description="
             Great job making it close to the end of the textbook! Please help us
             learn about your learning experience by completing the outtake
-            survey.
-          "
+            survey."
         >
-          <NavigationButton href={routes.surveyHome({ surveyId: "outtake" })}>
+          <NavigationButton
+            href={routes.surveyHome({ surveyId: Survey.OUTTAKE })}
+          >
             Outtake Survey
           </NavigationButton>
         </PreAssignmentPrompt>
@@ -139,22 +107,21 @@ export async function PageAssignments({
     );
   }
 
-  const canSkipSummary = user.personalization.available_summary_skips > 0;
-
-  if (canSkipSummary) {
+  if (quizReady) {
     return (
       <AssignmentsShell>
-        {quizPromptReady && (
-          <Suspense fallback={<QuizPrompt.Skeleton />}>
-            <QuizPrompt />
-          </Suspense>
-        )}
+        <PageQuiz page={page} user={user} />
+      </AssignmentsShell>
+    );
+  }
 
+  const canSkipSummary = user.personalization.available_summary_skips > 0;
+  if (condition !== Condition.SIMPLE && canSkipSummary) {
+    return (
+      <AssignmentsShell>
+        {quizAnswered && <DeleteQuiz pageSlug={page.slug} />}
         <Card className="border-info">
           <CardContent>
-            {condition !== Condition.SIMPLE ? (
-              <PageQuizModal page={page} pageStatus={pageStatus} />
-            ) : null}
             <SummaryFormSkip
               pageStatus={pageStatus}
               page={page}
@@ -172,12 +139,7 @@ export async function PageAssignments({
   if (page.assignments.length !== 0) {
     return (
       <AssignmentsShell>
-        {quizPromptReady && (
-          <Suspense fallback={<QuizPrompt.Skeleton />}>
-            <QuizPrompt />
-          </Suspense>
-        )}
-
+        {quizAnswered && <DeleteQuiz pageSlug={page.slug} />}
         <Card className="border-info">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
@@ -186,12 +148,12 @@ export async function PageAssignments({
             </CardTitle>
             <CardDescription>
               {pageStatus.unlocked ? (
-                <p>
+                <>
                   You have finished this page, you are still welcome to improve
                   the summary.
-                </p>
+                </>
               ) : (
-                <p>
+                <>
                   You can unlock the next page by submitting{" "}
                   <Link
                     href={`#${SUMMARY_DESCRIPTION_ID}`}
@@ -200,14 +162,11 @@ export async function PageAssignments({
                     a good summary
                   </Link>{" "}
                   of this page
-                </p>
+                </>
               )}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            {condition !== Condition.SIMPLE ? (
-              <PageQuizModal page={page} pageStatus={pageStatus} />
-            ) : null}
             {condition === Condition.SIMPLE ? (
               <SummaryFormSimple page={page} pageStatus={pageStatus} />
             ) : null}
@@ -224,7 +183,7 @@ export async function PageAssignments({
                 pageStatus={pageStatus}
                 afterSubmit={
                   <Suspense fallback={<SummaryCount.Skeleton />}>
-                    <SummaryCount pageSlug={page.slug} />
+                    <SummaryCount pageSlug={page.slug} userId={user.id} />
                   </Suspense>
                 }
               />
