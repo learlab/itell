@@ -26,7 +26,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import pluralize from "pluralize";
 
 import type {
   ColumnDef,
@@ -48,10 +47,6 @@ export function StudentsTable<TData, TValue>({
   caption,
   filename,
 }: DataTableProps<TData, TValue>) {
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10, //customize the default page size
-  });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -59,29 +54,21 @@ export function StudentsTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onPaginationChange: setPagination,
-
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       sorting,
       columnFilters,
       columnVisibility,
-      pagination,
     },
   });
 
   const numRows = table.getFilteredRowModel().rows.length;
-  const pageStart = pagination.pageIndex * pagination.pageSize + 1;
-  const pageEnd = Math.min(
-    (pagination.pageIndex + 1) * pagination.pageSize,
-    numRows
-  );
-  table.getFilteredRowModel().rows;
+
   return (
     <div>
       <div className="flex items-center py-4">
@@ -154,7 +141,7 @@ export function StudentsTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody className="text-center">
-            {table.getRowModel().rows.length ? (
+            {table.getRowModel().rows.length > 0 ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -184,10 +171,6 @@ export function StudentsTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-between pt-4">
-        <p className="text-sm text-muted-foreground">
-          showing {`${String(pageStart)} to ${String(pageEnd)}`} of{" "}
-          {pluralize("student", numRows, true)}
-        </p>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
@@ -195,7 +178,7 @@ export function StudentsTable<TData, TValue>({
             onClick={() => {
               table.previousPage();
             }}
-            disabled={pagination.pageIndex === 0}
+            disabled={!table.getCanPreviousPage()}
           >
             Previous
           </Button>
@@ -205,7 +188,7 @@ export function StudentsTable<TData, TValue>({
             onClick={() => {
               table.nextPage();
             }}
-            disabled={pagination.pageIndex === table.getPageCount() - 1}
+            disabled={!table.getCanNextPage()}
           >
             Next
           </Button>
