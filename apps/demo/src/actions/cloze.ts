@@ -11,7 +11,7 @@ export const createClozeAction = authedProcedure
   .input(
     z.object({
       pageSlug: z.string(),
-      data: ClozeDataSchema,
+      data: z.string(),
     })
   )
   .handler(async ({ input, ctx }) => {

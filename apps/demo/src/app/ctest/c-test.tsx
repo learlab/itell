@@ -3,7 +3,7 @@
 import React, { FormEvent, useRef, useState } from "react";
 import { Button } from "@itell/ui/button";
 import { Prose } from "@itell/ui/prose";
-
+import { createClozeAction } from "@/actions/cloze";
 import { WordItem } from "./word-item";
 import type { ShowLetter } from "./word-item";
 
@@ -74,7 +74,11 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
         testResult.correctWords++;
       }
     });
-
+    console.log(testResult)
+    createClozeAction({
+      pageSlug: 'ctest',
+      data: JSON.stringify(testResult),      
+    })
     setResult(testResult);
   };
 
