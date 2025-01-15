@@ -149,7 +149,7 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
     return () => {
       abort.abort();
     };
-  }, [pageSlug]);
+  }, [abort, pageSlug, signal]);
 
   return (
     state &&
@@ -240,7 +240,6 @@ function findParentChunk(range: Range) {
       node instanceof HTMLElement &&
       node.classList.contains("content-chunk")
     ) {
-       
       return node.dataset.chunkSlug!;
     }
     node = node.parentElement;
