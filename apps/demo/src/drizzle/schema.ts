@@ -391,6 +391,22 @@ export type SurveySession = InferSelectModel<typeof survey_sessions>;
 // { sectionId: { questionId: answer } }
 export type SurveyData = Record<string, SurveySubmission>;
 
+export const cloze_answers = pgTable(
+  "cloze_answers",
+  {
+    id: serial("id").primaryKey().notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    pageSlug: text("page_slug").notNull(),
+    data: jsonb("data").$type<ClozeData>().notNull(),
+    createdAt: CreatedAt,
+  },
+);
+
+export const ClozeDataSchema = z.array(z.string());
+export type ClozeData = z.infer<typeof ClozeDataSchema>;
+
 export const quiz_answers = pgTable(
   "quiz_answers",
   {
