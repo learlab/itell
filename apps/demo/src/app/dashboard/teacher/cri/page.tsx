@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader } from "@itell/ui/card";
 import { CRIChart } from "@cri/cri-chart";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
-import pluralize from "pluralize";
 
 import { Meta } from "@/config/metadata";
 import { getClassCRIStats } from "@/db/cri";
@@ -32,11 +31,14 @@ export default async function Page() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading={Meta.criTeacher.title} text={Meta.criTeacher.description} />
+      <DashboardHeader
+        heading={Meta.criTeacher.title}
+        text={Meta.criTeacher.description}
+      />
       <Card>
         <CardHeader>
           <CardDescription>
-            Your class answered {pluralize("question", count, true)} constructed response items.
+            Your class answered {count} constructed response items.
           </CardDescription>
         </CardHeader>
         {count > 0 && (

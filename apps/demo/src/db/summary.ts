@@ -1,9 +1,10 @@
+import { cache } from "react";
 import { and, count, desc, eq, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { summaries, users } from "@/drizzle/schema";
 import { isProduction, Tags } from "@/lib/constants";
-import { db } from ".";
+import { db, first } from ".";
 
 /**
  * Get summary for user, if `summaryId` is not provided, return all summaries
@@ -88,3 +89,9 @@ export const countSummary = memoize(
   },
   { persist: false, revalidateTags: [Tags.COUNT_SUMMARY] }
 );
+
+export const getSummary = cache(async (summaryId: number) => {
+  return first(
+    await db.select().from(summaries).where(eq(summaries.id, summaryId))
+  );
+});
