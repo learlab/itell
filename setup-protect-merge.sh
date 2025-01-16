@@ -35,11 +35,22 @@ cache_dir="$repo_root/.protect-merge-cache"
 cache_manifest="$cache_dir/manifest.txt"
 
 update_cache() {
-    local file="$1"
+    local path="$1"
     local hash="$2"
     mkdir -p "$cache_dir/files"
-    cp "$file" "$cache_dir/files/$(echo "$file" | sed 's/\//_/g')"
-    echo "$file $hash" >> "$cache_manifest"
+    local cache_path="$cache_dir/files/$(echo "$path" | sed 's/\//_/g')"
+    if [ -d "$path" ]; then
+        # For directories, store the list of files and their hashes
+        find "$path" -type f -print0 | while IFS= read -r -d '' file; do
+            local file_hash=$(git hash-object "$file")
+            echo "$file $file_hash" >> "$cache_manifest"
+            cp "$file" "$cache_dir/files/$(echo "$file" | sed 's/\//_/g')"
+        done
+    else
+        # For individual files
+        cp "$path" "$cache_path"
+        echo "$path $hash" >> "$cache_manifest"
+    fi
 }
 
 get_gitattributes_hash() {
@@ -64,49 +75,109 @@ if [ "$rebuild_cache" = true ]; then
     rm -rf "$cache_dir"
     mkdir -p "$cache_dir/files"
 
-    protected_files=$(git ls-files | git check-attr merge --stdin | grep "merge: keep-ours" | cut -d: -f1)
+    # Get both file and directory patterns with keep-ours
+    protected_patterns=$(git ls-files | git check-attr merge --stdin | grep "merge: keep-ours" | cut -d: -f1)
+    
+    # Separate directory patterns and file patterns
+    protected_dirs=""
+    protected_files=""
+    
+    while read -r pattern; do
+        [ -z "$pattern" ] && continue
+        if [ -d "$pattern" ]; then
+            protected_dirs="${protected_dirs}${pattern}"$'\n'
+        else
+            protected_files="${protected_files}${pattern}"$'\n'
+        fi
+    done <<< "$protected_patterns"
+
+    echo "$protected_dirs" > "$cache_dir/protected_dirs.txt"
     echo "$protected_files" > "$cache_dir/protected_files.txt"
     echo "$current_gitattributes_hash" > "$cache_dir/gitattributes_hash"
 
+    # Cache directories content
+    while read -r dir; do
+        [ -z "$dir" ] && continue
+        if [ -d "$dir" ]; then
+            find "$dir" -type f -print0 | while IFS= read -r -d '' file; do
+                hash=$(git hash-object "$file")
+                update_cache "$file" "$hash"
+            done
+        fi
+    done <<< "$protected_dirs"
+
+    # Cache individual files
     while read -r file; do
         [ -z "$file" ] && continue
+        [ -f "$file" ] || continue
         hash=$(git hash-object "$file")
         update_cache "$file" "$hash"
     done <<< "$protected_files"
 else
+    protected_dirs=$(cat "$cache_dir/protected_dirs.txt")
     protected_files=$(cat "$cache_dir/protected_files.txt")
 fi
 
 merge_base=$(git merge-base HEAD "$target_branch")
 
-if [ -n "$protected_files" ]; then
-    changing_files=$(git diff --name-only "$merge_base" "$target_branch")
+tmp_dir=$(mktemp -d)
+protect_list=""
 
-    tmp_dir=$(mktemp -d)
-    protect_list=""
+# Function to check if a path is under any protected directory
+is_under_protected_dir() {
+    local check_path="$1"
+    while read -r dir; do
+        [ -z "$dir" ] && continue
+        if [[ "$check_path" == "$dir"/* || "$check_path" == "$dir" ]]; then
+            return 0
+        fi
+    done <<< "$protected_dirs"
+    return 1
+}
 
-    while read -r file; do
-        if echo "$changing_files" | grep -q "^${file}$"; then
-            current_hash=$(git hash-object "$file")
-            cached_path="$cache_dir/files/$(echo "$file" | sed 's/\//_/g')"
+# Get all changed files between merge base and target branch
+changing_files=$(git diff --name-status "$merge_base" "$target_branch")
 
-            if [ -f "$cached_path" ]; then
-                cached_hash=$(git hash-object "$cached_path")
-                if [ "$current_hash" != "$cached_hash" ]; then
+# Process changes
+while IFS= read -r change; do
+    [ -z "$change" ] && continue
+    
+    status=$(echo "$change" | cut -f1)
+    file=$(echo "$change" | cut -f2-)
+    
+    # Check if file is explicitly protected or under protected directory
+    if echo "$protected_files" | grep -q "^${file}$" || is_under_protected_dir "$file"; then
+        if [ "$status" = "M" ] || [ "$status" = "A" ] || [ "$status" = "D" ]; then
+            if [ -f "$file" ]; then
+                current_hash=$(git hash-object "$file")
+                cached_path="$cache_dir/files/$(echo "$file" | sed 's/\//_/g')"
+                
+                if [ -f "$cached_path" ]; then
+                    cached_hash=$(git hash-object "$cached_path")
+                    if [ "$current_hash" != "$cached_hash" ]; then
+                        update_cache "$file" "$current_hash"
+                    fi
+                else
                     update_cache "$file" "$current_hash"
                 fi
-            else
-                update_cache "$file" "$current_hash"
+                
+                mkdir -p "$(dirname "$tmp_dir/$file")"
+                cp "$cached_path" "$tmp_dir/$file"
+                protect_list="$protect_list$file"$'\n'
+            elif [ "$status" = "D" ]; then
+                # For deleted files, we'll restore them from cache
+                cached_path="$cache_dir/files/$(echo "$file" | sed 's/\//_/g')"
+                if [ -f "$cached_path" ]; then
+                    mkdir -p "$(dirname "$tmp_dir/$file")"
+                    cp "$cached_path" "$tmp_dir/$file"
+                    protect_list="$protect_list$file"$'\n'
+                fi
             fi
-
-            mkdir -p "$(dirname "$tmp_dir/$file")"
-            cp "$cached_path" "$tmp_dir/$file"
-            protect_list="$protect_list$file"$'\n'
         fi
-    done <<< "$protected_files"
+    fi
+done <<< "$changing_files"
 
-    echo "$protect_list" > "$tmp_dir/protected_files.txt"
-fi
+echo "$protect_list" > "$tmp_dir/protected_files.txt"
 
 # Perform the merge with its original output
 git merge "$target_branch" "${merge_args[@]}"
@@ -119,9 +190,10 @@ if [ -f "$tmp_dir/protected_files.txt" ] && [ "$merge_status" -eq 0 ]; then
         restored_files=""
         while read -r file; do
             [ -z "$file" ] && continue
-            restored_files="${restored_files}${file}\n"
+            mkdir -p "$(dirname "$file")"
             cp "$tmp_dir/$file" "$file"
             git add "$file"
+            restored_files="${restored_files}${file}\n"
             ((restored_count++))
         done < "$tmp_dir/protected_files.txt"
 
