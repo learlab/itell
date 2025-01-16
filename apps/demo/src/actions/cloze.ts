@@ -11,13 +11,17 @@ export const createClozeAction = authedProcedure
   .input(
     z.object({
       pageSlug: z.string(),
-      data: z.string(),
+      data: ClozeDataSchema,
+      totalWords: z.number(),
+      correctWords: z.number(),
     })
   )
   .handler(async ({ input, ctx }) => {
     return await db.insert(cloze_answers).values({
       pageSlug: input.pageSlug,
       userId: ctx.user.id,
+      totalWords: input.totalWords,
+      correctWords: input.correctWords,
       data: input.data,
     });
   });

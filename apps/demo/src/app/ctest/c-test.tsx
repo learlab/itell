@@ -74,10 +74,19 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
         testResult.correctWords++;
       }
     });
-    console.log(testResult)
+    
+    let resultTargets = testResult.data.map(arr => arr[0]);
+    let resultPlaceholders = testResult.data.map(arr => arr[1].placeholder.join(''));
+    let resultAnswers = testResult.data.map(arr => arr[1].answers.join('')); 
     createClozeAction({
       pageSlug: 'ctest',
-      data: JSON.stringify(testResult),      
+      totalWords: testResult.totalWords,
+      correctWords: testResult.correctWords,
+      data: {
+        targets: resultTargets,
+        placeholders: resultPlaceholders,
+        answers: resultAnswers
+      },      
     })
     setResult(testResult);
   };
@@ -152,12 +161,6 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
           </Button>
         </div>
       </form>
-
-      {result ? (
-        <pre style={{ fontFamily: "monospace" }}>
-          <code>{JSON.stringify(result, null, 2)} </code>
-        </pre>
-      ) : null}
     </div>
   );
 };
