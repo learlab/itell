@@ -1,4 +1,4 @@
-apps/demo/content merge=keep-ours
+apps/demo/content/textbook merge=keep-ours
 apps/demo/src/drizzle merge=keep-ours
 apps/demo/src/lib/auth/conditions.ts merge=keep-ours
 apps/demo/src/app/auth/_components/knowledge-carousel.tsx merge=keep-ours
