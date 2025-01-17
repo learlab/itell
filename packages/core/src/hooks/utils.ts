@@ -165,22 +165,36 @@ export const usePortal = () => {
 
 const MOBILE_BREAKPOINT = 768;
 
-export const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
+const getScreenIssue = () => {
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    return "mobile";
+  }
+  if (window.innerWidth < MOBILE_BREAKPOINT) {
+    return "resize";
+  }
+  return undefined;
+};
+
+// Determines if an issue with the screen is detected.
+// Returns "mobile" if the device is a mobile device,
+// "resize" if the window is too small, and undefined
+// if there is no issue.
+export const useScreenIssue = () => {
+  const [screenIssue, setScreenIssue] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const mql = window.matchMedia(
       `(max-width: ${(MOBILE_BREAKPOINT - 1).toString()}px)`
     );
     const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+      setScreenIssue(getScreenIssue());
     };
     mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    setScreenIssue(getScreenIssue());
     return () => {
       mql.removeEventListener("change", onChange);
     };
   }, []);
 
-  return isMobile;
+  return screenIssue;
 };

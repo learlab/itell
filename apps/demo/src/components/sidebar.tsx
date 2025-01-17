@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useIsMobile } from "@itell/core/hooks";
+import { useScreenIssue } from "@itell/core/hooks";
 import { Button } from "@itell/ui/button";
 import { Sheet, SheetContent } from "@itell/ui/sheet";
 import { cn } from "@itell/utils";
@@ -93,10 +93,10 @@ const SidebarTrigger = React.forwardRef<
 SidebarTrigger.displayName = "SidebarTrigger";
 
 function Sidebar({ children, className }: React.ComponentProps<"div">) {
-  const isMobile = useIsMobile();
+  const screenIssue = useScreenIssue();
   const { open, onOpenChange } = useSidebar();
 
-  if (isMobile) {
+  if (screenIssue) {
     return (
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent
