@@ -17,7 +17,6 @@ import {
   Condition,
   EventType,
   EXCELLENT_SUMMARY_THRESHOLD,
-  isProduction,
   PAGE_SUMMARY_THRESHOLD,
   Tags,
 } from "@/lib/constants";
@@ -99,19 +98,17 @@ export const createSummaryAction = authedProcedure
       )[0];
 
       // create events
-      if (isProduction) {
-        await tx.insert(events).values({
-          type: EventType.KEYSTROKE,
-          pageSlug: input.summary.pageSlug,
-          userId: ctx.user.id,
-          data: {
-            summaryId,
-            start: input.keystroke.start,
-            keystrokes: input.keystroke.data,
-            isMobile: input.keystroke.isMobile,
-          },
-        });
-      }
+      await tx.insert(events).values({
+        type: EventType.KEYSTROKE,
+        pageSlug: input.summary.pageSlug,
+        userId: ctx.user.id,
+        data: {
+          summaryId,
+          start: input.keystroke.start,
+          keystrokes: input.keystroke.data,
+          isMobile: input.keystroke.isMobile,
+        },
+      });
 
       // update user page slug
       const nextPageSlug = nextPage(input.summary.pageSlug);
