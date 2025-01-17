@@ -198,3 +198,8 @@ export const useScreenIssue = () => {
 
   return screenIssue;
 };
+
+export const useIsMobile = () => {
+  const screenIssue = useScreenIssue();
+  return screenIssue !== undefined;
+};
