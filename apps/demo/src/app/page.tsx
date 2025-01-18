@@ -7,13 +7,19 @@ import { ClassCodeToast } from "@/components/class-code-toast";
 import { ContinueReading } from "@/components/continue-reading";
 import { HtmlRenderer } from "@/components/html-renderer";
 import { MainNav } from "@/components/main-nav";
-import { MobilePopup } from "@/components/mobile-popup";
+import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 import { TakeConsent } from "@/components/take-consent";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
 
-export default async function Page({ searchParams }: { searchParams: Promise<unknown> }) {
-  const { class_code_valid } = routes.home.$parseSearchParams(await searchParams);
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<unknown>;
+}) {
+  const { class_code_valid } = routes.home.$parseSearchParams(
+    await searchParams
+  );
   return (
     <>
       <MainNav read />
@@ -24,7 +30,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<unk
         tabIndex={-1}
       >
         <HtmlRenderer html={home.html} className="underline-offset-2" />
-        <MobilePopup />
+        <ScreenIssuePopup />
         <div className="flex items-center justify-center">
           <ActionButton />
         </div>

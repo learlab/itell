@@ -4,8 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Elements } from "@itell/constants";
 import {
   useDebounce,
-  useIsMobile,
   useKeystroke,
+  useScreenIssue,
   useTimer,
 } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
@@ -59,7 +59,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const [finished, setFinished] = useState(pageStatus.unlocked);
   const criStore = useCRIStore();
   const isSummaryReady = useSelector(criStore, SelectSummaryReady);
-  const isMobile = useIsMobile();
+  const screenIssue = useScreenIssue();
 
   const randomChunkSlug = useMemo(() => {
     const validChunks = page.chunks.filter((chunk) => chunk.type === "regular");
@@ -121,7 +121,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
         keystroke: {
           start: prevInput.current ?? getSummaryLocal(pageSlug) ?? "",
           data: keystrokes,
-          isMobile: isMobile ?? false,
+          isMobile: screenIssue ? false : screenIssue === "mobile",
         },
       });
       if (err) {
