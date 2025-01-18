@@ -70,42 +70,42 @@ export async function PageAssignments({
     );
   }
 
-  if (!intakeDone) {
-    return (
-      <AssignmentsShell>
-        <PreAssignmentPrompt
-          title="Take Intake Survey"
-          description="Before starting the textbook, help us customize your learning experience by completing the intake survey."
-        >
-          <NavigationButton
-            href={routes.surveyHome({ surveyId: Survey.INTAKE })}
-          >
-            Intake Survey
-          </NavigationButton>
-        </PreAssignmentPrompt>
-      </AssignmentsShell>
-    );
-  }
+  // if (!intakeDone) {
+  //   return (
+  //     <AssignmentsShell>
+  //       <PreAssignmentPrompt
+  //         title="Take Intake Survey"
+  //         description="Before starting the textbook, help us customize your learning experience by completing the intake survey."
+  //       >
+  //         <NavigationButton
+  //           href={routes.surveyHome({ surveyId: Survey.INTAKE })}
+  //         >
+  //           Intake Survey
+  //         </NavigationButton>
+  //       </PreAssignmentPrompt>
+  //     </AssignmentsShell>
+  //   );
+  // }
 
-  if (outtakeReady && !outtakeDone) {
-    return (
-      <AssignmentsShell>
-        <PreAssignmentPrompt
-          title="Take Outtake Survey"
-          description="
-            Great job making it close to the end of the textbook! Please help us
-            learn about your learning experience by completing the outtake
-            survey."
-        >
-          <NavigationButton
-            href={routes.surveyHome({ surveyId: Survey.OUTTAKE })}
-          >
-            Outtake Survey
-          </NavigationButton>
-        </PreAssignmentPrompt>
-      </AssignmentsShell>
-    );
-  }
+  // if (outtakeReady && !outtakeDone) {
+  //   return (
+  //     <AssignmentsShell>
+  //       <PreAssignmentPrompt
+  //         title="Take Outtake Survey"
+  //         description="
+  //           Great job making it close to the end of the textbook! Please help us
+  //           learn about your learning experience by completing the outtake
+  //           survey."
+  //       >
+  //         <NavigationButton
+  //           href={routes.surveyHome({ surveyId: Survey.OUTTAKE })}
+  //         >
+  //           Outtake Survey
+  //         </NavigationButton>
+  //       </PreAssignmentPrompt>
+  //     </AssignmentsShell>
+  //   );
+  // }
 
   if (quizReady) {
     return (

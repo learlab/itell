@@ -96,8 +96,7 @@ export const users = pgTable("users", {
   classId: text("class_id"),
   finished: boolean("finished").default(false).notNull(),
   preferences: jsonb("preferences").$type<UserPreferences>(),
-  // do not mandate consent for the demo volume
-  consentGiven: boolean("consent_given"),
+  consentGiven: boolean("consent_given").default(true),
   personalization: jsonb("personalization_data").$type<PersonalizationData>(),
   conditionAssignments: jsonb("condition_assignments")
     .$type<ConditionAssignments>()
@@ -153,7 +152,7 @@ export const sessions = pgTable(
     }).notNull(),
     createdAt: CreatedAt,
   },
-  (table) => [index("sessions_user_id_idx").on(table.userId)]
+  (table) => [index("sessions_user_id_idx").on(table.userId)],
 );
 
 export const oauthAccounts = pgTable(
@@ -170,7 +169,7 @@ export const oauthAccounts = pgTable(
       columns: [table.provider_id, table.provider_user_id],
       name: "oauth_accounts_pk",
     }),
-  ]
+  ],
 );
 
 export const events = pgTable(
@@ -188,7 +187,7 @@ export const events = pgTable(
   (table) => [
     index("events_user_id_idx").on(table.userId),
     index("events_type_idx").on(table.type),
-  ]
+  ],
 );
 export const CreateEventSchema = createInsertSchema(events);
 
@@ -219,7 +218,7 @@ export const summaries = pgTable(
     createdAt: CreatedAt,
     updatedAt: UpdatedAt,
   },
-  (table) => [index("summaries_user_id_idx").on(table.userId)]
+  (table) => [index("summaries_user_id_idx").on(table.userId)],
 );
 
 export type Summary = InferSelectModel<typeof summaries>;
@@ -245,7 +244,7 @@ export const notes = pgTable(
   (table) => [
     index("notes_user_id_idx").on(table.userId),
     index("notes_page_slug_idx").on(table.pageSlug),
-  ]
+  ],
 );
 
 export const CreateNoteSchema = createInsertSchema(notes);
@@ -272,14 +271,14 @@ export const constructed_responses = pgTable(
   (table) => [
     index("constructed_responses_user_id_idx").on(table.userId),
     index("constructed_responses_page_slug_idx").on(table.pageSlug),
-  ]
+  ],
 );
 
 export type ConstructedResponse = InferSelectModel<
   typeof constructed_responses
 >;
 export const CreateConstructedResponseSchema = createInsertSchema(
-  constructed_responses
+  constructed_responses,
 );
 
 export const constructed_responses_feedback = pgTable(
@@ -298,14 +297,14 @@ export const constructed_responses_feedback = pgTable(
     text: text("text").notNull(),
     tags: text("tags").array().notNull(),
     createdAt: CreatedAt,
-  }
+  },
 );
 export const CreateConstructedResponseFeedbackSchema = createInsertSchema(
   constructed_responses_feedback,
   {
     // fix for https://github.com/drizzle-team/drizzle-orm/issues/1110
     tags: z.array(z.string()),
-  }
+  },
 );
 
 export const focus_times = pgTable(
@@ -327,7 +326,7 @@ export const focus_times = pgTable(
       columns: [table.userId, table.pageSlug],
       name: "focus_times_pkey",
     }),
-  ]
+  ],
 );
 export const CreateFocusTimeSchema = createInsertSchema(focus_times);
 
@@ -350,7 +349,7 @@ export const chat_messages = pgTable(
       columns: [table.userId, table.pageSlug],
       name: "chat_messages_pkey",
     }),
-  ]
+  ],
 );
 export const ChatMessageDataSchema = z.object({
   text: z.string(),
@@ -402,7 +401,7 @@ export const quiz_answers = pgTable(
     data: jsonb("data").$type<QuizData>().notNull(),
     createdAt: CreatedAt,
   },
-  (table) => [index("quiz_answers_page_slug_idx").on(table.pageSlug)]
+  (table) => [index("quiz_answers_page_slug_idx").on(table.pageSlug)],
 );
 
 export const QuizDataSchema = z.array(z.string());
