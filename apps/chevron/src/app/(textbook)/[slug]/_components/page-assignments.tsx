@@ -15,7 +15,7 @@ import { type User } from "lucia";
 import { NavigationButton } from "@/components/navigation-button";
 import { isQuizAnswered } from "@/db/quiz";
 import { getSurveyStatus, isOuttakeReady } from "@/db/survey";
-import { Condition, SUMMARY_DESCRIPTION_ID, Survey } from "@/lib/constants";
+import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
 import { DeleteQuiz } from "./delete-quiz-answer";
@@ -45,8 +45,8 @@ export async function PageAssignments({
   user,
   condition,
 }: Props) {
-  const { intakeDone, outtakeDone } = await getSurveyStatus(user);
-  const outtakeReady = isOuttakeReady(user);
+  // const { intakeDone, outtakeDone } = await getSurveyStatus(user);
+  // const outtakeReady = isOuttakeReady(user);
   const hasQuiz = page.quiz && page.quiz.length > 0;
 
   let quizReady = false;
