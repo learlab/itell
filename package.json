@@ -25,6 +25,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@itell/cli": "workspace:*",
     "@types/node": "^22.10.5",
     "husky": "^9.1.7",
     "patch-package": "^8.0.0",

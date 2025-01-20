@@ -1,26 +1,25 @@
 import path from "path";
 import fs from "fs/promises";
 import { Config, ChangedFile } from "./types.js";
-import chalk from "chalk";
-import { validateProjectPath } from "./utils.js";
+import { getProjectNameFromPath, validateProjectPath } from "./utils.js";
+import { Logger } from "./logger.js";
 
 export class Sync {
+  private logger: Logger;
+
   constructor(
     private config: Config,
     private rootDir: string,
-    private verbose: boolean = false,
-  ) {}
-
-  private log(message: string) {
-    if (this.verbose) {
-      console.log(message);
-    }
+    verbose: boolean = false,
+  ) {
+    this.logger = new Logger(verbose);
   }
 
-  private isProtected(projectName: string, filePath: string): boolean {
+  private isProtected(projectPath: string, filePath: string): boolean {
+    const projectName = getProjectNameFromPath(projectPath);
     const projectConfig = this.config.projects?.[projectName];
     const protectedFiles =
-      projectConfig?.protectedFiles || this.config.protectedFiles;
+      projectConfig?.protectedFiles || this.config.protectedFiles || [];
 
     return protectedFiles.some((pattern) => {
       if (pattern.endsWith("/")) {
@@ -35,24 +34,17 @@ export class Sync {
     sourceProject: string,
     targetProject: string,
   ) {
-    const sourcePath = path.join(
-      this.rootDir,
-      "apps",
-      sourceProject,
-      changedFile.path,
-    );
-    const targetPath = path.join(
-      this.rootDir,
-      "apps",
-      targetProject,
-      changedFile.path,
-    );
+    const sourcePath = path.join(this.rootDir, sourceProject, changedFile.path);
+    const targetPath = path.join(this.rootDir, targetProject, changedFile.path);
+
+    // Only sync files from src directory
+    if (!changedFile.path.startsWith("src/")) {
+      return;
+    }
 
     if (this.isProtected(targetProject, changedFile.path)) {
-      this.log(
-        chalk.yellow(
-          `Skipping protected file: ${changedFile.path} in ${targetProject}`,
-        ),
+      this.logger.warn(
+        `Skipping protected file: ${changedFile.path} in ${targetProject}`,
       );
       return;
     }
@@ -60,45 +52,45 @@ export class Sync {
     try {
       if (changedFile.status === "deleted") {
         await fs.unlink(targetPath);
-        this.log(chalk.red(`Deleted: ${changedFile.path} in ${targetProject}`));
+        this.logger.error(`Deleted: ${changedFile.path} in ${targetProject}`);
       } else {
         const content = await fs.readFile(sourcePath);
         await fs.mkdir(path.dirname(targetPath), { recursive: true });
         await fs.writeFile(targetPath, content);
-        this.log(
-          chalk.green(`Synced: ${changedFile.path} to ${targetProject}`),
-        );
+        this.logger.success(`Synced: ${changedFile.path} to ${targetProject}`);
       }
     } catch (error) {
-      this.log(
-        chalk.red(
-          `Error syncing ${changedFile.path} to ${targetProject}: ${error}`,
-        ),
+      this.logger.error(
+        `Error syncing ${changedFile.path} to ${targetProject}: ${error}`,
       );
     }
   }
 
   async syncChanges(changedFiles: ChangedFile[]) {
-    // Get target projects from config or find all projects
     let targetProjects: string[] = [];
 
     if (this.config.targetProjects) {
-      // Use configured target projects
       targetProjects = this.config.targetProjects;
-      // Validate all target projects exist
       for (const project of targetProjects) {
         await validateProjectPath(this.rootDir, project);
       }
     } else {
-      // If no target projects specified, use all projects in apps directory except main
-      const allProjects = await fs.readdir(path.join(this.rootDir, "apps"));
-      targetProjects = allProjects.filter((p) => p !== this.config.mainProject);
+      throw new Error("targetProjects must be specified in the configuration");
+    }
+
+    // Only sync files from src directory
+    const srcFiles = changedFiles.filter((file) =>
+      file.path.startsWith("src/"),
+    );
+
+    if (srcFiles.length === 0) {
+      this.logger.info("No changes detected in src directory");
+      return;
     }
 
     for (const project of targetProjects) {
-      this.log(chalk.blue(`\nSyncing changes to ${project}...`));
-
-      for (const file of changedFiles) {
+      this.logger.info(`\nSyncing changes to ${project}...`);
+      for (const file of srcFiles) {
         await this.syncFile(file, this.config.mainProject, project);
       }
     }

@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const ConfigSchema = z.object({
-  mainProject: z.string(),
-  targetProjects: z.array(z.string()).optional(), // New field for target projects
-  protectedFiles: z.array(z.string()),
+  mainProject: z.string(), // full path e.g. "apps/project-1"
+  targetProjects: z.array(z.string()).optional(), // full paths e.g. ["apps/project-2"]
+  protectedFiles: z.array(z.string()).optional(), // files/patterns within src directory
   projects: z
     .record(
       z.object({

@@ -1,0 +1,4 @@
+{
+  "mainProject": "apps/demo",
+  "targetProjects": ["apps/chevron"]
+}

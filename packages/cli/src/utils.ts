@@ -8,7 +8,6 @@ export async function findMonorepoRoot(
 
   while (currentDir !== path.parse(currentDir).root) {
     try {
-      // Check for essential monorepo files
       const hasPackageJson = await fs
         .access(path.join(currentDir, "package.json"))
         .then(() => true)
@@ -23,19 +22,7 @@ export async function findMonorepoRoot(
         .catch(() => false);
 
       if (hasPackageJson && hasPnpmWorkspace && hasTurboJson) {
-        // Verify apps and packages directories exist
-        const hasApps = await fs
-          .access(path.join(currentDir, "apps"))
-          .then(() => true)
-          .catch(() => false);
-        const hasPackages = await fs
-          .access(path.join(currentDir, "packages"))
-          .then(() => true)
-          .catch(() => false);
-
-        if (hasApps && hasPackages) {
-          return currentDir;
-        }
+        return currentDir;
       }
       currentDir = path.dirname(currentDir);
     } catch (error) {
@@ -50,12 +37,16 @@ export async function findMonorepoRoot(
 
 export async function validateProjectPath(
   rootDir: string,
-  projectName: string,
+  projectPath: string,
 ): Promise<void> {
-  const projectPath = path.join(rootDir, "apps", projectName);
+  const fullPath = path.join(rootDir, projectPath);
   try {
-    await fs.access(projectPath);
+    await fs.access(fullPath);
   } catch {
-    throw new Error(`Project "${projectName}" not found in apps directory`);
+    throw new Error(`Project path "${projectPath}" not found`);
   }
+}
+
+export function getProjectNameFromPath(projectPath: string): string {
+  return projectPath.split("/").pop() || "";
 }

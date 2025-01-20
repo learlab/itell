@@ -1,15 +1,15 @@
-import path from "path";
 import { Command } from "commander";
 import { loadConfig } from "../config.js";
 import { GitManager } from "../git.js";
 import { Sync } from "../sync.js";
 import { findMonorepoRoot, validateProjectPath } from "../utils.js";
+import path from "path";
 
 export function createSyncCommand(): Command {
   const syncCommand = new Command("sync")
     .description("Sync changes from main project to other projects")
     .option("-c, --config <path>", "path to config file")
-    .option("-m, --main-project <name>", "main project name")
+    .option("-m, --main-project <path>", "main project path")
     .option("-v, --verbose", "enable verbose logging")
     .action(async (options) => {
       try {
@@ -21,14 +21,17 @@ export function createSyncCommand(): Command {
         }
 
         await validateProjectPath(rootDir, config.mainProject);
-        const mainProjectPath = path.join(rootDir, "apps", config.mainProject);
+        const mainProjectPath = path.join(rootDir, config.mainProject);
 
         const gitManager = new GitManager(mainProjectPath);
-        const changedFiles = await gitManager.getChangedFiles();
+        if (!(await gitManager.isGitRepository())) {
+          throw new Error(`${config.mainProject} is not a git repository`);
+        }
 
+        const changedFiles = await gitManager.getChangedFiles();
         if (changedFiles.length === 0) {
           if (options.verbose) {
-            console.log("No changes detected in main project");
+            console.log("No changes detected in src directory");
           }
           return;
         }
