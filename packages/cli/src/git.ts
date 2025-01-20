@@ -12,18 +12,19 @@ export class GitManager {
   async getChangedFiles(mainProject: string): Promise<ChangedFile[]> {
     const status = await this.git.status();
 
+    const re = new RegExp(`^${mainProject}`);
     // Filter for files in src directory only
     const files: ChangedFile[] = [
       ...status.modified.map((path) => ({
-        path: path.replace(/^mainProject/, ""),
+        path: path.replace(re, ""),
         status: "modified",
       })),
       ...status.not_added.map((path) => ({
-        path: path.replace(/^mainProject/, ""),
+        path: path.replace(re, ""),
         status: "added",
       })),
       ...status.deleted.map((path) => ({
-        path: path.replace(/^mainProject/, ""),
+        path: path.replace(re, ""),
         status: "deleted",
       })),
     ].filter((file) => file.path.startsWith(path.join(mainProject, "src")));
