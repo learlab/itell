@@ -18,7 +18,8 @@
     "format": "turbo run format",
     "clean": "turbo run clean",
     "patch": "pnpm patch-package",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sync": "pnpm itell sync -v"
   },
   "keywords": [
     "itell"

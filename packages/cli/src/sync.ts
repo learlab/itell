@@ -34,14 +34,24 @@ export class Sync {
     sourceProject: string,
     targetProject: string,
   ) {
-    const sourcePath = path.join(this.rootDir, sourceProject, changedFile.path);
-    const targetPath = path.join(this.rootDir, targetProject, changedFile.path);
-
-    // Only sync files from src directory
-    if (!changedFile.path.startsWith("src/")) {
-      return;
-    }
-
+    const sourcePath = path.join(
+      this.rootDir,
+      sourceProject,
+      changedFile.path.replace(sourceProject, ""),
+    );
+    const targetPath = path.join(
+      this.rootDir,
+      targetProject,
+      changedFile.path.replace(sourceProject, ""),
+    );
+    console.log({
+      rootDir: this.rootDir,
+      sourceProject,
+      targetProject,
+      changedFile: changedFile.path,
+      sourcePath,
+      targetPath,
+    });
     if (this.isProtected(targetProject, changedFile.path)) {
       this.logger.warn(
         `Skipping protected file: ${changedFile.path} in ${targetProject}`,
@@ -78,19 +88,9 @@ export class Sync {
       throw new Error("targetProjects must be specified in the configuration");
     }
 
-    // Only sync files from src directory
-    const srcFiles = changedFiles.filter((file) =>
-      file.path.startsWith("src/"),
-    );
-
-    if (srcFiles.length === 0) {
-      this.logger.info("No changes detected in src directory");
-      return;
-    }
-
     for (const project of targetProjects) {
       this.logger.info(`\nSyncing changes to ${project}...`);
-      for (const file of srcFiles) {
+      for (const file of changedFiles) {
         await this.syncFile(file, this.config.mainProject, project);
       }
     }

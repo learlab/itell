@@ -1,5 +1,6 @@
 import { simpleGit, SimpleGit } from "simple-git";
 import { ChangedFile } from "./types.js";
+import path from "path";
 
 export class GitManager {
   private git: SimpleGit;
@@ -8,7 +9,7 @@ export class GitManager {
     this.git = simpleGit(workingDir);
   }
 
-  async getChangedFiles(): Promise<ChangedFile[]> {
+  async getChangedFiles(mainProject: string): Promise<ChangedFile[]> {
     const status = await this.git.status();
 
     // Filter for files in src directory only
@@ -16,7 +17,7 @@ export class GitManager {
       ...status.modified.map((path) => ({ path, status: "modified" })),
       ...status.not_added.map((path) => ({ path, status: "added" })),
       ...status.deleted.map((path) => ({ path, status: "deleted" })),
-    ].filter((file) => file.path.startsWith("src/"));
+    ].filter((file) => file.path.startsWith(path.join(mainProject, "src")));
 
     return files;
   }

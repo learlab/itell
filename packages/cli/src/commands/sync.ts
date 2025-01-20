@@ -22,16 +22,18 @@ export function createSyncCommand(): Command {
 
         await validateProjectPath(rootDir, config.mainProject);
         const mainProjectPath = path.join(rootDir, config.mainProject);
-
         const gitManager = new GitManager(mainProjectPath);
         if (!(await gitManager.isGitRepository())) {
           throw new Error(`${config.mainProject} is not a git repository`);
         }
-
-        const changedFiles = await gitManager.getChangedFiles();
+        const changedFiles = await gitManager.getChangedFiles(
+          config.mainProject,
+        );
         if (changedFiles.length === 0) {
           if (options.verbose) {
-            console.log("No changes detected in src directory");
+            console.log(
+              `No changes detected in src directory of project ${config.mainProject}`,
+            );
           }
           return;
         }

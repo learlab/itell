@@ -1,4 +1,5 @@
 {
-  "mainProject": "apps/demo",
-  "targetProjects": ["apps/chevron"]
+  "mainProject": "apps/chevron",
+  "targetProjects": ["apps/demo"],
+  "protectedFiles": ["src/app/(textbook)/[slug]/_components/chat/chat.tsx"]
 }
