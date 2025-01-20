@@ -22,6 +22,7 @@ export class Sync {
       projectConfig?.protectedFiles || this.config.protectedFiles || [];
 
     return protectedFiles.some((pattern) => {
+      // if the protected pattern is dir/ then all files inside should be skipped
       if (pattern.endsWith("/")) {
         return filePath.startsWith(pattern);
       }
@@ -36,28 +37,23 @@ export class Sync {
   ) {
     const sourcePath = path.join(this.rootDir, sourceProject, changedFile.path);
     const targetPath = path.join(this.rootDir, targetProject, changedFile.path);
-    console.log({ sourcePath, targetPath, changedFile: changedFile.path });
     if (this.isProtected(targetProject, changedFile.path)) {
-      this.logger.warn(
-        `Skipping protected file: ${changedFile.path} in ${targetProject}`,
-      );
+      this.logger.warn(`Skipping protected file: ${changedFile.path}`);
       return;
     }
 
     try {
       if (changedFile.status === "deleted") {
         await fs.unlink(targetPath);
-        this.logger.error(`Deleted: ${changedFile.path} in ${targetProject}`);
+        this.logger.error(`Deleted: ${changedFile.path}`);
       } else {
         const content = await fs.readFile(sourcePath);
         await fs.mkdir(path.dirname(targetPath), { recursive: true });
         await fs.writeFile(targetPath, content);
-        this.logger.success(`Synced: ${changedFile.path} to ${targetProject}`);
+        this.logger.success(`Synced: ${changedFile.path}`);
       }
     } catch (error) {
-      this.logger.error(
-        `Error syncing ${changedFile.path} to ${targetProject}: ${error}`,
-      );
+      this.logger.error(`Error syncing ${changedFile.path}: ${error}`);
     }
   }
 

@@ -18,4 +18,17 @@ export type Config = z.infer<typeof ConfigSchema>;
 export interface ChangedFile {
   path: string;
   status: string;
+  hash?: string; // git hash for tracking
+}
+
+export interface SyncState {
+  lastSync: {
+    timestamp: number;
+    files: {
+      [filepath: string]: {
+        hash: string;
+        targets: string[];
+      };
+    };
+  };
 }
