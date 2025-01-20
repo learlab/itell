@@ -41,14 +41,14 @@ function useIntersectionState() {
           setSeen(true);
         }
       },
-      { threshold: 0.6 },
+      { threshold: 0.6 }
     );
 
     const visibilityObserver = new IntersectionObserver(
       (entries) => {
         setVisible(entries[0].isIntersecting);
       },
-      { threshold: 0 },
+      { threshold: 0 }
     );
 
     const element = document.getElementById(PAGE_ASSIGNMENTS_ID);
@@ -145,7 +145,7 @@ export function FloatingSummary() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-4 z-30 rounded-lg bg-accent shadow-md pt-1 border-2"
+          className="fixed bottom-4 z-30 rounded-lg border-2 bg-accent pt-1 shadow-md"
           id="floating-summary"
           style={{
             left: dimensions.left,
@@ -163,7 +163,7 @@ export function FloatingSummary() {
                   summaryStore.send({ type: "toggleShowFloatingSummary" })
                 }
                 type="button"
-                className="p-1 flex items-center justify-center rounded-full bg-background border border-accent-foreground -translate-y-1/2"
+                className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
               >
                 <XIcon className="size-4" />
               </button>
@@ -171,7 +171,7 @@ export function FloatingSummary() {
                 aria-label="Jump to summary submission"
                 onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
                 type="button"
-                className="p-1 flex items-center justify-center rounded-full bg-background border border-accent-foreground -translate-y-1/2"
+                className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
               >
                 <ArrowDownIcon className="size-4" />
               </button>
@@ -189,7 +189,7 @@ export function FloatingSummary() {
                   value={input}
                   rows={6}
                   placeholder="This page is about ..."
-                  className="font-normal md:text-base xl:text-lg border-none"
+                  className="border-none font-normal md:text-base xl:text-lg"
                   onChange={(e) =>
                     summaryStore.send({
                       type: "setInput",

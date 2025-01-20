@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 export function RootProvider({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="light">
-      <Toaster richColors closeButton />
+      <Toaster richColors closeButton visibleToasts={1} />
       {children}
     </ThemeProvider>
   );

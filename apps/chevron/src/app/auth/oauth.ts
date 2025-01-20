@@ -158,7 +158,7 @@ export const createOAuthCallbackHandler = ({
       (await cookies()).set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes,
+        sessionCookie.attributes
       );
 
       // redirect, which can be
@@ -175,7 +175,7 @@ export const createOAuthCallbackHandler = ({
                       class_code_valid,
                     },
                   }
-                : {},
+                : {}
             )
           : dst !== "/"
             ? dst
@@ -186,7 +186,7 @@ export const createOAuthCallbackHandler = ({
                         class_code_valid,
                       },
                     }
-                  : {},
+                  : {}
               );
 
       return new Response(null, {

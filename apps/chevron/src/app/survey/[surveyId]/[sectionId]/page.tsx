@@ -2,7 +2,6 @@ import Form from "next/form";
 import { notFound, redirect } from "next/navigation";
 import { Alert, AlertDescription } from "@itell/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
-import { Prose } from "@itell/ui/prose";
 import { Survey } from "#content";
 
 import { upsertSurveyAction } from "@/actions/survey";
