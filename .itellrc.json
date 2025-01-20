@@ -1,5 +1,9 @@
 {
-  "mainProject": "apps/chevron",
-  "targetProjects": ["apps/demo"],
-  "protectedFiles": ["src/app/(textbook)/[slug]/_components/chat/chat.tsx"]
+  "mainProject": "apps/demo",
+  "targetProjects": ["apps/chevron"],
+  "protectedFiles": [
+    "src/drizzle/",
+    "src/lib/auth/conditions.ts",
+    "src/app/auth/_components/knowledge-carousel.tsx"
+  ]
 }
