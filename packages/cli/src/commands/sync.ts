@@ -11,6 +11,7 @@ export function createSyncCommand(): Command {
     .option("-c, --config <path>", "path to config file")
     .option("-m, --main-project <path>", "main project path")
     .option("-v, --verbose", "enable verbose logging")
+    .option("--compare <ref>", "git reference to compare with (e.g., HEAD~2)")
     .action(async (options) => {
       try {
         const rootDir = await findMonorepoRoot();
@@ -23,11 +24,13 @@ export function createSyncCommand(): Command {
         await validateProjectPath(rootDir, config.mainProject);
         const mainProjectPath = path.join(rootDir, config.mainProject);
         const gitManager = new GitManager(mainProjectPath);
+
         if (!(await gitManager.isGitRepository())) {
           throw new Error(`${config.mainProject} is not a git repository`);
         }
         const changedFiles = await gitManager.getChangedFiles(
           config.mainProject,
+          options.compare,
         );
         if (changedFiles.length === 0) {
           if (options.verbose) {
