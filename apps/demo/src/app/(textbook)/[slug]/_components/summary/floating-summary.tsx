@@ -41,14 +41,14 @@ function useIntersectionState() {
           setSeen(true);
         }
       },
-      { threshold: 0.6 }
+      { threshold: 0.6 },
     );
 
     const visibilityObserver = new IntersectionObserver(
       (entries) => {
         setVisible(entries[0].isIntersecting);
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
 
     const element = document.getElementById(PAGE_ASSIGNMENTS_ID);
@@ -145,7 +145,7 @@ export function FloatingSummary() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-4 z-30"
+          className="fixed bottom-4 z-30 rounded-lg bg-accent shadow-md pt-1 border-2"
           id="floating-summary"
           style={{
             left: dimensions.left,
@@ -155,20 +155,15 @@ export function FloatingSummary() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
         >
-          {summaryResponse && (
-            <div className="px-4">
-              <SummaryFeedbackDetails response={summaryResponse} />
-            </div>
-          )}
-          <form className="relative rounded-lg bg-background shadow-md">
-            <header className="absolute right-2 top-2 z-40 flex items-center justify-end">
+          <div className="relative">
+            <header className="absolute right-2 top-0 z-40 flex items-center justify-end gap-2">
               <button
                 aria-label="Close floating summary"
                 onClick={() =>
                   summaryStore.send({ type: "toggleShowFloatingSummary" })
                 }
                 type="button"
-                className="px-1"
+                className="p-1 flex items-center justify-center rounded-full bg-background border border-accent-foreground -translate-y-1/2"
               >
                 <XIcon className="size-4" />
               </button>
@@ -176,24 +171,35 @@ export function FloatingSummary() {
                 aria-label="Jump to summary submission"
                 onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
                 type="button"
-                className="px-1"
+                className="p-1 flex items-center justify-center rounded-full bg-background border border-accent-foreground -translate-y-1/2"
               >
                 <ArrowDownIcon className="size-4" />
               </button>
             </header>
-            <Label className="flex flex-col gap-3">
-              <span className="sr-only">Your summary</span>
-              <TextArea
-                value={input}
-                rows={6}
-                placeholder="This page is about ..."
-                className="font-normal xl:text-lg"
-                onChange={(e) =>
-                  summaryStore.send({ type: "setInput", input: e.target.value })
-                }
+            {summaryResponse && (
+              <SummaryFeedbackDetails
+                response={summaryResponse}
+                className="border-none pt-2"
               />
-            </Label>
-          </form>
+            )}
+            <form>
+              <Label className="flex flex-col gap-3">
+                <span className="sr-only">Your summary</span>
+                <TextArea
+                  value={input}
+                  rows={6}
+                  placeholder="This page is about ..."
+                  className="font-normal md:text-base xl:text-lg border-none"
+                  onChange={(e) =>
+                    summaryStore.send({
+                      type: "setInput",
+                      input: e.target.value,
+                    })
+                  }
+                />
+              </Label>
+            </form>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -74,7 +74,7 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
         root: null,
         rootMargin: "100px",
         threshold: 0,
-      }
+      },
     );
 
     if (anchor) {
@@ -98,8 +98,8 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
       <PopoverTrigger
         ref={triggerRef}
         className={cn(
-          "fixed bottom-12 right-8 z-30 border bg-background text-foreground",
-          isCompact ? "rounded-full p-4" : "rounded-md px-6 py-4"
+          "fixed bottom-12 right-8 z-20 border bg-background text-foreground",
+          isCompact ? "rounded-full p-4" : "rounded-md px-6 py-4",
         )}
       >
         <motion.div className="flex items-center gap-2" layout>

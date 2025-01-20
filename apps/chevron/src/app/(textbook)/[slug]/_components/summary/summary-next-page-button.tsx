@@ -10,14 +10,13 @@ import { AnimatePresence, motion } from "motion/react";
 import { Spinner } from "@/components/spinner";
 import { buttonAnimationProps } from "@/lib/animations";
 import { makePageHref } from "@/lib/utils";
-import type { AnimationProps } from "motion/react";
 
 type Props = {
   pageSlug: string;
   text?: string;
 };
 
-export function NextPageButton({ text = "Go to next page", pageSlug }: Props) {
+export function NextPageButton({ text = "Next Page", pageSlug }: Props) {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -32,7 +31,7 @@ export function NextPageButton({ text = "Go to next page", pageSlug }: Props) {
       }}
       className={cn(
         "relative backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow dark:bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]",
-        buttonVariants({ variant: "default" })
+        buttonVariants({ variant: "default" }),
       )}
     >
       <AnimatePresence mode="popLayout" initial={false}>
@@ -58,15 +57,15 @@ export function NextPageButton({ text = "Go to next page", pageSlug }: Props) {
           <span
             className={cn(
               "relative flex h-full w-full items-center gap-2 text-sm tracking-wide",
-              pending ? "invisible" : ""
+              pending ? "invisible" : "",
             )}
             style={{
               maskImage:
                 "linear-gradient(-75deg,hsl(var(--primary)) calc(var(--x) + 20%),transparent calc(var(--x) + 30%),hsl(var(--primary)) calc(var(--x) + 100%))",
             }}
           >
-            {text}
             <ArrowRightIcon className="size-4" />
+            {text}
           </span>
           <span
             style={{

@@ -164,12 +164,12 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
         <SheetHeader>
           <SheetTitle>Configure ITELL</SheetTitle>
           <SheetDescription className="text-left">
-            You can view this because you are recognized as an admin. Click
-            &quot;Apply Changes&quot; at the bottom to reload the page with the
-            new settings.
+            Click <b>Apply Changes</b> at the bottom to reload the page with new
+            settings.
           </SheetDescription>
         </SheetHeader>
         <form className="grid gap-8 py-4" onSubmit={onSubmit}>
+          <RestartTextbook />
           <fieldset className="flex flex-col border p-4">
             <legend className="font-semibold">Feedback</legend>
             <RadioGroup
@@ -237,7 +237,6 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
               </div>
               <Switch name="page-unblur" aria-describedby="unblur-desc" />
             </Label>
-            <RestartTextbook />
           </fieldset>
 
           <fieldset className="flex flex-col gap-4 border p-4">
