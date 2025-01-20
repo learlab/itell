@@ -145,7 +145,7 @@ export function FloatingSummary() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-4 z-30"
+          className="fixed bottom-4 z-30 rounded-lg border-2 bg-accent pt-1 shadow-md"
           id="floating-summary"
           style={{
             left: dimensions.left,
@@ -155,20 +155,15 @@ export function FloatingSummary() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
         >
-          {summaryResponse && (
-            <div className="px-4">
-              <SummaryFeedbackDetails response={summaryResponse} />
-            </div>
-          )}
-          <form className="relative rounded-lg bg-background shadow-md">
-            <header className="absolute right-2 top-2 z-40 flex items-center justify-end">
+          <div className="relative">
+            <header className="absolute right-2 top-0 z-40 flex items-center justify-end gap-2">
               <button
                 aria-label="Close floating summary"
                 onClick={() =>
                   summaryStore.send({ type: "toggleShowFloatingSummary" })
                 }
                 type="button"
-                className="px-1"
+                className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
               >
                 <XIcon className="size-4" />
               </button>
@@ -176,24 +171,35 @@ export function FloatingSummary() {
                 aria-label="Jump to summary submission"
                 onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
                 type="button"
-                className="px-1"
+                className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
               >
                 <ArrowDownIcon className="size-4" />
               </button>
             </header>
-            <Label className="flex flex-col gap-3">
-              <span className="sr-only">Your summary</span>
-              <TextArea
-                value={input}
-                rows={6}
-                placeholder="This page is about ..."
-                className="font-normal xl:text-lg"
-                onChange={(e) =>
-                  summaryStore.send({ type: "setInput", input: e.target.value })
-                }
+            {summaryResponse && (
+              <SummaryFeedbackDetails
+                response={summaryResponse}
+                className="border-none pt-2"
               />
-            </Label>
-          </form>
+            )}
+            <form>
+              <Label className="flex flex-col gap-3">
+                <span className="sr-only">Your summary</span>
+                <TextArea
+                  value={input}
+                  rows={6}
+                  placeholder="This page is about ..."
+                  className="border-none font-normal md:text-base xl:text-lg"
+                  onChange={(e) =>
+                    summaryStore.send({
+                      type: "setInput",
+                      input: e.target.value,
+                    })
+                  }
+                />
+              </Label>
+            </form>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
