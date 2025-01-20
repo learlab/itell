@@ -27,6 +27,7 @@
 .driver-active #site-nav,
 .driver-active #chatbot-container,
 .driver-active #page-header,
+.driver-active #floating-summary,
 .driver-active .question-container {
   display: none;
 }

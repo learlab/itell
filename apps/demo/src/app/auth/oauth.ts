@@ -94,10 +94,17 @@ export const createOAuthCallbackHandler = ({
       });
     }
 
-    const { state: storedState, codeVerifier: storedCodeVerifier } = await getState();
+    const { state: storedState, codeVerifier: storedCodeVerifier } =
+      await getState();
     const { dst, join_class_code } = await readAuthData();
 
-    if (!code || !state || !storedState || !storedCodeVerifier || state !== storedState) {
+    if (
+      !code ||
+      !state ||
+      !storedState ||
+      !storedCodeVerifier ||
+      state !== storedState
+    ) {
       return notFound();
     }
 
@@ -111,7 +118,9 @@ export const createOAuthCallbackHandler = ({
         provider_user_id: oauthUser.id,
       });
 
-      const teacher = join_class_code ? await findTeacherByClass(join_class_code) : null;
+      const teacher = join_class_code
+        ? await findTeacherByClass(join_class_code)
+        : null;
       let class_code_valid: boolean | undefined = undefined;
 
       if (!user) {
@@ -124,7 +133,9 @@ export const createOAuthCallbackHandler = ({
             image: oauthUser.image,
             email: oauthUser.email,
             conditionAssignments: pageConditions,
-            role: env.ADMINS?.includes(oauthUser.email ?? "") ? "admin" : "user",
+            role: env.ADMINS?.includes(oauthUser.email ?? "")
+              ? "admin"
+              : "user",
             classId: teacher ? join_class_code : null,
           },
           provider_id: providerId,
@@ -135,7 +146,7 @@ export const createOAuthCallbackHandler = ({
       } else {
         // for existing users without a class id, update their record
         if (!user.classId) {
-          class_code_valid = Boolean(teacher);
+          class_code_valid = join_class_code ? Boolean(teacher) : undefined;
           if (teacher) {
             updateUser(user.id, { classId: join_class_code });
           }
@@ -144,7 +155,11 @@ export const createOAuthCallbackHandler = ({
 
       const session = await lucia.createSession(user.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
-      (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+      (await cookies()).set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      );
 
       // redirect, which can be
       // - consent form if user has not given consent
