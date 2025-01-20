@@ -12,6 +12,10 @@ export function createSyncCommand(): Command {
     .option("-m, --main-project <path>", "main project path")
     .option("-v, --verbose", "enable verbose logging")
     .option("--compare <ref>", "git reference to compare with (e.g., HEAD~2)")
+    .option(
+      "-d, --dry-run",
+      "show what changes would be made without actually making them",
+    )
     .action(async (options) => {
       try {
         const rootDir = await findMonorepoRoot();
@@ -42,7 +46,7 @@ export function createSyncCommand(): Command {
         }
 
         const sync = new Sync(config, rootDir, options.verbose);
-        await sync.syncChanges(changedFiles);
+        await sync.syncChanges(changedFiles, options.dryRun);
       } catch (error) {
         console.error("Error:", error instanceof Error ? error.message : error);
         process.exit(1);

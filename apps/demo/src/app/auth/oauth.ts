@@ -53,7 +53,6 @@ export const createOAuthRedirectHandler = ({
     const join_class_code = searchParams.get("join_class_code") ?? "";
     const dst = searchParams.get("redirect_to") ?? "/";
 
-    // store data in cookies for the callback route
     await setAuthData({ dst, join_class_code });
 
     const url = getRedirectUrl({ state, codeVerifier });
@@ -147,7 +146,7 @@ export const createOAuthCallbackHandler = ({
       } else {
         // for existing users without a class id, update their record
         if (!user.classId) {
-          class_code_valid = Boolean(teacher);
+          class_code_valid = join_class_code ? Boolean(teacher) : undefined;
           if (teacher) {
             updateUser(user.id, { classId: join_class_code });
           }
