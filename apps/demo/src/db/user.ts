@@ -122,3 +122,38 @@ export const getOtherUsers = memoize(
     logid: "Get other users",
   }
 );
+
+/**
+ * Get streak stats for every user
+ * If classId is provided, only get users from that class
+ * Otherwise, get all users
+ */
+export const getStreakLeaderboard = memoize(
+  async ({ classId }: { classId: string | null }) => {
+    let results;
+    if (classId) {
+      results = await db
+        .select({
+          name: schema.users.name,
+          image: schema.users.image,
+          streak: schema.users.personalization,
+        })
+        .from(schema.users)
+        .where(and(eq(schema.users.classId, classId)));
+    } else {
+      results = await db
+        .select({
+          name: schema.users.name,
+          image: schema.users.image,
+          streak: schema.users.personalization,
+        })
+        .from(schema.users);
+    }
+    return results
+      .sort(
+        (a, b) =>
+          (b.streak?.max_cri_streak ?? -1) - (a.streak?.max_cri_streak ?? -1)
+      )
+      .splice(0, 5);
+  }
+);

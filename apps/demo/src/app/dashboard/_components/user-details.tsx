@@ -15,6 +15,7 @@ import { countStudents } from "@/db/teacher";
 import { getOtherUsers } from "@/db/user";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
+import { UserLeaderboard } from "./user-leaderboard";
 import { UserRadarChart } from "./user-radar-chart";
 
 type Props = {
@@ -102,7 +103,7 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
         "Measures the semantic similarity between the summary and the original text. The higher the score, the better the summary describes the main points of the text.",
     },
     correctCriAnswers: {
-      label: "Correct Question Answers",
+      label: "Correct Answers",
       user: userStats.totalPassedAnswers,
       other: otherStats.totalPassedAnswers,
       userScaled: scale(
@@ -115,8 +116,8 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-      <div className="col-span-1 flex gap-4 lg:flex-col">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="col-span-1 grid grid-cols-3 gap-4 lg:col-span-2">
         <DashboardBadge
           title="Total Summaries"
           icon={<PencilIcon className="size-4" />}
@@ -194,7 +195,7 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
         </DashboardBadge>
       </div>
 
-      <Card className="col-span-full lg:col-span-2">
+      <Card className="col-span-full lg:col-span-1">
         <CardContent>
           <UserRadarChart data={radarChartData} />
         </CardContent>
@@ -221,6 +222,7 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
           </p>
         </CardFooter>
       </Card>
+      <UserLeaderboard userId={userId} classId={classId} />
     </div>
   );
 }
