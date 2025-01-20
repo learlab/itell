@@ -14,9 +14,18 @@ export class GitManager {
 
     // Filter for files in src directory only
     const files: ChangedFile[] = [
-      ...status.modified.map((path) => ({ path, status: "modified" })),
-      ...status.not_added.map((path) => ({ path, status: "added" })),
-      ...status.deleted.map((path) => ({ path, status: "deleted" })),
+      ...status.modified.map((path) => ({
+        path: path.replace(/^mainProject/, ""),
+        status: "modified",
+      })),
+      ...status.not_added.map((path) => ({
+        path: path.replace(/^mainProject/, ""),
+        status: "added",
+      })),
+      ...status.deleted.map((path) => ({
+        path: path.replace(/^mainProject/, ""),
+        status: "deleted",
+      })),
     ].filter((file) => file.path.startsWith(path.join(mainProject, "src")));
 
     return files;

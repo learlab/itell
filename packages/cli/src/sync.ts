@@ -34,24 +34,9 @@ export class Sync {
     sourceProject: string,
     targetProject: string,
   ) {
-    const sourcePath = path.join(
-      this.rootDir,
-      sourceProject,
-      changedFile.path.replace(sourceProject, ""),
-    );
-    const targetPath = path.join(
-      this.rootDir,
-      targetProject,
-      changedFile.path.replace(sourceProject, ""),
-    );
-    console.log({
-      rootDir: this.rootDir,
-      sourceProject,
-      targetProject,
-      changedFile: changedFile.path,
-      sourcePath,
-      targetPath,
-    });
+    const sourcePath = path.join(this.rootDir, sourceProject, changedFile.path);
+    const targetPath = path.join(this.rootDir, targetProject, changedFile.path);
+    console.log({ sourcePath, targetPath, changedFile: changedFile.path });
     if (this.isProtected(targetProject, changedFile.path)) {
       this.logger.warn(
         `Skipping protected file: ${changedFile.path} in ${targetProject}`,
