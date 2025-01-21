@@ -1,6 +1,10 @@
 import { simpleGit, SimpleGit } from "simple-git";
 import { ChangedFile } from "./types.js";
 import crypto from "crypto";
+import path from "path";
+import util from "node:util";
+import child_process from "node:child_process";
+const exec = util.promisify(child_process.exec);
 
 export class GitManager {
   private git: SimpleGit;
@@ -26,31 +30,82 @@ export class GitManager {
   async getChangedFiles(
     mainProject: string,
     compareWith?: string,
+    files?: string[],
   ): Promise<ChangedFile[]> {
-    let diffArgs = ["HEAD"];
+    // validate commit ref
     if (compareWith) {
-      // Validate the compare reference exists
       try {
-        await this.git.revparse(compareWith);
-        diffArgs = [compareWith, "HEAD"];
-      } catch (error) {
+        this.git.revparse(compareWith);
+      } catch (err) {
         throw new Error(`Invalid git reference: ${compareWith}`);
       }
     }
+    const re = new RegExp(`^${mainProject}/`);
+    const changedFiles: ChangedFile[] = [];
+    // user synching a specific file
+    if (files && files.length > 0) {
+      const fullPaths = files.map((f) => path.join(mainProject, f));
+      const { stdout } = await exec(
+        `git status --porcelain ${fullPaths.join(" ")}`,
+      );
+      if (stdout) {
+        const statusLines = stdout.split("\n").filter(Boolean);
+        for (const line of statusLines) {
+          console.log(line);
+          const statusCode = line.substring(0, 2);
+          const filePath = line.substring(3);
+          const shortPath = filePath.replace(re, "");
+          let status: string;
+          if (statusCode.includes("D")) {
+            status = "deleted";
+          } else if (statusCode.includes("??")) {
+            status = "added";
+          } else if (statusCode.includes("M") || statusCode.includes("A")) {
+            status = "modified";
+          } else {
+            continue;
+          }
+
+          const hash = await this.getFileHash(filePath);
+          changedFiles.push({
+            path: filePath,
+            shortPath,
+            status,
+            hash,
+          });
+        }
+      }
+
+      if (compareWith) {
+        const { stdout } = await exec(
+          `git diff ${compareWith} HEAD -- ${fullPaths.join(" ")}`,
+        );
+        if (stdout) {
+          const diffFiles = stdout
+            .split("\n")
+            .filter((line) => line.startsWith("diff --git"))
+            .map((line) => line.split(" ").pop()?.slice(2))
+            .filter((file): file is string => !!file);
+
+          // Add files that appear in diff but not in local changes
+          for (const diffFile of diffFiles) {
+            if (!changedFiles.some((f) => f.path === diffFile)) {
+              const hash = await this.getFileHash(diffFile);
+              const shortPath = diffFile.replace(re, "");
+              changedFiles.push({
+                path: diffFile,
+                shortPath,
+                status: "modified",
+                hash,
+              });
+            }
+          }
+        }
+      }
+      return changedFiles;
+    }
 
     const status = await this.git.status();
-    const diffFiles = compareWith
-      ? (await this.git.diff(diffArgs))
-          .split("\n")
-          .filter((line) => line.startsWith("diff --git"))
-          .map((line) => line.split(" ").pop()?.slice(2))
-          .filter(
-            (file): file is string => !!file && file.startsWith(mainProject),
-          )
-      : [];
-
-    const changedFiles: ChangedFile[] = [];
-    const re = new RegExp(`^${mainProject}/`);
 
     // Add modified and new files
     for (const path of [...status.modified, ...status.not_added]) {
@@ -65,7 +120,6 @@ export class GitManager {
         });
       }
     }
-
     // Add deleted files
     for (const path of status.deleted) {
       const shortPath = path.replace(re, "");
@@ -86,6 +140,13 @@ export class GitManager {
 
     // Add files from diff if comparing with a specific commit
     if (compareWith) {
+      const diffFiles = (await this.git.diff([compareWith, "HEAD"]))
+        .split("\n")
+        .filter((line) => line.startsWith("diff --git"))
+        .map((line) => line.split(" ").pop()?.slice(2))
+        .filter(
+          (file): file is string => !!file && file.startsWith(mainProject),
+        );
       for (const path of diffFiles) {
         const shortPath = path.replace(re, "");
         if (shortPath.startsWith("src")) {

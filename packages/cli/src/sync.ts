@@ -4,20 +4,25 @@ import { Config, ChangedFile } from "./types.js";
 import { getProjectNameFromPath, validateProjectPath } from "./utils.js";
 import { Logger } from "./logger.js";
 import { StateManager } from "./state.js";
+import pMap from "p-map";
 
 export class Sync {
   private logger: Logger;
   private stateManager: StateManager;
   private results: ProjectSyncResults;
+  // user specified files via the -f option
+  private files: string[];
 
   constructor(
     private config: Config,
     private rootDir: string,
     verbose: boolean = false,
+    files?: string[],
   ) {
     this.logger = new Logger(verbose);
     this.stateManager = new StateManager(rootDir);
     this.results = {};
+    this.files = files ?? [];
   }
 
   private async init() {
@@ -73,6 +78,7 @@ export class Sync {
     sourceProject: string,
     targetProject: string,
     dryRun: boolean,
+    isUserSpecified: boolean,
   ) {
     const sourcePath = path.join(
       this.rootDir,
@@ -86,13 +92,16 @@ export class Sync {
     );
 
     if (this.isProtected(targetProject, changedFile.shortPath)) {
-      this.recordResult(targetProject, {
-        filePath: changedFile.shortPath,
-        fileStatus: changedFile.status,
-        action: "Skipped",
-        reason: "Protected file",
-      });
-      return false;
+      // ignore protected files unless it's listed in the -f option
+      if (!isUserSpecified) {
+        this.recordResult(targetProject, {
+          filePath: changedFile.shortPath,
+          fileStatus: changedFile.status,
+          action: "Skipped",
+          reason: "Protected file",
+        });
+        return false;
+      }
     }
 
     // Check state to see if the sync has been done
@@ -178,14 +187,20 @@ export class Sync {
       `${dryRun ? "[DRY RUN] " : ""}Processing ${changedFiles.length} files from ${this.config.mainProject}`,
     );
 
-    for (const project of targetProjects) {
+    pMap(targetProjects, async (project) => {
       this.logger.info(`\nSyncing changes to ${project}...`);
       for (const file of changedFiles) {
-        await this.syncFile(file, this.config.mainProject, project, dryRun);
+        await this.syncFile(
+          file,
+          this.config.mainProject,
+          project,
+          dryRun,
+          this.files.includes(file.shortPath),
+        );
       }
 
       this.displayResults();
-    }
+    });
   }
 }
 

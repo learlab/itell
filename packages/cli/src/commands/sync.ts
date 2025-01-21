@@ -16,6 +16,10 @@ export function createSyncCommand(): Command {
       "-d, --dry-run",
       "show what changes would be made without actually making them",
     )
+    .option(
+      "-f, --file <paths...>",
+      "specific file to sync (relative to main project, e.g., src/components/button.tsx)",
+    )
     .action(async (options) => {
       try {
         const rootDir = await findMonorepoRoot();
@@ -35,17 +39,20 @@ export function createSyncCommand(): Command {
         const changedFiles = await gitManager.getChangedFiles(
           config.mainProject,
           options.compare,
+          options.file,
         );
         if (changedFiles.length === 0) {
           if (options.verbose) {
             console.log(
-              `No changes detected in src directory of project ${config.mainProject}`,
+              options.file
+                ? `No changes detected for file ${options.file}`
+                : `No changes detected in src directory of project ${config.mainProject}`,
             );
           }
           return;
         }
 
-        const sync = new Sync(config, rootDir, options.verbose);
+        const sync = new Sync(config, rootDir, options.verbose, options.file);
         await sync.syncChanges(changedFiles, options.dryRun);
       } catch (error) {
         console.error("Error:", error instanceof Error ? error.message : error);
