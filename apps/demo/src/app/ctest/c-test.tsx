@@ -78,6 +78,7 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
     let resultTargets = testResult.data.map(arr => arr[0]);
     let resultPlaceholders = testResult.data.map(arr => arr[1].placeholder.join(''));
     let resultAnswers = testResult.data.map(arr => arr[1].answers.join('')); 
+    
     createClozeAction({
       pageSlug: 'ctest',
       totalWords: testResult.totalWords,
