@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { Elements } from "@itell/constants";
 import {
   useDebounce,
-  useIsMobile,
   useKeystroke,
+  useScreenIssue,
   useTimer,
 } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
@@ -84,7 +84,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const summaryResponseRef = useRef<SummaryResponse | null>(null);
   const stairsDataRef = useRef<StairsQuestion | null>(null);
   const stairsAnsweredRef = useRef(false);
-  const isMobile = useIsMobile();
+  const screenIssue = useScreenIssue();
 
   // stores
   const chatStore = useChatStore();
@@ -161,7 +161,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
             console.log("summary response chunk", data, chunk);
 
             const parsed = SummaryResponseSchema.safeParse(
-              JSON.parse(String(data))
+              JSON.parse(String(data)),
             );
             if (parsed.success) {
               summaryResponseRef.current = parsed.data;
@@ -176,7 +176,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
                 {
                   body: requestBody,
                   chunk: data,
-                }
+                },
               );
               return;
             }
@@ -239,7 +239,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           keystroke: {
             start: prevInput ?? getSummaryLocal(pageSlug) ?? "",
             data: keystrokes,
-            isMobile: isMobile ?? false,
+            isMobile: screenIssue ? false : screenIssue === "mobile",
           },
         });
         if (err) {
@@ -272,7 +272,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         }
       }
     },
-    { delayTimeout: 20000 }
+    { delayTimeout: 20000 },
   );
   const isPending = useDebounce(_isPending, 100);
 
@@ -437,7 +437,7 @@ const goToQuestion = (question: StairsQuestion) => {
     }, 100);
   } else {
     toast.warning(
-      "Please revise your summary with substantial changes and resubmit to unlock the next page"
+      "Please revise your summary with substantial changes and resubmit to unlock the next page",
     );
   }
 };

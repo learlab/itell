@@ -16,7 +16,6 @@ import { Pager } from "@textbook/pager";
 import { SelectionPopover } from "@textbook/selection-popover";
 import { TextbookToc } from "@textbook/textbook-toc";
 
-import { MobilePopup } from "@/components/mobile-popup";
 import { PageProvider } from "@/components/provider/page-provider";
 import { getSession } from "@/lib/auth";
 import { getUserCondition } from "@/lib/auth/conditions";
@@ -31,9 +30,10 @@ import { firstAssignmentPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
+import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 
 const ResourceLoader = dynamic(() =>
-  import("./resource-loader").then((mod) => mod.ResourceLoader)
+  import("./resource-loader").then((mod) => mod.ResourceLoader),
 );
 
 export default async function Page(props: {
@@ -64,7 +64,7 @@ export default async function Page(props: {
 
   return (
     <PageProvider condition={userCondition} page={page} pageStatus={pageStatus}>
-      <MobilePopup />
+      <ScreenIssuePopup />
       <ResourceLoader condition={userCondition} />
       <TextbookWrapper>
         <div id={Elements.TEXTBOOK_NAV}>

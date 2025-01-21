@@ -7,16 +7,23 @@ import { ClassCodeToast } from "@/components/class-code-toast";
 import { ContinueReading } from "@/components/continue-reading";
 import { HtmlRenderer } from "@/components/html-renderer";
 import { MainNav } from "@/components/main-nav";
-import { MobilePopup } from "@/components/mobile-popup";
 import { TakeConsent } from "@/components/take-consent";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
+import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 
-export default async function Page({ searchParams }: { searchParams: Promise<unknown> }) {
-  const { class_code_valid } = routes.home.$parseSearchParams(await searchParams);
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<unknown>;
+}) {
+  const { class_code_valid } = routes.home.$parseSearchParams(
+    await searchParams,
+  );
   return (
     <>
       <MainNav read />
+      <ScreenIssuePopup />
       <ClassCodeToast valid={class_code_valid} />
       <main
         className="mx-auto max-w-3xl flex-1 space-y-6 px-6 py-8 md:px-10 lg:px-16"
@@ -24,7 +31,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<unk
         tabIndex={-1}
       >
         <HtmlRenderer html={home.html} className="underline-offset-2" />
-        <MobilePopup />
+
         <div className="flex items-center justify-center">
           <ActionButton />
         </div>
@@ -49,7 +56,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
       id={Elements.SITE_FOOTER}
       className={cn(
         "flex flex-row items-center justify-between border-t-2 border-border px-16 py-8 lg:px-32",
-        className
+        className,
       )}
     >
       <p className="text-center text-sm leading-loose md:text-left">
