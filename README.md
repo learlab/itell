@@ -125,7 +125,62 @@ pnpm run dev
 > Feel free to skip this section if you don't need to change volumes other than
 > the demo.
 
-WIP
+If you changed `apps/demo` and want to bring the changes to other volumes, run
+
+```
+pnpm sync
+```
+
+If you have already committed the changes, run
+
+```bash
+pnpm sync --compare HEAD~1 # or other commit signatures
+```
+
+The CLI respects configuration in `.itellrc.json` in the monorepo root
+
+```json
+// .itellrc.json
+{
+  // project to copy from
+  "mainProject": "apps/demo",
+  // projects to bring changes to
+  "targetProjects": ["apps/chevron"],
+  // files that should not be changed (relative to mainProject)
+  "protectedFiles": [
+    "src/drizzle/",
+    "src/lib/auth/conditions.ts",
+    "src/app/auth/_components/knowledge-carousel.tsx"
+  ]
+}
+```
+
+If you need to synchronize a file that is protected or outside of the `src`
+directory (whose changes are ignored by default), use the `-f` option:
+
+```bash
+# this will sync apps/chevron/README.md against apps/demo/README.md
+pnpm sync -f README.md
+```
+
+The CLI will update your working directory directly. It is recommended to use
+the `--dry-run` option if you are not sure what is going to happen:
+
+```bash
+> pnpm sync -v -f "README.md" "src/drizzle/schema.ts" --dry-run
+
+[DRY RUN] Processing 2 files from apps/demo
+
+Syncing changes to apps/chevron...
+
+Results for apps/chevron:
++-----------------------+----------+------------+---------------------+
+| File                  | Status   | Action     | Reason             |
++-----------------------+----------+------------+---------------------+
+| src/drizzle/schema.ts | modified | Would Sync |                    |
+| README.md             | modified | Would Sync |                    |
++-----------------------+----------+------------+---------------------+
+```
 
 <!-- ## With Dev Containers -->
 <!---->
