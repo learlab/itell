@@ -150,10 +150,17 @@ export const getStreakLeaderboard = memoize(
         .from(schema.users);
     }
     return results
-      .sort(
-        (a, b) =>
-          (b.streak?.max_cri_streak ?? -1) - (a.streak?.max_cri_streak ?? -1)
-      )
+      .sort((a, b) => {
+        const difference =
+          (b.streak?.max_cri_streak ?? -1) - (a.streak?.max_cri_streak ?? -1);
+        if (difference === 0) {
+          return (
+            (b.streak?.max_summary_streak ?? -1) -
+            (a.streak?.max_summary_streak ?? -1)
+          );
+        }
+        return difference;
+      })
       .splice(0, 5);
   }
 );

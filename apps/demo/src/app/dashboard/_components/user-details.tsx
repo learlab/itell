@@ -233,12 +233,20 @@ UserDetails.ErrorFallback = CreateErrorFallback(
 
 UserDetails.Skeleton = function UserDetailsSkeleton() {
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-      <div className="col-span-1 flex gap-4 lg:flex-col">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="col-span-1 grid grid-cols-3 gap-4 lg:col-span-2">
         <DashboardBadge.Skeletons />
       </div>
 
-      <Card className="col-span-full lg:col-span-2">
+      <Card className="col-span-full lg:col-span-1">
+        <CardContent>
+          <Skeleton className="h-[300px] w-full" />
+        </CardContent>
+        <CardFooter>
+          <Skeleton className="h-6 w-full" />
+        </CardFooter>
+      </Card>
+      <Card className="col-span-full lg:col-span-1">
         <CardContent>
           <Skeleton className="h-[300px] w-full" />
         </CardContent>

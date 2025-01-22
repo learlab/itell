@@ -31,7 +31,10 @@ export async function UserLeaderboard({ userId, classId }: Props) {
     const previousUser = streakData[index - 1];
     const currentUser = streakData[index];
     if (
-      previousUser.streak?.max_cri_streak === currentUser.streak?.max_cri_streak
+      previousUser.streak?.max_cri_streak ===
+        currentUser.streak?.max_cri_streak &&
+      previousUser.streak?.max_summary_streak ===
+        currentUser.streak?.max_summary_streak
     ) {
       return getAdjustedRank(index - 1);
     }
@@ -58,6 +61,7 @@ export async function UserLeaderboard({ userId, classId }: Props) {
               <TableHead>Rank</TableHead>
               <TableHead>Classmate</TableHead>
               <TableHead>Question Streak</TableHead>
+              <TableHead>Summary Streak</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="gap-2">
@@ -86,6 +90,7 @@ export async function UserLeaderboard({ userId, classId }: Props) {
                   </div>
                 </TableCell>
                 <TableCell>{user.streak?.max_cri_streak}</TableCell>
+                <TableCell>{user.streak?.max_summary_streak}</TableCell>
               </TableRow>
             ))}
           </TableBody>
