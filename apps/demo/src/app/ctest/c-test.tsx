@@ -3,7 +3,7 @@
 import React, { FormEvent, useRef, useState } from "react";
 import { Button } from "@itell/ui/button";
 import { Prose } from "@itell/ui/prose";
-
+import { createClozeAction } from "@/actions/cloze";
 import { WordItem } from "./word-item";
 import type { ShowLetter } from "./word-item";
 
@@ -74,7 +74,21 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
         testResult.correctWords++;
       }
     });
-
+    
+    let resultTargets = testResult.data.map(arr => arr[0]);
+    let resultPlaceholders = testResult.data.map(arr => arr[1].placeholder.join(''));
+    let resultAnswers = testResult.data.map(arr => arr[1].answers.join('')); 
+    
+    createClozeAction({
+      pageSlug: 'ctest',
+      totalWords: testResult.totalWords,
+      correctWords: testResult.correctWords,
+      data: {
+        targets: resultTargets,
+        placeholders: resultPlaceholders,
+        answers: resultAnswers
+      },      
+    })
     setResult(testResult);
   };
 
@@ -148,12 +162,6 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
           </Button>
         </div>
       </form>
-
-      {result ? (
-        <pre style={{ fontFamily: "monospace" }}>
-          <code>{JSON.stringify(result, null, 2)} </code>
-        </pre>
-      ) : null}
     </div>
   );
 };
