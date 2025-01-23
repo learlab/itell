@@ -1,4 +1,4 @@
-import { and, eq, ne } from "drizzle-orm";
+import { and, desc, eq, exists, isNotNull, ne, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { OAuthProviderId } from "@/app/auth/oauth";
@@ -134,33 +134,47 @@ export const getStreakLeaderboard = memoize(
     if (classId) {
       results = await db
         .select({
+          id: schema.users.id,
           name: schema.users.name,
           image: schema.users.image,
           streak: schema.users.personalization,
         })
         .from(schema.users)
-        .where(and(eq(schema.users.classId, classId)));
+        .where(
+          and(
+            eq(schema.users.classId, classId),
+            isNotNull(schema.users.personalization)
+          )
+        )
+        .orderBy(
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
+          ),
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+          )
+        )
+        .limit(5);
     } else {
       results = await db
         .select({
+          id: schema.users.id,
           name: schema.users.name,
           image: schema.users.image,
           streak: schema.users.personalization,
         })
-        .from(schema.users);
+        .from(schema.users)
+        .where(isNotNull(schema.users.personalization))
+        .orderBy(
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
+          ),
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+          )
+        )
+        .limit(5);
     }
-    return results
-      .sort((a, b) => {
-        const difference =
-          (b.streak?.max_cri_streak ?? -1) - (a.streak?.max_cri_streak ?? -1);
-        if (difference === 0) {
-          return (
-            (b.streak?.max_summary_streak ?? -1) -
-            (a.streak?.max_summary_streak ?? -1)
-          );
-        }
-        return difference;
-      })
-      .splice(0, 5);
+    return results;
   }
 );

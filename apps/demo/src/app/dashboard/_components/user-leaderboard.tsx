@@ -68,24 +68,26 @@ export async function UserLeaderboard({ userId, classId }: Props) {
             {streakData.map((user, index) => (
               <TableRow key={user.name}>
                 <TableCell>
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-200">
+                  <div
+                    className={`flex h-6 w-6 items-center justify-center rounded-full ${user.id === userId ? "bg-green-400" : "bg-slate-200"}`}
+                  >
                     {getAdjustedRank(index)}
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="inline-flex items-center gap-2 align-middle">
-                    {user.image ? (
-                      <Avatar className="mr-2 h-8 w-8">
+                    <Avatar className="mr-2 h-8 w-8">
+                      {user.image ? (
                         <AvatarImage
                           src={user.image}
                           alt="user profile photo"
                         />
-                      </Avatar>
-                    ) : (
-                      <AvatarFallback>
-                        {user.name?.[0]?.toUpperCase() ?? "User"}
-                      </AvatarFallback>
-                    )}
+                      ) : (
+                        <AvatarFallback>
+                          {user.name?.[0]?.toUpperCase() ?? "User"}
+                        </AvatarFallback>
+                      )}
+                    </Avatar>
                     {user.name}
                   </div>
                 </TableCell>
