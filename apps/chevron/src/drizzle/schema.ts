@@ -406,3 +406,29 @@ export const quiz_answers = pgTable(
 
 export const QuizDataSchema = z.array(z.string());
 export type QuizData = z.infer<typeof QuizDataSchema>;
+
+export const cloze_answers = pgTable(
+  "cloze_answers",
+  {
+    id: serial("id").primaryKey().notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    pageSlug: text("page_slug").notNull(),
+    totalWords: integer("total_words").notNull(),
+    correctWords: integer("correct_words").notNull(),
+    data: jsonb("data").$type<ClozeData>().notNull(),
+    createdAt: CreatedAt,
+  },
+
+  (table) => [index("cloze_answers_page_slug_idx").on(table.pageSlug)],
+);
+
+export const ClozeDataSchema = z.array(
+  z.object({
+    word: z.string(),
+    placeholders: z.array(z.string()),
+    answers: z.array(z.string()),
+  }),
+);
+export type ClozeData = z.infer<typeof ClozeDataSchema>;

@@ -45,6 +45,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
           redirect_to: undefined,
         }),
     }),
+    ctest: defineRoute("/ctest"),
     textbook: defineRoute("/[slug]", {
       params: z.object({
         slug: z.string(),

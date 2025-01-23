@@ -387,7 +387,6 @@ export const survey_sessions = pgTable("survey_sessions", {
 export const CreateSurveySessionSchema = createInsertSchema(survey_sessions);
 export const UpdateSurveySessionSchema = CreateSurveySessionSchema.partial();
 export type SurveySession = InferSelectModel<typeof survey_sessions>;
-
 // { sectionId: { questionId: answer } }
 export type SurveyData = Record<string, SurveySubmission>;
 
@@ -399,19 +398,22 @@ export const cloze_answers = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
     pageSlug: text("page_slug").notNull(),
-    totalWords: integer('total_words').notNull(),
-    correctWords: integer('correct_words').notNull(),
+    totalWords: integer("total_words").notNull(),
+    correctWords: integer("correct_words").notNull(),
     data: jsonb("data").$type<ClozeData>().notNull(),
     createdAt: CreatedAt,
   },
+
+  (table) => [index("cloze_answers_page_slug_idx").on(table.pageSlug)]
 );
 
-export const ClozeDataSchema = z.object({
-  targets: z.array(z.string()),
-  placeholders: z.array(z.string()),
-  answers: z.array(z.string())
-})
-
+export const ClozeDataSchema = z.array(
+  z.object({
+    word: z.string(),
+    placeholders: z.array(z.string()),
+    answers: z.array(z.string()),
+  })
+);
 export type ClozeData = z.infer<typeof ClozeDataSchema>;
 
 export const quiz_answers = pgTable(

@@ -1,100 +1,82 @@
 "use client";
 
-import React, { FormEvent, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Button } from "@itell/ui/button";
+import { Errorbox } from "@itell/ui/callout";
 import { Prose } from "@itell/ui/prose";
+import { useActionStatus } from "use-action-status";
+
 import { createClozeAction } from "@/actions/cloze";
+import { AdminButton } from "@/components/admin-button";
+import { ClozeData } from "@/drizzle/schema";
 import { WordItem } from "./word-item";
 import type { ShowLetter } from "./word-item";
 
 interface Props {
   paragraphs: string[];
+  isAdmin?: boolean;
   // number of revealed letters of each word,  0 = cloze test, 2 = c-test
   showLetter?: ShowLetter;
 }
 
-// for each word, get the revealed letters and user input letters
-type TestResultDataItem = [
-  string,
-  { placeholder: string[]; answers: string[] },
-];
-
-type TestResult = {
-  totalWords: number;
-  correctWords: number;
-  data: Array<TestResultDataItem>;
-};
-
-export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
+export const CTest = ({
+  paragraphs,
+  isAdmin = false,
+  showLetter = 0,
+}: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [result, setResult] = useState<TestResult | null>(null);
 
-  if (paragraphs.length < 1) return <p>not enough paragraphs</p>;
+  const { action, isPending, error } = useActionStatus(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-  const handleSubmit = (e: FormEvent) => {
-    if (!formRef.current) return;
-    e.preventDefault();
+      const form = e.currentTarget as HTMLFormElement;
+      const fields = Array.from(
+        form.querySelectorAll("fieldset[data-target-word]")
+      ) as HTMLFieldSetElement[];
 
-    const targetWords = Array.from(
-      formRef.current.querySelectorAll("fieldset[data-target-word]")
-    ) as HTMLFieldSetElement[];
+      let correctWords = 0;
+      const clozeData: ClozeData = [];
 
-    const testResult: TestResult = {
-      totalWords: targetWords.length,
-      correctWords: 0,
-      data: [],
-    };
-    targetWords.forEach((field) => {
-      const word = field.dataset.targetWord as string;
-      const inputs = Array.from(
-        field.querySelectorAll("input[type=text]")
-      ) as HTMLInputElement[];
+      fields.forEach((field) => {
+        const word = field.dataset.targetWord as string;
+        const inputs = Array.from(
+          field.querySelectorAll("input[type=text]")
+        ) as HTMLInputElement[];
 
-      const result = {
-        word,
-        placeholder: [] as string[],
-        answers: [] as string[],
-      };
-      inputs.forEach((input) => {
-        const isTarget = input.dataset.isTarget === "true";
-        if (isTarget) {
-          result.answers.push(input.value);
-        } else {
-          result.placeholder.push(input.value);
+        const result = {
+          word,
+          placeholders: [] as string[],
+          answers: [] as string[],
+        };
+        inputs.forEach((input) => {
+          const isTarget = input.dataset.isTarget === "true";
+          if (isTarget) {
+            result.answers.push(input.value);
+          } else {
+            result.placeholders.push(input.value);
+          }
+        });
+
+        clozeData.push(result);
+        const joined = result.placeholders.join("") + result.answers.join("");
+        if (joined === word) {
+          correctWords++;
         }
       });
 
-      testResult.data.push([
-        result.word,
-        { placeholder: result.placeholder, answers: result.answers },
-      ]);
-
-      const joined = result.placeholder.join("") + result.answers.join("");
-      if (joined === word) {
-        testResult.correctWords++;
+      const [, err] = await createClozeAction({
+        pageSlug: "ctest",
+        totalWords: fields.length,
+        correctWords,
+        data: clozeData,
+      });
+      if (err) {
+        throw new Error("Failed to save answers, please try again later");
       }
-    });
-    
-    let resultTargets = testResult.data.map(arr => arr[0]);
-    let resultPlaceholders = testResult.data.map(arr => arr[1].placeholder.join(''));
-    let resultAnswers = testResult.data.map(arr => arr[1].answers.join('')); 
-    
-    createClozeAction({
-      pageSlug: 'ctest',
-      totalWords: testResult.totalWords,
-      correctWords: testResult.correctWords,
-      data: {
-        targets: resultTargets,
-        placeholders: resultPlaceholders,
-        answers: resultAnswers
-      },      
-    })
-    setResult(testResult);
-  };
-
-  const handleReset = () => {
-    formRef.current?.reset();
-  };
+    }
+  );
+  if (paragraphs.length < 1) return <p>not enough paragraphs</p>;
 
   const { firstSentence, rest: firstParagraphRest } = splitFirstSentence(
     paragraphs[0]
@@ -102,10 +84,13 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
 
   return (
     <div className="space-y-8">
+      {isAdmin && <QuickFill />}
+      {error && <Errorbox title={error.message} />}
       <form
+        id="cloze-form"
         className="flex flex-col gap-4 rounded-lg p-6"
         ref={formRef}
-        onSubmit={handleSubmit}
+        onSubmit={action}
       >
         <Prose className="space-y-3">
           {paragraphs.map((paragraph, pIndex) => {
@@ -155,16 +140,45 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
           })}
         </Prose>
         <div className="flex gap-4">
-          <Button type="submit">Score</Button>
-
-          <Button onClick={handleReset} type="button" variant="outline">
-            Reset
+          <Button disabled={isPending} pending={isPending} type="submit">
+            Score
           </Button>
         </div>
       </form>
     </div>
   );
 };
+
+function QuickFill() {
+  return (
+    <AdminButton
+      size="lg"
+      type="button"
+      onClick={async () => {
+        const form = document.getElementById("cloze-form");
+        if (form) {
+          const targetWords = Array.from(
+            form.querySelectorAll("fieldset[data-target-word]")
+          ) as HTMLFieldSetElement[];
+          targetWords.forEach((field) => {
+            const inputs = Array.from(
+              field.querySelectorAll("input[type=text]")
+            ) as HTMLInputElement[];
+
+            inputs.forEach((input) => {
+              const isTarget = input.dataset.isTarget === "true";
+              if (isTarget) {
+                input.value = "a";
+              }
+            });
+          });
+        }
+      }}
+    >
+      Quick Fill
+    </AdminButton>
+  );
+}
 
 const splitWords = ({
   text,

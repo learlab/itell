@@ -1,20 +1,23 @@
-import { CTest } from "./c-test";
 import { volume } from "#content";
-// Example data - replace with API response later
 
-const sampleText = `
-This is a sample text. More text here for testing.
+import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/auth/role";
+import { routes } from "@/lib/navigation";
+import { redirectWithSearchParams } from "@/lib/utils";
+import { CTest } from "./c-test";
 
-This is the second paragraph.
-`;
-
-const volumeSummary = volume.summary
-
-export default function CTestPage() {
-  const paragraphs = splitParagraphs(volumeSummary);
+export default async function Page() {
+  const { user } = await getSession();
+  if (!user) {
+    return redirectWithSearchParams(routes.auth(), {
+      redirect_to: routes.ctest(),
+    });
+  }
+  const paragraphs = splitParagraphs(volume.summary);
+  const admin = isAdmin(user.role);
   return (
     <div className="mx-auto max-w-4xl p-6">
-      <CTest showLetter={2} paragraphs={paragraphs} />
+      <CTest paragraphs={paragraphs} isAdmin={admin} showLetter={2} />
     </div>
   );
 }

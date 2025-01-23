@@ -1,5 +1,6 @@
 {
   "name": "@itell/demo",
+  "type": "module",
   "version": "0.1.0",
   "scripts": {
     "setup": "pnpm install && pnpm drizzle-kit migrate && pnpm run build:deps && pnpm run assets",

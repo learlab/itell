@@ -8,6 +8,13 @@
       "when": 1736271436140,
       "tag": "0000_perfect_blizzard",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1737617084151,
+      "tag": "0001_natural_bishop",
+      "breakpoints": true
     }
   ]
 }
