@@ -1,4 +1,4 @@
-import { and, eq, ne } from "drizzle-orm";
+import { and, desc, eq, exists, isNotNull, ne, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { OAuthProviderId } from "@/app/auth/oauth";
@@ -120,5 +120,61 @@ export const getOtherUsers = memoize(
     revalidateTags: ({ userId }) => ["get-other-users", userId],
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "Get other users",
+  }
+);
+
+/**
+ * Get streak stats for every user
+ * If classId is provided, only get users from that class
+ * Otherwise, get all users
+ */
+export const getStreakLeaderboard = memoize(
+  async ({ classId }: { classId: string | null }) => {
+    let results;
+    if (classId) {
+      results = await db
+        .select({
+          id: schema.users.id,
+          name: schema.users.name,
+          image: schema.users.image,
+          streak: schema.users.personalization,
+        })
+        .from(schema.users)
+        .where(
+          and(
+            eq(schema.users.classId, classId),
+            isNotNull(schema.users.personalization)
+          )
+        )
+        .orderBy(
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
+          ),
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+          )
+        )
+        .limit(5);
+    } else {
+      results = await db
+        .select({
+          id: schema.users.id,
+          name: schema.users.name,
+          image: schema.users.image,
+          streak: schema.users.personalization,
+        })
+        .from(schema.users)
+        .where(isNotNull(schema.users.personalization))
+        .orderBy(
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
+          ),
+          desc(
+            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+          )
+        )
+        .limit(5);
+    }
+    return results;
   }
 );
