@@ -7,6 +7,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 import dotenv from "dotenv";
 
+// const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 export const baseURL = "http://127.0.0.1:3000";
 /**

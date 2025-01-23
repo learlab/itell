@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { Elements } from "@itell/constants";
 import {
   useDebounce,
-  useIsMobile,
   useKeystroke,
+  useScreenIssue,
   useTimer,
 } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
@@ -84,7 +84,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const summaryResponseRef = useRef<SummaryResponse | null>(null);
   const stairsDataRef = useRef<StairsQuestion | null>(null);
   const stairsAnsweredRef = useRef(false);
-  const isMobile = useIsMobile();
+  const screenIssue = useScreenIssue();
 
   // stores
   const chatStore = useChatStore();
@@ -239,7 +239,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           keystroke: {
             start: prevInput ?? getSummaryLocal(pageSlug) ?? "",
             data: keystrokes,
-            isMobile: isMobile ?? false,
+            isMobile: screenIssue ? false : screenIssue === "mobile",
           },
         });
         if (err) {

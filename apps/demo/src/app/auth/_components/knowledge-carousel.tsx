@@ -28,7 +28,7 @@ const cards = [
     href: "/3-goals-of-science",
   },
   {
-    text: "Although much of our folk psychology is probably reasonably accurate, it is clear that much of it is not. For example, most people believe that anger can be relieved by 'letting it out'—perhaps by punching something or screaming loudly. Scientific research, however, has shown that this approach tends to leave people feeling more angry, not less.",
+    text: "Although much of our folk psychology is probably reasonably accurate, it is clear that much of it is not. For instance, most people believe that anger can be relieved by 'letting it out'—perhaps by punching something or screaming loudly. Scientific research, however, has shown that this approach tends to leave people feeling more angry, not less.",
     source: "4. Science and Common Sense",
     href: "/4-science-and-common-sense",
   },

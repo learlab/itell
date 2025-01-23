@@ -16,8 +16,8 @@ import { Pager } from "@textbook/pager";
 import { SelectionPopover } from "@textbook/selection-popover";
 import { TextbookToc } from "@textbook/textbook-toc";
 
-import { MobilePopup } from "@/components/mobile-popup";
 import { PageProvider } from "@/components/provider/page-provider";
+import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 import { getSession } from "@/lib/auth";
 import { getUserCondition } from "@/lib/auth/conditions";
 import {
@@ -64,7 +64,7 @@ export default async function Page(props: {
 
   return (
     <PageProvider condition={userCondition} page={page} pageStatus={pageStatus}>
-      <MobilePopup />
+      <ScreenIssuePopup />
       <ResourceLoader condition={userCondition} />
       <TextbookWrapper>
         <div id={Elements.TEXTBOOK_NAV}>
