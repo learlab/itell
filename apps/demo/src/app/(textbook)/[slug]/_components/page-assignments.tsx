@@ -15,6 +15,7 @@ import { type User } from "lucia";
 import { NavigationButton } from "@/components/navigation-button";
 import { isQuizAnswered } from "@/db/quiz";
 import { getSurveyStatus, isOuttakeReady } from "@/db/survey";
+import { isAdmin } from "@/lib/auth/role";
 import { Condition, SUMMARY_DESCRIPTION_ID, Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
@@ -49,6 +50,7 @@ export async function PageAssignments({
   const outtakeReady = isOuttakeReady(user);
   const hasQuiz = page.quiz && page.quiz.length > 0;
 
+  const admin = isAdmin(user.role);
   let quizReady = false;
   let quizAnswered = false;
   if (hasQuiz) {
@@ -119,7 +121,7 @@ export async function PageAssignments({
   if (condition !== Condition.SIMPLE && canSkipSummary) {
     return (
       <AssignmentsShell>
-        {quizAnswered && <DeleteQuiz pageSlug={page.slug} />}
+        {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
         <Card className="border-info">
           <CardContent>
             <SummaryFormSkip
@@ -139,7 +141,7 @@ export async function PageAssignments({
   if (page.assignments.length !== 0) {
     return (
       <AssignmentsShell>
-        {quizAnswered && <DeleteQuiz pageSlug={page.slug} />}
+        {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
         <Card className="border-info">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
