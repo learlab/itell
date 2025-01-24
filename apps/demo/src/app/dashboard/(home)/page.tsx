@@ -62,9 +62,9 @@ const parseSearchParams = (searchParams: unknown) => {
     readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
   }
 
-  let leaderboardMetric = LeaderboardMetric.summary_streak;
+  let leaderboardMetric = LeaderboardMetric.all;
   if (
-    Object.values(leaderboardMetric).includes(
+    Object.values(LeaderboardMetric).includes(
       leaderboard_metric as LeaderboardMetric
     )
   ) {

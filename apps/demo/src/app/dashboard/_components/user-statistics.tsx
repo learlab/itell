@@ -19,7 +19,7 @@ export function UserStatistics({
   classId,
   pageSlug,
   readingTimeLevel = ReadingTimeChartLevel.week_1,
-  leaderboardMetric = LeaderboardMetric.summary_streak,
+  leaderboardMetric = LeaderboardMetric.all,
 }: Props) {
   const readingTimeParams: ReadingTimeChartParams = {
     level: readingTimeLevel,

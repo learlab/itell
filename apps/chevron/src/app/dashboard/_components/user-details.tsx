@@ -15,15 +15,23 @@ import { countStudents } from "@/db/teacher";
 import { getOtherUsers } from "@/db/user";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
+import { UserLeaderboard } from "./user-leaderboard";
+import { LeaderboardMetric } from "./user-leaderboard-control";
 import { UserRadarChart } from "./user-radar-chart";
 
 type Props = {
   userId: string;
   classId: string | null;
   pageSlug: string | null;
+  leaderboardMetric?: LeaderboardMetric;
 };
 
-export async function UserDetails({ userId, classId, pageSlug }: Props) {
+export async function UserDetails({
+  userId,
+  classId,
+  pageSlug,
+  leaderboardMetric = LeaderboardMetric.all,
+}: Props) {
   const otherUsers = await getOtherUsers({ userId, classId });
   if (otherUsers.length === 0) {
     return (
@@ -102,7 +110,7 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
         "Measures the semantic similarity between the summary and the original text. The higher the score, the better the summary describes the main points of the text.",
     },
     correctCriAnswers: {
-      label: "Correct Question Answers",
+      label: "Correct Answers",
       user: userStats.totalPassedAnswers,
       other: otherStats.totalPassedAnswers,
       userScaled: scale(
@@ -110,13 +118,13 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
         otherStats.totalPassedAnswers
       ),
       otherScaled: 1,
-      description: "Total number of questions answered during reading.",
+      description: "Number of correct answers to contructed response items",
     },
   };
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-      <div className="col-span-1 flex gap-4 lg:flex-col">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="col-span-1 grid grid-cols-3 gap-4 lg:col-span-2">
         <DashboardBadge
           title="Total Summaries"
           icon={<PencilIcon className="size-4" />}
@@ -194,7 +202,7 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
         </DashboardBadge>
       </div>
 
-      <Card className="col-span-full lg:col-span-2">
+      <Card className="col-span-full lg:col-span-1">
         <CardContent>
           <UserRadarChart data={radarChartData} />
         </CardContent>
@@ -221,6 +229,11 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
           </p>
         </CardFooter>
       </Card>
+      <UserLeaderboard
+        userId={userId}
+        classId={classId}
+        metric={leaderboardMetric}
+      />
     </div>
   );
 }
@@ -231,12 +244,20 @@ UserDetails.ErrorFallback = CreateErrorFallback(
 
 UserDetails.Skeleton = function UserDetailsSkeleton() {
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-      <div className="col-span-1 flex gap-4 lg:flex-col">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="col-span-1 grid grid-cols-3 gap-4 lg:col-span-2">
         <DashboardBadge.Skeletons />
       </div>
 
-      <Card className="col-span-full lg:col-span-2">
+      <Card className="col-span-full lg:col-span-1">
+        <CardContent>
+          <Skeleton className="h-[300px] w-full" />
+        </CardContent>
+        <CardFooter>
+          <Skeleton className="h-6 w-full" />
+        </CardFooter>
+      </Card>
+      <Card className="col-span-full lg:col-span-1">
         <CardContent>
           <Skeleton className="h-[300px] w-full" />
         </CardContent>

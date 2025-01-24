@@ -30,7 +30,7 @@ export async function UserDetails({
   userId,
   classId,
   pageSlug,
-  leaderboardMetric = LeaderboardMetric.summary_streak,
+  leaderboardMetric = LeaderboardMetric.all,
 }: Props) {
   const otherUsers = await getOtherUsers({ userId, classId });
   if (otherUsers.length === 0) {

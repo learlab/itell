@@ -73,7 +73,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({
           reading_time_level: ReadingTimeChartLevel.week_1,
-          leaderboard_metric: LeaderboardMetric.summary_streak,
+          leaderboard_metric: LeaderboardMetric.all,
           join_class_code: undefined,
         }),
     }),

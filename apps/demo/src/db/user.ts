@@ -1,7 +1,8 @@
-import { and, desc, eq, exists, isNotNull, ne, sql } from "drizzle-orm";
+import { and, desc, eq, isNotNull, ne, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { OAuthProviderId } from "@/app/auth/oauth";
+import { LeaderboardMetric } from "@/app/dashboard/_components/user-leaderboard-control";
 import { isProduction } from "@/lib/constants";
 import { db, first } from ".";
 import * as schema from "../drizzle/schema";
@@ -128,53 +129,50 @@ export const getOtherUsers = memoize(
  * If classId is provided, only get users from that class
  * Otherwise, get all users
  */
-export const getStreakLeaderboard = memoize(
-  async ({ classId }: { classId: string | null }) => {
-    let results;
-    if (classId) {
-      results = await db
-        .select({
-          id: schema.users.id,
-          name: schema.users.name,
-          image: schema.users.image,
-          streak: schema.users.personalization,
-        })
-        .from(schema.users)
-        .where(
-          and(
-            eq(schema.users.classId, classId),
-            isNotNull(schema.users.personalization)
-          )
-        )
-        .orderBy(
-          desc(
-            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+export const getLeaderboard = memoize(
+  async ({
+    classId,
+  }: {
+    userId: string;
+    classId: string | null;
+    metric: LeaderboardMetric;
+  }) => {
+    const t = db
+      .select({
+        id: schema.users.id,
+        name: schema.users.name,
+        image: schema.users.image,
+        max_summary_streak:
+          sql<number>`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`.as(
+            "max_summary_streak"
           ),
-          desc(
-            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
-          )
-        )
-        .limit(5);
-    } else {
-      results = await db
-        .select({
-          id: schema.users.id,
-          name: schema.users.name,
-          image: schema.users.image,
-          streak: schema.users.personalization,
-        })
-        .from(schema.users)
-        .where(isNotNull(schema.users.personalization))
-        .orderBy(
-          desc(
-            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+        max_cri_streak:
+          sql<number>`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`.as(
+            "max_cri_streak"
           ),
-          desc(
-            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
-          )
+        combined_rank: sql<number>`DENSE_RANK() OVER (ORDER BY
+    cast(${schema.users.personalization}->>'max_summary_streak' as integer) DESC,
+    cast(${schema.users.personalization}->>'max_cri_streak' as integer) DESC
+  )::integer`.as("combined_rank"),
+      })
+      .from(schema.users)
+      .where(
+        and(
+          classId ? eq(schema.users.classId, classId) : undefined,
+          isNotNull(schema.users.personalization)
         )
-        .limit(5);
-    }
-    return results;
+      )
+      .as("t");
+    // don't need desc order here because combined_rank is already in desc order
+    return await db.select().from(t).orderBy(t.combined_rank).limit(5);
+  },
+  {
+    persist: true,
+    duration: 60 * 5,
+    revalidateTags: ({ userId, classId }) => ["leaderboard", classId ?? userId],
+    additionalCacheKey: ["leaderboard"],
+    log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
+    logid: "Leaderboard",
+    suppressWarnings: true,
   }
 );
