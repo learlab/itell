@@ -148,10 +148,10 @@ export const getStreakLeaderboard = memoize(
         )
         .orderBy(
           desc(
-            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
+            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
           ),
           desc(
-            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
           )
         )
         .limit(5);
@@ -167,10 +167,10 @@ export const getStreakLeaderboard = memoize(
         .where(isNotNull(schema.users.personalization))
         .orderBy(
           desc(
-            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
+            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
           ),
           desc(
-            sql`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`
+            sql`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`
           )
         )
         .limit(5);
