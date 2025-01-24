@@ -1,6 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@itell/ui/avatar";
 import { Button } from "@itell/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@itell/ui/hover-card";
 import { Skeleton } from "@itell/ui/skeleton";
 import {
   Table,
@@ -10,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@itell/ui/table";
+import { InfoIcon } from "lucide-react";
 
 import { CreateErrorFallback } from "@/components/error-fallback";
 import { getStreakLeaderboard } from "@/db/user";
@@ -45,13 +51,25 @@ export async function UserLeaderboard({ userId, classId }: Props) {
     <Card className="has-[[data-pending]]:animate-pulse">
       <CardHeader>
         <CardTitle>
-          <Button
-            variant="link"
-            size="lg"
-            className="flex items-center gap-1 pl-0 text-lg xl:text-xl"
-          >
-            Class Leaderboard
-          </Button>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <Button
+                variant="link"
+                size="lg"
+                className="flex items-center gap-1 pl-0 text-lg xl:text-xl"
+              >
+                Class Leaderboard <InfoIcon className="size-4" />
+              </Button>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              <p className="text-sm font-semibold">
+                A leaderboard of students in this class. The rankings are
+                decided by the longest streak of consecutive summaries passed
+                and the longest streak of consecutive questions answered
+                correctly.
+              </p>
+            </HoverCardContent>
+          </HoverCard>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -60,8 +78,8 @@ export async function UserLeaderboard({ userId, classId }: Props) {
             <TableRow>
               <TableHead>Rank</TableHead>
               <TableHead>Classmate</TableHead>
-              <TableHead>Question Streak</TableHead>
               <TableHead>Summary Streak</TableHead>
+              <TableHead>Question Streak</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="gap-2">
@@ -91,8 +109,8 @@ export async function UserLeaderboard({ userId, classId }: Props) {
                     {user.name}
                   </div>
                 </TableCell>
-                <TableCell>{user.streak?.max_cri_streak}</TableCell>
                 <TableCell>{user.streak?.max_summary_streak}</TableCell>
+                <TableCell>{user.streak?.max_cri_streak}</TableCell>
               </TableRow>
             ))}
           </TableBody>
