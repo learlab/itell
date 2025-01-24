@@ -16,15 +16,22 @@ import { getOtherUsers } from "@/db/user";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
 import { UserLeaderboard } from "./user-leaderboard";
+import { LeaderboardMetric } from "./user-leaderboard-control";
 import { UserRadarChart } from "./user-radar-chart";
 
 type Props = {
   userId: string;
   classId: string | null;
   pageSlug: string | null;
+  leaderboardMetric?: LeaderboardMetric;
 };
 
-export async function UserDetails({ userId, classId, pageSlug }: Props) {
+export async function UserDetails({
+  userId,
+  classId,
+  pageSlug,
+  leaderboardMetric = LeaderboardMetric.summary_streak,
+}: Props) {
   const otherUsers = await getOtherUsers({ userId, classId });
   if (otherUsers.length === 0) {
     return (
@@ -111,7 +118,7 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
         otherStats.totalPassedAnswers
       ),
       otherScaled: 1,
-      description: "Total number of questions answered during reading.",
+      description: "Number of correct answers to contructed response items",
     },
   };
 
@@ -222,7 +229,11 @@ export async function UserDetails({ userId, classId, pageSlug }: Props) {
           </p>
         </CardFooter>
       </Card>
-      <UserLeaderboard userId={userId} classId={classId} />
+      <UserLeaderboard
+        userId={userId}
+        classId={classId}
+        metric={leaderboardMetric}
+      />
     </div>
   );
 }

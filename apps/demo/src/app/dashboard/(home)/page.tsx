@@ -9,6 +9,7 @@ import { incrementView } from "@/db/dashboard";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
+import { LeaderboardMetric } from "../_components/user-leaderboard-control";
 
 type Props = {
   searchParams?: Promise<Record<string, string> | undefined>;
@@ -21,16 +22,8 @@ export default async function Page(props: Props) {
     return redirectWithSearchParams("auth", searchParams);
   }
 
-  const { reading_time_level } =
-    routes.dashboard.$parseSearchParams(searchParams);
-  let readingTimeLevel = ReadingTimeChartLevel.week_1;
-  if (
-    Object.values(ReadingTimeChartLevel).includes(
-      reading_time_level as ReadingTimeChartLevel
-    )
-  ) {
-    readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
-  }
+  const { readingTimeLevel, leaderboardMetric } =
+    parseSearchParams(searchParams);
 
   incrementView({
     userId: user.id,
@@ -49,9 +42,34 @@ export default async function Page(props: Props) {
             classId={user.classId}
             pageSlug={user.pageSlug}
             readingTimeLevel={readingTimeLevel}
+            leaderboardMetric={leaderboardMetric}
           />
         </CardContent>
       </Card>
     </DashboardShell>
   );
 }
+
+const parseSearchParams = (searchParams: unknown) => {
+  const { reading_time_level, leaderboard_metric } =
+    routes.dashboard.$parseSearchParams(searchParams);
+  let readingTimeLevel = ReadingTimeChartLevel.week_1;
+  if (
+    Object.values(ReadingTimeChartLevel).includes(
+      reading_time_level as ReadingTimeChartLevel
+    )
+  ) {
+    readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
+  }
+
+  let leaderboardMetric = LeaderboardMetric.summary_streak;
+  if (
+    Object.values(leaderboardMetric).includes(
+      leaderboard_metric as LeaderboardMetric
+    )
+  ) {
+    leaderboardMetric = leaderboard_metric as LeaderboardMetric;
+  }
+
+  return { readingTimeLevel, leaderboardMetric };
+};
