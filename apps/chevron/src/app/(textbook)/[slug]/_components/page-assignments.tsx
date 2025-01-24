@@ -31,6 +31,7 @@ import { SummaryFormReread } from "./summary/summary-form-reread";
 import { SummaryFormSimple } from "./summary/summary-form-simple";
 import { SummaryFormSkip } from "./summary/summary-form-skip";
 import { SummaryFormStairs } from "./summary/summary-form-stairs";
+import { isAdmin } from "@/lib/auth/role";
 
 type Props = {
   page: Page;
@@ -48,6 +49,7 @@ export async function PageAssignments({
   // const { intakeDone, outtakeDone } = await getSurveyStatus(user);
   // const outtakeReady = isOuttakeReady(user);
   const hasQuiz = page.quiz && page.quiz.length > 0;
+  const admin = isAdmin(user.role);
 
   let quizReady = false;
   let quizAnswered = false;
@@ -139,7 +141,7 @@ export async function PageAssignments({
   if (page.assignments.length !== 0) {
     return (
       <AssignmentsShell>
-        {quizAnswered && <DeleteQuiz pageSlug={page.slug} />}
+        {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
         <Card className="border-info">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">

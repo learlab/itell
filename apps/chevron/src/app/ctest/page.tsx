@@ -13,7 +13,7 @@ export default async function Page() {
       redirect_to: routes.ctest(),
     });
   }
-  const paragraphs = splitParagraphs(volume.summary);
+  const paragraphs = splitParagraphs(volume.summary ?? "");
   const admin = isAdmin(user.role);
   return (
     <div className="mx-auto max-w-4xl p-6">
