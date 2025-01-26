@@ -9,7 +9,7 @@ chunks:
   slug: Scientific-Research-1495t
   type: regular
 - title: Understanding Driver Distraction
-  slug: Understanding-Driver-Distraction-32
+  slug: Understanding-Driver-Distraction-1
   type: video
 - title: Cell Phones and Driving
   slug: Cell-Phones-and-Driving-1496t
@@ -27,7 +27,7 @@ cri:
   slug: Scientific-Research-1495t
 - question: What is one of the main findings of David Strayer's research on driver distraction?
   answer: Talking on a cell phone while driving makes a driver four times more likely to be involved in a crash.
-  slug: Understanding-Driver-Distraction-32
+  slug: Understanding-Driver-Distraction-1
 - question: What did researchers find regarding the effect of cell phone use on driving performance?
   answer: Researchers found that people's ability to detect road hazards, reaction time, and maintain control of the vehicle were all impaired by cell phone use.
   slug: Cell-Phones-and-Driving-1496t
@@ -57,7 +57,7 @@ Figure 2.1 presents a simple model of scientific research in psychology. The res
 
 The research by Mehl and his colleagues is described nicely by this model. Their research question—whether women are more talkative than men—was suggested to them both by people’s stereotypes and by claims published in the research literature about the relative talkativeness of women and men. When they checked the research literature, however, they found that this question had not been adequately addressed in scientific studies. They then conducted a careful empirical study, analyzed the results (finding very little difference between women and men), formed their conclusions, and published their work so that it became part of the research literature. The publication of their article is not the end of the story, however, because their work suggests many new questions (about the reliability of the result, about potential cultural differences, etc.) that will likely be taken up by them and by other researchers inspired by their work.
 
-## Understanding Driver Distraction {#Understanding-Driver-Distraction-32} 
+## Understanding Driver Distraction {#Understanding-Driver-Distraction-1} 
 
 
 
