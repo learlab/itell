@@ -55,7 +55,7 @@ export async function PageAssignments({
   let quizAnswered = false;
   if (hasQuiz) {
     quizAnswered = await isQuizAnswered(user.id, page.slug);
-    quizReady = !quizAnswered;
+    quizReady = pageStatus.unlocked && !quizAnswered;
   }
   if (!user.consentGiven) {
     return (

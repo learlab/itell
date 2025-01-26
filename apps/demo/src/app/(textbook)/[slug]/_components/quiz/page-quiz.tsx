@@ -41,9 +41,9 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
       <CardHeader>
         <CardTitle>Take Quiz</CardTitle>
         <CardDescription>
-          Great job finishing the chapter. Please takt the quiz below to test
-          your knowledge. After you submit the quiz, you will be able unlock the
-          next page with an awesome summary.
+          Great job finishing the chapter. Please take the quiz below to test
+          your knowledge. You will only receive full credit after you finish all
+          quizzes.
         </CardDescription>
       </CardHeader>
 

@@ -18,7 +18,7 @@ export function QuizQuickFill() {
         }
       }}
     >
-      Quiz Fill
+      Fill Quiz
     </AdminButton>
   );
 }
