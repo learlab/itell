@@ -5,6 +5,7 @@ import { Elements } from "@itell/constants";
 import { type Message } from "@itell/core/chat";
 import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
 import { cn } from "@itell/utils";
+import { computePosition } from "@floating-ui/dom";
 import { useSelector } from "@xstate/store/react";
 import { MessageCircleIcon, XIcon } from "lucide-react";
 import { motion } from "motion/react";
@@ -26,18 +27,39 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
   const open = useSelector(store, SelectOpen);
   const [isCompact, setIsCompact] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const anchorRef = useRef<HTMLElement | null>(null);
+  const assignmentsRef = useRef<HTMLElement | null>(null);
   const expandedRectRef = useRef<DOMRect | null>(null);
 
+  function toggleChat(open: boolean) {
+    if (!triggerRef.current) return;
+    const trigger = triggerRef.current;
+    if (open) {
+      const chat = document.getElementById("chat-popover") as HTMLElement;
+      chat.showPopover();
+      computePosition(trigger, chat, {
+        placement: "top",
+        strategy: "fixed",
+      }).then(({ x, y }) => {
+        console.log("assign", { x, y });
+        Object.assign(chat.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
+      });
+    } else {
+      trigger.hidePopover();
+    }
+  }
+
   const checkOverlap = useCallback(() => {
-    if (!triggerRef.current || !anchorRef.current) return;
+    if (!triggerRef.current || !assignmentsRef.current) return;
 
     if (!expandedRectRef.current && !isCompact) {
       expandedRectRef.current = triggerRef.current.getBoundingClientRect();
       return;
     }
 
-    const rectA = anchorRef.current.getBoundingClientRect();
+    const rectA = assignmentsRef.current.getBoundingClientRect();
     const rectB =
       expandedRectRef.current ?? triggerRef.current.getBoundingClientRect();
 
@@ -54,7 +76,7 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
   useEffect(() => {
     const anchor = document.getElementById(Elements.PAGE_ASSIGNMENTS);
     if (anchor) {
-      anchorRef.current = anchor;
+      assignmentsRef.current = anchor;
       checkOverlap();
     }
 
@@ -74,7 +96,7 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
         root: null,
         rootMargin: "100px",
         threshold: 0,
-      },
+      }
     );
 
     if (anchor) {
@@ -89,32 +111,34 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
   }, [checkOverlap]);
 
   return (
-    <Popover
-      open={open}
-      onOpenChange={(value) => {
-        store.send({ type: "setOpen", value });
-      }}
-    >
-      <PopoverTrigger
+    <>
+      <button
+        onClick={() => toggleChat(true)}
         ref={triggerRef}
+        // @ts-expect-error ignore prop name
+        popovertarget="chat-popover"
         className={cn(
-          "fixed bottom-12 right-8 z-20 border bg-background text-foreground",
-          isCompact ? "rounded-full p-4" : "rounded-md px-6 py-4",
+          "fixed bottom-12 right-8 z-20 bg-background text-foreground"
         )}
       >
-        <motion.div className="flex items-center gap-2" layout>
+        <motion.div
+          className={cn(
+            "flex items-center gap-2 border-2",
+            isCompact ? "rounded-full p-4" : "rounded-md px-6 py-4"
+          )}
+          layout
+        >
           <MessageCircleIcon className="size-6" />
           {!isCompact && <span>Chat with AI</span>}
         </motion.div>
-      </PopoverTrigger>
-      <PopoverContent
-        side="top"
-        className="w-80 px-2 py-4 lg:w-96"
-        sideOffset={8}
-        align="end"
+      </button>
+      <div
+        popover="auto"
+        id="chat-popover"
+        className="fixed z-50 w-80 rounded-md border-2 px-2 py-4 lg:w-96"
       >
         <div
-          className="flex h-[50vh] flex-col"
+          className="flex flex-col"
           id={Elements.CHATBOT_CONTAINER}
           style={{
             height: "clamp(300px, 55vh, 800px)",
@@ -129,10 +153,10 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
           <ChatInput pageSlug={pageSlug} />
         </div>
         <footer className="px-4 py-2 text-xs text-muted-foreground">
-          This content has been AI-generated and may contain errors.{" "}
+          This content has been AI-generated and may contain errors.
         </footer>
-      </PopoverContent>
-    </Popover>
+      </div>
+    </>
   );
 }
 
