@@ -9,6 +9,8 @@ import {
   CardTitle,
 } from "@itell/ui/card";
 import { Skeleton } from "@itell/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@itell/ui/tabs";
+import { cn } from "@itell/utils";
 import { Page } from "#content";
 import { type User } from "lucia";
 
@@ -109,19 +111,10 @@ export async function PageAssignments({
     );
   }
 
-  if (quizReady) {
-    return (
-      <AssignmentsShell>
-        <PageQuiz page={page} user={user} />
-      </AssignmentsShell>
-    );
-  }
-
-  const canSkipSummary = user.personalization.available_summary_skips > 0;
-  if (condition !== Condition.SIMPLE && canSkipSummary) {
-    return (
-      <AssignmentsShell>
-        {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
+  function PageSummary() {
+    const canSkipSummary = user.personalization.available_summary_skips > 0;
+    if (condition !== Condition.SIMPLE && canSkipSummary) {
+      return (
         <Card className="border-info">
           <CardContent>
             <SummaryFormSkip
@@ -134,70 +127,94 @@ export async function PageAssignments({
             />
           </CardContent>
         </Card>
+      );
+    }
+
+    return (
+      <Card className="border-info">
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2">
+            <span>Summary</span>
+            <ToggleShowFloatingSummary />
+          </CardTitle>
+          <CardDescription>
+            {pageStatus.unlocked ? (
+              <>
+                You have finished this page, you are still welcome to improve
+                the summary.
+              </>
+            ) : (
+              <>
+                You can unlock the next page by submitting{" "}
+                <Link
+                  href={`#${SUMMARY_DESCRIPTION_ID}`}
+                  className="font-semibold text-info underline underline-offset-4"
+                >
+                  a good summary
+                </Link>{" "}
+                of this page
+              </>
+            )}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          {condition === Condition.SIMPLE ? (
+            <SummaryFormSimple page={page} pageStatus={pageStatus} />
+          ) : null}
+          {condition === Condition.RANDOM_REREAD ? (
+            <SummaryFormReread
+              user={user}
+              page={page}
+              pageStatus={pageStatus}
+            />
+          ) : condition === Condition.STAIRS ? (
+            <SummaryFormStairs
+              user={user}
+              page={page}
+              pageStatus={pageStatus}
+              afterSubmit={
+                <Suspense fallback={<SummaryCount.Skeleton />}>
+                  <SummaryCount pageSlug={page.slug} userId={user.id} />
+                </Suspense>
+              }
+            />
+          ) : null}
+          {condition !== Condition.SIMPLE ? (
+            <>
+              <SummaryDescription condition={condition} />
+              <FloatingSummary />
+            </>
+          ) : null}
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (quizReady) {
+    return (
+      <AssignmentsShell key={"quiz"}>
+        {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
+        <Tabs defaultValue="quiz">
+          <TabsList>
+            <TabsTrigger value="quiz">Quiz</TabsTrigger>
+            <TabsTrigger value="summary">Summary</TabsTrigger>
+          </TabsList>
+          <TabsContent value="quiz">
+            <PageQuiz page={page} user={user} />
+          </TabsContent>
+          <TabsContent value="summary">
+            <PageSummary />
+          </TabsContent>
+        </Tabs>
       </AssignmentsShell>
     );
   }
 
   if (page.assignments.length !== 0) {
     return (
-      <AssignmentsShell>
+      <AssignmentsShell key={"summary"}>
         {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
-        <Card className="border-info">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <span>Summary</span>
-              <ToggleShowFloatingSummary />
-            </CardTitle>
-            <CardDescription>
-              {pageStatus.unlocked ? (
-                <>
-                  You have finished this page, you are still welcome to improve
-                  the summary.
-                </>
-              ) : (
-                <>
-                  You can unlock the next page by submitting{" "}
-                  <Link
-                    href={`#${SUMMARY_DESCRIPTION_ID}`}
-                    className="font-semibold text-info underline underline-offset-4"
-                  >
-                    a good summary
-                  </Link>{" "}
-                  of this page
-                </>
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            {condition === Condition.SIMPLE ? (
-              <SummaryFormSimple page={page} pageStatus={pageStatus} />
-            ) : null}
-            {condition === Condition.RANDOM_REREAD ? (
-              <SummaryFormReread
-                user={user}
-                page={page}
-                pageStatus={pageStatus}
-              />
-            ) : condition === Condition.STAIRS ? (
-              <SummaryFormStairs
-                user={user}
-                page={page}
-                pageStatus={pageStatus}
-                afterSubmit={
-                  <Suspense fallback={<SummaryCount.Skeleton />}>
-                    <SummaryCount pageSlug={page.slug} userId={user.id} />
-                  </Suspense>
-                }
-              />
-            ) : null}
-            {condition !== Condition.SIMPLE ? (
-              <>
-                <SummaryDescription condition={condition} />
-                <FloatingSummary />
-              </>
-            ) : null}
-          </CardContent>
-        </Card>
+        <PageSummary />
       </AssignmentsShell>
     );
   }
@@ -205,12 +222,20 @@ export async function PageAssignments({
   return null;
 }
 
-function AssignmentsShell({ children }: { children: React.ReactNode }) {
+function AssignmentsShell({
+  children,
+  className,
+  ...rest
+}: { children: React.ReactNode } & React.HtmlHTMLAttributes<HTMLDivElement>) {
   return (
     <section
       id={Elements.PAGE_ASSIGNMENTS}
       aria-labelledby="page-assignments-heading"
-      className="mt-6 space-y-4 border-t-2 pt-6"
+      className={cn(
+        "mt-6 space-y-4 border-t-2 pt-6 duration-1000 animate-in fade-in",
+        className
+      )}
+      {...rest}
     >
       <h2 className="sr-only" id="page-assignments-heading">
         assignments

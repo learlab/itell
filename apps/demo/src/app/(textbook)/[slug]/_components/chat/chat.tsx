@@ -98,11 +98,16 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
       <PopoverTrigger
         ref={triggerRef}
         className={cn(
-          "fixed bottom-12 right-8 z-30 border bg-background text-foreground",
-          isCompact ? "rounded-full p-4" : "rounded-md px-6 py-4"
+          "fixed bottom-12 right-8 z-30 bg-background text-foreground"
         )}
       >
-        <motion.div className="flex items-center gap-2" layout>
+        <motion.div
+          className={cn(
+            "flex items-center gap-2 border",
+            isCompact ? "rounded-full p-4" : "rounded-md px-6 py-4"
+          )}
+          layout
+        >
           <MessageCircleIcon className="size-6" />
           {!isCompact && <span>Chat with AI</span>}
         </motion.div>

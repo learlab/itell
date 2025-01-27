@@ -65,8 +65,8 @@ export function NextPageButton({ text = "Go to next page", pageSlug }: Props) {
                 "linear-gradient(-75deg,hsl(var(--primary)) calc(var(--x) + 20%),transparent calc(var(--x) + 30%),hsl(var(--primary)) calc(var(--x) + 100%))",
             }}
           >
-            {text}
             <ArrowRightIcon className="size-4" />
+            {text}
           </span>
           <span
             style={{

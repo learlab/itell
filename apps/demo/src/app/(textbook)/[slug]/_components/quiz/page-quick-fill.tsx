@@ -5,6 +5,7 @@ import { AdminButton } from "@/components/admin-button";
 export function QuizQuickFill() {
   return (
     <AdminButton
+      size={"lg"}
       onClick={async () => {
         const form = document.getElementById("page-quiz");
         if (form) {
