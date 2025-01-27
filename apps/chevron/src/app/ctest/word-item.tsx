@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Input } from "@itell/ui/input";
 import { cn } from "@itell/utils";
+import { is } from "drizzle-orm";
 
 type ShowLetterFn = (word: string) => number;
 
@@ -12,6 +13,7 @@ interface Props {
   showLetter: ShowLetter;
   isTarget?: boolean;
   className?: string;
+  isSubmitted?: boolean;
 }
 
 export function WordItem({
@@ -19,6 +21,7 @@ export function WordItem({
   showLetter = 0,
   isTarget = false,
   className,
+  isSubmitted,
 }: Props) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -74,6 +77,7 @@ export function WordItem({
             ref={setInputRef(index)}
             onNext={() => handleNext(index)}
             onPrev={() => handlePrev(index)}
+            isSubmitted={isSubmitted}
           />
         )
       )}
@@ -102,9 +106,10 @@ interface LetterInputProps {
   ref: (_: HTMLInputElement) => void;
   onNext?: () => void;
   onPrev?: () => void;
+  isSubmitted?: boolean;
 }
 
-function LetterInput({ letter, onNext, onPrev, ref }: LetterInputProps) {
+function LetterInput({ letter, onNext, onPrev, ref, isSubmitted = false }: LetterInputProps) {
   const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "ArrowLeft") {
@@ -153,11 +158,11 @@ function LetterInput({ letter, onNext, onPrev, ref }: LetterInputProps) {
       onKeyDown={handleKeyDown}
       className={cn(
         "size-8 bg-muted px-1.5 text-center text-base focus-visible:ring-info xl:text-lg",
-        isCorrect === true
-          ? "border-green-400 bg-green-50"
-          : isCorrect === false
-            ? "border-red-400 bg-red-50"
-            : "border-gray-300 bg-white"
+        isSubmitted
+          ? isCorrect
+            ? "border-green-400 bg-green-50"
+            : "border-red-400 bg-red-50"
+          : "border-gray-300 bg-white"
       )}
     />
   );

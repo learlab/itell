@@ -12,7 +12,7 @@ export default function CTestPage() {
 
   return (
     <div className="mx-auto max-w-4xl p-6">
-      <CTest showLetter={2} paragraphs={paragraphs} />
+      <CTest showLetter={2} paragraphs={paragraphs} mode="ctest" />
     </div>
   );
 }

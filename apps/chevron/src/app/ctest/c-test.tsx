@@ -11,6 +11,8 @@ interface Props {
   paragraphs: string[];
   // number of revealed letters of each word,  0 = cloze test, 2 = c-test
   showLetter?: ShowLetter;
+  mode?: "cloze" | "ctest";
+  targetIndices?: number[]; // manual indices of cloze test
 }
 
 // for each word, get the revealed letters and user input letters
@@ -25,9 +27,10 @@ type TestResult = {
   data: Array<TestResultDataItem>;
 };
 
-export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
+export const CTest = ({ paragraphs, showLetter = 0, mode = 'ctest', targetIndices }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [result, setResult] = useState<TestResult | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (paragraphs.length < 1) return <p>not enough paragraphs</p>;
 
@@ -76,10 +79,12 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
     });
 
     setResult(testResult);
+    setIsSubmitted(true);
   };
 
   const handleReset = () => {
     formRef.current?.reset();
+    setIsSubmitted(false);
   };
 
   const { firstSentence, rest: firstParagraphRest } = splitFirstSentence(
@@ -99,18 +104,19 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
               return (
                 <div key={pIndex}>
                   {firstSentence &&
-                    splitWords({ text: paragraph, shouldTarget: false }).map(
+                    splitWords({ text: paragraph, shouldTarget: false, mode, targetIndices  }).map(
                       (wordObj, wIndex) => (
                         <WordItem
                           key={`${pIndex}-${wIndex}`}
                           word={wordObj.text}
                           showLetter={showLetter}
                           isTarget={wordObj.isTarget}
+                          isSubmitted={isSubmitted}
                         />
                       )
                     )}
                   {firstParagraphRest &&
-                    splitWords({ text: paragraph, shouldTarget: true }).map(
+                    splitWords({ text: paragraph, shouldTarget: true, mode, targetIndices  }).map(
                       (wordObj, wIndex) => (
                         <WordItem
                           key={`${pIndex}-${wIndex}`}
@@ -126,7 +132,7 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
 
             return (
               <div key={pIndex}>
-                {splitWords({ text: paragraph, shouldTarget: true }).map(
+                {splitWords({ text: paragraph, shouldTarget: true, mode, targetIndices }).map(
                   (wordObj, wIndex) => (
                     <WordItem
                       key={`${pIndex}-${wIndex}`}
@@ -158,13 +164,19 @@ export const CTest = ({ paragraphs, showLetter = 0 }: Props) => {
   );
 };
 
+interface SplitWordsOptions {
+  text: string;
+  shouldTarget: boolean;
+  mode: "cloze" | "ctest";
+  targetIndices?: number[];
+}
+
 const splitWords = ({
   text,
   shouldTarget,
-}: {
-  text: string;
-  shouldTarget: boolean;
-}) => {
+  mode,
+  targetIndices
+}: SplitWordsOptions) => {
   const words: { text: string; isTarget: boolean }[] = [];
   let wordCounter = 0;
 
@@ -177,9 +189,19 @@ const splitWords = ({
       return;
     }
     if (part.trim()) {
+      let isTarget = false;
+
+      if (shouldTarget) {
+        if (mode === "cloze" && targetIndices) {
+          isTarget = targetIndices.includes(wordCounter)
+        } else {
+          isTarget = isContentWord(part) && wordCounter % 2 === 1;
+        }
+      }
+
       words.push({
         text: part,
-        isTarget: shouldTarget && isContentWord(part) && wordCounter % 2 === 1,
+        isTarget
       });
       wordCounter++;
     }
