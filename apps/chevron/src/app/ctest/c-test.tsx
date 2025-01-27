@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, FormEvent, useState } from "react";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { Prose } from "@itell/ui/prose";
@@ -17,14 +17,32 @@ interface Props {
   isAdmin?: boolean;
   // number of revealed letters of each word,  0 = cloze test, 2 = c-test
   showLetter?: ShowLetter;
+  mode?: "cloze" | "ctest";
+  targetIndices?: number[]; // manual indices of cloze test
 }
+
+// for each word, get the revealed letters and user input letters
+type TestResultDataItem = [
+  string,
+  { placeholder: string[]; answers: string[] },
+];
+
+type TestResult = {
+  totalWords: number;
+  correctWords: number;
+  data: Array<TestResultDataItem>;
+};
 
 export const CTest = ({
   paragraphs,
   isAdmin = false,
-  showLetter = 0,
+  showLetter = 0, 
+  mode = 'ctest', 
+  targetIndices,
 }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
+  const [result, setResult] = useState<TestResult | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { action, isPending, error } = useActionStatus(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,6 +83,17 @@ export const CTest = ({
         }
       });
 
+      // Set local result state
+      setResult({
+        totalWords: fields.length,
+        correctWords,
+        data: clozeData.map((item) => [
+          item.word,
+          { placeholder: item.placeholders, answers: item.answers },
+        ]),
+      });
+      setIsSubmitted(true);
+
       const [, err] = await createClozeAction({
         pageSlug: "ctest",
         totalWords: fields.length,
@@ -77,6 +106,12 @@ export const CTest = ({
     }
   );
   if (paragraphs.length < 1) return <p>not enough paragraphs</p>;
+
+  const handleReset = () => {
+    formRef.current?.reset();
+    setIsSubmitted(false);
+    setResult(null);
+  };
 
   const { firstSentence, rest: firstParagraphRest } = splitFirstSentence(
     paragraphs[0]
@@ -98,24 +133,26 @@ export const CTest = ({
               return (
                 <div key={pIndex}>
                   {firstSentence &&
-                    splitWords({ text: paragraph, shouldTarget: false }).map(
+                    splitWords({ text: paragraph, shouldTarget: false, mode, targetIndices  }).map(
                       (wordObj, wIndex) => (
                         <WordItem
                           key={`${pIndex}-${wIndex}`}
                           word={wordObj.text}
                           showLetter={showLetter}
                           isTarget={wordObj.isTarget}
+                          isSubmitted={isSubmitted}
                         />
                       )
                     )}
                   {firstParagraphRest &&
-                    splitWords({ text: paragraph, shouldTarget: true }).map(
+                    splitWords({ text: paragraph, shouldTarget: true, mode, targetIndices  }).map(
                       (wordObj, wIndex) => (
                         <WordItem
                           key={`${pIndex}-${wIndex}`}
                           word={wordObj.text}
                           showLetter={showLetter}
                           isTarget={wordObj.isTarget}
+                          isSubmitted={isSubmitted}
                         />
                       )
                     )}
@@ -125,13 +162,14 @@ export const CTest = ({
 
             return (
               <div key={pIndex}>
-                {splitWords({ text: paragraph, shouldTarget: true }).map(
+                {splitWords({ text: paragraph, shouldTarget: true, mode, targetIndices }).map(
                   (wordObj, wIndex) => (
                     <WordItem
                       key={`${pIndex}-${wIndex}`}
                       word={wordObj.text}
                       showLetter={showLetter}
                       isTarget={wordObj.isTarget}
+                      isSubmitted={isSubmitted}
                     />
                   )
                 )}
@@ -143,8 +181,16 @@ export const CTest = ({
           <Button disabled={isPending} pending={isPending} type="submit">
             Score
           </Button>
+          <Button onClick={handleReset} type="button" variant="outline">
+            Reset
+          </Button>
         </div>
       </form>
+      {result ? (
+        <pre style={{ fontFamily: "monospace" }}>
+          <code>{JSON.stringify(result, null, 2)}</code>
+        </pre>
+      ) : null}
     </div>
   );
 };
@@ -180,13 +226,19 @@ function QuickFill() {
   );
 }
 
+interface SplitWordsOptions {
+  text: string;
+  shouldTarget: boolean;
+  mode: "cloze" | "ctest";
+  targetIndices?: number[];
+}
+
 const splitWords = ({
   text,
   shouldTarget,
-}: {
-  text: string;
-  shouldTarget: boolean;
-}) => {
+  mode,
+  targetIndices
+}: SplitWordsOptions) => {
   const words: { text: string; isTarget: boolean }[] = [];
   let wordCounter = 0;
 
@@ -199,9 +251,19 @@ const splitWords = ({
       return;
     }
     if (part.trim()) {
+      let isTarget = false;
+
+      if (shouldTarget) {
+        if (mode === "cloze" && targetIndices) {
+          isTarget = targetIndices.includes(wordCounter)
+        } else {
+          isTarget = isContentWord(part) && wordCounter % 2 === 1;
+        }
+      }
+
       words.push({
         text: part,
-        isTarget: shouldTarget && isContentWord(part) && wordCounter % 2 === 1,
+        isTarget
       });
       wordCounter++;
     }
