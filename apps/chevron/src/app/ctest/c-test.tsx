@@ -103,9 +103,11 @@ export const CTest = ({
       if (err) {
         throw new Error("Failed to save answers, please try again later");
       }
-    }
-  );
-  if (paragraphs.length < 1) return <p>not enough paragraphs</p>;
+    });
+
+    setResult(testResult);
+    setIsSubmitted(true);
+  };
 
   const handleReset = () => {
     formRef.current?.reset();
