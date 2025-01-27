@@ -30,8 +30,8 @@ export function NextPageButton({ text = "Next Page", pageSlug }: Props) {
         });
       }}
       className={cn(
-        "relative backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow dark:bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]",
-        buttonVariants({ variant: "default" }),
+        "relative w-40 backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow dark:bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]",
+        buttonVariants({ variant: "default" })
       )}
     >
       <AnimatePresence mode="popLayout" initial={false}>
@@ -56,8 +56,8 @@ export function NextPageButton({ text = "Next Page", pageSlug }: Props) {
           ) : null}
           <span
             className={cn(
-              "relative flex h-full w-full items-center gap-2 text-sm tracking-wide",
-              pending ? "invisible" : "",
+              "relative flex h-full w-full items-center justify-center gap-2 text-sm tracking-wide",
+              pending ? "invisible" : ""
             )}
             style={{
               maskImage:

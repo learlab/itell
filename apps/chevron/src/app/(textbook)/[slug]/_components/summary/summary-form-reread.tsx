@@ -107,7 +107,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       const response = parsed.data;
       summaryResponseRef.current = response;
 
-      const [, err] = await createSummaryAction({
+      const [_, err] = await createSummaryAction({
         summary: {
           text: input,
           pageSlug,
@@ -143,7 +143,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
         goToRandomChunk(randomChunkSlug);
       }
     },
-    { delayTimeout: 10000 },
+    { delayTimeout: 10000 }
   );
   const isPending = useDebounce(_isPending, 100);
 
@@ -205,18 +205,17 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
             <Warning role="alert">{ErrorFeedback[ErrorType.INTERNAL]}</Warning>
           ) : null}
           {isDelayed ? <DelayMessage /> : null}
-          <div className="flex justify-end">
-            <Button
-              disabled={!isSummaryReady || isPending}
-              pending={isPending}
-              type="submit"
-            >
-              <span className="flex items-center gap-2">
-                <SendHorizontalIcon className="size-3" />
-                Submit
-              </span>
-            </Button>
-          </div>
+          <Button
+            disabled={!isSummaryReady || isPending}
+            pending={isPending}
+            type="submit"
+            className="w-40"
+          >
+            <span className="flex items-center gap-2">
+              <SendHorizontalIcon className="size-3" />
+              Submit
+            </span>
+          </Button>
         </form>
       </div>
     </>
