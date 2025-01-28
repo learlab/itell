@@ -27,6 +27,8 @@ import {
 } from "@/lib/store/summary-store";
 import { scrollToElement } from "@/lib/utils";
 import { SummaryFeedbackDetails } from "./summary-feedback";
+import { toast } from "sonner";
+import { isProduction } from "@/lib/constants";
 
 const PAGE_ASSIGNMENTS_ID = Elements.PAGE_ASSIGNMENTS;
 
@@ -41,14 +43,14 @@ function useIntersectionState() {
           setSeen(true);
         }
       },
-      { threshold: 0.6 }
+      { threshold: 0.6 },
     );
 
     const visibilityObserver = new IntersectionObserver(
       (entries) => {
         setVisible(entries[0].isIntersecting);
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
 
     const element = document.getElementById(PAGE_ASSIGNMENTS_ID);
@@ -123,7 +125,7 @@ export function ToggleShowFloatingSummary() {
   );
 }
 
-export function FloatingSummary() {
+export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
   const summaryStore = useSummaryStore();
   const criStore = useCRIStore();
   const isSummaryReady = useSelector(criStore, SelectSummaryReady);
@@ -190,6 +192,12 @@ export function FloatingSummary() {
                   rows={6}
                   placeholder="This page is about ..."
                   className="border-none font-normal md:text-base xl:text-lg"
+                  onPaste={(e) => {
+                    if (isProduction && isAdmin) {
+                      e.preventDefault();
+                      toast.warning("Copy & Paste is not allowed");
+                    }
+                  }}
                   onChange={(e) =>
                     summaryStore.send({
                       type: "setInput",

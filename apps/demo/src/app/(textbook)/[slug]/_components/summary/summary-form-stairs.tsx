@@ -277,11 +277,11 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const isPending = useDebounce(_isPending, 100);
 
   useEffect(() => {
-    if (summaryResponseRef.current) {
+    if (isNextPageVisible && summaryResponseRef.current) {
       if (isLast) {
         toast.info("You have finished the entire textbook!");
       } else {
-        const title = response?.is_passed
+        const title = summaryResponseRef.current.is_passed
           ? "Good job summarizing 🎉"
           : "You can now move on 👏";
         toast(title, {
@@ -299,7 +299,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         });
       }
     }
-  }, [isLast, isNextPageVisible, page.next_slug, response?.is_passed, router]);
+  }, [isLast, isNextPageVisible, page, router]);
 
   const { portals } = useDriver(driverObj, {
     pageSlug,

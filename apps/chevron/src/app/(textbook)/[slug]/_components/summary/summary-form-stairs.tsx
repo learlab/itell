@@ -161,7 +161,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
             console.log("summary response chunk", data, chunk);
 
             const parsed = SummaryResponseSchema.safeParse(
-              JSON.parse(String(data)),
+              JSON.parse(String(data))
             );
             if (parsed.success) {
               summaryResponseRef.current = parsed.data;
@@ -176,7 +176,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
                 {
                   body: requestBody,
                   chunk: data,
-                },
+                }
               );
               return;
             }
@@ -272,16 +272,16 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         }
       }
     },
-    { delayTimeout: 20000 },
+    { delayTimeout: 20000 }
   );
   const isPending = useDebounce(_isPending, 100);
 
   useEffect(() => {
-    if (summaryResponseRef.current) {
+    if (isNextPageVisible && summaryResponseRef.current) {
       if (isLast) {
         toast.info("You have finished the entire textbook!");
       } else {
-        const title = response?.is_passed
+        const title = summaryResponseRef.current.is_passed
           ? "Good job summarizing 🎉"
           : "You can now move on 👏";
         toast(title, {
@@ -299,7 +299,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         });
       }
     }
-  }, [isLast, isNextPageVisible, page.next_slug, response?.is_passed, router]);
+  }, [isLast, isNextPageVisible, page, router]);
 
   const { portals } = useDriver(driverObj, {
     pageSlug,
@@ -437,7 +437,7 @@ const goToQuestion = (question: StairsQuestion) => {
     }, 100);
   } else {
     toast.warning(
-      "Please revise your summary with substantial changes and resubmit to unlock the next page",
+      "Please revise your summary with substantial changes and resubmit to unlock the next page"
     );
   }
 };

@@ -182,7 +182,7 @@ export async function PageAssignments({
           {condition !== Condition.SIMPLE ? (
             <>
               <SummaryDescription condition={condition} />
-              <FloatingSummary />
+              <FloatingSummary isAdmin={admin} />
             </>
           ) : null}
         </CardContent>
@@ -233,7 +233,7 @@ function AssignmentsShell({
       aria-labelledby="page-assignments-heading"
       className={cn(
         "mt-6 space-y-4 border-t-2 pt-6 duration-1000 animate-in fade-in",
-        className
+        className,
       )}
       {...rest}
     >
