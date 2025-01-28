@@ -14,11 +14,13 @@ import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { ArrowDownIcon, PinIcon, XIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { toast } from "sonner";
 
 import {
   useCRIStore,
   useSummaryStore,
 } from "@/components/provider/page-provider";
+import { isProduction } from "@/lib/constants";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
 import {
   SelectInput,
@@ -190,6 +192,12 @@ export function FloatingSummary() {
                   rows={6}
                   placeholder="This page is about ..."
                   className="border-none font-normal md:text-base xl:text-lg"
+                  onPaste={(e) => {
+                    if (isProduction) {
+                      e.preventDefault();
+                      toast.warning("Copy & Paste is not allowed");
+                    }
+                  }}
                   onChange={(e) =>
                     summaryStore.send({
                       type: "setInput",
