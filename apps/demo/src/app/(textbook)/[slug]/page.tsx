@@ -89,7 +89,6 @@ export default async function Page(props: {
             <PageTitle>{page.title}</PageTitle>
             <PageContent title={page.title} html={page.html} />
             <SelectionPopover user={user} pageSlug={pageSlug} />
-
             {page.last_modified ? (
               <p className="text-right text-sm text-muted-foreground">
                 <span>Last updated at </span>

@@ -203,10 +203,8 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         if (stairsChunk) {
           const regex = /data: ({"request_id":.*?})\n*/;
           const match = regex.exec(stairsChunk.trim());
-          console.log("final stairs chunk\n", stairsChunk);
           if (match?.[1]) {
             const stairsString = match[1];
-            console.log("parsed as", stairsString);
             const stairsData = JSON.parse(stairsString) as StairsQuestion;
             stairsDataRef.current = stairsData;
             finishStage("Analyzing");

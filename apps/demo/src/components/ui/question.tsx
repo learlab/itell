@@ -23,7 +23,7 @@ export function Question({ question, answer, chunkSlug, pageSlug }: Props) {
     (store) => store.context.chunkStatus[chunkSlug]
   );
 
-  if (!chunkStatus.hasQuestion) return null;
+  if (!chunkStatus?.hasQuestion) return null;
 
   return (
     <div className="question-container my-6">

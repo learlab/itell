@@ -22,34 +22,15 @@ type Props = {
   data: Message[];
 };
 
-export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
-  const store = useChatStore();
-  const open = useSelector(store, SelectOpen);
+export function ChatPopover({ pageSlug, pageTitle, updatedAt, data }: Props) {
   const [isCompact, setIsCompact] = useState(false);
+  const [popoverPosition, setPopoverPosition] = useState({
+    left: 0,
+    top: 0,
+  });
   const triggerRef = useRef<HTMLButtonElement>(null);
   const assignmentsRef = useRef<HTMLElement | null>(null);
   const expandedRectRef = useRef<DOMRect | null>(null);
-
-  function toggleChat(open: boolean) {
-    if (!triggerRef.current) return;
-    const trigger = triggerRef.current;
-    if (open) {
-      const chat = document.getElementById("chat-popover") as HTMLElement;
-      chat.showPopover();
-      computePosition(trigger, chat, {
-        placement: "top",
-        strategy: "fixed",
-      }).then(({ x, y }) => {
-        console.log("assign", { x, y });
-        Object.assign(chat.style, {
-          left: `${x}px`,
-          top: `${y}px`,
-        });
-      });
-    } else {
-      trigger.hidePopover();
-    }
-  }
 
   const checkOverlap = useCallback(() => {
     if (!triggerRef.current || !assignmentsRef.current) return;
@@ -113,8 +94,21 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
   return (
     <>
       <button
-        onClick={() => toggleChat(true)}
+        id="chat-trigger"
         ref={triggerRef}
+        onClick={() => {
+          if (!triggerRef.current) return;
+          const btn = triggerRef.current;
+          const popover = document.getElementById(
+            "chat-popover"
+          ) as HTMLElement;
+          const rect = btn.getBoundingClientRect();
+          const popoverRect = popover.getBoundingClientRect();
+          setPopoverPosition({
+            left: rect.left,
+            top: rect.bottom,
+          });
+        }}
         // @ts-expect-error ignore prop name
         popovertarget="chat-popover"
         className={cn(
@@ -134,14 +128,18 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
       </button>
       <div
         popover="auto"
+        className="fixed z-50 w-96 -translate-x-1/2 -translate-y-1/2 rounded-md border-2 px-2 py-4"
         id="chat-popover"
-        className="fixed z-50 w-80 rounded-md border-2 px-2 py-4 lg:w-96"
+        style={{
+          left: `${popoverPosition.left}px`,
+          top: `${popoverPosition.top}px`,
+        }}
       >
         <div
           className="flex flex-col"
           id={Elements.CHATBOT_CONTAINER}
           style={{
-            height: "clamp(300px, 55vh, 800px)",
+            height: "clamp(300px, 60vh, 900px)",
           }}
         >
           <ChatHeader />
@@ -161,8 +159,6 @@ export function Chat({ pageSlug, pageTitle, updatedAt, data }: Props) {
 }
 
 function ChatHeader() {
-  const store = useChatStore();
-
   return (
     <div
       className="mb-3 flex items-center justify-between gap-3 border-b p-3"
@@ -180,9 +176,10 @@ function ChatHeader() {
         </div>
       </div>
       <button
-        onClick={() => {
-          store.send({ type: "setOpen", value: false });
-        }}
+        // @ts-expect-error ignore prop name
+        popovertarget="chat-popover"
+        // eslint-disable-next-line react/no-unknown-property
+        popoveraction="close"
         aria-label="Close chat"
       >
         <XIcon className="size-6" />

@@ -5,7 +5,7 @@ import { MessageCircleIcon } from "lucide-react";
 import { getPageChats } from "@/db/chat";
 import { getUserCondition } from "@/lib/auth/conditions";
 import { Condition } from "@/lib/constants";
-import { Chat } from "./chat/chat";
+import { ChatPopover } from "./chat/chat-popover";
 
 type Props = {
   user: User | null;
@@ -29,7 +29,7 @@ export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
   })) as Message[];
 
   return (
-    <Chat
+    <ChatPopover
       pageSlug={pageSlug}
       updatedAt={new Date(updatedAt)}
       data={messages}

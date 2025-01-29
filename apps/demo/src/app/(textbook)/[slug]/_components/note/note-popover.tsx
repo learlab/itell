@@ -24,9 +24,9 @@ import { Label } from "@itell/ui/label";
 import { cn, getChunkElement } from "@itell/utils";
 import { computePosition, flip, offset, shift } from "@floating-ui/dom";
 import {
+  CheckIcon,
   NotepadTextIcon,
   PaletteIcon,
-  SaveIcon,
   TrashIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -161,6 +161,7 @@ export const NotePopover = memo(
         }
         setRecordId(data.id);
       }
+      popoverRef.current?.hidePopover();
       setText(noteText);
       setPending(false);
     };
@@ -377,7 +378,7 @@ export const NotePopover = memo(
                   aria-label="save note"
                   onClick={handleUpsert}
                 >
-                  <SaveIcon className="size-4" />
+                  <CheckIcon className="size-4" />
                 </button>
               </div>
             </footer>
