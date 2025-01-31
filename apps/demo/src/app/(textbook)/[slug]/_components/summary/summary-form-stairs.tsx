@@ -133,6 +133,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         chat_history: getHistory(chatStore),
         excluded_chunks: getExcludedChunks(criStore),
         score_history: data.contentScoreHistory,
+        class_id: user.classId ?? undefined,
       };
       requestBodyRef.current = requestBody;
       const response = await apiClient.api.summary.stairs.$post({

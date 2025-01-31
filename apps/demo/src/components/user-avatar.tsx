@@ -8,17 +8,15 @@ interface Props extends React.ComponentPropsWithoutRef<typeof Avatar> {
 }
 
 export function UserAvatar({ user, className, alt, ...rest }: Props) {
-  const name = user.name?.[0]?.toUpperCase() ?? "User";
-
   return (
     <Avatar className={className} {...rest}>
       {user.image ? (
         <>
-          <AvatarImage src={user.image} alt={alt ?? "user profile photo"} />
-          <AvatarFallback>{name}</AvatarFallback>
+          <AvatarImage src={user.image} alt={alt ?? "User profile photo"} />
+          <AvatarFallback>{user.name?.slice(0, 1)}</AvatarFallback>
         </>
       ) : (
-        <AvatarFallback>{name}</AvatarFallback>
+        <AvatarFallback>U</AvatarFallback>
       )}
     </Avatar>
   );

@@ -133,6 +133,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         chat_history: getHistory(chatStore),
         excluded_chunks: getExcludedChunks(criStore),
         score_history: data.contentScoreHistory,
+        class_id: user.classId ?? undefined,
       };
       requestBodyRef.current = requestBody;
       const response = await apiClient.api.summary.stairs.$post({
@@ -161,7 +162,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
             console.log("summary response chunk", data, chunk);
 
             const parsed = SummaryResponseSchema.safeParse(
-              JSON.parse(String(data)),
+              JSON.parse(String(data))
             );
             if (parsed.success) {
               summaryResponseRef.current = parsed.data;
@@ -176,7 +177,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
                 {
                   body: requestBody,
                   chunk: data,
-                },
+                }
               );
               return;
             }
@@ -203,10 +204,8 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         if (stairsChunk) {
           const regex = /data: ({"request_id":.*?})\n*/;
           const match = regex.exec(stairsChunk.trim());
-          console.log("final stairs chunk\n", stairsChunk);
           if (match?.[1]) {
             const stairsString = match[1];
-            console.log("parsed as", stairsString);
             const stairsData = JSON.parse(stairsString) as StairsQuestion;
             stairsDataRef.current = stairsData;
             finishStage("Analyzing");
@@ -272,7 +271,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         }
       }
     },
-    { delayTimeout: 20000 },
+    { delayTimeout: 20000 }
   );
   const isPending = useDebounce(_isPending, 100);
 
@@ -437,7 +436,7 @@ const goToQuestion = (question: StairsQuestion) => {
     }, 100);
   } else {
     toast.warning(
-      "Please revise your summary with substantial changes and resubmit to unlock the next page",
+      "Please revise your summary with substantial changes and resubmit to unlock the next page"
     );
   }
 };

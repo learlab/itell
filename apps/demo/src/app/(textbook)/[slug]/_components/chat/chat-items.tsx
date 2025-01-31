@@ -1,22 +1,28 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { type Message } from "@itell/core/chat";
 import { Avatar, AvatarFallback, AvatarImage } from "@itell/ui/avatar";
 import { Button } from "@itell/ui/button";
 import { cn, getChunkElement } from "@itell/utils";
 import htmr from "htmr";
+import { CopyIcon } from "lucide-react";
 import { toast } from "sonner";
 
+import { useSession } from "@/components/provider/page-provider";
 import { Spinner } from "@/components/spinner";
+import { routes } from "@/lib/navigation";
 import { scrollToElement } from "@/lib/utils";
+import { ChatFeedback } from "./chat-feedback";
+import { scrollChat } from "./chat-popover";
 
 type Props = {
   initialMessage: Message;
+  data: Message[];
   updatedAt?: Date;
   prevData?: Message[];
-  data: Message[];
+  className?: string;
 };
 
 export function ChatItems({
@@ -24,11 +30,13 @@ export function ChatItems({
   data,
   prevData,
   updatedAt,
+  className,
 }: Props) {
   return (
     <div
       className={cn(
-        "scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-1 flex-col-reverse gap-3 overflow-y-auto px-2 py-3"
+        "scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-1 flex-col-reverse gap-3 overflow-y-auto px-2 py-3",
+        className
       )}
     >
       <div className="flex-1 flex-grow space-y-2" role="status">
@@ -69,50 +77,56 @@ const MessageItemMemo = React.memo(MessageItem);
 
 function MessageItem({ message }: { message: Message }) {
   const isPending = message.text === "";
+  const { user } = useSession();
+
+  useEffect(() => {
+    scrollChat();
+  }, [message]);
 
   return (
     <div
-      className={cn("chat-message flex items-end", {
-        "justify-end": message.isUser,
-      })}
       // only announce the message if it's not from the user
       role={message.isUser ? "" : "status"}
     >
-      <div
-        className={cn(
-          "mx-2 flex max-w-xs flex-row items-start gap-1 overflow-x-hidden text-sm",
-          message.isUser ? "justify-end" : "justify-start"
-        )}
-      >
-        {message.isUser ? (
-          <Avatar className="order-last h-8 w-8 rounded-none">
-            <AvatarImage src="/images/user.svg" />
-            <AvatarFallback>User</AvatarFallback>
-          </Avatar>
-        ) : (
-          <Avatar className="h-8 w-8 rounded-none">
-            <AvatarImage src="/images/itell-ai.svg" alt="itell ai says" />
-            <AvatarFallback>AI</AvatarFallback>
-          </Avatar>
-        )}
-
-        {isPending ? (
-          <Spinner className="size-4" />
-        ) : (
-          <div
-            className={cn("rounded-lg px-4 py-2", {
-              "border-2 bg-primary-foreground": !message.isUser,
-              "bg-accent": message.isUser,
-            })}
-          >
-            <MessageRenderer
-              text={message.text}
-              node={message.node}
-              context={message.context}
-              transform={message.transform}
-            />
-          </div>
-        )}
+      <div className="flex flex-row items-center gap-1 overflow-x-hidden text-sm">
+        {message.isUser &&
+          (user?.image ? (
+            <Avatar className="size-7 rounded-full">
+              <AvatarImage src={user.image} alt={"User profile photo"} />
+              <AvatarFallback>{user.name?.slice(0, 1)}</AvatarFallback>
+            </Avatar>
+          ) : (
+            <Avatar className="size-7 rounded-full">
+              <AvatarImage src="/images/user.svg" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+          ))}
+        <div
+          className={cn("flex-1 rounded-lg p-2", {
+            "border-2 bg-primary-foreground": !message.isUser,
+            "bg-accent": message.isUser,
+          })}
+        >
+          {isPending ? (
+            <div className="flex items-center justify-center">
+              <Spinner className="size-5" />
+            </div>
+          ) : (
+            <>
+              <MessageRenderer
+                text={message.text}
+                node={message.node}
+                context={message.context}
+                transform={message.transform}
+              />
+              {!message.isUser && (
+                <footer className="mt-2">
+                  <ChatAction message={message} />
+                </footer>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -142,7 +156,7 @@ function MessageRenderer({ text, context, node, transform }: DisplayMessage) {
           className="mt-1"
           onClick={() => {
             if (context === "[User Guide]") {
-              router.push("/guide");
+              router.push(routes.guide());
               return;
             }
             // find the context element
@@ -165,4 +179,23 @@ function MessageRenderer({ text, context, node, transform }: DisplayMessage) {
   }
 
   return transform ? htmr(text, { transform: components }) : <p>{text}</p>;
+}
+
+function ChatAction({ message }: { message: Message }) {
+  return (
+    <div className="flex items-center gap-1">
+      <button
+        className="group px-1"
+        aria-label="Copy message"
+        onClick={async () => {
+          await navigator.clipboard.writeText(message.text);
+          toast.success("Message copied");
+        }}
+      >
+        <CopyIcon className={"size-3 group-hover:stroke-info"} />
+      </button>
+      <ChatFeedback isPositive message={message} />
+      <ChatFeedback isPositive={false} message={message} />
+    </div>
+  );
 }

@@ -49,10 +49,7 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
         if (!content) {
           return toast.warning("Selection is empty");
         }
-        const chat = document.getElementById("chat-popover");
-        if (chat && !chat.matches(":popover-open")) {
-          chat.showPopover();
-        }
+        store.send({ type: "setOpen", value: true });
 
         const text = `Please explain the following:\n\n <blockquote>${content}</blockquote> `;
         addChat({ text, pageSlug, transform: true, currentChunk: chunkSlug });

@@ -1,6 +1,6 @@
 "use client";
 
-import { type HTMLAttributes } from "react";
+import { useEffect, useRef } from "react";
 import { Label } from "@itell/ui/label";
 import { cn } from "@itell/utils";
 import { CornerDownLeft } from "lucide-react";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { InternalError } from "@/components/internal-error";
 import { isProduction } from "@/lib/constants";
 import { useAddChat } from "@/lib/hooks/use-add-chat";
+import type { HTMLAttributes } from "react";
 
 interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
   pageSlug: string;
@@ -19,7 +20,7 @@ export function ChatInput({ className, pageSlug, ...props }: ChatInputProps) {
   const { action, pending, isError } = useAddChat();
 
   return (
-    <div {...props} className={cn("grid gap-2 px-2", className)}>
+    <div {...props} className={cn("grid gap-2", className)}>
       <form
         className="relative mt-4 flex-1 overflow-hidden rounded-lg border-none outline-none"
         onSubmit={(e) => {
@@ -34,6 +35,7 @@ export function ChatInput({ className, pageSlug, ...props }: ChatInputProps) {
           <span className="sr-only">Enter your message here</span>
           <TextArea
             name="input"
+            autoFocus
             rows={2}
             maxRows={4}
             disabled={pending}
@@ -64,7 +66,10 @@ export function ChatInput({ className, pageSlug, ...props }: ChatInputProps) {
           </button>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 border-t border-border" aria-hidden="true" />
+        <div
+          className="absolute inset-x-0 bottom-0 border-t border-border"
+          aria-hidden="true"
+        />
       </form>
       {isError ? <InternalError>Failed to save chat</InternalError> : null}
     </div>

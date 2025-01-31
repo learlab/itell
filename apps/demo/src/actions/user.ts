@@ -11,8 +11,8 @@ import { updateUser } from "@/db/user";
 import {
   chat_messages,
   constructed_responses,
-  constructed_responses_feedback,
   events,
+  feedbacks,
   focus_times,
   quiz_answers,
   summaries,
@@ -23,7 +23,12 @@ import {
 } from "@/drizzle/schema";
 import { isProduction, Tags } from "@/lib/constants";
 import { isLastPage } from "@/lib/pages";
-import { firstPage, getPageData, isPageAfter, nextPage } from "@/lib/pages/pages.server";
+import {
+  firstPage,
+  getPageData,
+  isPageAfter,
+  nextPage,
+} from "@/lib/pages/pages.server";
 import { authedProcedure } from "./utils";
 
 /**
@@ -73,7 +78,9 @@ export const updateUserPrefsAction = authedProcedure
   )
   .handler(async ({ input, ctx }) => {
     await db.transaction(async (tx) => {
-      const user = first(await tx.select().from(users).where(eq(users.id, ctx.user.id)));
+      const user = first(
+        await tx.select().from(users).where(eq(users.id, ctx.user.id))
+      );
       if (user) {
         const prefs = user.preferences ?? {};
         if (input.preferences.theme) {
@@ -92,7 +99,10 @@ export const updateUserPrefsAction = authedProcedure
           return;
         }
 
-        await tx.update(users).set({ preferences: prefs }).where(eq(users.id, ctx.user.id));
+        await tx
+          .update(users)
+          .set({ preferences: prefs })
+          .where(eq(users.id, ctx.user.id));
       }
     });
   });
@@ -105,16 +115,21 @@ export const resetUserAction = authedProcedure
   .handler(async ({ ctx }) => {
     const userId = ctx.user.id;
     return await db.transaction(async (tx) => {
-      await tx.update(users).set({ finished: false, pageSlug: null }).where(eq(users.id, userId));
+      await tx
+        .update(users)
+        .set({ finished: false, pageSlug: null })
+        .where(eq(users.id, userId));
       await tx.delete(summaries).where(eq(summaries.userId, userId));
       await tx.delete(chat_messages).where(eq(chat_messages.userId, userId));
       await tx.delete(focus_times).where(eq(focus_times.userId, userId));
       await tx.delete(events).where(eq(events.userId, userId));
-      await tx.delete(constructed_responses).where(eq(constructed_responses.userId, userId));
       await tx
-        .delete(constructed_responses_feedback)
-        .where(eq(constructed_responses_feedback.userId, userId));
-      await tx.delete(survey_sessions).where(eq(survey_sessions.userId, userId));
+        .delete(constructed_responses)
+        .where(eq(constructed_responses.userId, userId));
+      await tx.delete(feedbacks).where(eq(feedbacks.userId, userId));
+      await tx
+        .delete(survey_sessions)
+        .where(eq(survey_sessions.userId, userId));
       await tx.delete(quiz_answers).where(eq(quiz_answers.userId, userId));
 
       return { pageSlug: firstPage.slug };
@@ -140,7 +155,10 @@ export const incrementUserPageSlugAction = authedProcedure
   )
   .handler(async ({ input, ctx }) => {
     const nextPageSlug = nextPage(input.currentPageSlug);
-    const shouldUpdateUserPageSlug = isPageAfter(nextPageSlug, ctx.user.pageSlug);
+    const shouldUpdateUserPageSlug = isPageAfter(
+      nextPageSlug,
+      ctx.user.pageSlug
+    );
     const page = getPageData(input.currentPageSlug);
 
     if (page) {

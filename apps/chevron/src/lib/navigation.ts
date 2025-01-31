@@ -27,6 +27,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ class_code_valid: undefined }),
     }),
+    guide: defineRoute("/guide"),
     consent: defineRoute("/consent", {
       search: z
         .object({

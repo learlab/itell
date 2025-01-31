@@ -49,7 +49,8 @@ export default async function Page(props: {
 
   const pageSlug = page.slug;
 
-  const { user } = await getSession();
+  const session = await getSession();
+  const user = session.user;
   const userId = user?.id ?? null;
   const userFinished = user?.finished ?? false;
   const userPageSlug = user?.pageSlug ?? null;
@@ -63,7 +64,12 @@ export default async function Page(props: {
   });
 
   return (
-    <PageProvider condition={userCondition} page={page} pageStatus={pageStatus}>
+    <PageProvider
+      session={session}
+      condition={userCondition}
+      page={page}
+      pageStatus={pageStatus}
+    >
       <ScreenIssuePopup />
       <ResourceLoader condition={userCondition} />
       <TextbookWrapper>

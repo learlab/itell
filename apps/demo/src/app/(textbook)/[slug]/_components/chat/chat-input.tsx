@@ -20,7 +20,7 @@ export function ChatInput({ className, pageSlug, ...props }: ChatInputProps) {
   const { action, pending, isError } = useAddChat();
 
   return (
-    <div {...props} className={cn("grid gap-2 px-2", className)}>
+    <div {...props} className={cn("grid gap-2", className)}>
       <form
         className="relative mt-4 flex-1 overflow-hidden rounded-lg border-none outline-none"
         onSubmit={(e) => {

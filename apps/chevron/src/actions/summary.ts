@@ -56,16 +56,15 @@ export const createSummaryAction = authedProcedure
           ? input.summary.isPassed
           : true;
       if (!canProceed) {
-        const [record] = await tx
-          .select({ count: count() })
-          .from(summaries)
-          .where(
-            and(
-              eq(summaries.userId, ctx.user.id),
-              eq(summaries.pageSlug, input.summary.pageSlug)
-            )
-          );
-        canProceed = record.count + 1 >= PAGE_SUMMARY_THRESHOLD;
+        const count = await tx.$count(
+          summaries,
+          and(
+            eq(summaries.userId, ctx.user.id),
+            eq(summaries.pageSlug, input.summary.pageSlug),
+            isNotNull(summaries.contentScore)
+          )
+        );
+        canProceed = count + 1 >= PAGE_SUMMARY_THRESHOLD;
       }
 
       // Evaluate whether a summary is an "Excellent" summary (> the content score at a percentile defined by EXCELLENT_SUMMARY_THRESHOLD)
