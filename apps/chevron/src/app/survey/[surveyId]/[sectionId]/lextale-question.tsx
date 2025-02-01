@@ -33,9 +33,8 @@ export function LexTaleQuestion({
   // only cares about if the word is visited, not the value
   const [checkedWords, setCheckedWords] = useState<Record<string, boolean>>(
     () =>
-      defaultValue ? Object.fromEntries(words.map((word) => [word, true])) : {}
+      defaultValue ? Object.fromEntries(words.map((word) => [word, true])) : {},
   );
-  console.log(currentWord, checkedWords);
 
   useEffect(() => {
     if (!api) {
@@ -73,7 +72,7 @@ export function LexTaleQuestion({
     startTransition(() => {
       words.forEach((w) => {
         const input = document.querySelector(
-          `input[name='${inputName(question.id, w)}'][value='no']`
+          `input[name='${inputName(question.id, w)}'][value='no']`,
         ) as HTMLInputElement;
         input.checked = true;
       });
@@ -125,7 +124,7 @@ export function LexTaleQuestion({
                     <Label
                       className={cn(
                         buttonVariants({ size: "lg", variant: "outline" }),
-                        "h-fit p-4 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base"
+                        "h-fit p-4 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base",
                       )}
                     >
                       <RadioGroupItem value={"yes"} className="sr-only" />
@@ -135,7 +134,7 @@ export function LexTaleQuestion({
                     <Label
                       className={cn(
                         buttonVariants({ size: "lg", variant: "outline" }),
-                        "h-fit p-4 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base"
+                        "h-fit p-4 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base",
                       )}
                     >
                       <RadioGroupItem value={"no"} className="sr-only" />

@@ -35,7 +35,6 @@ export function LexTaleQuestion({
     () =>
       defaultValue ? Object.fromEntries(words.map((word) => [word, true])) : {}
   );
-  console.log(currentWord, checkedWords);
 
   useEffect(() => {
     if (!api) {
