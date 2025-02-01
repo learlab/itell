@@ -40,11 +40,7 @@ export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
 
 ChatLoader.Skeleton = function ChatLoaderSkeleton() {
   return (
-    <button
-      className={
-        "fixed bottom-12 right-8 z-20 flex items-center gap-2 border bg-background text-foreground"
-      }
-    >
+    <button className="fixed bottom-12 right-8 z-20 flex items-center justify-center gap-2 rounded-lg border-2 bg-background px-6 py-4 text-foreground">
       <MessageCircleIcon className="size-6" />
       <span>Chat with AI</span>
     </button>
