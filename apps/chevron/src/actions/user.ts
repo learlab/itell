@@ -11,12 +11,11 @@ import { updateUser } from "@/db/user";
 import {
   chat_messages,
   constructed_responses,
-  constructed_responses_feedback,
   events,
+  feedbacks,
   focus_times,
   quiz_answers,
   summaries,
-  survey_sessions,
   TeacherSchema,
   UpdateUserSchema,
   users,
@@ -126,10 +125,10 @@ export const resetUserAction = authedProcedure
       await tx
         .delete(constructed_responses)
         .where(eq(constructed_responses.userId, userId));
-      await tx
-        .delete(constructed_responses_feedback)
-        .where(eq(constructed_responses_feedback.userId, userId));
-      // await tx.delete(survey_sessions).where(eq(survey_sessions.userId, userId));
+      await tx.delete(feedbacks).where(eq(feedbacks.userId, userId));
+      // await tx
+      //   .delete(survey_sessions)
+      //   .where(eq(survey_sessions.userId, userId));
       await tx.delete(quiz_answers).where(eq(quiz_answers.userId, userId));
 
       return { pageSlug: firstPage.slug };

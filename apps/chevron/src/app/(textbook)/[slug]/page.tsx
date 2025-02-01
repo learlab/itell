@@ -17,6 +17,7 @@ import { SelectionPopover } from "@textbook/selection-popover";
 import { TextbookToc } from "@textbook/textbook-toc";
 
 import { PageProvider } from "@/components/provider/page-provider";
+import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 import { getSession } from "@/lib/auth";
 import { getUserCondition } from "@/lib/auth/conditions";
 import {
@@ -30,10 +31,9 @@ import { firstAssignmentPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
-import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 
 const ResourceLoader = dynamic(() =>
-  import("./resource-loader").then((mod) => mod.ResourceLoader),
+  import("./resource-loader").then((mod) => mod.ResourceLoader)
 );
 
 export default async function Page(props: {
@@ -49,7 +49,8 @@ export default async function Page(props: {
 
   const pageSlug = page.slug;
 
-  const { user } = await getSession();
+  const session = await getSession();
+  const user = session.user;
   const userId = user?.id ?? null;
   const userFinished = user?.finished ?? false;
   const userPageSlug = user?.pageSlug ?? null;
@@ -63,7 +64,12 @@ export default async function Page(props: {
   });
 
   return (
-    <PageProvider condition={userCondition} page={page} pageStatus={pageStatus}>
+    <PageProvider
+      session={session}
+      condition={userCondition}
+      page={page}
+      pageStatus={pageStatus}
+    >
       <ScreenIssuePopup />
       <ResourceLoader condition={userCondition} />
       <TextbookWrapper>
@@ -89,7 +95,6 @@ export default async function Page(props: {
             <PageTitle>{page.title}</PageTitle>
             <PageContent title={page.title} html={page.html} />
             <SelectionPopover user={user} pageSlug={pageSlug} />
-
             {page.last_modified ? (
               <p className="text-right text-sm text-muted-foreground">
                 <span>Last updated at </span>

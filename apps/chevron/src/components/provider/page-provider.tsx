@@ -5,6 +5,7 @@ import { useLocalStorage } from "@itell/core/hooks";
 import { type Subscription } from "@xstate/store";
 import { type Page } from "#content";
 
+import { GetSessionData } from "@/lib/auth/actions";
 import { type PageStatus } from "@/lib/page-status";
 import { createChatStore } from "@/lib/store/chat-store";
 import { createCRIStore } from "@/lib/store/cri-store";
@@ -19,12 +20,14 @@ import type { SummaryStore } from "@/lib/store/summary-store";
 
 type Props = {
   children: React.ReactNode;
+  session: GetSessionData;
   condition: string;
   page: Page;
   pageStatus: PageStatus;
 };
 
 type State = {
+  session: GetSessionData;
   condition: string;
   chunks: string[];
   criStore: CRIStore;
@@ -33,7 +36,13 @@ type State = {
 };
 const PageContext = createContext<State>({} as State);
 
-export function PageProvider({ children, condition, page, pageStatus }: Props) {
+export function PageProvider({
+  children,
+  session,
+  condition,
+  page,
+  pageStatus,
+}: Props) {
   const slugs = page.chunks.map(({ slug }) => slug);
   const [snapshot, setSnapshot] = useLocalStorage<CRISnapshot | undefined>(
     `question-store-${page.slug}`,
@@ -105,6 +114,7 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
   return (
     <PageContext.Provider
       value={{
+        session,
         criStore: criStoreRef.current,
         chatStore: chatStoreRef.current,
         summaryStore: summaryStoreRef.current,
@@ -116,6 +126,11 @@ export function PageProvider({ children, condition, page, pageStatus }: Props) {
     </PageContext.Provider>
   );
 }
+
+export const useSession = () => {
+  const state = useContext(PageContext);
+  return useMemo(() => state.session, [state.session]);
+};
 
 export const useCondition = () => {
   const state = useContext(PageContext);

@@ -24,9 +24,9 @@ import { Label } from "@itell/ui/label";
 import { cn, getChunkElement } from "@itell/utils";
 import { computePosition, flip, offset, shift } from "@floating-ui/dom";
 import {
+  CheckIcon,
   NotepadTextIcon,
   PaletteIcon,
-  SaveIcon,
   TrashIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -161,6 +161,7 @@ export const NotePopover = memo(
         }
         setRecordId(data.id);
       }
+      popoverRef.current?.hidePopover();
       setText(noteText);
       setPending(false);
     };
@@ -335,11 +336,11 @@ export const NotePopover = memo(
                   <AlertDialogTrigger asChild>
                     <button
                       type="button"
-                      className="p-2"
+                      className="group p-2"
                       aria-label="delete note"
                       onClick={() => popoverRef.current?.hidePopover()}
                     >
-                      <TrashIcon className="size-4" />
+                      <TrashIcon className="size-4 group-hover:stroke-info" />
                     </button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -370,14 +371,13 @@ export const NotePopover = memo(
                   color={noteColor}
                   onChange={handleColorChange}
                 />
-
                 <button
                   type="button"
-                  className="p-2"
+                  className="group p-2"
                   aria-label="save note"
                   onClick={handleUpsert}
                 >
-                  <SaveIcon className="size-4" />
+                  <CheckIcon className="size-4 group-hover:stroke-info" />
                 </button>
               </div>
             </footer>
@@ -406,13 +406,13 @@ function ColorPicker({ id, color, onChange }: ColorPickerProps) {
     <div>
       <button
         type="button"
-        className="p-2"
+        className="group p-2"
         aria-label="change note color"
         // @ts-expect-error popoverTarget is not typed
         popovertarget={popoverId}
         ref={triggerRef}
       >
-        <PaletteIcon className="size-4" />
+        <PaletteIcon className="size-4 group-hover:stroke-info" />
       </button>
       <div
         id={popoverId}

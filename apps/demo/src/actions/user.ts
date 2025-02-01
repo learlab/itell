@@ -11,12 +11,11 @@ import { updateUser } from "@/db/user";
 import {
   chat_messages,
   constructed_responses,
-  constructed_responses_feedback,
   events,
+  feedbacks,
   focus_times,
   quiz_answers,
   summaries,
-  survey_sessions,
   TeacherSchema,
   UpdateUserSchema,
   users,
@@ -50,7 +49,7 @@ const getTeacherActionHandler = memoize(
     revalidateTags: (userId) => ["get-teacher", userId],
     log: isProduction ? [] : ["dedupe", "datacache", "verbose"],
     logid: "Get teacher",
-  },
+  }
 );
 
 /**
@@ -74,12 +73,12 @@ export const updateUserPrefsAction = authedProcedure
         note_color_light: z.string().optional(),
         note_color_dark: z.string().optional(),
       }),
-    }),
+    })
   )
   .handler(async ({ input, ctx }) => {
     await db.transaction(async (tx) => {
       const user = first(
-        await tx.select().from(users).where(eq(users.id, ctx.user.id)),
+        await tx.select().from(users).where(eq(users.id, ctx.user.id))
       );
       if (user) {
         const prefs = user.preferences ?? {};
@@ -126,10 +125,7 @@ export const resetUserAction = authedProcedure
       await tx
         .delete(constructed_responses)
         .where(eq(constructed_responses.userId, userId));
-      await tx
-        .delete(constructed_responses_feedback)
-        .where(eq(constructed_responses_feedback.userId, userId));
-      // await tx.delete(survey_sessions).where(eq(survey_sessions.userId, userId));
+      await tx.delete(feedbacks).where(eq(feedbacks.userId, userId));
       await tx.delete(quiz_answers).where(eq(quiz_answers.userId, userId));
 
       return { pageSlug: firstPage.slug };
@@ -151,13 +147,13 @@ export const incrementUserPageSlugAction = authedProcedure
     z.object({
       currentPageSlug: z.string(),
       withStreakSkip: z.boolean().optional(),
-    }),
+    })
   )
   .handler(async ({ input, ctx }) => {
     const nextPageSlug = nextPage(input.currentPageSlug);
     const shouldUpdateUserPageSlug = isPageAfter(
       nextPageSlug,
-      ctx.user.pageSlug,
+      ctx.user.pageSlug
     );
     const page = getPageData(input.currentPageSlug);
 

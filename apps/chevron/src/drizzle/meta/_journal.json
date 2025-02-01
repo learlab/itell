@@ -15,6 +15,13 @@
       "when": 1737617747745,
       "tag": "0001_naive_reptil",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1738338070479,
+      "tag": "0002_unknown_bushwacker",
+      "breakpoints": true
     }
   ]
 }

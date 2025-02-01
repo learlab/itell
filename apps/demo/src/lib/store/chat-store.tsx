@@ -144,10 +144,18 @@ export const botMessage = ({
   context,
 });
 
-export const getHistory = (store: ChatStore) => {
+/**
+ * Extract chat history from chat store, if messageId is provided, messages prior to that message is
+ * returned (excluding the one with specified id)
+ *
+ */
+export const getHistory = (store: ChatStore, opts?: { messageId?: string }) => {
   const snap = store.getSnapshot();
+  const endIdx = opts?.messageId
+    ? snap.context.messages.findIndex((m) => m.id === opts.messageId)
+    : undefined;
 
-  return snap.context.messages.map((m) => ({
+  return snap.context.messages.slice(0, endIdx).map((m) => ({
     agent: m.isUser ? "user" : "bot",
     text: m.text,
   }));

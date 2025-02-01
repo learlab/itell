@@ -16,6 +16,11 @@ export const ClassRole = {
   STUDENT: "student",
 } as const;
 
+export const FeedbackType = {
+  CRI: "CRI",
+  CHAT: "Chat",
+} as const;
+
 export const Errors = {
   INTERNAL: "InternalError",
 
