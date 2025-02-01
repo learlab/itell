@@ -32,10 +32,10 @@ export const allPagesSorted = pages.sort((a, b) => {
 export const quizPages = allPagesSorted.filter((page) => page.quiz);
 
 export const allAssignmentPagesSorted = allPagesSorted.filter(
-  (page) => page.assignments.length > 0
+  (page) => page.assignments.length > 0,
 );
 export const firstAssignmentPage = allAssignmentPagesSorted.find(
-  (page) => page.assignments.length > 0
+  (page) => page.assignments.length > 0,
 );
 export const firstPage = allPagesSorted[0];
 
@@ -70,7 +70,7 @@ export const tocPages = pages.reduce<(TocPageItem | TocGroup)[]>(
 
     return acc;
   },
-  []
+  [],
 );
 
 export type TocPageItem = {
@@ -94,7 +94,7 @@ export const pagesByParent = groupBy(
     slug: page.slug,
     href: page.href,
   })),
-  (page) => page.parentTitle
+  (page) => page.parentTitle,
 );
 
 export const isPageAfter = (a: string | undefined, b: string | null) => {
@@ -106,7 +106,6 @@ export const isPageAfter = (a: string | undefined, b: string | null) => {
 
 export const nextPage = (slug: string): string => {
   const currentPageIndex = allPagesSorted.findIndex((s) => s.slug === slug);
-
   // If current page is the last one or not found, return the same location
   if (
     currentPageIndex === -1 ||
@@ -129,5 +128,6 @@ export const nextPage = (slug: string): string => {
   if (nextPageWithSummary) {
     return nextPageWithSummary.slug;
   }
-  return slug;
+  // if can't find a following page that requires summary, set user's pageSlug to the last one
+  return allPagesSorted[allPagesSorted.length - 1].slug;
 };
