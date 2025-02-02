@@ -70,7 +70,6 @@ function ConsentForm({ value, user }: { value?: "yes" | "no"; user: User }) {
           <ol className="list-disc space-y-3 pl-6">
             <li>Complete a demographic and individual differences survey</li>
             <li>Complete a short language proficiency assessment</li>
-            <li>Complete a pretest quiz that includes 14 true/false questions</li>
             <li>Complete an assessment of your previous understanding of the topic</li>
             <li>
               Read the text <span className="italic">{volume.title}</span>
