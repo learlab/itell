@@ -13,9 +13,10 @@ type Props = {
   data: Message[];
   updatedAt: Date;
   pageTitle: string;
+  className?: string;
 };
 
-export function ChatMessages({ data, updatedAt, pageTitle }: Props) {
+export function ChatMessages({ data, updatedAt, pageTitle, className }: Props) {
   const store = useChatStore();
   const messages = useSelector(store, SelectMessages);
 
@@ -40,6 +41,7 @@ export function ChatMessages({ data, updatedAt, pageTitle }: Props) {
       data={messages}
       prevData={data}
       updatedAt={updatedAt}
+      className={className}
     />
   );
 }

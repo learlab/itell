@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@itell/ui/select";
 
-import { useSafeSearchParams } from "@/lib/navigation";
+import { routes, useSafeSearchParams } from "@/lib/navigation";
 
 export function ReadingTimeControl() {
   const router = useRouter();
@@ -19,10 +19,14 @@ export function ReadingTimeControl() {
   const [pending, startTransition] = useTransition();
 
   const handleSelect = (val: string) => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("reading_time_level", val);
     startTransition(() => {
-      router.push(url.toString(), { scroll: false });
+      router.push(
+        routes.dashboard({
+          search: {
+            reading_time_level: val,
+          },
+        })
+      );
     });
   };
 

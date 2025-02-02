@@ -129,5 +129,5 @@ export const nextPage = (slug: string): string => {
   if (nextPageWithSummary) {
     return nextPageWithSummary.slug;
   }
-  return slug;
+  return allPagesSorted[allPagesSorted.length - 1].slug;
 };

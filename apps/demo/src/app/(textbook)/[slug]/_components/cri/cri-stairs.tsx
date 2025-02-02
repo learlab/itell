@@ -26,12 +26,8 @@ import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
 
-import {
-  createCRIAnswerAction,
-  getCRIStreakAction,
-  updateCRIStreakAction,
-} from "@/actions/cri";
-import { useCRIStore } from "@/components/provider/page-provider";
+import { createCRIAnswerAction, updateCRIStreakAction } from "@/actions/cri";
+import { useCRIStore, useSession } from "@/components/provider/page-provider";
 import { Confetti } from "@/components/ui/confetti";
 import { apiClient } from "@/lib/api-client";
 import { Condition, isProduction } from "@/lib/constants";
@@ -57,20 +53,17 @@ type State = {
 };
 
 export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
+  const { user } = useSession();
   const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const form = useRef<HTMLFormElement>(null);
-
   const {
-    data: streak,
+    execute: updateStreak,
+    data: _streak,
     setOptimistic: setStreak,
-    execute: getStreak,
-  } = useServerAction(getCRIStreakAction);
-  const { execute: updateStreak } = useServerAction(updateCRIStreakAction);
-
-  useEffect(() => {
-    getStreak();
-  }, []);
+  } = useServerAction(updateCRIStreakAction);
+  const streak =
+    _streak === undefined ? (user?.personalization.cri_streak ?? 0) : _streak;
 
   const [collapsed, setCollapsed] = useState(!shouldBlur);
   const [state, setState] = useState<State>({

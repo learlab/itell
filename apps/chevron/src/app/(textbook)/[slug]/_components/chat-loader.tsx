@@ -1,12 +1,11 @@
 import { type Message } from "@itell/core/chat";
-import { Avatar, AvatarImage } from "@itell/ui/avatar";
 import { type User } from "lucia";
+import { MessageCircleIcon } from "lucide-react";
 
-import { Spinner } from "@/components/spinner";
 import { getPageChats } from "@/db/chat";
 import { getUserCondition } from "@/lib/auth/conditions";
 import { Condition } from "@/lib/constants";
-import { Chat } from "./chat/chat";
+import { ChatPopover } from "./chat/chat-popover";
 
 type Props = {
   user: User | null;
@@ -30,7 +29,7 @@ export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
   })) as Message[];
 
   return (
-    <Chat
+    <ChatPopover
       pageSlug={pageSlug}
       updatedAt={new Date(updatedAt)}
       data={messages}
@@ -41,12 +40,9 @@ export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
 
 ChatLoader.Skeleton = function ChatLoaderSkeleton() {
   return (
-    <div className="fixed bottom-12 right-8 z-30 flex w-80 items-center gap-2 rounded-lg border border-border bg-background p-4 shadow-lg lg:w-96">
-      <Avatar className="h-8 w-8 rounded-none">
-        <AvatarImage src="/images/itell-ai.svg" />
-      </Avatar>
-      <span>ITELL AI</span>
-      <Spinner />
-    </div>
+    <button className="fixed bottom-12 right-8 z-20 flex items-center justify-center gap-2 rounded-lg border-2 bg-background px-6 py-4 text-foreground">
+      <MessageCircleIcon className="size-6" />
+      <span>Chat with AI</span>
+    </button>
   );
 };

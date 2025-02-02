@@ -25,8 +25,6 @@ type Props = {
 };
 
 export const SelectionPopover = ({ user, pageSlug }: Props) => {
-  const abort = new AbortController();
-  const { signal } = abort;
   const { theme } = useTheme();
   const store = useChatStore();
   const open = useSelector(store, SelectOpen);
@@ -45,15 +43,13 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
     icon: <SparklesIcon className="size-5" />,
     action: () => {
       if (state) {
-        if (!open) {
-          store.send({ type: "setOpen", value: true });
-        }
         const range = normalizeRange(state.range.cloneRange());
         const chunkSlug = findParentChunk(range);
         const content = range.cloneContents().textContent;
         if (!content) {
           return toast.warning("Selection is empty");
         }
+        store.send({ type: "setOpen", value: true });
 
         const text = `Please explain the following:\n\n <blockquote>${content}</blockquote> `;
         addChat({ text, pageSlug, transform: true, currentChunk: chunkSlug });
@@ -142,14 +138,16 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
     target.current = document.getElementById(Elements.PAGE_CONTENT);
     document.addEventListener("selectionchange", handler, { signal });
     window.addEventListener("resize", handler, { signal });
 
     return () => {
-      abort.abort();
+      controller.abort();
     };
-  }, [abort, pageSlug, signal]);
+  }, [pageSlug]);
 
   return (
     state &&

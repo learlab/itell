@@ -11,6 +11,7 @@ export function DeleteQuiz({ pageSlug }: { pageSlug: string }) {
   const [pending, startTransition] = useTransition();
   return (
     <AdminButton
+      size={"lg"}
       pending={pending}
       disabled={pending}
       onClick={() =>

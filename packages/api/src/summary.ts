@@ -11,6 +11,7 @@ const RequestSchema = z.object({
     .optional(),
   excluded_chunks: z.array(z.string()).optional(),
   score_history: z.array(z.number()).optional(),
+  class_id: z.string().optional(),
 });
 
 export const createSummaryRouter = ({

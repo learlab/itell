@@ -2,6 +2,8 @@ import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { createNavigationConfig } from "next-safe-navigation";
 import { z } from "zod";
 
+import { LeaderboardMetric } from "@/app/dashboard/_components/user-leaderboard-control";
+
 const classCodeValid = z.union([
   z.boolean().optional(),
   z
@@ -25,6 +27,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ class_code_valid: undefined }),
     }),
+    guide: defineRoute("/guide"),
     consent: defineRoute("/consent", {
       search: z
         .object({
@@ -45,6 +48,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
           redirect_to: undefined,
         }),
     }),
+    ctest: defineRoute("/ctest"),
     textbook: defineRoute("/[slug]", {
       params: z.object({
         slug: z.string(),
@@ -65,10 +69,12 @@ export const { routes, useSafeParams, useSafeSearchParams } =
       search: z
         .object({
           join_class_code: z.string().optional(),
-          reading_time_level: z.string().default(ReadingTimeChartLevel.week_1),
+          reading_time_level: z.string().optional(),
+          leaderboard_metric: z.string().optional(),
         })
         .default({
           reading_time_level: ReadingTimeChartLevel.week_1,
+          leaderboard_metric: LeaderboardMetric.all,
           join_class_code: undefined,
         }),
     }),

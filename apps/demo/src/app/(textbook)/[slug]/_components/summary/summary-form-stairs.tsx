@@ -133,6 +133,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         chat_history: getHistory(chatStore),
         excluded_chunks: getExcludedChunks(criStore),
         score_history: data.contentScoreHistory,
+        class_id: user.classId ?? undefined,
       };
       requestBodyRef.current = requestBody;
       const response = await apiClient.api.summary.stairs.$post({
@@ -203,10 +204,8 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         if (stairsChunk) {
           const regex = /data: ({"request_id":.*?})\n*/;
           const match = regex.exec(stairsChunk.trim());
-          console.log("final stairs chunk\n", stairsChunk);
           if (match?.[1]) {
             const stairsString = match[1];
-            console.log("parsed as", stairsString);
             const stairsData = JSON.parse(stairsString) as StairsQuestion;
             stairsDataRef.current = stairsData;
             finishStage("Analyzing");
@@ -277,11 +276,11 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const isPending = useDebounce(_isPending, 100);
 
   useEffect(() => {
-    if (summaryResponseRef.current) {
+    if (isNextPageVisible && summaryResponseRef.current) {
       if (isLast) {
         toast.info("You have finished the entire textbook!");
       } else {
-        const title = response?.is_passed
+        const title = summaryResponseRef.current.is_passed
           ? "Good job summarizing 🎉"
           : "You can now move on 👏";
         toast(title, {
@@ -299,7 +298,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         });
       }
     }
-  }, [isLast, isNextPageVisible, page.next_slug, response?.is_passed, router]);
+  }, [isLast, isNextPageVisible, page, router]);
 
   const { portals } = useDriver(driverObj, {
     pageSlug,

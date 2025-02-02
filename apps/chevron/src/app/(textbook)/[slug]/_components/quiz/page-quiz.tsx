@@ -1,5 +1,4 @@
 import { revalidateTag } from "next/cache";
-import { Button } from "@itell/ui/button";
 import {
   Card,
   CardContent,
@@ -16,6 +15,7 @@ import { QuizData } from "@/drizzle/schema";
 import { isAdmin } from "@/lib/auth/role";
 import { Tags } from "@/lib/constants";
 import { QuizQuickFill } from "./page-quick-fill";
+import { PageQuizSubmitButton } from "./page-quiz-submit-button";
 import type { PageData } from "@/lib/pages";
 
 export function PageQuiz({ user, page }: { user: User; page: PageData }) {
@@ -41,13 +41,13 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
       <CardHeader>
         <CardTitle>Take Quiz</CardTitle>
         <CardDescription>
-          Great job finishing the chapter. Please takt the quiz below to test
-          your knowledge. After you submit the quiz, you will be able unlock the
-          next page with an awesome summary.
+          Great job finishing the chapter. Please take the quiz below to test
+          your knowledge. You will only receive full credit after you finish all
+          quizzes.
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="space-y-4">
         {admin && <QuizQuickFill />}
         <form action={action} id="page-quiz" className="grid gap-4">
           {page.quiz.map(({ question, answers }, qIndex) => (
@@ -68,8 +68,8 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
               </RadioGroup>
             </div>
           ))}
-          <footer className="flex justify-end">
-            <Button>Submit</Button>
+          <footer>
+            <PageQuizSubmitButton />
           </footer>
         </form>
       </CardContent>

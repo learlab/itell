@@ -16,8 +16,9 @@ import { MessageCircleCodeIcon, SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
-import { createCRIFeedbackAction } from "@/actions/cri";
+import { createCRIFeedbackAction } from "@/actions/feedback";
 import { InternalError } from "@/components/internal-error";
+import { FeedbackType } from "@/lib/constants";
 
 type Props = {
   chunkSlug: string;
@@ -64,7 +65,7 @@ export function CRIFeedback({ pageSlug, chunkSlug }: Props) {
                 tags.push(tag);
               }
             }
-            const [_, err] = await execute({
+            const [, err] = await execute({
               text,
               chunkSlug,
               pageSlug,
