@@ -123,8 +123,8 @@ export async function UserDetails({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <div className="col-span-1 grid grid-cols-3 gap-4 lg:col-span-2">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+      <div className="col-span-1 grid grid-cols-3 gap-4 xl:col-span-2">
         <DashboardBadge
           title="Total Summaries"
           icon={<PencilIcon className="size-4" />}
@@ -202,7 +202,7 @@ export async function UserDetails({
         </DashboardBadge>
       </div>
 
-      <Card className="col-span-full lg:col-span-1">
+      <Card className="col-span-full xl:col-span-1">
         <CardContent>
           <UserRadarChart data={radarChartData} />
         </CardContent>

@@ -37,7 +37,9 @@ async function start() {
 
   expect(page.getByTestId("user-nav-menu")).toBeVisible();
 
-  await page.context().storageState({ path: "playwright/.auth/storage.json" });
+  await page
+    .context()
+    .storageState({ path: "tests/playwright/.auth/storage.json" });
 
   await browser.close();
 }
