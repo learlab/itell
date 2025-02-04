@@ -17,7 +17,7 @@ export default async function Page() {
   const admin = isAdmin(user.role);
   return (
     <div className="mx-auto max-w-4xl p-6">
-      <CTest paragraphs={paragraphs} isAdmin={admin} showLetter={2} />
+      <CTest paragraphs={paragraphs} isAdmin={admin} showLetter={2} mode="ctest"/>
     </div>
   );
 }
