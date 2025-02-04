@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 export function ConsentSubmit({
   action,
-  value = "yes",
+  value,
 }: {
   action: (val: boolean) => Promise<void>;
   value?: "yes" | "no";
@@ -18,15 +18,12 @@ export function ConsentSubmit({
     <Form
       action={async (formData) => {
         const given = formData.get("agreement") === "yes";
-        if (given) {
-          toast.success("Consent given. Thank you!");
-          action(given);
-        } else {
-          toast.warning(
-            "Consent not given. You will be redirected to the text anyway."
-          );
-          action(given);
-        }
+        toast.success(
+          given
+            ? "Consent given. Navigating to next onboarding task ..."
+            : "Consent refused. Navigating to next onboarding task ..."
+        );
+        action(given);
       }}
       className="flex flex-col gap-4"
     >
@@ -35,7 +32,11 @@ export function ConsentSubmit({
         study, please indicate your agreement by clicking &quot;I am over 18
         years of age and I agree to having my data used in this study&quot;
       </p>
-      <RadioGroup name="agreement" required defaultValue={value}>
+      <RadioGroup
+        name="agreement"
+        required
+        {...(value !== undefined ? { value } : { defaultValue: "yes" })}
+      >
         <Label className="group flex flex-row-reverse items-center justify-end gap-4 xl:text-lg">
           <span className="underline-offset-2 group-has-[:checked]:underline">
             I have read and understood the information above, I am 18 years or
@@ -50,15 +51,15 @@ export function ConsentSubmit({
           <RadioGroupItem className="size-5 shrink-0" value="no" />
         </Label>
       </RadioGroup>
-      <Submit />
+      <Submit disabled={value !== undefined} />
     </Form>
   );
 }
 
-function Submit() {
+function Submit({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" pending={pending} disabled={pending}>
+    <Button type="submit" pending={pending} disabled={disabled || pending}>
       Submit
     </Button>
   );

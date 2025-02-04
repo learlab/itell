@@ -5,6 +5,7 @@ import { Lucia } from "lucia";
 import { db } from "@/db";
 import { sessions, users } from "@/drizzle/schema";
 import { isProduction } from "../constants";
+import { isAdmin } from "./role";
 import type {
   ConditionAssignments,
   PersonalizationData,
@@ -27,6 +28,7 @@ export const lucia = new Lucia(adapter, {
       image: attributes.image,
       email: attributes.email,
       role: attributes.role,
+      isAdmin: isAdmin(attributes.role),
       conditionAssignments: attributes.conditionAssignments,
       pageSlug: attributes.pageSlug,
       finished: attributes.finished,

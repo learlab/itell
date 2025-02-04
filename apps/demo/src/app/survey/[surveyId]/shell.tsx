@@ -1,7 +1,6 @@
 import React from "react";
 import { Skeleton } from "@itell/ui/skeleton";
 import { User } from "lucia";
-import { ChevronLeft } from "lucide-react";
 
 import { ContinueReading } from "@/components/continue-reading";
 import { SidebarTrigger } from "@/components/sidebar";

@@ -8,7 +8,6 @@ import { upsertSurveyAction } from "@/actions/survey";
 import { getSurveySessions } from "@/db/survey";
 import { SurveySession } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
-import { isAdmin } from "@/lib/auth/role";
 import { routes } from "@/lib/navigation";
 import { firstPage } from "@/lib/pages/pages.server";
 import ScrollToTop from "../scroll-to-top";
@@ -129,7 +128,7 @@ export default async function SurveyQuestionPage(props: {
                   key={question.id}
                   question={question}
                   sessionData={sectionData?.[question.id]}
-                  isAdmin={isAdmin(user.role)}
+                  isAdmin={user.isAdmin}
                 />
               </CardContent>
             </Card>

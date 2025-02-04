@@ -19,7 +19,6 @@ import {
   FileBoxIcon,
   LineChartIcon,
   LogOutIcon,
-  SettingsIcon,
 } from "lucide-react";
 
 import { AuthForm } from "@/app/auth/_components/auth-form";

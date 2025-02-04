@@ -371,7 +371,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
             pageSlug={pageSlug}
             pending={isPending}
             stages={stages}
-            userRole={user.role}
+            isAdmin={user.isAdmin}
             enableSimilarity
             prevInput={prevInput}
             ref={ref}

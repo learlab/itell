@@ -11,14 +11,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@itell/ui/tooltip";
-import { cn, numOfWords } from "@itell/utils";
+import { numOfWords } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { InfoIcon } from "lucide-react";
 import pluralize from "pluralize";
 import { toast } from "sonner";
 
 import { useSummaryStore } from "@/components/provider/page-provider";
-import { isAdmin } from "@/lib/auth/role";
 import { isProduction } from "@/lib/constants";
 import { type StageItem } from "@/lib/hooks/use-summary-stage";
 import { useSafeSearchParams } from "@/lib/navigation";
@@ -43,7 +42,7 @@ type Props = {
   pageSlug: string;
   stages: StageItem[];
   pending: boolean;
-  userRole: string;
+  isAdmin: boolean;
   prevInput?: string;
   enableSimilarity?: boolean;
   value?: string;
@@ -57,7 +56,7 @@ export const SummaryInput = ({
   disabled = true,
   value = "",
   pending,
-  userRole,
+  isAdmin,
   enableSimilarity = false,
   prevInput,
   ref,
@@ -117,7 +116,7 @@ export const SummaryInput = ({
           }}
           rows={10}
           onPaste={(e) => {
-            if (isProduction && !isAdmin(userRole)) {
+            if (isProduction && !isAdmin) {
               e.preventDefault();
               toast.warning("Copy & Paste is not allowed");
             }

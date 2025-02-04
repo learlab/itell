@@ -27,14 +27,16 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ class_code_valid: undefined }),
     }),
-    guide: defineRoute("/guide"),
-    consent: defineRoute("/consent", {
+    onboarding: defineRoute("/onboarding"),
+    consent: defineRoute("/onboarding/consent", {
       search: z
         .object({
           class_code_valid: classCodeValid,
         })
         .default({ class_code_valid: undefined }),
     }),
+    intakeSurvey: defineRoute("/onboarding/intake"),
+    guide: defineRoute("/guide"),
     auth: defineRoute("/auth", {
       search: z
         .object({

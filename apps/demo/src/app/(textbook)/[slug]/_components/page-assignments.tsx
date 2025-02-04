@@ -17,7 +17,6 @@ import { type User } from "lucia";
 import { NavigationButton } from "@/components/navigation-button";
 import { isQuizAnswered } from "@/db/quiz";
 import { getSurveyStatus, isOuttakeReady } from "@/db/survey";
-import { isAdmin } from "@/lib/auth/role";
 import { Condition, SUMMARY_DESCRIPTION_ID, Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { type PageStatus } from "@/lib/page-status";
@@ -52,7 +51,6 @@ export async function PageAssignments({
   const outtakeReady = isOuttakeReady(user);
   const hasQuiz = page.quiz && page.quiz.length > 0;
 
-  const admin = isAdmin(user.role);
   let quizReady = false;
   let quizAnswered = false;
   if (hasQuiz) {
@@ -182,7 +180,7 @@ export async function PageAssignments({
           {condition !== Condition.SIMPLE ? (
             <>
               <SummaryDescription condition={condition} />
-              <FloatingSummary isAdmin={admin} />
+              <FloatingSummary isAdmin={user.isAdmin} />
             </>
           ) : null}
         </CardContent>
@@ -193,7 +191,7 @@ export async function PageAssignments({
   if (quizReady) {
     return (
       <AssignmentsShell key={"quiz"}>
-        {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
+        {quizAnswered && user.isAdmin && <DeleteQuiz pageSlug={page.slug} />}
         <Tabs defaultValue="quiz">
           <TabsList>
             <TabsTrigger value="quiz">Quiz</TabsTrigger>
@@ -213,7 +211,7 @@ export async function PageAssignments({
   if (page.assignments.length !== 0) {
     return (
       <AssignmentsShell key={"summary"}>
-        {quizAnswered && admin && <DeleteQuiz pageSlug={page.slug} />}
+        {quizAnswered && user.isAdmin && <DeleteQuiz pageSlug={page.slug} />}
         <PageSummary />
       </AssignmentsShell>
     );
@@ -233,7 +231,7 @@ function AssignmentsShell({
       aria-labelledby="page-assignments-heading"
       className={cn(
         "mt-6 space-y-4 border-t-2 pt-6 duration-1000 animate-in fade-in",
-        className,
+        className
       )}
       {...rest}
     >

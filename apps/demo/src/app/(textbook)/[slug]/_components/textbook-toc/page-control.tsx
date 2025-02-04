@@ -4,7 +4,6 @@ import { cn } from "@itell/utils";
 import { ArrowUpIcon, PencilIcon } from "lucide-react";
 
 import { getSession } from "@/lib/auth";
-import { isAdmin } from "@/lib/auth/role";
 import { AdminTools } from "../admin-tools";
 import { RestartPageButton } from "./restart-page-button";
 
@@ -44,9 +43,7 @@ export async function PageControl({
   return (
     <div className="mt-12 space-y-2">
       <p className="sr-only">page control</p>
-      {user && isAdmin(user.role) ? (
-        <AdminTools user={user} pageSlug={pageSlug} />
-      ) : null}
+      {user?.isAdmin ? <AdminTools user={user} pageSlug={pageSlug} /> : null}
       {assignment ? (
         <AnchorLink
           icon={<PencilIcon className="size-4 xl:size-6" />}

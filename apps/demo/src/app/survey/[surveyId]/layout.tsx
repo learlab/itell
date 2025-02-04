@@ -12,7 +12,6 @@ import {
   AlertDialogTrigger,
 } from "@itell/ui/alert-dialog";
 import { Badge } from "@itell/ui/badge";
-import { Button } from "@itell/ui/button";
 import { Label } from "@itell/ui/label";
 import { ScrollArea } from "@itell/ui/scroll-area";
 import {
@@ -39,7 +38,6 @@ import {
   isSurveySessionFinished,
 } from "@/db/survey";
 import { getSession } from "@/lib/auth";
-import { isAdmin } from "@/lib/auth/role";
 import { Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
@@ -64,7 +62,6 @@ export default async function Layout({
   }
 
   const isReady = isSurveyReady(user, surveyId);
-  const admin = isAdmin(user.role);
   if (!isReady) {
     return (
       <SidebarProvider>
@@ -83,7 +80,7 @@ export default async function Layout({
                 will receive a notice when it&apos;s ready as you continue
                 reading the textbook.
               </AlertDescription>
-              {admin && <SetProgress user={user} />}
+              {user.isAdmin && <SetProgress user={user} />}
             </Alert>
             <ContinueReading user={user} />
           </SurveyHomeShell>
@@ -109,7 +106,7 @@ export default async function Layout({
             </p>
             <div className="flex items-center gap-2">
               <ContinueReading user={user} />
-              {admin && <DeleteSurvey surveyId={surveyId} />}
+              {user.isAdmin && <DeleteSurvey surveyId={surveyId} />}
             </div>
           </SurveyHomeShell>
         </SidebarInset>

@@ -1,7 +1,6 @@
 import { volume } from "#content";
 
 import { getSession } from "@/lib/auth";
-import { isAdmin } from "@/lib/auth/role";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { CTest } from "./c-test";
@@ -14,10 +13,9 @@ export default async function Page() {
     });
   }
   const paragraphs = splitParagraphs(volume.summary);
-  const admin = isAdmin(user.role);
   return (
     <div className="mx-auto max-w-4xl p-6">
-      <CTest paragraphs={paragraphs} isAdmin={admin} showLetter={2} />
+      <CTest paragraphs={paragraphs} isAdmin={user.isAdmin} showLetter={2} />
     </div>
   );
 }
