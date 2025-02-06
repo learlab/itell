@@ -7,9 +7,8 @@ import { UserStatistics } from "@dashboard/user-statistics";
 import { Meta } from "@/config/metadata";
 import { incrementView } from "@/db/dashboard";
 import { getSession } from "@/lib/auth";
-import { routes } from "@/lib/navigation";
+import { LeaderboardMetric, routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
-import { LeaderboardMetric } from "../_components/user-leaderboard-control";
 
 type Props = {
   searchParams?: Promise<Record<string, string> | undefined>;
@@ -56,7 +55,7 @@ const parseSearchParams = (searchParams: unknown) => {
   let readingTimeLevel = ReadingTimeChartLevel.week_1;
   if (
     Object.values(ReadingTimeChartLevel).includes(
-      reading_time_level as ReadingTimeChartLevel
+      reading_time_level as ReadingTimeChartLevel,
     )
   ) {
     readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
@@ -65,7 +64,7 @@ const parseSearchParams = (searchParams: unknown) => {
   let leaderboardMetric = LeaderboardMetric.all;
   if (
     Object.values(LeaderboardMetric).includes(
-      leaderboard_metric as LeaderboardMetric
+      leaderboard_metric as LeaderboardMetric,
     )
   ) {
     leaderboardMetric = leaderboard_metric as LeaderboardMetric;

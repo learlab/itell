@@ -16,8 +16,8 @@ import { getOtherUsers } from "@/db/user";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
 import { UserLeaderboard } from "./user-leaderboard";
-import { LeaderboardMetric } from "./user-leaderboard-control";
 import { UserRadarChart } from "./user-radar-chart";
+import { LeaderboardMetric } from "@/lib/navigation";
 
 type Props = {
   userId: string;
@@ -91,7 +91,7 @@ export async function UserDetails({
       other: otherStats.totalPassedSummaries,
       userScaled: scale(
         userStats.totalPassedSummaries,
-        otherStats.totalPassedSummaries
+        otherStats.totalPassedSummaries,
       ),
       otherScaled: 1,
       description:
@@ -115,7 +115,7 @@ export async function UserDetails({
       other: otherStats.totalPassedAnswers,
       userScaled: scale(
         userStats.totalPassedAnswers,
-        otherStats.totalPassedAnswers
+        otherStats.totalPassedAnswers,
       ),
       otherScaled: 1,
       description: "Number of correct answers to contructed response items",
@@ -195,7 +195,7 @@ export async function UserDetails({
             {diffs.contentScore
               ? `
 					${diffs.contentScore > 0 ? "+" : ""}${diffs.contentScore.toFixed(
-            2
+            2,
           )} compared to others`
               : "class stats unavailable"}
           </p>
@@ -239,7 +239,7 @@ export async function UserDetails({
 }
 
 UserDetails.ErrorFallback = CreateErrorFallback(
-  "Failed to calculate learning statistics"
+  "Failed to calculate learning statistics",
 );
 
 UserDetails.Skeleton = function UserDetailsSkeleton() {

@@ -10,8 +10,7 @@ import remarkGfm from "remark-gfm";
 import remarkHeadingAttrs from "remark-heading-attrs";
 import remarkMath from "remark-math";
 import { defineCollection, defineConfig, defineSchema, s } from "velite";
-
-import { SurveySchema } from "@/lib/survey";
+import { SurveySchema } from "@/lib/survey-data";
 
 const execAsync = promisify(exec);
 const timestamp = defineSchema(() =>

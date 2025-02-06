@@ -7,21 +7,12 @@ import { User } from "lucia";
 
 import { updateUserAction } from "@/actions/user";
 import { ClassCodeToast } from "@/components/class-code-toast";
-import { getSurveySessions, isSurveySessionFinished } from "@/db/survey";
 import { getSession } from "@/lib/auth";
-import { Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { ConsentSubmit } from "./consent-submit";
 
-export default async function ConsentPage({
-  searchParams,
-}: {
-  searchParams: Promise<unknown>;
-}) {
-  const { class_code_valid } = routes.consent.$parseSearchParams(
-    await searchParams
-  );
+export default async function ConsentPage() {
   const { user } = await getSession();
   if (!user) {
     return redirectWithSearchParams("/auth", { redirect_to: routes.consent() });
@@ -29,7 +20,6 @@ export default async function ConsentPage({
 
   return (
     <>
-      <ClassCodeToast valid={class_code_valid} />
       <ConsentForm
         user={user}
         value={

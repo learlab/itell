@@ -121,6 +121,7 @@ export const createOAuthCallbackHandler = ({
       const teacher = join_class_code
         ? await findTeacherByClass(join_class_code)
         : null;
+      console.log("teacher found", teacher);
       let class_code_valid: boolean | undefined = undefined;
 
       if (!user) {
@@ -162,32 +163,23 @@ export const createOAuthCallbackHandler = ({
       );
 
       // redirect, which can be
-      // - consent form if user has not given consent
+      // - onboarding if not finished
       // - the "redirect_to" searchParam present on the /auth page
       // - referrer header
       // - homepage (fallback)
-      const url =
-        user.consentGiven === null
-          ? routes.consent(
-              class_code_valid !== undefined
-                ? {
-                    search: {
-                      class_code_valid,
-                    },
-                  }
-                : {}
-            )
-          : dst !== "/"
-            ? dst
-            : routes.home(
-                class_code_valid !== undefined
-                  ? {
-                      search: {
-                        class_code_valid,
-                      },
-                    }
-                  : {}
-              );
+      const url = !user.onboardingFinished
+        ? routes.onboarding(
+            class_code_valid === undefined
+              ? undefined
+              : { search: { class_code_valid } }
+          )
+        : dst !== "/"
+          ? dst
+          : routes.home(
+              class_code_valid === undefined
+                ? undefined
+                : { search: { class_code_valid } }
+            );
 
       return new Response(null, {
         status: 303,

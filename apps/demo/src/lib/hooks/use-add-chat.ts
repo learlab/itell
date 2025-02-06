@@ -5,7 +5,6 @@ import { parseEventStream } from "@itell/utils";
 import { useServerAction } from "zsa-react";
 
 import { createChatsAction } from "@/actions/chat";
-import { scrollChat } from "@/app/(textbook)/[slug]/_components/chat/chat-popover";
 import { useChatStore } from "@/components/provider/page-provider";
 import { apiClient } from "../api-client";
 import { botMessage, getHistory, userMessage } from "../store/chat-store";

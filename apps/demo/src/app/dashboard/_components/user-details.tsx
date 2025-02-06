@@ -13,10 +13,10 @@ import { Spinner } from "@/components/spinner";
 import { getOtherStats, getUserStats } from "@/db/dashboard";
 import { countStudents } from "@/db/teacher";
 import { getOtherUsers } from "@/db/user";
+import { LeaderboardMetric } from "@/lib/navigation";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
 import { UserLeaderboard } from "./user-leaderboard";
-import { LeaderboardMetric } from "./user-leaderboard-control";
 import { UserRadarChart } from "./user-radar-chart";
 
 type Props = {

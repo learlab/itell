@@ -4,8 +4,8 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import { ReadingTime } from "./reading-time";
 import { UserDetails } from "./user-details";
-import { LeaderboardMetric } from "./user-leaderboard-control";
 import type { ReadingTimeChartParams } from "@itell/core/dashboard";
+import { LeaderboardMetric } from "@/lib/navigation";
 
 type Props = {
   userId: string;

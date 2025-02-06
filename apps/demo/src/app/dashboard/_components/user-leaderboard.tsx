@@ -19,7 +19,7 @@ import { InfoIcon } from "lucide-react";
 
 import { CreateErrorFallback } from "@/components/error-fallback";
 import { getLeaderboard } from "@/db/user";
-import { LeaderboardMetric } from "./user-leaderboard-control";
+import { LeaderboardMetric } from "@/lib/navigation";
 
 type Props = {
   userId: string;

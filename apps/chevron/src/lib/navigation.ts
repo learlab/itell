@@ -2,7 +2,13 @@ import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { createNavigationConfig } from "next-safe-navigation";
 import { z } from "zod";
 
-import { LeaderboardMetric } from "@/app/dashboard/_components/user-leaderboard-control";
+import { Survey } from "./constants";
+
+export enum LeaderboardMetric {
+  all = "all",
+  summary_streak = "summary_streak",
+  cri_streak = "cri_streak",
+}
 
 const classCodeValid = z.union([
   z.boolean().optional(),
@@ -27,14 +33,28 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ class_code_valid: undefined }),
     }),
-    guide: defineRoute("/guide"),
-    consent: defineRoute("/consent", {
+    onboarding: defineRoute("/onboarding", {
       search: z
         .object({
           class_code_valid: classCodeValid,
         })
         .default({ class_code_valid: undefined }),
     }),
+    consent: defineRoute("/onboarding/consent"),
+    intakeSurvey: defineRoute("/onboarding/intake"),
+    intakeSurveySection: defineRoute("/onboarding/intake/[sectionId]", {
+      params: z.object({
+        sectionId: z.string(),
+      }),
+    }),
+    outtakeSurvey: defineRoute("/offboarding/outtake"),
+    outtakeSurveySection: defineRoute("/offboarding/outtake/[sectionId]", {
+      params: z.object({
+        sectionId: z.string(),
+      }),
+    }),
+    cTest: defineRoute("/onboarding/ctest"),
+    guide: defineRoute("/guide"),
     auth: defineRoute("/auth", {
       search: z
         .object({
@@ -48,7 +68,6 @@ export const { routes, useSafeParams, useSafeSearchParams } =
           redirect_to: undefined,
         }),
     }),
-    ctest: defineRoute("/ctest"),
     textbook: defineRoute("/[slug]", {
       params: z.object({
         slug: z.string(),
@@ -113,15 +132,26 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         })
         .default({ join_class_code: undefined }),
     }),
-    surveyHome: defineRoute("/survey/[surveyId]", {
-      params: z.object({
-        surveyId: z.string(),
-      }),
-    }),
-    surveySection: defineRoute("/survey/[surveyId]/[sectionId]", {
-      params: z.object({
-        surveyId: z.string(),
-        sectionId: z.string(),
-      }),
-    }),
   }));
+
+export const surveyHomeRoute = (surveyId: string) => {
+  switch (surveyId) {
+    case Survey.INTAKE:
+      return routes.intakeSurvey();
+    case Survey.OUTTAKE:
+      return routes.outtakeSurvey();
+    default:
+      return routes.home();
+  }
+};
+
+export const surveySectionRoute = (surveyId: string, sectionId: string) => {
+  switch (surveyId) {
+    case Survey.INTAKE:
+      return routes.intakeSurveySection({ sectionId });
+    case Survey.OUTTAKE:
+      return routes.outtakeSurveySection({ sectionId });
+    default:
+      return routes.home();
+  }
+};

@@ -33,6 +33,8 @@ export const lucia = new Lucia(adapter, {
       pageSlug: attributes.pageSlug,
       finished: attributes.finished,
       consentGiven: attributes.consentGiven,
+      onboardingFinished: attributes.onboardingFinished,
+      offboardingFinished: attributes.offboardingFinished,
       surveyCompleted: attributes.surveyCompleted,
       classId: attributes.classId,
       personalization: {
@@ -75,6 +77,8 @@ interface DatabaseUserAttributes {
   finished: boolean;
   surveyCompleted: boolean;
   consentGiven: boolean | null;
+  onboardingFinished: boolean;
+  offboardingFinished: boolean;
   classId: string | null;
   pageSlug: string | null;
   conditionAssignments: ConditionAssignments;

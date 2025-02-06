@@ -10,13 +10,11 @@ import {
   SelectValue,
 } from "@itell/ui/select";
 
-import { routes, useSafeSearchParams } from "@/lib/navigation";
-
-export enum LeaderboardMetric {
-  all = "all",
-  summary_streak = "summary_streak",
-  cri_streak = "cri_streak",
-}
+import {
+  LeaderboardMetric,
+  routes,
+  useSafeSearchParams,
+} from "@/lib/navigation";
 
 export function UserLeaderboardControl() {
   const router = useRouter();

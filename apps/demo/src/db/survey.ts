@@ -11,7 +11,7 @@ import { db, first } from ".";
 // memoized as this is nestedly called by layout/page
 export const getSurveySessions = memoize(
   async <T extends string | string[]>(
-    user: User,
+    userId: string,
     surveyId: T
   ): Promise<T extends string ? SurveySession | null : SurveySession[]> => {
     const sessions = await db
@@ -19,7 +19,7 @@ export const getSurveySessions = memoize(
       .from(survey_sessions)
       .where(
         and(
-          eq(survey_sessions.userId, user.id),
+          eq(survey_sessions.userId, userId),
           typeof surveyId === "string"
             ? eq(survey_sessions.surveyId, surveyId)
             : inArray(survey_sessions.surveyId, surveyId)
@@ -45,8 +45,8 @@ export const isSurveySessionFinished = (
   return session && session.finishedAt !== null;
 };
 
-export const getSurveyStatus = async (user: User) => {
-  const sessions = await getSurveySessions(user, [
+export const getSurveyStatus = async (userId: string) => {
+  const sessions = await getSurveySessions(userId, [
     Survey.INTAKE,
     Survey.OUTTAKE,
   ]);

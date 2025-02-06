@@ -7,9 +7,8 @@ import { UserStatistics } from "@dashboard/user-statistics";
 import { Meta } from "@/config/metadata";
 import { incrementView } from "@/db/dashboard";
 import { getSession } from "@/lib/auth";
-import { routes } from "@/lib/navigation";
+import { LeaderboardMetric, routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";
-import { LeaderboardMetric } from "../_components/user-leaderboard-control";
 
 type Props = {
   searchParams?: Promise<Record<string, string> | undefined>;

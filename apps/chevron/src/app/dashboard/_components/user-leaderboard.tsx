@@ -19,7 +19,7 @@ import { InfoIcon } from "lucide-react";
 
 import { CreateErrorFallback } from "@/components/error-fallback";
 import { getLeaderboard } from "@/db/user";
-import { LeaderboardMetric } from "./user-leaderboard-control";
+import { LeaderboardMetric } from "@/lib/navigation";
 
 type Props = {
   userId: string;
@@ -108,5 +108,5 @@ UserLeaderboard.Skeleton = function ReadingTimeSkeleton() {
   return <Skeleton className="h-[350px] w-full" />;
 };
 UserLeaderboard.ErrorFallback = CreateErrorFallback(
-  "Could not load user leaderboard"
+  "Could not load user leaderboard",
 );

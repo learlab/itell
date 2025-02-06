@@ -5,6 +5,7 @@ import { Lucia } from "lucia";
 import { db } from "@/db";
 import { sessions, users } from "@/drizzle/schema";
 import { isProduction } from "../constants";
+import { isAdmin } from "./role";
 import type {
   ConditionAssignments,
   PersonalizationData,
@@ -27,10 +28,13 @@ export const lucia = new Lucia(adapter, {
       image: attributes.image,
       email: attributes.email,
       role: attributes.role,
+      isAdmin: isAdmin(attributes.role),
       conditionAssignments: attributes.conditionAssignments,
       pageSlug: attributes.pageSlug,
       finished: attributes.finished,
       consentGiven: attributes.consentGiven,
+      onboardingFinished: attributes.onboardingFinished,
+      offboardingFinished: attributes.offboardingFinished,
       surveyCompleted: attributes.surveyCompleted,
       classId: attributes.classId,
       personalization: {
@@ -73,6 +77,8 @@ interface DatabaseUserAttributes {
   finished: boolean;
   surveyCompleted: boolean;
   consentGiven: boolean | null;
+  onboardingFinished: boolean;
+  offboardingFinished: boolean;
   classId: string | null;
   pageSlug: string | null;
   conditionAssignments: ConditionAssignments;

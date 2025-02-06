@@ -3,9 +3,9 @@
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { SurveyQuestionDataSchema } from "@/app/survey/[surveyId]/[sectionId]/survey-question-renderer";
 import { db, first } from "@/db";
 import { survey_sessions } from "@/drizzle/schema";
+import { SurveyQuestionDataSchema } from "@/lib/survey-question";
 import { authedProcedure } from "./utils";
 
 export const upsertSurveyAction = authedProcedure

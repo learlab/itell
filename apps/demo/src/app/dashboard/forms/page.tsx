@@ -26,7 +26,7 @@ type FormEntry = {
 };
 
 async function getSurveyStatus(user: User) {
-  const sessions = await getSurveySessions(user, [
+  const sessions = await getSurveySessions(user.id, [
     Survey.INTAKE,
     Survey.OUTTAKE,
   ]);

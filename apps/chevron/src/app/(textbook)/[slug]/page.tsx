@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Elements } from "@itell/constants";
 import { PageTitle } from "@itell/ui/page-title";
 import { ScrollArea } from "@itell/ui/scroll-area";
@@ -51,6 +51,9 @@ export default async function Page(props: {
 
   const session = await getSession();
   const user = session.user;
+  if (user && !user.onboardingFinished) {
+    return redirect(routes.onboarding());
+  }
   const userId = user?.id ?? null;
   const userFinished = user?.finished ?? false;
   const userPageSlug = user?.pageSlug ?? null;

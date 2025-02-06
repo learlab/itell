@@ -1,9 +1,9 @@
-import { and, desc, eq, isNotNull, ne, sql } from "drizzle-orm";
+import { and, eq, isNotNull, ne, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { OAuthProviderId } from "@/app/auth/oauth";
-import { LeaderboardMetric } from "@/app/dashboard/_components/user-leaderboard-control";
 import { isProduction } from "@/lib/constants";
+import { LeaderboardMetric } from "@/lib/navigation";
 import { db, first } from ".";
 import * as schema from "../drizzle/schema";
 

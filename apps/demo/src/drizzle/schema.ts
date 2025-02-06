@@ -14,7 +14,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { SurveySubmission } from "@/app/survey/[surveyId]/[sectionId]/survey-question-renderer";
+import { SurveySubmission } from "@/lib/survey-question";
 import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 export const aal_level = pgEnum("aal_level", ["aal1", "aal2", "aal3"]);
@@ -96,8 +96,10 @@ export const users = pgTable("users", {
   classId: text("class_id"),
   finished: boolean("finished").default(false).notNull(),
   preferences: jsonb("preferences").$type<UserPreferences>(),
-  // do not mandate consent for the demo volume
-  consentGiven: boolean("consent_given").default(true),
+  // do not mandate onboarding tasks for the demo volume
+  consentGiven: boolean("consent_given"),
+  onboardingFinished: boolean("onboarding_finished").notNull().default(true),
+  offboardingFinished: boolean("offboarding_finished").notNull().default(false),
   personalization: jsonb("personalization_data").$type<PersonalizationData>(),
   conditionAssignments: jsonb("condition_assignments")
     .$type<ConditionAssignments>()
