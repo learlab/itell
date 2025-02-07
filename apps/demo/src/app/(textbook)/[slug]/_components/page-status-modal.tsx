@@ -14,7 +14,6 @@ import {
 import { LoginButton } from "@auth//auth-form";
 import { type User } from "lucia";
 
-import { TakeOnboarding } from "@/components/take-consent";
 import { isProduction } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { makePageHref } from "@/lib/utils";
@@ -32,32 +31,19 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
   }
 
   if (user) {
-    if (user.consentGiven === null) {
-      return (
-        <Modal title="Please review the consent form first">
-          <p>Please review our policies before continuing.</p>
-          <DialogFooter>
-            <TakeOnboarding />
-          </DialogFooter>
-        </Modal>
-      );
-    }
-
     if (latest) {
       return null;
     }
-
-    const href = makePageHref(user.pageSlug ?? fallbackPageSlug);
-
     // user with locked page
+    const href = makePageHref(user?.pageSlug ?? fallbackPageSlug);
     return (
-      <Modal title="You haven't unlocked this page yet">
+      <Modal title="Page locked">
         <p>
-          Submit a passing summary for
+          Gain access by submitting a passing summary for
           <Link href={href} className="mx-1 font-semibold underline">
             <span> this page </span>
           </Link>
-          first.
+          .
         </p>
         <DialogFooter>
           <Button>
@@ -74,9 +60,9 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
       title="Log in to access the textbook"
       description="We collects anonymous data to improve learning experience."
     >
-      <div className="flex justify-center">
+      <DialogFooter className="sm:justify-start">
         <LoginButton />
-      </div>
+      </DialogFooter>
     </Modal>
   );
 }

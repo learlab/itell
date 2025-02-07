@@ -12,6 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@itell/ui/dropdown";
+import { AuthForm } from "@auth/auth-form";
+import { DeleteAccount } from "@auth/delete-account";
 import { type User } from "lucia";
 import {
   ChevronDownIcon,
@@ -21,7 +23,6 @@ import {
   LogOutIcon,
 } from "lucide-react";
 
-import { AuthForm } from "@/app/auth/_components/auth-form";
 import { logout } from "@/lib/auth/actions";
 import { Spinner } from "./spinner";
 import { UserAvatar } from "./user-avatar";
@@ -124,27 +125,28 @@ export function UserAccountNav({ user }: { user: User | null }) {
           ))}
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="cursor-pointer"
             disabled={logoutPending}
             onSelect={(event) => {
               event.preventDefault();
               setLogoutPending(true);
               startTransition(async () => {
                 await logout();
-                router.push("/auth");
                 setOpen(false);
                 setLogoutPending(false);
               });
             }}
           >
-            <button
-              role="link"
-              type="button"
-              className="flex w-full items-center gap-2"
-            >
+            <button type="button" className="flex w-full items-center gap-2">
               {logoutPending ? <Spinner /> : <LogOutIcon className="size-4" />}
               Sign out
             </button>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={(event) => {
+              event.preventDefault();
+            }}
+          >
+            <DeleteAccount />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

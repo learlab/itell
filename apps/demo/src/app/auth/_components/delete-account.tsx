@@ -1,10 +1,9 @@
 "use client";
 
 import { useTransition } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -19,15 +18,14 @@ import { UserRoundX } from "lucide-react";
 import { deleteUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
 import { logout } from "@/lib/auth/actions";
-import { routes } from "@/lib/navigation";
 
-export function DeleteAccount() {
+export function DeleteAccount(props: React.ComponentProps<typeof AdminButton>) {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <AdminButton variant="outline" className="gap-2" size={"lg"}>
+        <AdminButton variant="outline" className="gap-2" size={"lg"} {...props}>
           <UserRoundX className="size-4" />
           <span>Delete Account</span>
         </AdminButton>
@@ -35,8 +33,7 @@ export function DeleteAccount() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Account?</AlertDialogTitle>
-          This will delete your account and all related data. This is for admin
-          testing only.
+          This will delete your account and all related data.
           <AlertDialogDescription></AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -49,8 +46,6 @@ export function DeleteAccount() {
                 localStorage.clear();
                 await deleteUserAction();
                 await logout();
-
-                router.push(routes.auth());
               });
             }}
           >
