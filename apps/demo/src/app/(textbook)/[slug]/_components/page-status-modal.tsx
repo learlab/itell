@@ -14,7 +14,7 @@ import {
 import { LoginButton } from "@auth//auth-form";
 import { type User } from "lucia";
 
-import { TakeConsent } from "@/components/take-consent";
+import { TakeOnboarding } from "@/components/take-consent";
 import { isProduction } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { makePageHref } from "@/lib/utils";
@@ -37,7 +37,7 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
         <Modal title="Please review the consent form first">
           <p>Please review our policies before continuing.</p>
           <DialogFooter>
-            <TakeConsent />
+            <TakeOnboarding />
           </DialogFooter>
         </Modal>
       );
@@ -104,7 +104,9 @@ function Modal({
       <DialogContent canClose={!isProduction}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description ? <DialogDescription>{description}</DialogDescription> : null}
+          {description ? (
+            <DialogDescription>{description}</DialogDescription>
+          ) : null}
         </DialogHeader>
         {children}
       </DialogContent>

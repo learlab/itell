@@ -8,7 +8,7 @@ import { ContinueReading } from "@/components/continue-reading";
 import { HtmlRenderer } from "@/components/html-renderer";
 import { MainNav } from "@/components/main-nav";
 import { ScreenIssuePopup } from "@/components/screen-issue-popup";
-import { TakeConsent } from "@/components/take-consent";
+import { TakeOnboarding } from "@/components/take-onboarding";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
 
@@ -42,8 +42,8 @@ export default async function Page({
 
 async function ActionButton() {
   const { user } = await getSession();
-  if (user && user.consentGiven === null) {
-    return <TakeConsent />;
+  if (user && !user.onboardingFinished) {
+    return <TakeOnboarding />;
   }
 
   return <ContinueReading user={user} className="w-52" />;

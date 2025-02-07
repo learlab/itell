@@ -1,15 +1,16 @@
 import { cn } from "@itell/utils";
 
+import { routes } from "@/lib/navigation";
 import { NavigationButton } from "./navigation-button";
 
-export function TakeConsent({ className }: { className?: string }) {
+export function TakeOnboarding({ className }: { className?: string }) {
   return (
     <NavigationButton
-      href="/consent"
+      href={routes.onboarding()}
       size={"lg"}
       className={cn("p-0", className)}
     >
-      Review Consent Form
+      Start Onboarding
     </NavigationButton>
   );
 }
