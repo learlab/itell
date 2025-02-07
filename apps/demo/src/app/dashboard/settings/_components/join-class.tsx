@@ -72,7 +72,7 @@ export function JoinClassForm({ user }: Props) {
         />
       ) : null}
       {teacherName === null && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-red-400">
           No teacher found associated with the code, please make sure you are
           using the exact code received from your teacher.
         </p>

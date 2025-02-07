@@ -72,7 +72,7 @@ export function JoinClassModal({ userClassId, teacherName, classId }: Props) {
                     the confirm button to join.
                   </p>
                 ) : (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-warning">
                     No teacher found associated with the code, please make sure
                     you are using the exact code received from your teacher.
                   </p>
