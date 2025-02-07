@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { buttonVariants } from "@itell/ui/button";
-import { Errorbox } from "@itell/ui/callout";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { UserProgress } from "@dashboard/user-progress";
@@ -12,7 +11,7 @@ import { findUser } from "@/db/user";
 import { type User } from "@/drizzle/schema";
 import { Errors } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
-import { firstAssignmentPage, getPageData } from "@/lib/pages/pages.server";
+import { firstPage, getPageData } from "@/lib/pages/pages.server";
 import { checkTeacher } from "../../teacher/check-teacher";
 
 interface PageProps {
@@ -32,17 +31,31 @@ export default async function Page(props: PageProps) {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading={Meta.student.title} text={Meta.student.description} />
+      <DashboardHeader
+        heading={Meta.student.title}
+        text={Meta.student.description}
+      />
       <StudentProfile student={student} searchParams={searchParams} />
     </DashboardShell>
   );
 }
 
-function StudentProfile({ student, searchParams }: { student: User; searchParams: unknown }) {
+function StudentProfile({
+  student,
+  searchParams,
+}: {
+  student: User;
+  searchParams: unknown;
+}) {
   const page = getPageData(student.pageSlug);
-  const { reading_time_level } = routes.dashboardStudent.$parseSearchParams(searchParams);
+  const { reading_time_level } =
+    routes.dashboardStudent.$parseSearchParams(searchParams);
   let readingTimeLevel = ReadingTimeChartLevel.week_1;
-  if (Object.values(ReadingTimeChartLevel).includes(reading_time_level as ReadingTimeChartLevel)) {
+  if (
+    Object.values(ReadingTimeChartLevel).includes(
+      reading_time_level as ReadingTimeChartLevel
+    )
+  ) {
     readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
   }
   return (
@@ -52,7 +65,7 @@ function StudentProfile({ student, searchParams }: { student: User; searchParams
           <div className="flex items-center justify-between">
             <p>{student.name}</p>
             <p className="text-sm font-semibold text-muted-foreground">
-              {page?.title || firstAssignmentPage?.title}
+              {page?.title || firstPage?.title}
             </p>
           </div>
         </CardTitle>
@@ -62,7 +75,10 @@ function StudentProfile({ student, searchParams }: { student: User; searchParams
             <p>joined at {student.createdAt.toLocaleString("en-us")}</p>
           </div>
           <div className="text-center">
-            <UserProgress pageSlug={student.pageSlug} finished={student.finished} />
+            <UserProgress
+              pageSlug={student.pageSlug}
+              finished={student.finished}
+            />
           </div>
 
           <div className="flex justify-between">

@@ -1,6 +1,6 @@
 import { type User } from "lucia";
 
-import { allAssignmentPagesSorted } from "@/lib/pages/pages.server";
+import { allPagesSorted } from "@/lib/pages/pages.server";
 import { AdminToolsClient } from "./admin-tools.client";
 
 type Props = {
@@ -10,10 +10,6 @@ type Props = {
 
 export function AdminTools({ user, pageSlug }: Props) {
   return (
-    <AdminToolsClient
-      user={user}
-      pageSlug={pageSlug}
-      pages={allAssignmentPagesSorted}
-    />
+    <AdminToolsClient user={user} pageSlug={pageSlug} pages={allPagesSorted} />
   );
 }

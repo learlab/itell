@@ -354,13 +354,12 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           </form>
         </CRIContent>
 
-        <CardFooter>
-          <div className="flex items-center gap-1.5">
-            <p className="text-sm text-muted-foreground">
-              iTELL evaluation is based on AI and may not always be accurate.{" "}
-            </p>
+        <CardFooter className="flex-col items-start gap-2 text-sm text-muted-foreground">
+          <p className="m-0">
+            Answer the question above the continue reading. iTELL evaluation is
+            based on AI and may not always be accurate.{" "}
             <CRIFeedback pageSlug={pageSlug} chunkSlug={chunkSlug} />
-          </div>
+          </p>
         </CardFooter>
       </CRIShell>
     </>

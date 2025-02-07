@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@itell/ui/button";
+import { Errorbox } from "@itell/ui/callout";
 import { Input } from "@itell/ui/input";
 import { Label } from "@itell/ui/label";
 import { JoinClassModal } from "@dashboard/join-class-modal";
@@ -63,7 +64,7 @@ export function JoinClassForm({ user }: Props) {
         </Label>
         <SubmitButton />
       </form>
-      {/* dialog to confirm joining a class */}
+      {/* dialog to confirm joining the class */}
       {teacherName ? (
         <JoinClassModal
           userClassId={user.classId}
@@ -72,10 +73,10 @@ export function JoinClassForm({ user }: Props) {
         />
       ) : null}
       {teacherName === null && (
-        <p className="text-sm text-muted-foreground">
-          No teacher found associated with the code, please make sure you are
-          using the exact code received from your teacher.
-        </p>
+        <Errorbox
+          title="No teacher found associated with the code, please make sure you are
+          using the exact code received from your teacher."
+        />
       )}
     </div>
   );

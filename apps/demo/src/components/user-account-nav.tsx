@@ -141,13 +141,17 @@ export function UserAccountNav({ user }: { user: User | null }) {
               Sign out
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={(event) => {
-              event.preventDefault();
-            }}
-          >
-            <DeleteAccount />
-          </DropdownMenuItem>
+
+          {user.isAdmin && (
+            <DropdownMenuItem
+              className="mt-2"
+              onSelect={(event) => {
+                event.preventDefault();
+              }}
+            >
+              <DeleteAccount badgePosition="top-center" />
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

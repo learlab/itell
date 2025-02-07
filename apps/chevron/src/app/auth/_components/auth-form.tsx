@@ -107,7 +107,7 @@ export function LoginButton() {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant="outline" className="gap-2">
+        <Button variant="outline" className="w-32 gap-2">
           <LogInIcon className="size-4" />
           Log in
         </Button>

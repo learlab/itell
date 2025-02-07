@@ -11,7 +11,7 @@ export function AdminButton({
   ...props
 }: React.ComponentProps<typeof Button> & {
   badgeClassName?: string;
-  badgePosition?: "top-right" | "right";
+  badgePosition?: "top-right" | "right" | "top-center";
 }) {
   return (
     <Button className={cn("relative", className)} {...props}>
@@ -23,6 +23,8 @@ export function AdminButton({
             "right-0 top-0 -translate-y-1/2 translate-x-1/2",
           badgePosition === "right" &&
             "right-0 top-1/2 -translate-x-full -translate-y-1/2",
+          badgePosition === "top-center" &&
+            "right-1/2 top-0 -translate-y-1/2 translate-x-1/2",
           badgeClassName
         )}
       >

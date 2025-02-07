@@ -57,7 +57,7 @@ const getCorrectCount = (
 
 export const analyzeClassQuiz = memoize(
   async (studentIds: string[], classId: string) => {
-    const results = await db
+    const records = await db
       // select distinct to only get the latest submission for each user/page
       .selectDistinctOn([quiz_answers.userId, quiz_answers.pageSlug], {
         userId: quiz_answers.userId,
@@ -75,18 +75,17 @@ export const analyzeClassQuiz = memoize(
         desc(quiz_answers.createdAt)
       );
 
-    const analyzedResults = results.map((result) => {
+    return records.map((result) => {
       const pageCorrectAnswers = correctAnswers[result.pageSlug];
       const count = getCorrectCount(result.data, pageCorrectAnswers);
       return {
         userId: result.userId,
         pageSlug: result.pageSlug,
+        data: result.data,
         name: result.name ?? "Anonymous",
         count,
       };
     });
-
-    return analyzedResults;
   },
   {
     persist: true,

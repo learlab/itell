@@ -27,30 +27,19 @@ export const findTeacher = async (userId: string) => {
 /*
  * Find teacher by classId, returns user model
  */
-export const findTeacherByClass = memoize(
-  async (classId: string) => {
-    const records = await db
-      .select()
-      .from(schema.users)
-      .innerJoin(schema.teachers, eq(schema.users.id, schema.teachers.id))
-      .where(
-        and(
-          eq(schema.teachers.classId, classId),
-          eq(schema.teachers.isPrimary, true)
-        )
-      );
-
-    return first(records)?.users;
-  },
-  {
-    persist: true,
-    duration: 5 * 60,
-    revalidateTags: (classId) => ["find-teacher-by-class", classId],
-    log: isProduction ? [] : ["dedupe", "datacache", "verbose"],
-    logid: "Find teacher by class",
-  }
-);
-
+export const findTeacherByClass = async (classId: string) => {
+  const records = await db
+    .select()
+    .from(schema.users)
+    .innerJoin(schema.teachers, eq(schema.users.id, schema.teachers.id))
+    .where(
+      and(
+        eq(schema.teachers.classId, classId),
+        eq(schema.teachers.isPrimary, true)
+      )
+    );
+  return first(records)?.users;
+};
 /**
  * Get students by classId, alongside with their summary count
  */

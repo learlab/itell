@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
 } from "@itell/ui/alert-dialog";
 import { Button } from "@itell/ui/button";
+import { Errorbox } from "@itell/ui/callout";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
@@ -33,7 +34,7 @@ export function JoinClassModal({ userClassId, teacherName, classId }: Props) {
   const canJoinClass = !userClassId && teacherName;
 
   const joinClass = async () => {
-    const [_, err] = await execute({ classId });
+    const [, err] = await execute({ classId });
     if (!err) {
       setOpen(false);
       toast.success("You have joined the class! Redirecting.");
@@ -44,11 +45,11 @@ export function JoinClassModal({ userClassId, teacherName, classId }: Props) {
   };
 
   useEffect(() => {
-    if (isError) {
+    if (error) {
       toast.error("Can't join class now, please try again later.");
       reportSentry("join class", { error });
     }
-  }, [isError]);
+  }, [error]);
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -72,10 +73,10 @@ export function JoinClassModal({ userClassId, teacherName, classId }: Props) {
                     the confirm button to join.
                   </p>
                 ) : (
-                  <p className="text-sm text-muted-foreground">
-                    No teacher found associated with the code, please make sure
-                    you are using the exact code received from your teacher.
-                  </p>
+                  <Errorbox
+                    title="No teacher found associated with the code, please make sure you are
+          using the exact code received from your teacher."
+                  />
                 )}
               </div>
 

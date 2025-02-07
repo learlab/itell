@@ -23,10 +23,11 @@ export async function ClassQuizTable({ students, classId }: Props) {
   );
 
   // loop through students instead of data to show all students in the table
-  // for each student, generate the object {page1: correctCount, page2: correctCount, ...}
-  const byStudent = students.reduce<Record<string, Record<string, number>>>((acc, cur) => {
+  // for each student, get {page1: correctCount, page2: correctCount, ...}
+  const byStudent = students.reduce<
+    Record<string, Record<string, { correctCount: number; data: string[] }>>
+  >((acc, cur) => {
     const entries = data.filter((d) => d.userId === cur.id);
-
     if (entries.length === 0) {
       acc[cur.name] = {};
       return acc;
@@ -36,24 +37,36 @@ export async function ClassQuizTable({ students, classId }: Props) {
     if (!acc[name]) {
       acc[name] = {};
     }
-
     for (const entry of entries) {
-      acc[name][entry.pageSlug] = entry.count;
+      acc[name][entry.pageSlug] = {
+        correctCount: entry.count,
+        data: entry.data,
+      };
     }
 
     return acc;
   }, {});
-  const studentsArr = Object.entries(byStudent).map(([name, records]) => ({
+  const tableData = Object.entries(byStudent).map(([name, records]) => ({
     name,
     total: Object.keys(records).length,
-    ...Object.fromEntries(quizPages.map((page) => [page.slug, records[page.slug] ?? -1])),
+    ...Object.fromEntries(
+      quizPages.map((page) => [
+        page.slug,
+        {
+          correctCount: records[page.slug]?.correctCount ?? -1,
+          data: records[page.slug]?.data ?? null,
+        },
+      ])
+    ),
   }));
 
-  return <QuizTableClient data={studentsArr} quizPages={quizPages} />;
+  return <QuizTableClient data={tableData} quizPages={quizPages} />;
 }
 
 ClassQuizTable.Skeleton = function TableSkeleton() {
   return <Skeleton className="h-80 w-full" />;
 };
 
-ClassQuizTable.ErrorFallback = CreateErrorFallback("Failed to get quiz statistics");
+ClassQuizTable.ErrorFallback = CreateErrorFallback(
+  "Failed to get quiz statistics"
+);

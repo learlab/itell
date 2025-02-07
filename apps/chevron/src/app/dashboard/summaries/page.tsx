@@ -13,7 +13,7 @@ import { getUserSummary } from "@/db/summary";
 import { Summary } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
-import { allPagesSorted, firstAssignmentPage } from "@/lib/pages/pages.server";
+import { allPagesSorted } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 import { SummaryListSelect } from "./_components/summary-list-select";
 
@@ -43,7 +43,7 @@ export default async function Page(props: { searchParams: Promise<unknown> }) {
           <CardContent>
             <NavigationButton
               href={`${makePageHref(
-                user.pageSlug ?? firstAssignmentPage?.slug ?? firstPage.slug
+                user.pageSlug ?? firstPage.slug
               )}#${Elements.PAGE_ASSIGNMENTS}`}
               className="px-4"
             >

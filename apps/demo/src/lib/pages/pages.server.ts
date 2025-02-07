@@ -34,9 +34,6 @@ export const quizPages = allPagesSorted.filter((page) => page.quiz);
 export const allAssignmentPagesSorted = allPagesSorted.filter(
   (page) => page.assignments.length > 0
 );
-export const firstAssignmentPage = allAssignmentPagesSorted.find(
-  (page) => page.assignments.length > 0
-);
 export const firstPage = allPagesSorted[0];
 
 export const getPage = (slug: string) =>
@@ -118,16 +115,5 @@ export const nextPage = (slug: string): string => {
   // Get the next page
   const nextPage = allPagesSorted[currentPageIndex + 1];
 
-  if (nextPage.summary) {
-    return nextPage.slug;
-  }
-
-  // find the next page that requires a summary
-  const nextPageWithSummary = allPagesSorted
-    .slice(currentPageIndex + 1)
-    .find((s) => s.summary);
-  if (nextPageWithSummary) {
-    return nextPageWithSummary.slug;
-  }
-  return allPagesSorted[allPagesSorted.length - 1].slug;
+  return nextPage.slug;
 };

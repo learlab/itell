@@ -17,6 +17,7 @@ import { type User } from "lucia";
 import { isQuizAnswered } from "@/db/quiz";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
+import { MarkCompletedForm } from "./mark-completed-form";
 import { PageQuiz } from "./quiz/page-quiz";
 import { DeleteQuiz } from "./quiz/page-quiz-delete-answer";
 import {
@@ -43,6 +44,17 @@ export async function PageAssignments({
   user,
   condition,
 }: Props) {
+  if (page.assignments.length === 0) {
+    if (!pageStatus.unlocked) {
+      return (
+        <AssignmentsShell>
+          <MarkCompletedForm user={user} page={page} />
+        </AssignmentsShell>
+      );
+    }
+
+    return null;
+  }
   const hasQuiz = page.quiz && page.quiz.length > 0;
   let quizReady = false;
   let quizAnswered = false;

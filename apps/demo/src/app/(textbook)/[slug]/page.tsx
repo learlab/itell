@@ -27,7 +27,7 @@ import {
 } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { getPageStatus } from "@/lib/page-status";
-import { firstAssignmentPage, getPage } from "@/lib/pages/pages.server";
+import { firstPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
@@ -128,14 +128,13 @@ export default async function Page(props: {
       </Suspense>
 
       {user ? <NoteLoader userId={user.id} pageSlug={pageSlug} /> : null}
+      <PageStatusModal
+        user={user}
+        pageStatus={pageStatus}
+        fallbackPageSlug={firstPage?.slug ?? null}
+      />
 
-      {isProduction ? (
-        <PageStatusModal
-          user={user}
-          pageStatus={pageStatus}
-          fallbackPageSlug={firstAssignmentPage?.slug ?? null}
-        />
-      ) : null}
+      {isProduction ? null : null}
       <ChunkControl
         userId={userId}
         pageSlug={pageSlug}

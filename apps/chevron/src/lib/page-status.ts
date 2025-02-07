@@ -1,15 +1,7 @@
 import { volume } from "#content";
-import { isLastPage } from "./pages";
-import {
-  firstAssignmentPage,
-  firstPage,
-  getPageData,
-  isPageAfter,
-} from "./pages/pages.server";
 
-const isPageUnlockedWithoutUser = (pageSlug: string) => {
-  return volume.free_pages.includes(pageSlug);
-};
+import { isLastPage } from "./pages";
+import { firstPage, getPageData, isPageAfter } from "./pages/pages.server";
 
 export type PageStatus = {
   // if user has completed the page
@@ -33,17 +25,12 @@ export const getPageStatus = ({
 
   if (!userPageSlug) {
     return {
-      unlocked: isPageUnlockedWithoutUser(pageSlug),
-      latest:
-        pageSlug ===
-        (firstAssignmentPage ? firstAssignmentPage.slug : firstPage.slug),
+      unlocked: false,
+      latest: pageSlug === firstPage.slug,
     };
   }
 
   const latest = pageSlug === userPageSlug;
-  if (isPageUnlockedWithoutUser(pageSlug)) {
-    return { unlocked: true, latest };
-  }
 
   const page = getPageData(pageSlug);
   if (!page) {
