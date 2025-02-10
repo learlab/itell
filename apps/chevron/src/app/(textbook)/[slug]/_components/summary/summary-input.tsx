@@ -5,12 +5,7 @@ import { Elements } from "@itell/constants";
 import { useDebounce } from "@itell/core/hooks";
 import { levenshteinDistance } from "@itell/core/summary";
 import { Label } from "@itell/ui/label";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@itell/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { numOfWords } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { InfoIcon } from "lucide-react";
@@ -164,17 +159,15 @@ function Distance({ distance }: { distance: number }) {
           </span>
         </div>
       </div>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <InfoIcon className="size-6 flex-shrink-0" />
-          </TooltipTrigger>
-          <TooltipContent className="w-64">
-            Revise your summary to make it more unique to your previous summary
-            (pass the threshold indicated by the blue bar).
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <InfoIcon className="size-6 flex-shrink-0" />
+        </TooltipTrigger>
+        <TooltipContent className="w-64">
+          Revise your summary to make it more unique to your previous summary
+          (pass the threshold indicated by the blue bar).
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 }

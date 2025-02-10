@@ -18,7 +18,7 @@ import {
 import { InfoIcon } from "lucide-react";
 
 import { CreateErrorFallback } from "@/components/error-fallback";
-import { getLeaderboard } from "@/db/user";
+import { getLeaderboard } from "@/db/dashboard";
 import { LeaderboardMetric } from "@/lib/navigation";
 
 type Props = {
@@ -29,7 +29,6 @@ type Props = {
 
 export async function UserLeaderboard({ userId, classId, metric }: Props) {
   const data = await getLeaderboard({ userId, classId, metric });
-  console.log(data[0].image);
 
   return (
     <Card>

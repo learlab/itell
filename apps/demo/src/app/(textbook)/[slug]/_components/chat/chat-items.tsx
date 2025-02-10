@@ -39,7 +39,7 @@ export function ChatItems({
         className
       )}
     >
-      <div className="flex-1 flex-grow space-y-2" role="status">
+      <div className="flex-1 flex-grow space-y-3" role="status">
         {prevData?.map((message) => {
           return <MessageItemMemo key={message.id} message={message} />;
         })}

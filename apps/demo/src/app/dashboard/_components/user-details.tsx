@@ -13,7 +13,7 @@ import { Spinner } from "@/components/spinner";
 import { getOtherStats, getUserStats } from "@/db/dashboard";
 import { countStudents } from "@/db/teacher";
 import { getOtherUsers } from "@/db/user";
-import { LeaderboardMetric } from "@/lib/navigation";
+import { LeaderboardMetric, routes } from "@/lib/navigation";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
 import { UserLeaderboard } from "./user-leaderboard";
@@ -220,7 +220,7 @@ export async function UserDetails({
             ) : (
               <span>
                 enter your class code in{" "}
-                <Link href="/dashboard/settings#enroll" className="underline">
+                <Link href={routes.dashboardSettings()} className="underline">
                   Settings
                 </Link>{" "}
                 to join a class.

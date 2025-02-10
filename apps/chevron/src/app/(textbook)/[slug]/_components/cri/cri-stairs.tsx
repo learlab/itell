@@ -11,14 +11,10 @@ import {
   HoverCardTrigger,
 } from "@itell/ui/hover-card";
 import { Label } from "@itell/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
 import { StatusButton } from "@itell/ui/status-button";
 import { TextArea } from "@itell/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@itell/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { BanIcon, Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
@@ -27,7 +23,11 @@ import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
 
 import { createCRIAnswerAction, updateCRIStreakAction } from "@/actions/cri";
-import { useCRIStore, useSession } from "@/components/provider/page-provider";
+import {
+  useCRIStore,
+  usePageStatus,
+  useSession,
+} from "@/components/provider/page-provider";
 import { Confetti } from "@/components/ui/confetti";
 import { apiClient } from "@/lib/api-client";
 import { Condition, isProduction } from "@/lib/constants";
@@ -54,6 +54,7 @@ type State = {
 
 export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
   const { user } = useSession();
+  const pageStatus = usePageStatus();
   const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const form = useRef<HTMLFormElement>(null);
@@ -203,21 +204,19 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           question={question}
           headerRight={
             streak !== undefined && streak >= 2 ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Flame color="#b91c1c" className={toClassName(streak)} />
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>
-                      You have answered {streak} questions correctly in a row,
-                      good job!
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <Flame color="#b91c1c" className={toClassName(streak)} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    You have answered {streak} questions correctly in a row,
+                    good job!
+                  </p>
+                </TooltipContent>
+              </Tooltip>
             ) : null
           }
         />
@@ -258,18 +257,22 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 input={state.input}
               />
             )}
-            {status !== StatusStairs.UNANSWERED && (
-              <HoverCard>
-                <HoverCardTrigger asChild>
-                  <Button variant="link" type="button" className="gap-2">
+            {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" type="button" className="gap-2">
                     <KeyRoundIcon className="size-4" />
                     Reveal Answer
                   </Button>
-                </HoverCardTrigger>
-                <HoverCardContent className="w-80">
-                  <p className="no-select leading-relaxed">{answer}</p>
-                </HoverCardContent>
-              </HoverCard>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="no-select w-80 leading-relaxed"
+                  side="right"
+                  sideOffset={12}
+                >
+                  {answer}
+                </PopoverContent>
+              </Popover>
             )}
           </div>
 

@@ -16,7 +16,9 @@ export function UserAvatar({ user, className, alt, ...rest }: Props) {
           <AvatarFallback>{user.name?.slice(0, 1)}</AvatarFallback>
         </>
       ) : (
-        <AvatarFallback>U</AvatarFallback>
+        <AvatarFallback>
+          {user?.name ? user.name.slice(0, 1) : "U"}
+        </AvatarFallback>
       )}
     </Avatar>
   );

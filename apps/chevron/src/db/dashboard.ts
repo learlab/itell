@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { getGroupedReadingTime } from "@itell/core/dashboard";
-import { and, count, eq, gte, inArray, sql } from "drizzle-orm";
+import { and, count, eq, gte, inArray, isNotNull, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import {
@@ -8,8 +8,10 @@ import {
   events,
   focus_times,
   summaries,
+  users,
 } from "@/drizzle/schema";
 import { isProduction } from "@/lib/constants";
+import { LeaderboardMetric } from "@/lib/navigation";
 import { db } from ".";
 
 export const incrementView = cache(
@@ -246,6 +248,59 @@ export const getReadingTime = memoize(
     additionalCacheKey: ["reading-time-chart"],
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "Reading time chart",
+    suppressWarnings: true,
+  }
+);
+
+/**
+ * Get streak stats for every user
+ * If classId is provided, only get users from that class
+ * Otherwise, get all users
+ */
+export const getLeaderboard = memoize(
+  async ({
+    classId,
+  }: {
+    userId: string;
+    classId: string | null;
+    metric: LeaderboardMetric;
+  }) => {
+    const t = db
+      .select({
+        id: users.id,
+        name: users.name,
+        image: users.image,
+        max_summary_streak:
+          sql<number>`cast(${users.personalization}->>'max_summary_streak' as integer)`.as(
+            "max_summary_streak"
+          ),
+        max_cri_streak:
+          sql<number>`cast(${users.personalization}->>'max_cri_streak' as integer)`.as(
+            "max_cri_streak"
+          ),
+        combined_rank: sql<number>`DENSE_RANK() OVER (ORDER BY
+    cast(${users.personalization}->>'max_summary_streak' as integer) DESC,
+    cast(${users.personalization}->>'max_cri_streak' as integer) DESC
+  )::integer`.as("combined_rank"),
+      })
+      .from(users)
+      .where(
+        and(
+          classId ? eq(users.classId, classId) : undefined,
+          isNotNull(users.personalization)
+        )
+      )
+      .as("t");
+    // don't need desc order here because combined_rank is already in desc order
+    return await db.select().from(t).orderBy(t.combined_rank).limit(5);
+  },
+  {
+    persist: true,
+    duration: 60 * 5,
+    revalidateTags: ({ userId, classId }) => ["leaderboard", classId ?? userId],
+    additionalCacheKey: ["leaderboard"],
+    log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
+    logid: "Leaderboard",
     suppressWarnings: true,
   }
 );

@@ -7,7 +7,12 @@ import { ErrorFeedback, ErrorType } from "@itell/core/summary";
 import { Warning } from "@itell/ui/callout";
 import { StatusButton } from "@itell/ui/status-button";
 import { useSelector } from "@xstate/store/react";
-import { ArrowRightIcon, StepForward } from "lucide-react";
+import {
+  ArrowBigRightIcon,
+  ArrowRightIcon,
+  FlameIcon,
+  StepForward,
+} from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
@@ -102,7 +107,7 @@ export const SummaryFormSkip = memo(
       <div className="flex flex-col gap-2">
         <Confetti active={pageFinished} />
         <h3 className="text-2xl font-extrabold">Nicely Done!</h3>
-        <div>
+        <div className="flex flex-col gap-1 leading-relaxed">
           {pageFinished ? (
             <>
               <p>
@@ -112,16 +117,6 @@ export const SummaryFormSkip = memo(
               <p>
                 You can skip writing a summary on a page you haven&apos;t
                 completed yet.
-              </p>
-              <p>
-                🔥 Streak count:{" "}
-                <span className="font-semibold text-warning">{streak}</span>{" "}
-              </p>
-              <p>
-                ⏭️ Summary skips available:{" "}
-                <span className="font-semibold text-warning">
-                  {available_summary_skips}
-                </span>{" "}
               </p>
             </>
           ) : (
@@ -137,18 +132,20 @@ export const SummaryFormSkip = memo(
                 Click on the skip summary button below to skip writing a summary
                 for this page.{" "}
               </p>
-              <p>
-                🔥 Streak count:{" "}
-                <span className="font-semibold text-warning">{streak}</span>{" "}
-              </p>
-              <p>
-                ⏭️ Summary skips available:{" "}
-                <span className="font-semibold text-warning">
-                  {available_summary_skips}
-                </span>{" "}
-              </p>
             </>
           )}
+
+          <p className="flex items-center">
+            <FlameIcon className="mr-1 size-6 stroke-red-500" /> Streak count:{" "}
+            <span className="font-semibold text-warning">{streak}</span>{" "}
+          </p>
+          <p className="flex items-center">
+            <ArrowBigRightIcon className="mr-1 size-6 stroke-info" /> Summary
+            skips available:{" "}
+            <span className="font-semibold text-warning">
+              {available_summary_skips}
+            </span>{" "}
+          </p>
         </div>
 
         <h2 id="completion-form-heading" className="sr-only">

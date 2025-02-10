@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useDebounce } from "@itell/core/hooks";
+import { Button } from "@itell/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { Page } from "#content";
 import { PinIcon, TableOfContentsIcon } from "lucide-react";
@@ -65,22 +67,31 @@ export function PageHeader({
         <TableOfContents page={page} />
       </div>
       <div className="flex items-center gap-4">
-        <button
-          aria-hidden="true"
-          onClick={() => {
-            setShouldAutoHide(!shouldAutoHide);
-            setCookie(
-              PAGE_HEADER_PIN_COOKIE,
-              !shouldAutoHide ? "true" : "false"
-            );
-          }}
-        >
-          <PinIcon
-            className={cn("size-4 rotate-45 transition-all", {
-              "rotate-0": !shouldAutoHide,
-            })}
-          />
-        </button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size={"sm"}
+              variant={"ghost"}
+              className="size-6"
+              onClick={() => {
+                setShouldAutoHide(!shouldAutoHide);
+                setCookie(
+                  PAGE_HEADER_PIN_COOKIE,
+                  !shouldAutoHide ? "true" : "false"
+                );
+              }}
+            >
+              <PinIcon
+                className={cn("size-4 shrink-0 rotate-45 transition-all", {
+                  "rotate-0": !shouldAutoHide,
+                })}
+              />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={12} side="bottom">
+            Fix header
+          </TooltipContent>
+        </Tooltip>
 
         <NoteCount />
         <PageStatusInfo status={pageStatus} />

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Label } from "@itell/ui/label";
+import { Button } from "@itell/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
-import { CornerDownLeft } from "lucide-react";
+import { ArrowRightCircle, ArrowUpIcon } from "lucide-react";
 import TextArea from "react-textarea-autosize";
 import { toast } from "sonner";
 
@@ -22,7 +22,7 @@ export function ChatInput({ className, pageSlug, ...props }: ChatInputProps) {
   return (
     <div {...props} className={cn("grid gap-2", className)}>
       <form
-        className="relative mt-4 flex-1 overflow-hidden rounded-lg border-none outline-none"
+        className="relative flex items-center rounded-lg border border-input bg-background px-3 py-1.5 pr-8 text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-ring/10 focus-within:ring-offset-0"
         onSubmit={(e) => {
           e.preventDefault();
           const input = e.currentTarget.input.value.trim();
@@ -31,45 +31,39 @@ export function ChatInput({ className, pageSlug, ...props }: ChatInputProps) {
           e.currentTarget.input.value = "";
         }}
       >
-        <Label>
-          <span className="sr-only">Enter your message here</span>
-          <TextArea
-            name="input"
-            autoFocus
-            rows={2}
-            maxRows={4}
-            disabled={pending}
-            placeholder="Message ITELL AI..."
-            className="block w-full resize-none rounded-md border border-border bg-background/90 px-4 py-1.5 pr-14 text-sm font-normal leading-5 focus:ring-0 disabled:pointer-events-none disabled:opacity-50"
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                const input = e.currentTarget.value.trim();
-                action({ text: input, pageSlug });
-                e.currentTarget.value = "";
-              }
-            }}
-            onPaste={(e) => {
-              if (isProduction) {
-                e.preventDefault();
-                toast.warning("Copy & Paste is not allowed");
-              }
-            }}
-          />
-        </Label>
-
-        <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
-          <button type="submit" disabled={pending}>
-            <kbd className="inline-flex items-center rounded border px-1 text-xs">
-              <CornerDownLeft className="size-4" />
-            </kbd>
-          </button>
-        </div>
-
-        <div
-          className="absolute inset-x-0 bottom-0 border-t border-border"
-          aria-hidden="true"
+        <TextArea
+          name="input"
+          autoFocus
+          disabled={pending}
+          placeholder="Enter a message"
+          className="flex-1 resize-none bg-transparent placeholder:text-muted-foreground focus:outline-none"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              const input = e.currentTarget.value.trim();
+              action({ text: input, pageSlug });
+              e.currentTarget.value = "";
+            }
+          }}
+          onPaste={(e) => {
+            if (isProduction) {
+              e.preventDefault();
+              toast.warning("Copy & Paste is not allowed");
+            }
+          }}
         />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant={"ghost"}
+              size="sm"
+              className="absolute bottom-1 right-1 size-6 rounded-full"
+            >
+              <ArrowUpIcon size={16} className="shrink-0" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent sideOffset={12}>Submit</TooltipContent>
+        </Tooltip>
       </form>
       {isError ? <InternalError>Failed to save chat</InternalError> : null}
     </div>

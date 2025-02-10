@@ -28,6 +28,7 @@ type Props = {
 
 type State = {
   session: GetSessionData;
+  pageStatus: PageStatus;
   condition: string;
   chunks: string[];
   criStore: CRIStore;
@@ -115,6 +116,7 @@ export function PageProvider({
     <PageContext.Provider
       value={{
         session,
+        pageStatus,
         criStore: criStoreRef.current,
         chatStore: chatStoreRef.current,
         summaryStore: summaryStoreRef.current,
@@ -126,6 +128,11 @@ export function PageProvider({
     </PageContext.Provider>
   );
 }
+
+export const usePageStatus = () => {
+  const state = useContext(PageContext);
+  return useMemo(() => state.pageStatus, [state.pageStatus]);
+};
 
 export const useSession = () => {
   const state = useContext(PageContext);

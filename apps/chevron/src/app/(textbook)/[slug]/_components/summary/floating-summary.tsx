@@ -4,21 +4,18 @@ import { useEffect, useState } from "react";
 import { Elements } from "@itell/constants";
 import { Label } from "@itell/ui/label";
 import { TextArea } from "@itell/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@itell/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { ArrowDownIcon, PinIcon, XIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { toast } from "sonner";
 
 import {
   useCRIStore,
   useSummaryStore,
 } from "@/components/provider/page-provider";
+import { isProduction } from "@/lib/constants";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
 import {
   SelectInput,
@@ -27,8 +24,6 @@ import {
 } from "@/lib/store/summary-store";
 import { scrollToElement } from "@/lib/utils";
 import { SummaryFeedbackDetails } from "./summary-feedback";
-import { toast } from "sonner";
-import { isProduction } from "@/lib/constants";
 
 const PAGE_ASSIGNMENTS_ID = Elements.PAGE_ASSIGNMENTS;
 
@@ -43,14 +38,14 @@ function useIntersectionState() {
           setSeen(true);
         }
       },
-      { threshold: 0.6 },
+      { threshold: 0.6 }
     );
 
     const visibilityObserver = new IntersectionObserver(
       (entries) => {
         setVisible(entries[0].isIntersecting);
       },
-      { threshold: 0 },
+      { threshold: 0 }
     );
 
     const element = document.getElementById(PAGE_ASSIGNMENTS_ID);
@@ -98,30 +93,28 @@ export function ToggleShowFloatingSummary() {
   const userShow = useSelector(summaryStore, SelectShowFloatingSummary);
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            aria-label="Toggle show floating summary"
-            onClick={() =>
-              summaryStore.send({ type: "toggleShowFloatingSummary" })
-            }
-          >
-            <PinIcon
-              className={cn("size-4 rotate-45 transition-all", {
-                // same shape for true and undefined
-                "rotate-0": userShow === false,
-              })}
-            />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent>
-          {userShow === false
-            ? "Show a floating window of summary input when you scrolls up"
-            : "Hide floating summary window"}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          aria-label="Toggle show floating summary"
+          onClick={() =>
+            summaryStore.send({ type: "toggleShowFloatingSummary" })
+          }
+        >
+          <PinIcon
+            className={cn("size-4 rotate-45 transition-all", {
+              // same shape for true and undefined
+              "rotate-0": userShow === false,
+            })}
+          />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent>
+        {userShow === false
+          ? "Show a floating window of summary input when you scrolls up"
+          : "Hide floating summary window"}
+      </TooltipContent>
+    </Tooltip>
   );
 }
 

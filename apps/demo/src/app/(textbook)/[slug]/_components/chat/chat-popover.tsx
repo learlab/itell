@@ -101,11 +101,17 @@ export function ChatPopover({ pageSlug, pageTitle, updatedAt, data }: Props) {
       className="fixed bottom-12 right-8 z-20 rounded-md bg-background text-foreground"
     >
       {isOpen ? (
-        <div className="w-96 rounded-md border" id="chat-popover">
+        <div
+          className="w-96 rounded-md border"
+          id="chat-popover"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="itell-ai-description"
+        >
           <ScrollArea
-            className="flex flex-col px-2 py-4"
+            className="flex flex-col px-3 py-4"
             style={{
-              height: "clamp(300px, 60vh, 900px)",
+              height: "clamp(300px, 55vh, 900px)",
             }}
           >
             <div className="h-full" id={Elements.CHATBOT_CONTAINER}>
@@ -119,13 +125,16 @@ export function ChatPopover({ pageSlug, pageTitle, updatedAt, data }: Props) {
             </div>
           </ScrollArea>
           <ChatInput pageSlug={pageSlug} className="px-2" />
-          <footer className="mt-4 px-4 text-xs text-muted-foreground">
+          <footer className="mt-4 px-4 pb-2 text-xs text-muted-foreground">
             <p>This content has been AI-generated and may contain errors.</p>
           </footer>
         </div>
       ) : (
         <motion.button
           ref={triggerRef}
+          aria-controls="chat-popover"
+          aria-haspopup="true"
+          aria-expanded={isOpen}
           className={cn(
             "flex items-center justify-center gap-2 border-2",
             isCompact ? "rounded-full p-4" : "rounded-lg px-6 py-4"
@@ -149,7 +158,7 @@ function ChatHeader() {
       className="sticky top-0 z-30 flex items-center gap-1.5 bg-background px-2 pb-3"
       aria-describedby="itell-ai-description"
     >
-      <p id="itell-api-description" className="sr-only">
+      <p id="itell-ai-description" className="sr-only">
         ITELL AI is a chatbot that can answer your questions regarding the
         textbook content.
       </p>
