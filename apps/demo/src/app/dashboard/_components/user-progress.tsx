@@ -24,7 +24,7 @@ export function UserProgress({
   }
 
   return (
-    <div className="leading-none space-y-2">
+    <div className="space-y-2 leading-none">
       <p className="sr-only">user&apos;s reading progress</p>
       <p className="font-semibold xl:text-lg">
         {displayProgress}% completed, {unlockedPages}/{validPages.length}{" "}
@@ -32,16 +32,16 @@ export function UserProgress({
       </p>
       <p className="text-muted-foreground">
         {finished ? (
-          "finished all contents"
+          "Finished all contents"
         ) : pageSlug ? (
           <span>
-            currently at{" "}
+            At page{" "}
             <Link href={makePageHref(pageSlug)} className="italic underline">
               {pageData?.title}
             </Link>
           </span>
         ) : (
-          "not started"
+          "Not started"
         )}
       </p>
     </div>

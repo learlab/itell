@@ -55,8 +55,9 @@ export function JoinClassForm({ user }: Props) {
         <Label>
           <span className="sr-only">class code</span>
           <Input
+            className="w-56"
             name="code"
-            placeholder="Enter your class code here"
+            placeholder="Enter class code"
             type="text"
             required
             defaultValue={join_class_code || ""}

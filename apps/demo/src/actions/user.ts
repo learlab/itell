@@ -16,6 +16,7 @@ import {
   focus_times,
   quiz_answers,
   summaries,
+  teachers,
   TeacherSchema,
   UpdateUserSchema,
   users,
@@ -133,7 +134,10 @@ export const resetUserAction = authedProcedure
   });
 
 export const deleteUserAction = authedProcedure.handler(async ({ ctx }) => {
-  return await db.delete(users).where(eq(users.id, ctx.user.id));
+  return db.transaction(async (tx) => {
+    await tx.delete(users).where(eq(users.id, ctx.user.id));
+    await tx.delete(teachers).where(eq(teachers.id, ctx.user.id));
+  });
 });
 
 /**

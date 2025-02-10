@@ -18,6 +18,7 @@ import { useServerAction } from "zsa-react";
 
 import { updateUserAction } from "@/actions/user";
 import { InternalError } from "@/components/internal-error";
+import { routes } from "@/lib/navigation";
 import { reportSentry } from "@/lib/utils";
 
 type Props = {
@@ -37,9 +38,9 @@ export function JoinClassModal({ userClassId, teacherName, classId }: Props) {
     const [, err] = await execute({ classId });
     if (!err) {
       setOpen(false);
-      toast.success("You have joined the class! Redirecting.");
+      toast.success("You have joined the class! Redirecting ...");
       setTimeout(() => {
-        router.push("/");
+        router.push(routes.home());
       }, 1000);
     }
   };

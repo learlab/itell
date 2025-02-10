@@ -1,4 +1,5 @@
 "use client";
+"use no memo";
 
 import { useState } from "react";
 import { Button } from "@itell/ui/button";
@@ -50,7 +51,7 @@ export function StudentsTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 50, //customize the default page size
+    pageSize: 15, //customize the default page size
   });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

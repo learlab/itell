@@ -112,7 +112,7 @@ export function ColorPicker({
         <Button
           variant="outline"
           className={cn(
-            "w-[220px] justify-start text-left font-normal text-muted-foreground",
+            "w-56 justify-start text-left font-normal text-muted-foreground",
             className
           )}
         >
