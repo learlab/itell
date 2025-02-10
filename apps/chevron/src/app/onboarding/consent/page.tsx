@@ -6,6 +6,7 @@ import "./styles.css";
 import { User } from "lucia";
 
 import { updateUserAction } from "@/actions/user";
+import { ClassCodeToast } from "@/components/class-code-toast";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
 import { redirectWithSearchParams } from "@/lib/utils";

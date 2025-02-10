@@ -1,16 +1,16 @@
-import { and, desc, eq, isNotNull, ne, sql } from "drizzle-orm";
+import { and, eq, isNotNull, ne, sql } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { OAuthProviderId } from "@/app/auth/oauth";
 import { isProduction } from "@/lib/constants";
+import { LeaderboardMetric } from "@/lib/navigation";
 import { db, first } from ".";
 import * as schema from "../drizzle/schema";
-import { LeaderboardMetric } from "@/lib/navigation";
 
 export const findUser = memoize(
   async (id: string) => {
     return first(
-      await db.select().from(schema.users).where(eq(schema.users.id, id)),
+      await db.select().from(schema.users).where(eq(schema.users.id, id))
     );
   },
   {
@@ -19,7 +19,7 @@ export const findUser = memoize(
     revalidateTags: (userId) => ["get-user", userId],
     log: isProduction ? [] : ["dedupe", "datacache", "verbose"],
     logid: "Get user",
-  },
+  }
 );
 
 type FindProviderArgs = {
@@ -40,14 +40,14 @@ export const findUserByProvider = async ({
       .from(schema.users)
       .innerJoin(
         schema.oauthAccounts,
-        eq(schema.users.id, schema.oauthAccounts.user_id),
+        eq(schema.users.id, schema.oauthAccounts.user_id)
       )
       .where(
         and(
           eq(schema.oauthAccounts.provider_id, provider_id),
-          eq(schema.oauthAccounts.provider_user_id, provider_user_id),
-        ),
-      ),
+          eq(schema.oauthAccounts.provider_user_id, provider_user_id)
+        )
+      )
   );
 
   return joined?.users;
@@ -82,7 +82,7 @@ export const createUser = async ({
  */
 export const updateUser = async (
   userId: string,
-  values: schema.UpdateUserInput,
+  values: schema.UpdateUserInput
 ) => {
   return await db
     .update(schema.users)
@@ -121,7 +121,7 @@ export const getOtherUsers = memoize(
     revalidateTags: ({ userId }) => ["get-other-users", userId],
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "Get other users",
-  },
+  }
 );
 
 /**
@@ -144,11 +144,11 @@ export const getLeaderboard = memoize(
         image: schema.users.image,
         max_summary_streak:
           sql<number>`cast(${schema.users.personalization}->>'max_summary_streak' as integer)`.as(
-            "max_summary_streak",
+            "max_summary_streak"
           ),
         max_cri_streak:
           sql<number>`cast(${schema.users.personalization}->>'max_cri_streak' as integer)`.as(
-            "max_cri_streak",
+            "max_cri_streak"
           ),
         combined_rank: sql<number>`DENSE_RANK() OVER (ORDER BY
     cast(${schema.users.personalization}->>'max_summary_streak' as integer) DESC,
@@ -159,8 +159,8 @@ export const getLeaderboard = memoize(
       .where(
         and(
           classId ? eq(schema.users.classId, classId) : undefined,
-          isNotNull(schema.users.personalization),
-        ),
+          isNotNull(schema.users.personalization)
+        )
       )
       .as("t");
     // don't need desc order here because combined_rank is already in desc order
@@ -174,5 +174,5 @@ export const getLeaderboard = memoize(
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "Leaderboard",
     suppressWarnings: true,
-  },
+  }
 );

@@ -24,7 +24,6 @@ export const GET = async (req: Request) => {
         ? `${env.NEXT_PUBLIC_HOST}/${slug}`
         : env.NEXT_PUBLIC_HOST;
 
-  console.log(url.searchParams.get("description"));
   const footer =
     url.searchParams.get("description") ||
     (isDashboard

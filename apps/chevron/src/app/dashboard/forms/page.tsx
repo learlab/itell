@@ -40,7 +40,7 @@ async function getSurveyStatus(user: User) {
 
   if (isOuttakeReady(user)) {
     const outtake = sessions.find(
-      (session) => session.surveyId === Survey.OUTTAKE,
+      (session) => session.surveyId === Survey.OUTTAKE
     );
     if (outtake) {
       outtakeStatus = outtake.finishedAt ? "completed" : "in-progress";
@@ -98,7 +98,7 @@ export default async function FormsPage() {
       pending: [] as FormEntry[],
       "not-applicable": [] as FormEntry[],
       completed: [] as FormEntry[],
-    } as Record<"pending" | "not-applicable" | "completed", FormEntry[]>,
+    } as Record<"pending" | "not-applicable" | "completed", FormEntry[]>
   );
 
   return (

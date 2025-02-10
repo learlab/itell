@@ -198,7 +198,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
             pageSlug={pageSlug}
             pending={isPending}
             stages={stages}
-            userRole={user.role}
+            isAdmin={user.isAdmin}
             ref={ref}
           />
           {isError ? (

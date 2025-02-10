@@ -13,9 +13,8 @@ import { useActionStatus } from "use-action-status";
 
 import { createCRIAnswerAction } from "@/actions/cri";
 import { InternalError } from "@/components/internal-error";
-import { useCRIStore } from "@/components/provider/page-provider";
+import { useCRIStore, useSession } from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
-import { isAdmin } from "@/lib/auth/role";
 import { Condition, isProduction } from "@/lib/constants";
 import { SelectShouldBlur } from "@/lib/store/cri-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
@@ -38,6 +37,7 @@ type State = {
 };
 
 export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
+  const { user } = useSession();
   const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const formRef = useRef<HTMLFormElement>(null);
@@ -159,7 +159,7 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
               rows={3}
               className="rounded-md p-4 shadow-md xl:text-lg"
               onPaste={(e) => {
-                if (isProduction && !isAdmin) {
+                if (isProduction && !user?.isAdmin) {
                   e.preventDefault();
                   toast.warning(
                     "Copy & Paste is disallowed, please answer with your own words."

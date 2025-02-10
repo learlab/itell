@@ -2,10 +2,10 @@ import { Suspense } from "react";
 import { ReadingTimeChartLevel } from "@itell/core/dashboard";
 import { ErrorBoundary } from "react-error-boundary";
 
+import { LeaderboardMetric } from "@/lib/navigation";
 import { ReadingTime } from "./reading-time";
 import { UserDetails } from "./user-details";
 import type { ReadingTimeChartParams } from "@itell/core/dashboard";
-import { LeaderboardMetric } from "@/lib/navigation";
 
 type Props = {
   userId: string;

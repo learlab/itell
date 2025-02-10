@@ -12,7 +12,6 @@ import { User } from "lucia";
 
 import { createQuizAction } from "@/actions/quiz";
 import { QuizData } from "@/drizzle/schema";
-import { isAdmin } from "@/lib/auth/role";
 import { Tags } from "@/lib/constants";
 import { QuizQuickFill } from "./page-quick-fill";
 import { PageQuizSubmitButton } from "./page-quiz-submit-button";
@@ -22,7 +21,6 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
   if (!page.quiz) {
     return null;
   }
-  const admin = isAdmin(user.role);
   const action = async (formData: FormData) => {
     "use server";
     const submission: QuizData = Array.from(formData.entries()).map(
@@ -48,7 +46,7 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {admin && <QuizQuickFill />}
+        {user.isAdmin && <QuizQuickFill />}
         <form action={action} id="page-quiz" className="grid gap-4">
           {page.quiz.map(({ question, answers }, qIndex) => (
             <div key={question} className="grid gap-3">

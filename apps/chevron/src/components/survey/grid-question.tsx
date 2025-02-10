@@ -11,8 +11,8 @@ import {
 } from "@itell/ui/table";
 
 import { AdminButton } from "@/components/admin-button";
-import { BaseQuestionProps } from "./survey-question-renderer";
 import { SurveyQuestion } from "@/lib/survey-question";
+import { BaseQuestionProps } from "./survey-question-renderer";
 
 export function GridQuestion({
   question,
@@ -28,7 +28,7 @@ export function GridQuestion({
             const firstCol = question.columns[0].value;
             question.rows.forEach((row) => {
               const input = document.querySelector(
-                `input[name='${inputName(question.id, row.text)}'][value="${firstCol}"]`,
+                `input[name='${inputName(question.id, row.text)}'][value="${firstCol}"]`
               ) as HTMLInputElement;
               if (input) {
                 input.checked = true;

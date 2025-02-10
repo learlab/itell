@@ -13,11 +13,11 @@ import { Spinner } from "@/components/spinner";
 import { getOtherStats, getUserStats } from "@/db/dashboard";
 import { countStudents } from "@/db/teacher";
 import { getOtherUsers } from "@/db/user";
+import { LeaderboardMetric } from "@/lib/navigation";
 import { getPageData } from "@/lib/pages/pages.server";
 import { TrendChart } from "./trend-chart";
 import { UserLeaderboard } from "./user-leaderboard";
 import { UserRadarChart } from "./user-radar-chart";
-import { LeaderboardMetric } from "@/lib/navigation";
 
 type Props = {
   userId: string;
@@ -91,7 +91,7 @@ export async function UserDetails({
       other: otherStats.totalPassedSummaries,
       userScaled: scale(
         userStats.totalPassedSummaries,
-        otherStats.totalPassedSummaries,
+        otherStats.totalPassedSummaries
       ),
       otherScaled: 1,
       description:
@@ -115,7 +115,7 @@ export async function UserDetails({
       other: otherStats.totalPassedAnswers,
       userScaled: scale(
         userStats.totalPassedAnswers,
-        otherStats.totalPassedAnswers,
+        otherStats.totalPassedAnswers
       ),
       otherScaled: 1,
       description: "Number of correct answers to contructed response items",
@@ -123,8 +123,8 @@ export async function UserDetails({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <div className="col-span-1 grid grid-cols-3 gap-4 lg:col-span-2">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+      <div className="col-span-1 grid grid-cols-3 gap-4 xl:col-span-2">
         <DashboardBadge
           title="Total Summaries"
           icon={<PencilIcon className="size-4" />}
@@ -195,14 +195,14 @@ export async function UserDetails({
             {diffs.contentScore
               ? `
 					${diffs.contentScore > 0 ? "+" : ""}${diffs.contentScore.toFixed(
-            2,
+            2
           )} compared to others`
               : "class stats unavailable"}
           </p>
         </DashboardBadge>
       </div>
 
-      <Card className="col-span-full lg:col-span-1">
+      <Card className="col-span-full xl:col-span-1">
         <CardContent>
           <UserRadarChart data={radarChartData} />
         </CardContent>
@@ -239,7 +239,7 @@ export async function UserDetails({
 }
 
 UserDetails.ErrorFallback = CreateErrorFallback(
-  "Failed to calculate learning statistics",
+  "Failed to calculate learning statistics"
 );
 
 UserDetails.Skeleton = function UserDetailsSkeleton() {

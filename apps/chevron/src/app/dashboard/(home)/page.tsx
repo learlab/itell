@@ -55,7 +55,7 @@ const parseSearchParams = (searchParams: unknown) => {
   let readingTimeLevel = ReadingTimeChartLevel.week_1;
   if (
     Object.values(ReadingTimeChartLevel).includes(
-      reading_time_level as ReadingTimeChartLevel,
+      reading_time_level as ReadingTimeChartLevel
     )
   ) {
     readingTimeLevel = reading_time_level as ReadingTimeChartLevel;
@@ -64,7 +64,7 @@ const parseSearchParams = (searchParams: unknown) => {
   let leaderboardMetric = LeaderboardMetric.all;
   if (
     Object.values(LeaderboardMetric).includes(
-      leaderboard_metric as LeaderboardMetric,
+      leaderboard_metric as LeaderboardMetric
     )
   ) {
     leaderboardMetric = leaderboard_metric as LeaderboardMetric;
