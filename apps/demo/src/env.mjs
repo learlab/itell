@@ -13,6 +13,8 @@ const server = z.object({
   DATABASE_URL: z.string(),
   ADMINS: z.string().optional(),
   ITELL_API_KEY: z.string(),
+  TEST_USER_EMAIL: z.string().optional(),
+  TEST_USER_PASSWORD: z.string().optional(),
 });
 
 /**
@@ -43,6 +45,8 @@ const processEnv = {
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
   ITELL_API_KEY: process.env.ITELL_API_KEY,
+  TEST_USER_EMAIL: process.env.TEST_USER_EMAIL,
+  TEST_USER_PASSWORD: process.env.TEST_USER_PASSWORD,
 };
 
 // Don't touch the part below

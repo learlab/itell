@@ -41,7 +41,7 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        // storageState: "playwright/.auth/storage.json",
+        // storageState: "tests/playwright/.auth/storage.json",
         launchOptions: {
           ignoreDefaultArgs: [
             "--disable-component-extensions-with-background-pages",
@@ -53,6 +53,7 @@ export default defineConfig({
             "--disable-setuid-sandbox",
             "--disable-infobars", // Hide the infobar about automation
             "--disable-dev-shm-usage",
+            "--disable-web-security",
           ],
         },
       },

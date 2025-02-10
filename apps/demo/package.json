@@ -1,6 +1,5 @@
 {
   "name": "@itell/demo",
-  "type": "module",
   "version": "0.1.0",
   "scripts": {
     "setup": "pnpm install && pnpm drizzle-kit migrate && pnpm run build:deps && pnpm run assets",
@@ -13,8 +12,8 @@
     "start": "next start -p 3000",
     "analyze": "ANALYZE=true next build",
     "assets": "tsx assets.ts",
-    "test": "pnpm exec playwright test",
-    "test:ui": "pnpm exec playwright test --ui"
+    "test": "dotenv -e .env.test -- pnpm exec playwright test",
+    "test:ui": "dotenv -e .env.test -- pnpm exec playwright test --ui"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.13",
@@ -88,6 +87,7 @@
     "@types/react-dom": "19.0.1",
     "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.28.1",
     "eslint-plugin-drizzle": "^0.2.3",
     "msw": "^2.7.0",

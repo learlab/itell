@@ -29,6 +29,7 @@ type Props = {
 
 export async function UserLeaderboard({ userId, classId, metric }: Props) {
   const data = await getLeaderboard({ userId, classId, metric });
+  console.log(data[0].image);
 
   return (
     <Card>
@@ -62,8 +63,8 @@ export async function UserLeaderboard({ userId, classId, metric }: Props) {
             <TableRow>
               <TableHead>Rank</TableHead>
               <TableHead>Classmate</TableHead>
-              <TableHead>Summary Streak</TableHead>
-              <TableHead>Question Streak</TableHead>
+              <TableHead>Summary Streak 🥇</TableHead>
+              <TableHead>Question Streak 🥈</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="gap-2">
@@ -79,16 +80,12 @@ export async function UserLeaderboard({ userId, classId, metric }: Props) {
                 <TableCell>
                   <div className="inline-flex items-center gap-2 align-middle">
                     <Avatar className="mr-2 h-8 w-8">
-                      {user.image ? (
-                        <AvatarImage
-                          src={user.image}
-                          alt="user profile photo"
-                        />
-                      ) : (
+                      <>
+                        <AvatarImage src={user.image ?? ""} />
                         <AvatarFallback>
-                          {user.name?.[0]?.toUpperCase() ?? "User"}
+                          {user.name?.slice(0, 1)}
                         </AvatarFallback>
-                      )}
+                      </>
                     </Avatar>
                     {user.name}
                   </div>
