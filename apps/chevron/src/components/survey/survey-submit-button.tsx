@@ -15,7 +15,7 @@ export function SurveySubmitButton({ isLastPage }: { isLastPage: boolean }) {
       pending={pending}
       onClick={() => {
         if (isLastPage) {
-          toast.success("Survey finished.");
+          toast.success("Survey finished");
         }
       }}
     >

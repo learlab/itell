@@ -65,7 +65,7 @@ export function ChatFeedback({
             });
             if (!err) {
               setOpen(false);
-              toast.success("Thank you! We received your feedback.");
+              toast.success("Feedback received. Thank you!");
             } else {
               reportSentry("create chat feedback", { err });
             }

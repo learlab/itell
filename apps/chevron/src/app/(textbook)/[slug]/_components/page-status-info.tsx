@@ -1,14 +1,8 @@
 import { Button } from "@itell/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@itell/ui/hover-card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
-import { type User } from "lucia";
 import { EyeIcon, LockIcon, UnlockIcon } from "lucide-react";
 
-import { getPageStatus, PageStatus } from "@/lib/page-status";
+import { PageStatus } from "@/lib/page-status";
 
 type Props = {
   status: PageStatus;
@@ -17,7 +11,7 @@ type Props = {
 export function PageStatusInfo({ status }: Props) {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <Button className="px-1.5 text-sm" variant="ghost" size={"sm"}>
           {status.unlocked ? (
             <span>

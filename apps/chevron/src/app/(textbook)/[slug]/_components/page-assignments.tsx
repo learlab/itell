@@ -90,12 +90,7 @@ export async function PageAssignments({
             <ToggleShowFloatingSummary />
           </CardTitle>
           <CardDescription>
-            {pageStatus.unlocked ? (
-              <>
-                You have finished this page, you are still welcome to improve
-                the summary.
-              </>
-            ) : (
+            {!pageStatus.unlocked && (
               <>
                 You can unlock the next page by submitting{" "}
                 <Link

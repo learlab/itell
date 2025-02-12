@@ -136,7 +136,7 @@ export function TocItem({
           });
         }}
         className={cn(
-          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base xl:text-lg xl:gap-4 2xl:text-xl",
+          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base xl:gap-4 xl:text-lg 2xl:text-xl",
           {
             "animate-pulse": pending,
             "text-base 2xl:text-lg": inGroup,

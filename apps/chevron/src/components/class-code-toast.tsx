@@ -10,7 +10,7 @@ const opts = {
 export function ClassCodeToast({ valid }: { valid: boolean | undefined }) {
   useEffect(() => {
     if (valid === true) {
-      toast.success("Joined class successfully.");
+      toast.success("Enrolled in class successfully");
     } else if (valid === false) {
       toast.error(
         "The class code you used is invalid. Please contact your instructor for the correct url to join the class.",

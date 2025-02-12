@@ -14,7 +14,7 @@ export function PageQuizSubmitButton() {
       disabled={pending}
       className="w-40"
       onClick={() => {
-        toast.success("Quiz completed.");
+        toast.success("Quiz completed");
       }}
     >
       <span className="inline-flex items-center gap-2">

@@ -1,11 +1,14 @@
 import { Elements } from "@itell/constants";
+import { Badge } from "@itell/ui/badge";
 import { buttonVariants } from "@itell/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
 import { cn } from "@itell/utils";
-import { ArrowUpIcon, PencilIcon } from "lucide-react";
+import { PencilIcon } from "lucide-react";
 
 import { getSession } from "@/lib/auth";
+import { Condition } from "@/lib/constants";
 import { AdminTools } from "../admin-tools";
-import { RestartPageButton } from "./restart-page-button";
+import { ResetPage } from "./reset-page";
 
 interface LinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
   text: string;
@@ -42,7 +45,11 @@ export async function PageControl({
   const { user } = await getSession();
   return (
     <div className="mt-12 space-y-2">
-      <p className="sr-only">page control</p>
+      {user?.isAdmin && (
+        <PageConditionBadge
+          condition={user?.conditionAssignments[pageSlug] as string}
+        />
+      )}
       {user?.isAdmin ? <AdminTools user={user} pageSlug={pageSlug} /> : null}
       {assignment ? (
         <AnchorLink
@@ -52,13 +59,56 @@ export async function PageControl({
           aria-label="assignments for this page"
         />
       ) : null}
-      <RestartPageButton pageSlug={pageSlug} />
-
-      <AnchorLink
-        icon={<ArrowUpIcon className="size-4 xl:size-6" />}
-        text="Back"
-        href={`#${Elements.PAGE_TITLE}`}
-      />
+      <ResetPage pageSlug={pageSlug} />
     </div>
+  );
+}
+
+function PageConditionBadge({ condition }: { condition: string }) {
+  return (
+    <Popover>
+      <PopoverTrigger>
+        <Badge className="text-base xl:text-lg">{condition}</Badge>
+      </PopoverTrigger>
+      <PopoverContent
+        align="end"
+        side="right"
+        sideOffset={12}
+        className="prose prose-sm dark:prose-invert"
+      >
+        <p>
+          Current page is in <span className="font-medium">{condition}</span>{" "}
+          condition.
+        </p>
+        {condition === Condition.STAIRS && (
+          <ul>
+            <li>CRI with AI feedback and explain button</li>
+            <li>
+              Summary with AI feedback, can pass with a sucessful summary or at
+              least two summaries with non-null content score
+            </li>
+          </ul>
+        )}
+        {condition === Condition.RANDOM_REREAD && (
+          <ul>
+            <li>No feedback for CRI and summary</li>
+            <li>
+              Summary will pass with any text, with no limit on length,
+              language, etc.
+            </li>
+          </ul>
+        )}
+
+        {condition === Condition.RANDOM_REREAD && (
+          <ul>
+            <li>No question and summary</li>
+            <li>
+              Users read short question answers and professional summaries
+              directly.
+            </li>
+          </ul>
+        )}
+      </PopoverContent>
+    </Popover>
   );
 }

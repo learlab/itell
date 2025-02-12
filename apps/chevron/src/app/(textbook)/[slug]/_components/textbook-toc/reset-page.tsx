@@ -7,7 +7,7 @@ import { RotateCcwIcon } from "lucide-react";
 import { useCRIStore } from "@/components/provider/page-provider";
 import { clearSummaryLocal } from "../summary/summary-input";
 
-export function RestartPageButton({ pageSlug }: { pageSlug: string }) {
+export function ResetPage({ pageSlug }: { pageSlug: string }) {
   const [pending, startTransition] = useTransition();
   const store = useCRIStore();
   return (

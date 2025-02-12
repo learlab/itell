@@ -17,12 +17,13 @@ import {
   validateSummary,
 } from "@itell/core/summary";
 import { driver } from "@itell/driver.js";
+import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { type User } from "lucia";
-import { FileQuestionIcon, SendHorizontalIcon } from "lucide-react";
+import { FileQuestionIcon, InfoIcon, SendHorizontalIcon } from "lucide-react";
 import Confetti from "react-dom-confetti";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
@@ -336,20 +337,31 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
 
         <div className="flex items-center gap-2">
           {isNextPageVisible && page.next_slug ? (
-            <NextPageButton pageSlug={page.next_slug} />
-          ) : null}
-          {stairsQuestion ? (
-            <Button
-              variant="outline"
-              onClick={() => {
-                goToQuestion(stairsQuestion);
-              }}
-            >
-              <span className="flex items-center gap-2">
-                <FileQuestionIcon className="size-4" />
-                Reflection
-              </span>
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Alert variant={"success"}>
+                <InfoIcon className="size-4" />
+                <AlertTitle>
+                  You have finished this page and can move on. You are still
+                  welcome to improve the summary.
+                </AlertTitle>
+              </Alert>
+              <div className="flex items-center gap-2">
+                <NextPageButton pageSlug={page.next_slug} />
+                {stairsQuestion ? (
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      goToQuestion(stairsQuestion);
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <FileQuestionIcon className="size-4" />
+                      Reflection
+                    </span>
+                  </Button>
+                ) : null}
+              </div>
+            </div>
           ) : null}
         </div>
         <Confetti active={response?.is_passed ?? false} />

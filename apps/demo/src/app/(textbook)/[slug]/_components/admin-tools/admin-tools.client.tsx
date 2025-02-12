@@ -58,19 +58,19 @@ const conditions = [
   {
     label: "Simple",
     description:
-      "No question and summary. Workers will read short questions and their correct answers and read professional summaries of the chapter. Workers will also read about strategies that can increase text comprehension.",
+      "No question and summary. Users will read short questions and their correct answers and read professional summaries of the chapter. Users will also read about strategies that can increase text comprehension.",
     value: Condition.SIMPLE,
   },
   {
     label: "Random rereading",
     description:
-      "With question and summary, but no feedback on correctness. Can revise question answer. After writing a summary, workers will receive a random chunk to reread without stairs.",
+      "With question and summary, but no feedback on correctness. Can revise question answer. After writing a summary, users will receive a random chunk to reread without stairs.",
     value: Condition.RANDOM_REREAD,
   },
   {
     label: "Stairs",
     description:
-      "With question and summary, and feedback on correctness. User will interact with stairs for failing summaries.",
+      "With question and summary, and feedback on correctness. Users will interact with stairs for failing summaries with a probability.",
     value: Condition.STAIRS,
   },
 ];
