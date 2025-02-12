@@ -144,7 +144,7 @@ const volume = defineCollection({
     slug: s.string(),
     free_pages: s.array(s.string()),
     latex: s.boolean().default(false),
-    summary: s.string().optional(),
+    summary: s.string().default(""),
   }),
 });
 
