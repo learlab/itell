@@ -18,6 +18,7 @@ import { TextbookToc } from "@textbook/textbook-toc";
 
 import { PageProvider } from "@/components/provider/page-provider";
 import { ScreenIssuePopup } from "@/components/screen-issue-popup";
+import { isOuttakeReady } from "@/db/offboarding";
 import { getSession } from "@/lib/auth";
 import { getUserCondition } from "@/lib/auth/conditions";
 import {
@@ -27,6 +28,7 @@ import {
 } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { getPageStatus } from "@/lib/page-status";
+import { isLastPage } from "@/lib/pages";
 import { firstPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
@@ -48,12 +50,18 @@ export default async function Page(props: {
   }
 
   const pageSlug = page.slug;
-
   const session = await getSession();
   const user = session.user;
+
   if (user && !user.onboardingFinished) {
     return redirect(routes.onboarding());
   }
+
+  // NOTE: only redirect to offboarding on last page
+  if (user && isLastPage(page) && isOuttakeReady(user)) {
+    return redirect(routes.offboarding());
+  }
+
   const userId = user?.id ?? null;
   const userFinished = user?.finished ?? false;
   const userPageSlug = user?.pageSlug ?? null;

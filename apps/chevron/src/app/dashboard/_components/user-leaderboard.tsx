@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@itell/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { InfoIcon } from "lucide-react";
 
 import { CreateErrorFallback } from "@/components/error-fallback";
@@ -34,26 +35,26 @@ export async function UserLeaderboard({ userId, classId, metric }: Props) {
     <Card>
       <CardHeader>
         <CardTitle>
-          <HoverCard>
-            <HoverCardTrigger asChild>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <Button
-                variant="link"
+                variant="ghost"
                 size="lg"
                 className="flex items-center gap-1 pl-0 text-lg xl:text-xl"
               >
                 {classId && "Class "} Leaderboard{" "}
-                <InfoIcon className="size-4" />
+                <InfoIcon className="ml-1 size-4" />
               </Button>
-            </HoverCardTrigger>
-            <HoverCardContent>
-              <p className="text-sm font-semibold">
+            </TooltipTrigger>
+            <TooltipContent className="max-w-64">
+              <p>
                 A leaderboard of students in this class. The rankings are
                 decided by the longest streak of consecutive summaries passed
                 and the longest streak of consecutive questions answered
                 correctly.
               </p>
-            </HoverCardContent>
-          </HoverCard>
+            </TooltipContent>
+          </Tooltip>
         </CardTitle>
       </CardHeader>
       <CardContent>

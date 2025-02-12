@@ -216,7 +216,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Page</SelectLabel>
-                    <ScrollArea className="max-h-[300px]">
+                    <ScrollArea className="h-[300px] max-w-80">
                       {pages.map((page) => (
                         <SelectItem key={page.slug} value={page.slug}>
                           {page.title}

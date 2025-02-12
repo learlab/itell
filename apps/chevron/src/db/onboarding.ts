@@ -2,13 +2,8 @@ import { User } from "lucia";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { getSurveySessions } from "@/db/survey";
+import { OnboardingStatus } from "@/lib/tasks";
 import { getClozeSession } from "./cloze";
-
-export type TaskStatus = "ready" | "in-progress" | "done" | "not-applicable";
-export type OnboardingStatus = Record<
-  "consent" | "intakeSurvey" | "cTest",
-  TaskStatus
->;
 
 export const getOnboardingStatus = memoize(
   async (user: User): Promise<OnboardingStatus> => {

@@ -2,11 +2,11 @@
 condition: stairs
 ---
 
-## Overview 
+## Overview
 
 This document provides guidelines for using Intelligent Texts for Enhanced Lifelong Learning (iTELL). iTELL is a webapp that presents text-based learning materials alongside videos and learning activities. It includes an AI assistant as well as automated feedback.
 
-## Getting Started 
+## Getting Started
 
 ### Sign in
 
@@ -23,11 +23,11 @@ This document provides guidelines for using Intelligent Texts for Enhanced Lifel
   width="1832"
   height="772">
 
- Sign in to iTELL
+Sign in to iTELL
 
 </i-image>
 
-## Making Progress in iTELL 
+## Making Progress in iTELL
 
 ### Pages
 
@@ -135,7 +135,7 @@ If your summary fails to pass the evaluation, iTELL's conversational agent (iTEL
 
 Your past summaries will be accessible from your dashboard.
 
-## iTELL AI 
+## iTELL AI
 
 ### Starting a Conversation
 
@@ -173,7 +173,7 @@ iTELL AI will ask you a question about the highlighted passage.
 
 Answer the question and engage in a conversation with iTELL AI to gain a better understanding of the passage. Once you feel that you have a better understanding of the text, click on the \`Return to summary\` button to go back to the summary module and rewrite your summary. After responding to iTELL AI's question, you can continue to engage with iTELL AI, or go back to the summary module
 
-iTELL AI will only automatically redirect you for re-reading once per page. 
+iTELL AI will only automatically redirect you for re-reading once per page.
 
 ### Ask iTELL AI
 
@@ -191,7 +191,7 @@ _Built with Meta Llama 3_: iTELL AI was built from Meta's Llama 3, a state-of-th
 
 Meta Llama 3 is licensed under the [Meta Llama 3 Community License](https://llama.meta.com/llama3/license/), Copyright © Meta Platforms, Inc. All Rights Reserved.
 
-## Dashboard 
+## Dashboard
 
 ### Statistics
 
@@ -234,7 +234,7 @@ An overview of the summaries tab.
 
 In the \`Questions\` tab, you will have access to all the short answer questions that you have responded to while reading the text. Each row will contain your answer to a question. Clicking on the row will take you to the relevant subsection. The emojis to the right side denotes your score (incorrect, partially correct, correct).
 
-## Notes and Highlights 
+## Notes and Highlights
 
 You can leave notes and highlight parts of the page for future reference. Click and drag through the text to activate the notes and highlights function.
 
@@ -316,7 +316,7 @@ Clicking on (1) prompts a color palette. Note color has been changed to orange. 
 
 \- The highlighting feature might not function properly when highlighting texts across different subsections.
 
-## Other Features 
+## Other Features
 
 ### Search Bar
 
@@ -331,7 +331,7 @@ Access the search function by clicking on the search bar on the top right corner
   width="1600"
   height="249">
 
- Find your target keywords inside the textbook.
+Find your target keywords inside the textbook.
 
 </i-image>
 
@@ -349,9 +349,11 @@ Clicking on the button will prompt a pop-up search bar where you can enter your 
 
 Transition to dark mode by clicking on the sun icon on the top right corner (**1**) then on the Dark button (**2**). Switch back to Light mode by clicking on the Light button. You can also use your system setting by clicking on the System button.
 
-![userguide22.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide22.png-9318cb8134bb88f18a3aea4358264f6f.png)![userguide23.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide23.png-f441c430e112e75cad1f240321b49d24.png)
+![userguide22.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide22.png-9318cb8134bb88f18a3aea4358264f6f.png)
 
-## Data Use 
+![userguide23.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide23.png-f441c430e112e75cad1f240321b49d24.png)
+
+## Data Use
 
 iTELL collects usage data that is used internally to provide feedback and for systems improvement. Your data may be used for research purposes if you are part of a study and consented for your data to be used for the specific purposes of the study. We never share data with 3rd party companies.
 
@@ -361,7 +363,7 @@ If you have logged in to iTELL using the single sign on services (e.g., Google o
 
 #### Usage data
 
-iTELL collects clickstream data including clicks, scrolls, and interaction with different elements within iTELL (e.g., clicking chunk reveal buttons or changing view settings in the dashboard). Individual key presses in the summary activity textbox are recorded. 
+iTELL collects clickstream data including clicks, scrolls, and interaction with different elements within iTELL (e.g., clicking chunk reveal buttons or changing view settings in the dashboard). Individual key presses in the summary activity textbox are recorded.
 
 #### Evaluation data
 
@@ -371,6 +373,7 @@ iTELL stores all evaluations of user responses to constructed response items and
 
 All conversations with iTELL AI are recorded. Our AI is powered by an open-source model that runs on our own servers. Your conversations are not sent to any third parties.
 
-## Contact Us 
+## Contact Us
 
 For technical issues or any other inquiries, contact us via email at lear.lab.vu@gmail.com
+

@@ -34,7 +34,7 @@ export function CRIHeader({
             <span className="font-bold">Question </span>
             {isOptional ? <span>(Optional)</span> : null}
           </p>
-          <p>{question}</p>
+          <p className="leading-relaxed">{question}</p>
         </div>
         {headerRight}
       </CardTitle>

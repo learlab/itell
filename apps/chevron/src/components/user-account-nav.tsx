@@ -21,9 +21,11 @@ import {
   FileBoxIcon,
   LineChartIcon,
   LogOutIcon,
+  PlayIcon,
 } from "lucide-react";
 
 import { logout } from "@/lib/auth/actions";
+import { routes } from "@/lib/navigation";
 import { Spinner } from "./spinner";
 import { UserAvatar } from "./user-avatar";
 
@@ -75,54 +77,72 @@ export function UserAccountNav({ user }: { user: User | null }) {
       >
         <DropdownMenuTrigger
           className="flex items-center gap-1"
-          aria-label="user navigation menu"
+          aria-label="User account navigation menu"
           data-test-id="user-nav-menu"
         >
           <UserAvatar user={user} className="size-8" />
           <ChevronDownIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-40">
-          {/* user name and email */}
           <div className="flex items-center justify-start gap-2 p-2">
-            <div className="flex flex-col space-y-1 leading-none">
-              {user.name ? (
-                <p className="font-medium">
-                  <span className="sr-only">username</span>
-                  {user.name}
-                </p>
-              ) : null}
+            <address className="flex flex-col space-y-1 not-italic leading-none">
+              {user.name ? <p className="font-medium">{user.name}</p> : null}
               {user.email ? (
-                <p className="w-[200px] truncate text-sm text-muted-foreground">
-                  <span className="sr-only">user email</span>
+                <a
+                  href={`mailto:${user.email}`}
+                  className="text-sm text-muted-foreground"
+                >
                   {user.email}
-                </p>
+                </a>
               ) : null}
-            </div>
+            </address>
           </div>
           <DropdownMenuSeparator />
-          {items.map((item) => (
-            <DropdownMenuItem
-              disabled={active === item.text && pending}
-              key={item.href}
-            >
+          {!user.onboardingFinished ? (
+            // only show one link to onboarding when it's not finished
+            <DropdownMenuItem disabled={pending}>
               <Link
-                href={item.href}
+                href={routes.onboarding()}
                 className="flex w-full items-center gap-2"
                 onClick={(e) => {
                   e.preventDefault();
-                  setActive(item.text);
+                  setActive("onboarding");
                   startTransition(() => {
                     setOpen(false);
-                    router.push(item.href);
+                    router.push(routes.onboarding());
                     setActive("");
                   });
                 }}
               >
-                {active === item.text ? <Spinner /> : item.icon}
-                {item.text}
+                <PlayIcon className="size-4" />
+                <span>Onboarding</span>
               </Link>
             </DropdownMenuItem>
-          ))}
+          ) : (
+            items.map((item) => (
+              <DropdownMenuItem
+                disabled={active === item.text && pending}
+                key={item.href}
+              >
+                <Link
+                  href={item.href}
+                  className="flex w-full items-center gap-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActive(item.text);
+                    startTransition(() => {
+                      setOpen(false);
+                      router.push(item.href);
+                      setActive("");
+                    });
+                  }}
+                >
+                  {active === item.text ? <Spinner /> : item.icon}
+                  {item.text}
+                </Link>
+              </DropdownMenuItem>
+            ))
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuItem
             disabled={logoutPending}

@@ -27,6 +27,7 @@ export function AdminButton({
             "right-1/2 top-0 -translate-y-1/2 translate-x-1/2",
           badgeClassName
         )}
+        aria-label="Admin only"
       >
         ADMIN
       </Badge>

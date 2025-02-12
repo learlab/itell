@@ -19,17 +19,19 @@ import { ScrollToTop } from "./scroll-to-top";
 import { SurveyQuestionRenderer } from "./survey-question-renderer";
 import { SurveySubmitButton } from "./survey-submit-button";
 
+type Props = {
+  user: User;
+  surveyId: string;
+  sectionId: string;
+  afterFinish: () => Promise<void>;
+};
+
 export async function SurveySection({
   user,
   surveyId,
   sectionId,
-  redirectTo,
-}: {
-  user: User;
-  surveyId: string;
-  sectionId: string;
-  redirectTo: string;
-}) {
+  afterFinish,
+}: Props) {
   const survey = getSurvey(surveyId);
   const section = survey?.sections.find((s) => s.id === sectionId);
   if (!section || !survey) {
@@ -90,7 +92,7 @@ export async function SurveySection({
             });
 
             if (isFinished) {
-              redirect(redirectTo);
+              await afterFinish();
             } else {
               redirect(surveySectionRoute(surveyId, nextSectionId));
             }

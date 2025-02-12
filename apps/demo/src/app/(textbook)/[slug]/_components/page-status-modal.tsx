@@ -13,6 +13,7 @@ import {
 } from "@itell/ui/dialog";
 import { LoginButton } from "@auth//auth-form";
 import { type User } from "lucia";
+import { CommandIcon, LockIcon } from "lucide-react";
 
 import { isProduction } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
@@ -37,7 +38,7 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
     // user with locked page
     const href = makePageHref(user?.pageSlug ?? fallbackPageSlug);
     return (
-      <Modal title="Page locked">
+      <Modal title="Page locked" icon={<LockIcon className="size-4" />}>
         <p>
           Gain access by submitting a passing summary for
           <Link href={href} className="mx-1 font-semibold underline">
@@ -58,6 +59,7 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
   return (
     <Modal
       title="Log in to access the textbook"
+      icon={<CommandIcon className="size-4" />}
       description="We collects anonymous data to improve learning experience."
     >
       <DialogFooter className="sm:justify-start">
@@ -71,10 +73,12 @@ function Modal({
   title,
   description,
   children,
+  icon,
 }: {
   title: string;
-  description?: string;
   children: React.ReactNode;
+  description?: string;
+  icon?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(true);
 
@@ -89,7 +93,10 @@ function Modal({
     >
       <DialogContent canClose={!isProduction}>
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            {icon}
+            {title}
+          </DialogTitle>
           {description ? (
             <DialogDescription>{description}</DialogDescription>
           ) : null}

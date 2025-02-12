@@ -11,7 +11,8 @@ import { User } from "lucia";
 import { FileTextIcon } from "lucide-react";
 
 import { Meta } from "@/config/metadata";
-import { getSurveySessions, isOuttakeReady } from "@/db/survey";
+import { isOuttakeReady } from "@/db/offboarding";
+import { getSurveySessions } from "@/db/survey";
 import { getSession } from "@/lib/auth";
 import { Survey } from "@/lib/constants";
 import { routes } from "@/lib/navigation";

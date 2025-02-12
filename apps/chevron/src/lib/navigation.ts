@@ -47,6 +47,7 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         sectionId: z.string(),
       }),
     }),
+    offboarding: defineRoute("/offboarding"),
     outtakeSurvey: defineRoute("/offboarding/outtake"),
     outtakeSurveySection: defineRoute("/offboarding/outtake/[sectionId]", {
       params: z.object({

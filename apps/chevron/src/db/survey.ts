@@ -1,11 +1,8 @@
 import { and, eq, inArray } from "drizzle-orm";
-import { User } from "lucia";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { survey_sessions, SurveySession } from "@/drizzle/schema";
 import { Survey } from "@/lib/constants";
-import { isLastPage } from "@/lib/pages";
-import { getPageData } from "@/lib/pages/pages.server";
 import { db, first } from ".";
 
 // memoized as this is nestedly called by layout/page
@@ -61,13 +58,4 @@ export const getSurveyStatus = async (userId: string) => {
     intakeDone: isSurveySessionFinished(intakeSession),
     outtakeDone: isSurveySessionFinished(outtakeSession),
   };
-};
-
-export const isOuttakeReady = (user: User) => {
-  const userPage = getPageData(user.pageSlug);
-  const outtakeReady =
-    isLastPage(userPage) ||
-    isLastPage(getPageData(userPage?.next_slug ?? null));
-
-  return outtakeReady;
 };

@@ -14,9 +14,7 @@ export function PageQuizSubmitButton() {
       disabled={pending}
       className="w-40"
       onClick={() => {
-        toast.success(
-          "Thank you for finishing the quiz. You can go to the next page."
-        );
+        toast.success("Quiz completed.");
       }}
     >
       <span className="inline-flex items-center gap-2">
