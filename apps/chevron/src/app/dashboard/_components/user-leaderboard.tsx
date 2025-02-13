@@ -1,11 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@itell/ui/avatar";
 import { Button } from "@itell/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@itell/ui/hover-card";
 import { Skeleton } from "@itell/ui/skeleton";
 import {
   Table,

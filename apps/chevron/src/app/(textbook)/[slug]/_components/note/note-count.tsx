@@ -1,11 +1,6 @@
 "use client";
 
 import { Button } from "@itell/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@itell/ui/hover-card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { useSelector } from "@xstate/store/react";
 import pluralize from "pluralize";

@@ -5,11 +5,6 @@ import { useDebounce } from "@itell/core/hooks";
 import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { CardFooter } from "@itell/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@itell/ui/hover-card";
 import { Label } from "@itell/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
 import { StatusButton } from "@itell/ui/status-button";

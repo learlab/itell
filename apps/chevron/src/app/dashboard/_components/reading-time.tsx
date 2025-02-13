@@ -8,11 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@itell/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@itell/ui/hover-card";
 import { Skeleton } from "@itell/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { getDatesBetween } from "@itell/utils";
