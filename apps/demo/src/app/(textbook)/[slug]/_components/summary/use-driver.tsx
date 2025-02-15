@@ -10,7 +10,10 @@ import { Condition, EventType } from "@/lib/constants";
 import { StairsQuestion } from "@/lib/store/summary-store";
 import { scrollToElement } from "@/lib/utils";
 import { SummaryFeedbackDetails } from "./summary-feedback";
-
+import { AnimatedText } from "./stairs-chunk-animation";
+import parse from "html-react-parser";
+import ReactDOMServer from "react-dom/server";
+import { STAIRS_TEXT_ANIMATION_WPM, STAIRS_TEXT_ANIMATION_DELAY } from "@/lib/constants";
 type BaseConfig = {
   pageSlug: string;
   exitButton: ({ onClick }: { onClick: (time: number) => void }) => JSX.Element;
@@ -68,6 +71,16 @@ const useDriver = (driverObj: Driver, config: Config) => {
           Elements.STAIRS_HIGHLIGHTED_CHUNK
         );
         if (isStairsConfig && chunk && config.summaryResponse.current) {
+          const reactElements = parse(chunk.innerHTML);
+
+          const animatedTextString = ReactDOMServer.renderToString(
+            <AnimatedText wpm={STAIRS_TEXT_ANIMATION_WPM} start_delay={STAIRS_TEXT_ANIMATION_DELAY}>{reactElements}</AnimatedText>
+          );
+          console.log(animatedTextString);
+
+
+          chunk.innerHTML = animatedTextString;
+
           const node = document.createElement("div");
           node.id = Elements.STAIRS_FEEDBACK_CONTAINER;
           addPortal(
@@ -77,6 +90,7 @@ const useDriver = (driverObj: Driver, config: Config) => {
             node
           );
           chunk.prepend(node);
+
         }
       },
       onPopoverRender: (popover) => {
