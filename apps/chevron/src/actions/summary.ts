@@ -39,14 +39,14 @@ export const createSummaryAction = authedProcedure
         data: z.array(z.array(z.union([z.number(), z.string(), z.boolean()]))),
         isMobile: z.boolean(),
       }),
-    }),
+    })
   )
   .output(
     z.object({
       nextPageSlug: z.string().nullable(),
       canProceed: z.boolean(),
       isExcellent: z.boolean(),
-    }),
+    })
   )
   .handler(async ({ input, ctx }) => {
     let shouldRevalidate = false;
@@ -55,14 +55,15 @@ export const createSummaryAction = authedProcedure
         input.summary.condition === Condition.STAIRS
           ? input.summary.isPassed
           : true;
+
       if (!canProceed) {
         const count = await tx.$count(
           summaries,
           and(
             eq(summaries.userId, ctx.user.id),
             eq(summaries.pageSlug, input.summary.pageSlug),
-            isNotNull(summaries.contentScore),
-          ),
+            isNotNull(summaries.contentScore)
+          )
         );
         canProceed = count + 1 >= PAGE_SUMMARY_THRESHOLD;
       }
@@ -77,7 +78,7 @@ export const createSummaryAction = authedProcedure
         `,
           })
           .from(summaries)
-          .where(isNotNull(summaries.contentScore)),
+          .where(isNotNull(summaries.contentScore))
       );
 
       const isExcellent = input.summary.contentScore
@@ -113,17 +114,16 @@ export const createSummaryAction = authedProcedure
       const nextPageSlug = nextPage(input.summary.pageSlug);
       const shouldUpdateUserPageSlug = isPageAfter(
         nextPageSlug,
-        ctx.user.pageSlug,
+        ctx.user.pageSlug
       );
 
-      // update user summary streak info
-      if (canProceed) {
+      // update user summary streak
+      if (canProceed && input.summary.condition === Condition.STAIRS) {
         shouldRevalidate = true;
-
         const newPersonalization = updatePersonalizationStreak(ctx.user, {
           summary: {
+            isExcellent,
             isPassed: input.summary.isPassed,
-            isExcellent: isExcellent,
           },
         });
 
@@ -140,6 +140,7 @@ export const createSummaryAction = authedProcedure
         }
       }
 
+      // return value for the transaction
       return {
         nextPageSlug: shouldUpdateUserPageSlug
           ? nextPageSlug
@@ -176,8 +177,8 @@ export const getStairsHistory = authedProcedure
           .where(
             and(
               eq(summaries.userId, ctx.user.id),
-              isNotNull(summaries.contentScore),
-            ),
+              isNotNull(summaries.contentScore)
+            )
           )
       ).map((v) => v.content);
 
@@ -188,9 +189,9 @@ export const getStairsHistory = authedProcedure
           .where(
             and(
               eq(focus_times.userId, ctx.user.id),
-              eq(focus_times.pageSlug, input.pageSlug),
-            ),
-          ),
+              eq(focus_times.pageSlug, input.pageSlug)
+            )
+          )
       );
 
       return {
@@ -218,10 +219,10 @@ const countSummaryByPassingHandler = memoize(
       })
       .from(summaries)
       .where(
-        and(eq(summaries.userId, userId), eq(summaries.pageSlug, pageSlug)),
+        and(eq(summaries.userId, userId), eq(summaries.pageSlug, pageSlug))
       );
 
     return record[0];
   },
-  { persist: false, revalidateTags: [Tags.COUNT_SUMMARY] },
+  { persist: false, revalidateTags: [Tags.COUNT_SUMMARY] }
 );

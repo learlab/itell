@@ -16,7 +16,6 @@ import {
   SummaryResponseSchema,
   validateSummary,
 } from "@itell/core/summary";
-import { driver } from "@itell/driver.js";
 import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
@@ -50,7 +49,7 @@ import {
   SelectResponse,
   SelectStairs,
 } from "@/lib/store/summary-store";
-import { makePageHref, reportSentry, scrollToElement } from "@/lib/utils";
+import { makePageHref, reportSentry } from "@/lib/utils";
 import { SummaryResponseFeedback } from "./summary-feedback";
 import {
   getSummaryLocal,
@@ -267,7 +266,10 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           });
 
           if (!data.canProceed) {
-            goToQuestion(stairsDataRef.current);
+            const chunk = getChunkElement(stairsDataRef.current.chunk);
+            if (chunk) {
+              highlight(chunk);
+            }
           }
         }
       }
@@ -301,7 +303,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
     }
   }, [isLast, isNextPageVisible, page, router]);
 
-  const { portals } = useDriver(driverObj, {
+  const { portals, highlight } = useDriver({
     pageSlug,
     condition: Condition.STAIRS,
     stairsData: stairsDataRef,
@@ -351,7 +353,10 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
                   <Button
                     variant="outline"
                     onClick={() => {
-                      goToQuestion(stairsQuestion);
+                      const chunk = getChunkElement(stairsQuestion.chunk);
+                      if (chunk) {
+                        highlight(chunk);
+                      }
                     }}
                   >
                     <span className="flex items-center gap-2">
@@ -431,24 +436,3 @@ function FinishReadingButton({ onClick }: { onClick: (_: number) => void }) {
     </div>
   );
 }
-
-const driverObj = driver();
-
-const goToQuestion = (question: StairsQuestion) => {
-  const el = getChunkElement(question.chunk, "data-chunk-slug");
-  if (el) {
-    driverObj.highlight({
-      element: el,
-      popover: {
-        description: "",
-      },
-    });
-    setTimeout(() => {
-      scrollToElement(el);
-    }, 100);
-  } else {
-    toast.warning(
-      "Please revise your summary with substantial changes and resubmit to unlock the next page"
-    );
-  }
-};
