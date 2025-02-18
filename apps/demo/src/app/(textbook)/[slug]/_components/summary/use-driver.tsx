@@ -4,16 +4,21 @@ import { usePortal } from "@itell/core/hooks";
 import { SummaryResponse } from "@itell/core/summary";
 import { Driver, removeInert, setInertBackground } from "@itell/driver.js";
 import { ChatStairs } from "@textbook/chat-stairs";
+import htmr from "htmr";
+import { createRoot } from "react-dom/client";
 
 import { createEventAction } from "@/actions/event";
-import { Condition, EventType } from "@/lib/constants";
+import {
+  Condition,
+  EventType,
+  STAIRS_TEXT_ANIMATION_DELAY,
+  STAIRS_TEXT_ANIMATION_WPM,
+} from "@/lib/constants";
 import { StairsQuestion } from "@/lib/store/summary-store";
 import { scrollToElement } from "@/lib/utils";
-import { SummaryFeedbackDetails } from "./summary-feedback";
 import { AnimatedText } from "./stairs-chunk-animation";
-import parse from "html-react-parser";
-import ReactDOMServer from "react-dom/server";
-import { STAIRS_TEXT_ANIMATION_WPM, STAIRS_TEXT_ANIMATION_DELAY } from "@/lib/constants";
+import { SummaryFeedbackDetails } from "./summary-feedback";
+
 type BaseConfig = {
   pageSlug: string;
   exitButton: ({ onClick }: { onClick: (time: number) => void }) => JSX.Element;
@@ -71,37 +76,36 @@ const useDriver = (driverObj: Driver, config: Config) => {
           Elements.STAIRS_HIGHLIGHTED_CHUNK
         );
         if (isStairsConfig && chunk && config.summaryResponse.current) {
-          const reactElements = parse(chunk.innerHTML);
-
-          const animatedTextString = ReactDOMServer.renderToString(
-            <AnimatedText wpm={STAIRS_TEXT_ANIMATION_WPM} start_delay={STAIRS_TEXT_ANIMATION_DELAY}>{reactElements}</AnimatedText>
+          const reactElements = htmr(chunk.innerHTML);
+          createRoot(chunk).render(
+            <AnimatedText
+              wpm={STAIRS_TEXT_ANIMATION_WPM}
+              start_delay={STAIRS_TEXT_ANIMATION_DELAY}
+            >
+              {reactElements}
+            </AnimatedText>
           );
-          console.log(animatedTextString);
 
-
-          chunk.innerHTML = animatedTextString;
-
-          const node = document.createElement("div");
-          node.id = Elements.STAIRS_FEEDBACK_CONTAINER;
+          const feedback = document.createElement("div");
+          feedback.id = Elements.STAIRS_FEEDBACK_CONTAINER;
           addPortal(
             <SummaryFeedbackDetails
               response={config.summaryResponse.current}
             />,
-            node
+            feedback
           );
-          chunk.prepend(node);
-
+          chunk.prepend(feedback);
         }
       },
       onPopoverRender: (popover) => {
-        if (isStairsConfig) {
-          addPortal(
-            <ChatStairs
-              id={Elements.STAIRS_CONTAINER}
-              pageSlug={config.pageSlug}
-              footer={
-                <config.exitButton
-                  onClick={(time) => {
+        addPortal(
+          <ChatStairs
+            id={Elements.STAIRS_CONTAINER}
+            pageSlug={config.pageSlug}
+            footer={
+              <config.exitButton
+                onClick={(time) => {
+                  if (isStairsConfig) {
                     if (!config.stairsAnswered.current) {
                       config.stairsAnswered.current = true;
                       createEventAction({
@@ -113,28 +117,21 @@ const useDriver = (driverObj: Driver, config: Config) => {
                         },
                       });
                     }
-                    driverObj.destroy();
-                  }}
-                />
-              }
-            />,
-            popover.wrapper
-          );
-        } else {
-          addPortal(
-            <config.exitButton
-              onClick={(time) => {
-                driverObj.destroy();
-                createEventAction({
-                  type: EventType.RANDOM_REREAD,
-                  pageSlug: config.pageSlug,
-                  data: { chunkSlug: config.randomChunkSlug, time },
-                });
-              }}
-            />,
-            popover.wrapper
-          );
-        }
+                  } else {
+                    createEventAction({
+                      type: EventType.RANDOM_REREAD,
+                      pageSlug: config.pageSlug,
+                      data: { chunkSlug: config.randomChunkSlug, time },
+                    });
+                  }
+
+                  driverObj.destroy();
+                }}
+              />
+            }
+          />,
+          popover.wrapper
+        );
 
         setTimeout(() => {
           document.getElementById(Elements.STAIRS_CONTAINER)?.focus();
