@@ -49,13 +49,29 @@ export const scrollToElement = (
 ) => {
   // offset to account for the sticky header
   const yOffset = opts?.offset ?? -70;
-  let target = typeof x === "string" ? null : x;
-  if (typeof x === "string") {
-    target = document.getElementById(x);
-    if (target) {
-      const y = target.getBoundingClientRect().top + window.scrollY + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
+  const target = typeof x === "string" ? document.getElementById(x) : x;
+  if (target) {
+    const y = target.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+};
+
+export const scrollToLastChild = (
+  el: HTMLElement | string,
+  scrollOptions: boolean | ScrollIntoViewOptions = {
+    behavior: "auto",
+    block: "end",
+    inline: "nearest",
+  }
+) => {
+  const target = typeof el == "string" ? document.getElementById(el) : el;
+  if (target) {
+    const lastEl = target.lastChild as HTMLElement | undefined;
+    if (!lastEl) {
+      return target.scrollIntoView(false);
     }
+
+    lastEl.scrollIntoView(scrollOptions);
   }
 };
 

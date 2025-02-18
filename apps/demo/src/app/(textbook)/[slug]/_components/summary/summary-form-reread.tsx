@@ -14,7 +14,6 @@ import {
   ErrorType,
   SummaryResponseSchema,
 } from "@itell/core/summary";
-import { driver } from "@itell/driver.js";
 import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Warning } from "@itell/ui/callout";
@@ -35,7 +34,7 @@ import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
-import { reportSentry, scrollToElement } from "@/lib/utils";
+import { reportSentry } from "@/lib/utils";
 import {
   getSummaryLocal,
   saveSummaryLocal,
@@ -50,8 +49,6 @@ type Props = {
   page: Page;
   pageStatus: PageStatus;
 };
-
-const driverObj = driver();
 
 export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const pageSlug = page.slug;
@@ -70,6 +67,19 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const { addStage, clearStages, finishStage, stages } = useSummaryStage();
   const requestBodyRef = useRef<string>("");
   const summaryResponseRef = useRef<SummaryResponse | null>(null);
+
+  const { portals, highlight } = useDriver({
+    pageSlug,
+    condition: Condition.RANDOM_REREAD,
+    randomChunkSlug,
+    exitButton: FinishReadingButton,
+  });
+  const goToRandomChunk = () => {
+    const el = getChunkElement(randomChunkSlug);
+    if (el) {
+      highlight(el);
+    }
+  };
 
   const {
     isError,
@@ -108,7 +118,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       const response = parsed.data;
       summaryResponseRef.current = response;
 
-      const [_, err] = await createSummaryAction({
+      const [, err] = await createSummaryAction({
         summary: {
           text: input,
           pageSlug,
@@ -140,20 +150,13 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       }
 
       // 25% random rereading if the page is not unlocked
-      if (!pageStatus.unlocked && Math.random() <= 0.25) {
-        goToRandomChunk(randomChunkSlug);
+      if (!pageStatus.unlocked && Math.random() <= 0.25 && !page.quiz) {
+        goToRandomChunk();
       }
     },
     { delayTimeout: 10000 }
   );
   const isPending = useDebounce(_isPending, 100);
-
-  const { portals } = useDriver(driverObj, {
-    pageSlug,
-    condition: Condition.RANDOM_REREAD,
-    randomChunkSlug,
-    exitButton: FinishReadingButton,
-  });
 
   useEffect(() => {
     if (error) {
@@ -262,20 +265,3 @@ function FinishReadingButton({ onClick }: { onClick: (_: number) => void }) {
     </div>
   );
 }
-
-const goToRandomChunk = (chunkSlug: string) => {
-  const el = getChunkElement(chunkSlug, "data-chunk-slug");
-  if (el) {
-    setTimeout(() => {
-      scrollToElement(el);
-    }, 100);
-    driverObj.highlight({
-      element: el,
-      popover: {
-        description: "",
-        side: "right",
-        align: "start",
-      },
-    });
-  }
-};

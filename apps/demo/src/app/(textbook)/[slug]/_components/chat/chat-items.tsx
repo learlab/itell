@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { Ref } from "react";
 import { useRouter } from "next/navigation";
 import { type Message } from "@itell/core/chat";
 import { Avatar, AvatarFallback, AvatarImage } from "@itell/ui/avatar";
@@ -15,11 +15,11 @@ import { Spinner } from "@/components/spinner";
 import { routes } from "@/lib/navigation";
 import { scrollToElement } from "@/lib/utils";
 import { ChatFeedback } from "./chat-feedback";
-import { scrollChat } from "./chat-popover";
 
 type Props = {
   initialMessage: Message;
   data: Message[];
+  ref?: Ref<HTMLDivElement>;
   updatedAt?: Date;
   prevData?: Message[];
   className?: string;
@@ -28,12 +28,14 @@ type Props = {
 export function ChatItems({
   initialMessage,
   data,
+  ref,
   prevData,
   updatedAt,
   className,
 }: Props) {
   return (
     <div
+      ref={ref}
       className={cn(
         "scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-1 flex-col-reverse gap-3 overflow-y-auto px-2 py-3",
         className
@@ -78,10 +80,6 @@ const MessageItemMemo = React.memo(MessageItem);
 function MessageItem({ message }: { message: Message }) {
   const isPending = message.text === "";
   const { user } = useSession();
-
-  useEffect(() => {
-    scrollChat();
-  }, [message]);
 
   return (
     <div

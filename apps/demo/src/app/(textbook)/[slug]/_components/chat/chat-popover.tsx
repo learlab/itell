@@ -12,6 +12,7 @@ import { motion } from "motion/react";
 
 import { useChatStore } from "@/components/provider/page-provider";
 import { SelectOpen } from "@/lib/store/chat-store";
+import { scrollToLastChild } from "@/lib/utils";
 import { ChatInput } from "./chat-input";
 import { ChatMessages } from "./chat-messages";
 
@@ -54,7 +55,7 @@ export function ChatPopover({ pageSlug, pageTitle, updatedAt, data }: Props) {
 
   useEffect(() => {
     if (isOpen) {
-      scrollChat();
+      scrollToLastChild(Elements.CHATBOT_CONTAINER);
     }
   }, [isOpen]);
 
@@ -109,7 +110,7 @@ export function ChatPopover({ pageSlug, pageTitle, updatedAt, data }: Props) {
           aria-labelledby="itell-ai-description"
         >
           <ScrollArea
-            className="flex flex-col px-3 py-4"
+            className="px-3 py-4"
             style={{
               height: "clamp(300px, 55vh, 900px)",
             }}
@@ -187,19 +188,3 @@ function ChatHeader() {
     </header>
   );
 }
-
-export const scrollChat = (smooth: boolean = true) => {
-  const el = document.getElementById(Elements.CHATBOT_CONTAINER);
-  if (el) {
-    const lastEl = el.lastChild as HTMLElement | undefined;
-    if (!lastEl) {
-      return el.scrollIntoView(false);
-    }
-
-    lastEl.scrollIntoView({
-      behavior: smooth ? "smooth" : "auto",
-      block: "end",
-      inline: "nearest",
-    });
-  }
-};

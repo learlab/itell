@@ -1,8 +1,10 @@
-import { JSX, RefObject, useEffect } from "react";
+"use client";
+
+import { JSX, RefObject, useCallback, useEffect } from "react";
 import { Elements } from "@itell/constants";
 import { usePortal } from "@itell/core/hooks";
 import { SummaryResponse } from "@itell/core/summary";
-import { Driver, removeInert, setInertBackground } from "@itell/driver.js";
+import { driver, removeInert, setInertBackground } from "@itell/driver.js";
 import { ChatStairs } from "@textbook/chat-stairs";
 import htmr from "htmr";
 import { createRoot } from "react-dom/client";
@@ -41,9 +43,27 @@ function isStairs(config: Config): config is StairsConfig {
   return config.condition === Condition.STAIRS;
 }
 
-const useDriver = (driverObj: Driver, config: Config) => {
+const useDriver = (config: Config) => {
+  const driverObj = driver();
   const { addPortal, removePortals, portals } = usePortal();
   const isStairsConfig = isStairs(config);
+
+  const highlight = useCallback(
+    (element: HTMLElement) => {
+      driverObj.highlight({
+        element,
+        popover: {
+          description: "",
+          side: "right",
+          align: "start",
+        },
+      });
+      setTimeout(() => {
+        scrollToElement(element, { offset: -120 });
+      }, 100);
+    },
+    [driverObj]
+  );
 
   useEffect(() => {
     driverObj.setConfig({
@@ -98,16 +118,17 @@ const useDriver = (driverObj: Driver, config: Config) => {
         }
       },
       onPopoverRender: (popover) => {
-        addPortal(
-          <ChatStairs
-            id={Elements.STAIRS_CONTAINER}
-            pageSlug={config.pageSlug}
-            footer={
-              <config.exitButton
-                onClick={(time) => {
-                  if (isStairsConfig) {
+        if (isStairsConfig) {
+          addPortal(
+            <ChatStairs
+              id={Elements.STAIRS_CONTAINER}
+              pageSlug={config.pageSlug}
+              footer={
+                <config.exitButton
+                  onClick={(time) => {
                     if (!config.stairsAnswered.current) {
                       config.stairsAnswered.current = true;
+                      driverObj.destroy();
                       createEventAction({
                         type: Condition.STAIRS,
                         pageSlug: config.pageSlug,
@@ -117,21 +138,27 @@ const useDriver = (driverObj: Driver, config: Config) => {
                         },
                       });
                     }
-                  } else {
-                    createEventAction({
-                      type: EventType.RANDOM_REREAD,
-                      pageSlug: config.pageSlug,
-                      data: { chunkSlug: config.randomChunkSlug, time },
-                    });
-                  }
-
-                  driverObj.destroy();
-                }}
-              />
-            }
-          />,
-          popover.wrapper
-        );
+                  }}
+                />
+              }
+            />,
+            popover.wrapper
+          );
+        } else {
+          addPortal(
+            <config.exitButton
+              onClick={(time) => {
+                driverObj.destroy();
+                createEventAction({
+                  type: EventType.RANDOM_REREAD,
+                  pageSlug: config.pageSlug,
+                  data: { chunkSlug: config.randomChunkSlug, time },
+                });
+              }}
+            />,
+            popover.wrapper
+          );
+        }
 
         setTimeout(() => {
           document.getElementById(Elements.STAIRS_CONTAINER)?.focus();
@@ -156,9 +183,9 @@ const useDriver = (driverObj: Driver, config: Config) => {
         document.getElementById(Elements.SUMMARY_INPUT)?.focus();
       },
     });
-  }, [addPortal, config, driverObj, isStairsConfig, removePortals]);
+  }, [addPortal, config, isStairsConfig, removePortals, driverObj]);
 
-  return { portals };
+  return { portals, highlight };
 };
 
 export default useDriver;

@@ -55,6 +55,7 @@ export const createSummaryAction = authedProcedure
         input.summary.condition === Condition.STAIRS
           ? input.summary.isPassed
           : true;
+
       if (!canProceed) {
         const count = await tx.$count(
           summaries,
@@ -116,14 +117,13 @@ export const createSummaryAction = authedProcedure
         ctx.user.pageSlug
       );
 
-      // update user summary streak info
-      if (canProceed) {
+      // update user summary streak
+      if (canProceed && input.summary.condition === Condition.STAIRS) {
         shouldRevalidate = true;
-
         const newPersonalization = updatePersonalizationStreak(ctx.user, {
           summary: {
+            isExcellent,
             isPassed: input.summary.isPassed,
-            isExcellent: isExcellent,
           },
         });
 
@@ -140,6 +140,7 @@ export const createSummaryAction = authedProcedure
         }
       }
 
+      // return value for the transaction
       return {
         nextPageSlug: shouldUpdateUserPageSlug
           ? nextPageSlug

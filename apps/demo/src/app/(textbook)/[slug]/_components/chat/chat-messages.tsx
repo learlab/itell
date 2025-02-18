@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { Elements } from "@itell/constants";
 import { type Message } from "@itell/core/chat";
 import { useSelector } from "@xstate/store/react";
 
 import { useChatStore } from "@/components/provider/page-provider";
 import { botMessage, SelectMessages } from "@/lib/store/chat-store";
+import { scrollToLastChild } from "@/lib/utils";
 import { ChatItems } from "./chat-items";
 import type { StoreMessage } from "@/lib/store/chat-store";
 
@@ -34,6 +36,10 @@ export function ChatMessages({ data, updatedAt, pageTitle, className }: Props) {
       }),
     [pageTitle]
   );
+
+  useEffect(() => {
+    scrollToLastChild(Elements.CHATBOT_CONTAINER);
+  }, [messages]);
 
   return (
     <ChatItems
