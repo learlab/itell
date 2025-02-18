@@ -9,7 +9,7 @@
     "clean": "rm -rf .next .turbo .velite",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "dev": "next dev -p 3000",
+    "dev": "next dev -p 3000 && react-scan localhost:3000",
     "start": "next start -p 3000",
     "analyze": "ANALYZE=true next build",
     "assets": "tsx assets.ts",
@@ -95,6 +95,7 @@
     "playwright-extra": "^4.3.6",
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
+    "react-scan": "^0.1.3",
     "rehype-format": "^5.0.1",
     "rehype-katex": "^6.0.3",
     "rehype-unwrap-images": "^1.0.0",
@@ -106,4 +107,3 @@
     "typescript": "5.6.0-beta"
   }
 }
-
