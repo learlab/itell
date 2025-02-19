@@ -7,6 +7,7 @@ interface Props {
   showLetter: number;
   isTarget?: boolean;
   className?: string;
+  showAnswer?: boolean;
 }
 
 export function WordItem({
@@ -14,8 +15,10 @@ export function WordItem({
   showLetter,
   className,
   isTarget = false,
+  showAnswer = false,
 }: Props) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [isRevealed, setIsRevealed] = useState(false);
 
   if (!isTarget) {
     return <span className="py-0.5">{word}</span>;
@@ -88,8 +91,28 @@ export function WordItem({
     inputRefs.current[index] = el;
   };
 
+  const handleClick = () => {
+    if (showAnswer) {
+      setIsRevealed(true);
+    }
+  };
+
+  if (isRevealed) {
+    return (
+      <span className="word-item inline-block whitespace-nowrap py-0.5">
+        <span className="text-green-600 font-medium px-1">{word}</span>
+      </span>
+    );
+  }
+
   return (
-    <span className="word-item inline-block whitespace-nowrap py-0.5">
+    <span 
+      className={cn(
+        "word-item inline-block whitespace-nowrap py-0.5",
+        showAnswer && "cursor-pointer hover:opacity-80"
+      )}
+      onClick={handleClick}
+    >
       <fieldset
         data-target-word={word}
         className={cn(
