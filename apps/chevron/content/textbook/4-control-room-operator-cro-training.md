@@ -88,11 +88,11 @@ CROs and HOs who have maintained their console qualification must work a minimum
 
 ## 4.5 Refresher Training {#45-Refresher-Training-2043} 
 
-Console Simulators
+#### Console Simulators
 
 Simulator training is offered weekly for refresher, unusual events, procedure reviews and CRO unit schools. 
 
-Simulations Sheets and Procedure Reviews
+#### Simulations Sheets and Procedure Reviews
 
 It is highly recommended that ALL CROs complete a minimum of 4 simulation exercise sheets annually conducting procedure reviews using the console simulators or HO station without making changes to the process.
 

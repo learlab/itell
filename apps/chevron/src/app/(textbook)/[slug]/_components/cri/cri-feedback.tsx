@@ -81,7 +81,7 @@ export function CRIFeedback({ pageSlug, chunkSlug }: Props) {
             setPending(false);
           }}
         >
-          <DialogTitle>Was the feedback helpful?</DialogTitle>
+          <DialogTitle>Was the question feedback helpful?</DialogTitle>
           <RadioGroup
             name="is-helpful"
             className="flex gap-4"
