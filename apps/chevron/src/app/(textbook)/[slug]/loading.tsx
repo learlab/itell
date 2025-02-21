@@ -68,7 +68,7 @@ export default async function Loading() {
             userPageSlug: user?.pageSlug ?? null,
             userFinished: user?.finished ?? false,
           })}
-          pin={(await cookies()).get(PAGE_HEADER_PIN_COOKIE)?.value === "true"}
+          hide={(await cookies()).get(PAGE_HEADER_PIN_COOKIE)?.value === "true"}
         />
         <div className="col-span-1 col-start-2 mt-4 flex flex-col gap-4">
           <PageTitle>{page.title}</PageTitle>

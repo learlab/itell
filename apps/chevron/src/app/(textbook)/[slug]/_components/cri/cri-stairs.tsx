@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
 import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
+import { Errorbox } from "@itell/ui/callout";
 import { CardFooter } from "@itell/ui/card";
 import { Label } from "@itell/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
@@ -255,7 +256,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" type="button" className="gap-2">
+                  <Button variant="secondary" type="button" className="gap-2">
                     <KeyRoundIcon className="size-4" />
                     Reveal Answer
                   </Button>
@@ -322,7 +323,6 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                       pending={isPending}
                       type="submit"
                       disabled={_isPending}
-                      variant="outline"
                       className="min-w-40"
                     >
                       <span className="flex items-center gap-2">
@@ -343,12 +343,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 </>
               )}
             </div>
-            {state.error ? (
-              <Alert variant={"error"}>
-                <BanIcon />
-                <AlertTitle>{state.error}</AlertTitle>
-              </Alert>
-            ) : null}
+            {state.error ? <Errorbox title={state.error} /> : null}
           </form>
         </CRIContent>
 

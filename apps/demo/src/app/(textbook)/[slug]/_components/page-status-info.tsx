@@ -14,20 +14,20 @@ export function PageStatusInfo({ status }: Props) {
       <TooltipTrigger asChild>
         <Button className="px-1.5 text-sm" variant="ghost" size={"sm"}>
           {status.unlocked ? (
-            <span>
+            <>
               <UnlockIcon className="mr-1 inline size-4" />
               Unlocked
-            </span>
+            </>
           ) : status.latest ? (
-            <span>
+            <>
               <EyeIcon className="mr-1 inline size-4" />
               In progress
-            </span>
+            </>
           ) : (
-            <span>
+            <>
               <LockIcon className="mr-1 inline size-4" />
               Locked
-            </span>
+            </>
           )}
         </Button>
       </TooltipTrigger>

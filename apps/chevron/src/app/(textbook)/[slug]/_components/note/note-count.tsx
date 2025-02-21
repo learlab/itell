@@ -3,6 +3,7 @@
 import { Button } from "@itell/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { useSelector } from "@xstate/store/react";
+import { StickyNoteIcon } from "lucide-react";
 import pluralize from "pluralize";
 
 import { noteStore, SelectNoteCount } from "@/lib/store/note-store";
@@ -14,6 +15,7 @@ export function NoteCount() {
     <Tooltip>
       <TooltipTrigger asChild>
         <Button variant="ghost" size={"sm"} className="px-1.5 text-sm">
+          <StickyNoteIcon className="mr-1 size-4" />
           {pluralize("note", count, true)}
         </Button>
       </TooltipTrigger>

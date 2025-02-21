@@ -62,3 +62,7 @@ export const Survey = {
   INTAKE: "intake",
   OUTTAKE: "outtake",
 };
+
+export const STAIRS_TEXT_ANIMATION_WPM = 300;
+export const STAIRS_TEXT_ANIMATION_DELAY = 1; // seconds
+
