@@ -43,6 +43,7 @@ export const EventType = {
   QUIZ: "quiz",
   STREAK: "streak",
   REWARD_SPENT: "reward-spent",
+  QUIZME: "quizme",
 } as const;
 
 export const Condition = {
