@@ -18,7 +18,6 @@ import { useServerAction } from "zsa-react";
 
 import { createCRIFeedbackAction } from "@/actions/feedback";
 import { InternalError } from "@/components/internal-error";
-import { FeedbackType } from "@/lib/constants";
 
 type Props = {
   chunkSlug: string;
