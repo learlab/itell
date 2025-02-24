@@ -3,23 +3,18 @@
 import React, { useRef, useState } from "react";
 import { redirect } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@itell/ui/alert";
-import { Badge } from "@itell/ui/badge";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
-import { Input } from "@itell/ui/input";
-import { cn } from "@itell/utils";
 import { User } from "lucia";
 import { SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
-
 import { createClozeAction } from "@/actions/cloze";
 import { updateUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
 import { ClozeData } from "@/drizzle/schema";
 import { routes } from "@/lib/navigation";
 import { WordItem } from "./word-item";
-import { get } from "http";
 
 interface Props {
   paragraphs: string[];
