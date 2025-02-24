@@ -34,7 +34,181 @@ cri: []
 next_slug: null
 order: 10
 parent: null
-quiz: null
+quiz:
+- question: What is the probation period for new trainees?
+  answers:
+  - answer: 18 months
+    correct: false
+  - answer: 6 months
+    correct: false
+  - answer: 12 months
+    correct: true
+  - answer: 20 months
+    correct: false
+- question: What is the maximum duration of the training program to become a Fully Qualified Operator?
+  answers:
+  - answer: 1 year
+    correct: false
+  - answer: 2 years
+    correct: false
+  - answer: 3 years
+    correct: true
+  - answer: 4 years
+    correct: false
+- question: What is the minimum passing score for FOTP daily tests, field assessments and final exams?
+  answers:
+  - answer: '75'
+    correct: false
+  - answer: '90'
+    correct: false
+  - answer: '80'
+    correct: true
+  - answer: '85'
+    correct: false
+- question: What are the three types of assessments used to evaluate trainee knowledge and ability?
+  answers:
+  - answer: Written examinations, skill performance demonstrations, and verbal assessments
+    correct: true
+  - answer: Written examinations, behavior tests, and verbal assessments
+    correct: false
+  - answer: Skill performance demonstrations, physical fitness tests, and verbal assessments
+    correct: false
+  - answer: Written examinations, skill performance demonstrations, and fundamental tests
+    correct: false
+- question: What is the purpose of the Qualification Review Board (QRB)? Select all that apply.
+  answers:
+  - answer: To determine an appropriate training plan for job requalification
+    correct: true
+  - answer: Address attendance issues
+    correct: false
+  - answer: Address training progress or competency issues
+    correct: true
+  - answer: Address behavior issues
+    correct: false
+- question: L&D maintains files of job qualification training documentation for operator trainees during progression through the 3 year formal training program.
+  answers:
+  - answer: 'True'
+    correct: true
+  - answer: 'False'
+    correct: false
+- question: Which training program evaluation level observes participants in work settings to assess whether they are utilizing the knowledge and skills acquired during training in their daily tasks.
+  answers:
+  - answer: Level 1 Reaction
+    correct: false
+  - answer: Level 2 Learning
+    correct: false
+  - answer: Level 3 Knowledge Transfer
+    correct: true
+  - answer: Level 4 Results
+    correct: false
+- question: Trainees must qualify on the first job within 12 months of hire date.
+  answers:
+  - answer: 'True'
+    correct: true
+  - answer: 'False'
+    correct: false
+- question: What unit training requirement must be completed before working the job independently, without a shadow trainer?
+  answers:
+  - answer: STL Solo Assessment
+    correct: true
+  - answer: Break-in Guide
+    correct: false
+  - answer: Qualification Checklist
+    correct: false
+  - answer: Unit School
+    correct: false
+- question: How many situation problems are trainees required to complete per job?
+  answers:
+  - answer: '10'
+    correct: false
+  - answer: '15'
+    correct: true
+  - answer: '8'
+    correct: false
+  - answer: '12'
+    correct: false
+- question: How many field tests are trainees required to complete per job?
+  answers:
+  - answer: '5'
+    correct: false
+  - answer: '10'
+    correct: true
+  - answer: '15'
+    correct: false
+  - answer: '8'
+    correct: false
+- question: A Final Qualification Exam with a score of 82 would require a Board of Review for possible termination.
+  answers:
+  - answer: 'True'
+    correct: false
+  - answer: 'False'
+    correct: true
+- question: If my performance evaluation is acceptable, I can begin formally training on another job prior to completing a Qualification Review Board for the current job on which I am training.
+  answers:
+  - answer: 'True'
+    correct: false
+  - answer: 'False'
+    correct: true
+- question: To maintain a qualification, a Trainee must work a minimum of how many 12-hour shifts in each qualified job in any 12-month period?
+  answers:
+  - answer: '1'
+    correct: false
+  - answer: '2'
+    correct: true
+  - answer: '3'
+    correct: false
+  - answer: '4'
+    correct: false
+- question: To maintain qualification, a Fully Qualified Operator must work a minimum of how many 12-hour shifts in the job in any 6-month period?
+  answers:
+  - answer: '1'
+    correct: true
+  - answer: '2'
+    correct: false
+  - answer: '3'
+    correct: false
+  - answer: '4'
+    correct: false
+- question: Unit School training emphasis is placed on the Electronic Operating Manual (EOM) for each specific plant?
+  answers:
+  - answer: 'True'
+    correct: true
+  - answer: 'False'
+    correct: false
+- question: Which of the following circumstances would not delay or prevent Trainee’s promotion in the training program and/or pay progression to the next level.
+  answers:
+  - answer: Failure to complete GFOTP or unit specific training
+    correct: false
+  - answer: Achieving only minimum of competency requirements
+    correct: true
+  - answer: Violation of Chevron attendance policies
+    correct: false
+  - answer: Unacceptable evaluations for performance or behavior
+    correct: false
+- question: A Control Room Operator (CRO) job may count as a third or fourth qualifying job.
+  answers:
+  - answer: 'True'
+    correct: true
+  - answer: 'False'
+    correct: false
+- question: How many supervisor performance evaluations are performed while in the first 3 years of the training program?
+  answers:
+  - answer: '1'
+    correct: false
+  - answer: '2'
+    correct: false
+  - answer: '3'
+    correct: false
+  - answer: '4'
+    correct: true
+- question: A trainee must complete all required GFOTP courses, OTJ training, and Qualification Activities associated with how many individual jobs to become a Fully Qualified Operator (FQO)?
+  answers:
+  - answer: Three
+    correct: false
+  - answer: Four
+    correct: true
+  - answer: Two
+    correct: false
 slug: appendices
 title: Appendices
 ---

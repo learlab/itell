@@ -3,7 +3,7 @@
 import { Button } from "@itell/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
-import { ArrowRightCircle, ArrowUpIcon } from "lucide-react";
+import { ArrowUpIcon } from "lucide-react";
 import TextArea from "react-textarea-autosize";
 import { toast } from "sonner";
 

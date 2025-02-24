@@ -37,7 +37,7 @@ export function DeleteCTest() {
             onClick={async () => {
               "use server";
               await deleteClozeAction({ pageSlug: "ctest" });
-              redirect(routes.cTest());
+              redirect(routes.ctest());
             }}
           >
             Continue

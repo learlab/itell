@@ -1,14 +1,24 @@
-import { JSX, RefObject, useEffect } from "react";
+"use client";
+
+import { JSX, RefObject, useCallback, useEffect } from "react";
 import { Elements } from "@itell/constants";
 import { usePortal } from "@itell/core/hooks";
 import { SummaryResponse } from "@itell/core/summary";
-import { Driver, removeInert, setInertBackground } from "@itell/driver.js";
+import { driver, removeInert, setInertBackground } from "@itell/driver.js";
 import { ChatStairs } from "@textbook/chat-stairs";
+import htmr from "htmr";
+import { createRoot } from "react-dom/client";
 
 import { createEventAction } from "@/actions/event";
-import { Condition, EventType } from "@/lib/constants";
+import {
+  Condition,
+  EventType,
+  STAIRS_TEXT_ANIMATION_DELAY,
+  STAIRS_TEXT_ANIMATION_WPM,
+} from "@/lib/constants";
 import { StairsQuestion } from "@/lib/store/summary-store";
 import { scrollToElement } from "@/lib/utils";
+import { AnimatedText } from "./stairs-chunk-animation";
 import { SummaryFeedbackDetails } from "./summary-feedback";
 
 type BaseConfig = {
@@ -33,9 +43,27 @@ function isStairs(config: Config): config is StairsConfig {
   return config.condition === Condition.STAIRS;
 }
 
-const useDriver = (driverObj: Driver, config: Config) => {
+const useDriver = (config: Config) => {
+  const driverObj = driver();
   const { addPortal, removePortals, portals } = usePortal();
   const isStairsConfig = isStairs(config);
+
+  const highlight = useCallback(
+    (element: HTMLElement) => {
+      driverObj.highlight({
+        element,
+        popover: {
+          description: "",
+          side: "right",
+          align: "start",
+        },
+      });
+      setTimeout(() => {
+        scrollToElement(element, { offset: -120 });
+      }, 100);
+    },
+    [driverObj]
+  );
 
   useEffect(() => {
     driverObj.setConfig({
@@ -68,15 +96,25 @@ const useDriver = (driverObj: Driver, config: Config) => {
           Elements.STAIRS_HIGHLIGHTED_CHUNK
         );
         if (isStairsConfig && chunk && config.summaryResponse.current) {
-          const node = document.createElement("div");
-          node.id = Elements.STAIRS_FEEDBACK_CONTAINER;
+          const reactElements = htmr(chunk.innerHTML);
+          createRoot(chunk).render(
+            <AnimatedText
+              wpm={STAIRS_TEXT_ANIMATION_WPM}
+              start_delay={STAIRS_TEXT_ANIMATION_DELAY}
+            >
+              {reactElements}
+            </AnimatedText>
+          );
+
+          const feedback = document.createElement("div");
+          feedback.id = Elements.STAIRS_FEEDBACK_CONTAINER;
           addPortal(
             <SummaryFeedbackDetails
               response={config.summaryResponse.current}
             />,
-            node
+            feedback
           );
-          chunk.prepend(node);
+          chunk.prepend(feedback);
         }
       },
       onPopoverRender: (popover) => {
@@ -90,6 +128,7 @@ const useDriver = (driverObj: Driver, config: Config) => {
                   onClick={(time) => {
                     if (!config.stairsAnswered.current) {
                       config.stairsAnswered.current = true;
+                      driverObj.destroy();
                       createEventAction({
                         type: Condition.STAIRS,
                         pageSlug: config.pageSlug,
@@ -99,7 +138,6 @@ const useDriver = (driverObj: Driver, config: Config) => {
                         },
                       });
                     }
-                    driverObj.destroy();
                   }}
                 />
               }
@@ -145,9 +183,9 @@ const useDriver = (driverObj: Driver, config: Config) => {
         document.getElementById(Elements.SUMMARY_INPUT)?.focus();
       },
     });
-  }, [addPortal, config, driverObj, isStairsConfig, removePortals]);
+  }, [addPortal, config, isStairsConfig, removePortals, driverObj]);
 
-  return { portals };
+  return { portals, highlight };
 };
 
 export default useDriver;

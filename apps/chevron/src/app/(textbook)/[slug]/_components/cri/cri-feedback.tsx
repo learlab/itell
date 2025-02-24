@@ -18,7 +18,6 @@ import { useServerAction } from "zsa-react";
 
 import { createCRIFeedbackAction } from "@/actions/feedback";
 import { InternalError } from "@/components/internal-error";
-import { FeedbackType } from "@/lib/constants";
 
 type Props = {
   chunkSlug: string;
@@ -81,7 +80,7 @@ export function CRIFeedback({ pageSlug, chunkSlug }: Props) {
             setPending(false);
           }}
         >
-          <DialogTitle>Was the feedback helpful?</DialogTitle>
+          <DialogTitle>Was the question feedback helpful?</DialogTitle>
           <RadioGroup
             name="is-helpful"
             className="flex gap-4"

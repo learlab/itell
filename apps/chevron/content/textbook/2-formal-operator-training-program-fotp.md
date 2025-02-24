@@ -216,11 +216,11 @@ Follow these steps to have P&IDs online updated:
 
 #### 2.6.1 Qualification Checklist
 
-Qualification checklists are designed to evaluate the knowledge acquired by the operator trainee through the completion of all previous OTJ training requirements. 
+Qualification checklists are designed to evaluate the knowledge acquired by the operator trainee through the completion of all previous OTJ training requirements.
 
 #### 2.6.2 Final Qualification Exam (FQE)
 
-_(Pre-requisite: All training documents required for Unit Job Qualification and a completed KR-981 is complete.) _
+_(Pre-requisite: All training documents required for Unit Job Qualification and a completed KR-981 is complete.)_
 
 This examination is only required for trainees as they qualify on their first four jobs. To complete the FQE, the trainee notifies the STL and UFT. The STL or UFT ensures all training requirements are completed. The STL or UFT contacts the M&P Specialist for a secure test copy. The UFT, STL, or Head Operator may proctor the FQE while following the testing protocol below: 
 
@@ -308,7 +308,8 @@ For FQO promotions, the O&M Training Supervisor will facilitate the recognition 
 | OT2 | Earliest - Minimum 1008 hours (84 12-hour shifts) of soloing on Job 1<br><br>Maximum time: complete by 1st year service anniversary | OT1 + Qualified on 1st job, successful GO-310 evaluation |
 | OT3 | Earliest – Minimum 672 hours (56 12-hour shifts) soloing on Job 2<br><br>Maximum time: complete by 2nd year service anniversary | OT2 + Qualified on 2nd job, successful GO-310 evaluation |
 | FQO | Earliest – Minimum 672 hours (56 12-hour shifts) soloing on Job 3 and Minimum 672 hours (56 12-hour shifts) soloing on Job 4<br><br>Maximum time: by 3rd year service anniversary | OT3 + GFOTP 2.0 + GFOTP 3.0 + Qualified on 3rd and 4th jobs (Console can be 4th job), successful GO-310 evaluation |
-| **Non-vacation absences may result in an extension of the training period. Extensions are considered on a case-by-case basis and for extenuating circumstances. The STL consults with the HRBP to determine length of extension, if any.  A Training Program Waiver form, KR-988, must be approved by the ASH indicating circumstances, length of extension, and withholding of pay progression until requirements are met.** |     |     |
 
 Table 5: Program Advancement & Pay Progression
+
+**Note: Non-vacation absences may result in an extension of the training period. Extensions are considered on a case-by-case basis and for extenuating circumstances. The STL consults with the HRBP to determine length of extension, if any.  A Training Program Waiver form, KR-988, must be approved by the ASH indicating circumstances, length of extension, and withholding of pay progression until requirements are met.**
 

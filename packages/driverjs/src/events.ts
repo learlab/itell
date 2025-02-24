@@ -10,7 +10,10 @@ export function requireRefresh() {
     window.cancelAnimationFrame(resizeTimeout);
   }
 
-  setState("__resizeTimeout", window.requestAnimationFrame(refreshActiveHighlight));
+  setState(
+    "__resizeTimeout",
+    window.requestAnimationFrame(refreshActiveHighlight),
+  );
 }
 
 function trapFocus(e: KeyboardEvent) {
@@ -39,11 +42,15 @@ function trapFocus(e: KeyboardEvent) {
 
   if (e.shiftKey) {
     const previousFocusableEl =
-      focusableEls[focusableEls.indexOf(document.activeElement as HTMLElement) - 1] || lastFocusableEl;
+      focusableEls[
+        focusableEls.indexOf(document.activeElement as HTMLElement) - 1
+      ] || lastFocusableEl;
     previousFocusableEl?.focus();
   } else {
     const nextFocusableEl =
-      focusableEls[focusableEls.indexOf(document.activeElement as HTMLElement) + 1] || firstFocusableEl;
+      focusableEls[
+        focusableEls.indexOf(document.activeElement as HTMLElement) + 1
+      ] || firstFocusableEl;
     nextFocusableEl?.focus();
   }
 }
@@ -77,9 +84,12 @@ function onKeyup(e: KeyboardEvent) {
 export function onDriverClick(
   element: Element,
   listener: (pointer: MouseEvent | PointerEvent) => void,
-  shouldPreventDefault?: (target: HTMLElement) => boolean
+  shouldPreventDefault?: (target: HTMLElement) => boolean,
 ) {
-  const listenerWrapper = (e: MouseEvent | PointerEvent, listener?: (pointer: MouseEvent | PointerEvent) => void) => {
+  const listenerWrapper = (
+    e: MouseEvent | PointerEvent,
+    listener?: (pointer: MouseEvent | PointerEvent) => void,
+  ) => {
     const target = e.target as HTMLElement;
     if (!element.contains(target)) {
       return;
@@ -106,10 +116,10 @@ export function onDriverClick(
   // Actual click handler
   document.addEventListener(
     "click",
-    e => {
+    (e) => {
       listenerWrapper(e, listener);
     },
-    useCapture
+    useCapture,
   );
 }
 

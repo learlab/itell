@@ -26,6 +26,7 @@
       "@class/*": ["src/app/dashboard/teacher/(home)/_components/*"],
       "@auth/*": ["./src/app/auth/_components/*"],
       "@summary/*": ["./src/app/summary/[id]/_components/*"],
+      "@quizme/*": ["./src/app/quizme/_components/*"],
       "react": ["./node_modules/@types/react"],
       "#content": [".velite"]
     },

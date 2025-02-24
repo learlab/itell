@@ -66,8 +66,8 @@ export default async function OnboardingLayout({
     },
     {
       label: "C Test",
-      status: status.cTest,
-      href: routes.cTest(),
+      status: status.ctest,
+      href: routes.ctest(),
     },
   ];
 

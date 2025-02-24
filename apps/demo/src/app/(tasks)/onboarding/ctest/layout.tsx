@@ -13,7 +13,7 @@ export default async function CTestLayout({
   const { user } = await getSession();
   if (!user) {
     return redirectWithSearchParams(routes.auth(), {
-      redirect_to: routes.cTest(),
+      redirect_to: routes.ctest(),
     });
   }
 
@@ -21,9 +21,9 @@ export default async function CTestLayout({
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
-      {status.cTest === "not-applicable" ? (
+      {status.ctest === "not-applicable" ? (
         <TaskNotApplicable />
-      ) : status.cTest === "done" ? (
+      ) : status.ctest === "done" ? (
         <>
           <TaskDone />
           {user.isAdmin && (

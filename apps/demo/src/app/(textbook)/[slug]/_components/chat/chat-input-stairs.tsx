@@ -1,10 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { HTMLAttributes, useRef, useState } from "react";
 import { Elements } from "@itell/constants";
+import { Button } from "@itell/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn, parseEventStream } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
-import { CornerDownLeft } from "lucide-react";
+import { ArrowUpIcon } from "lucide-react";
 import TextArea from "react-textarea-autosize";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
@@ -25,7 +27,6 @@ import {
 } from "@/lib/store/chat-store";
 import { reportSentry } from "@/lib/utils";
 import type { ChatHistory } from "@itell/core/chat";
-import type { HTMLAttributes } from "react";
 
 interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
   pageSlug: string;
@@ -37,7 +38,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
   const stairsQuestion = useSelector(store, SelectStairsQuestion);
   const stairsAnswered = useSelector(store, SelectStairsAnswered);
   const stairsTimestamp = useSelector(store, SelectStairsTimestamp);
-  const stairsReady = useSelector(store, SelectStairsReady);
+
   const [pending, setPending] = useState(false);
 
   const { isError, execute } = useServerAction(createChatsAction);
@@ -241,30 +242,30 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
   return (
     <div className={cn("grid gap-2 px-2", className)}>
       <form
-        className="mt-4 flex-1 overflow-hidden rounded-lg border-none outline-none"
+        className="relative flex items-center rounded-lg border border-input bg-background px-3 py-1.5 pr-8 text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-ring/10 focus-within:ring-offset-0"
         onSubmit={(e) => {
           e.preventDefault();
           if (!e.currentTarget.input.value) return;
-           
+
           onMessage(e.currentTarget.input.value);
           e.currentTarget.input.value = "";
         }}
       >
         {overMessageLimit ? (
-          <p className="p-2">Please return to the summary</p>
-        ) : stairsReady ? (
-          <div className="relative">
+          <p>Please return to the summary</p>
+        ) : (
+          <>
             <TextArea
               name="input"
               rows={2}
               maxRows={4}
-              disabled={pending || overMessageLimit || !stairsReady}
+              disabled={pending || overMessageLimit}
               placeholder={
                 overMessageLimit
                   ? "Please return to the summary"
                   : "Answer the question"
               }
-              className="block w-full resize-none rounded-md border border-border bg-background/90 px-4 py-1.5 pr-14 text-sm focus:ring-0 disabled:pointer-events-none disabled:opacity-50 sm:leading-6"
+              className="flex-1 resize-none bg-transparent placeholder:text-muted-foreground focus:outline-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -280,21 +281,20 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
                 }
               }}
             />
-
-            <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
-              <button type="submit" disabled={pending}>
-                <kbd className="inline-flex items-center rounded border px-1 text-xs">
-                  <CornerDownLeft className="size-4" />
-                </kbd>
-              </button>
-            </div>
-
-            <div
-              className="absolute inset-x-0 bottom-0 border-t border-border"
-              aria-hidden="true"
-            />
-          </div>
-        ) : null}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={"ghost"}
+                  size="sm"
+                  className="absolute bottom-1 right-1 size-6 rounded-full"
+                >
+                  <ArrowUpIcon size={16} className="shrink-0" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent sideOffset={12}>Submit</TooltipContent>
+            </Tooltip>
+          </>
+        )}
       </form>
       {isError ? (
         <InternalError className="px-2">

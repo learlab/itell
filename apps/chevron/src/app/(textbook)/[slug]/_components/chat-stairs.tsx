@@ -1,10 +1,11 @@
-import { Elements } from "@itell/constants";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-} from "@itell/ui/accordion";
+"use client";
 
+import { Elements } from "@itell/constants";
+import { ScrollArea } from "@itell/ui/scroll-area";
+import { useSelector } from "@xstate/store/react";
+
+import { useChatStore } from "@/components/provider/page-provider";
+import { SelectStairsReady } from "@/lib/store/chat-store";
 import { ChatInputStairs } from "./chat/chat-input-stairs";
 import { ChatMessagesStairs } from "./chat/chat-messages-stairs";
 
@@ -15,34 +16,36 @@ interface Props {
 }
 
 export function ChatStairs({ pageSlug, footer, id }: Props) {
+  const store = useChatStore();
+  const stairsReady = useSelector(store, SelectStairsReady);
+
   return (
-    <Accordion
+    <div
       id={id}
-      type="single"
-      value="item-1"
-      className="z-30 rounded-md border border-border bg-background text-foreground"
+      className="z-30 space-y-3 bg-background text-foreground"
       role="alert"
       tabIndex={-1}
       aria-relevant="additions"
     >
-      <p className="p-4 leading-tight tracking-tight">
-        Before continuing, you will be presented a question for the section that
-        is highlighted on the left side. When you are ready for the question,
-        click the button below.
-      </p>
       <a className="sr-only" href={`#${Elements.STAIRS_HIGHLIGHTED_CHUNK}`}>
         go to the relevant section
       </a>
-      <AccordionItem value="item-1" className="overflow-hidden">
-        <AccordionContent className="flex h-96 flex-col">
+
+      <ScrollArea className="h-[350px]">
+        <div className="h-full">
+          <p className="text-sm leading-relaxed">
+            Before continuing, you will be presented a question for the section
+            that is highlighted on the left side. When you are ready for the
+            question, click the button below.
+          </p>
           <ChatMessagesStairs />
-          <ChatInputStairs pageSlug={pageSlug} />
-          {footer}
-          <footer className="px-4 py-2 text-xs text-muted-foreground">
-            This content has been AI-generated and may contain errors.{" "}
-          </footer>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+        </div>
+      </ScrollArea>
+      {stairsReady && <ChatInputStairs pageSlug={pageSlug} />}
+      {footer}
+      <footer className="px-4 py-2 text-xs text-muted-foreground">
+        This content has been AI-generated and may contain errors.{" "}
+      </footer>
+    </div>
   );
 }

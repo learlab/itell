@@ -98,7 +98,7 @@ export default async function Page(props: {
           <PageHeader
             page={page}
             pageStatus={pageStatus}
-            pin={
+            hide={
               (await cookies()).get(PAGE_HEADER_PIN_COOKIE)?.value === "true"
             }
           />

@@ -23,7 +23,7 @@ export default async function IntakeSectionPage({
       sectionId={sectionId}
       afterFinish={async () => {
         "use server";
-        redirect(routes.cTest());
+        redirect(routes.ctest());
       }}
     />
   );

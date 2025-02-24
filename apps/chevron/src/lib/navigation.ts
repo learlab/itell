@@ -54,7 +54,8 @@ export const { routes, useSafeParams, useSafeSearchParams } =
         sectionId: z.string(),
       }),
     }),
-    cTest: defineRoute("/onboarding/ctest"),
+    ctest: defineRoute("/onboarding/ctest"),
+    quizme: defineRoute("/quizme"),
     guide: defineRoute("/guide"),
     auth: defineRoute("/auth", {
       search: z

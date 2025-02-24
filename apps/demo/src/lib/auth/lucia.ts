@@ -25,17 +25,39 @@ export const lucia = new Lucia(adapter, {
     return {
       id: attributes.id,
       name: attributes.name,
+      /**
+       * URL to OAuth profile photo
+       */
       image: attributes.image,
       email: attributes.email,
       role: attributes.role,
       isAdmin: isAdmin(attributes.role),
+      /**
+       * A <pageSlug, condition> map indicating user's testing condition for each page
+       */
       conditionAssignments: attributes.conditionAssignments,
+      /**
+       * Slug for page the user is currently at, null if not started
+       */
       pageSlug: attributes.pageSlug,
+      /**
+       * If user has completed all textbook pages
+       */
       finished: attributes.finished,
       consentGiven: attributes.consentGiven,
+      /**
+       * If user finishes all onboarding tasks
+       */
       onboardingFinished: attributes.onboardingFinished,
+      /**
+       * If user finishes all offboarding tasks
+       */
       offboardingFinished: attributes.offboardingFinished,
-      surveyCompleted: attributes.surveyCompleted,
+      /**
+       * User's class id, corresponds to `class_id` in the `teachers` table, null if user is not
+       * enrolled in any class. A "teacher" user may or may not enroll in his/her own class, therefore could have a
+       * null `class_id` or one that is different than his/her assigned class code
+       */
       classId: attributes.classId,
       personalization: {
         summary_streak: attributes.personalization?.summary_streak ?? 0,
@@ -75,7 +97,6 @@ interface DatabaseUserAttributes {
   email: string | null;
   role: string;
   finished: boolean;
-  surveyCompleted: boolean;
   consentGiven: boolean | null;
   onboardingFinished: boolean;
   offboardingFinished: boolean;

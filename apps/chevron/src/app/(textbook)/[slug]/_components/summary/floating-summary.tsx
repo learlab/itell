@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { Elements } from "@itell/constants";
+import { Badge } from "@itell/ui/badge";
 import { Label } from "@itell/ui/label";
 import { TextArea } from "@itell/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
-import { cn } from "@itell/utils";
+import { cn, numOfWords } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { ArrowDownIcon, PinIcon, XIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -136,11 +137,13 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
 
   if (!show) return null;
 
+  const numWords = numOfWords(input || "");
+
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-4 z-30 rounded-lg border-2 bg-accent pt-1 shadow-md"
+          className="fixed bottom-4 z-30 rounded-lg border-2 bg-accent shadow-md"
           id="floating-summary"
           style={{
             left: dimensions.left,
@@ -150,26 +153,31 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -50, opacity: 0 }}
         >
-          <div className="relative">
-            <header className="absolute right-2 top-0 z-40 flex items-center justify-end gap-2">
-              <button
-                aria-label="Close floating summary"
-                onClick={() =>
-                  summaryStore.send({ type: "toggleShowFloatingSummary" })
-                }
-                type="button"
-                className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
-              >
-                <XIcon className="size-4" />
-              </button>
-              <button
-                aria-label="Jump to summary submission"
-                onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
-                type="button"
-                className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
-              >
-                <ArrowDownIcon className="size-4" />
-              </button>
+          <div className="relative pt-2">
+            <header className="absolute top-0 z-40 flex w-full items-center justify-between px-4">
+              <Badge variant={"secondary"} className="-translate-y-1/2">
+                {numWords} words
+              </Badge>
+              <div className="ml-auto flex items-center gap-2">
+                <button
+                  aria-label="Close floating summary"
+                  onClick={() =>
+                    summaryStore.send({ type: "toggleShowFloatingSummary" })
+                  }
+                  type="button"
+                  className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
+                >
+                  <XIcon className="size-4" />
+                </button>
+                <button
+                  aria-label="Jump to summary submission"
+                  onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
+                  type="button"
+                  className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
+                >
+                  <ArrowDownIcon className="size-4" />
+                </button>
+              </div>
             </header>
             {summaryResponse && (
               <SummaryFeedbackDetails

@@ -53,7 +53,7 @@ export function OnboardingHeader({ user }: { user: User }) {
             )}
             {isCTest && (
               <BreadcrumbItem className="text-lg font-medium">
-                <BreadcrumbLink href={routes.cTest()}>C Test</BreadcrumbLink>
+                <BreadcrumbLink href={routes.ctest()}>C Test</BreadcrumbLink>
               </BreadcrumbItem>
             )}
             {isIntakeHome && (
