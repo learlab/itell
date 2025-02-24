@@ -10,6 +10,7 @@ import remarkGfm from "remark-gfm";
 import remarkHeadingAttrs from "remark-heading-attrs";
 import remarkMath from "remark-math";
 import { defineCollection, defineConfig, defineSchema, s } from "velite";
+
 import { SurveySchema } from "@/lib/survey-data";
 
 const execAsync = promisify(exec);
@@ -26,13 +27,13 @@ const timestamp = defineSchema(() =>
         });
       }
       const { stdout } = await execAsync(
-        `git log -1 --format=%cd ${meta.path}`,
+        `git log -1 --format=%cd ${meta.path}`
       );
       if (stdout === "") {
         return null;
       }
       return new Date(stdout).toDateString();
-    }),
+    })
 );
 
 const pages = defineCollection({
@@ -63,10 +64,10 @@ const pages = defineCollection({
                 title: s.string(),
                 level: s.union([s.literal(3), s.literal(4)]),
                 slug: s.string(),
-              }),
+              })
             )
             .optional(),
-        }),
+        })
       ),
       quiz: s
         .array(
@@ -76,9 +77,9 @@ const pages = defineCollection({
               s.object({
                 answer: s.string(),
                 correct: s.boolean(),
-              }),
+              })
             ),
-          }),
+          })
         )
         .nullable(),
       excerpt: s.excerpt(),
@@ -88,7 +89,7 @@ const pages = defineCollection({
           slug: s.string(),
           question: s.string(),
           answer: s.string(),
-        }),
+        })
       ),
       html: s.markdown({
         remarkPlugins: [remarkHeadingAttrs, remarkMath],
