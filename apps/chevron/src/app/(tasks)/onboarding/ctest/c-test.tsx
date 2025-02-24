@@ -113,9 +113,9 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
             if (pIndex === 0) {
               return (
                 <p key={pIndex}>
-                  {firstSentence + " "}
+                  {firstSentence}
                   {firstParagraphRest &&
-                    splitWords({ text: paragraph, shouldTarget: true }).map(
+                    splitWords({ text: firstParagraphRest, shouldTarget: true }).map(
                       (wordObj, wIndex) => (
                         <WordItem
                           key={`${pIndex}-${wIndex}`}
