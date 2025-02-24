@@ -23,7 +23,7 @@ interface Props {
 }
 
 export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
-  const getShowLetter = (word: string) => mode === "cloze" ? 0 : Math.floor(word.length / 2);
+  const getShowLetter = (word: string) => mode === "cloze" ? 0 : Math.ceil(word.length / 2);
   const formRef = useRef<HTMLFormElement>(null);
   const [uiState, setUiState] = useState<"initial" | "showingAnswers" | "showingContinue">("initial");
   const [results, setResults] = useState<{
@@ -201,7 +201,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       </Alert>
       {user.isAdmin && <QuickFill />}
       {error && <Errorbox title={error.message} />}
-      
+
       <form
         id="cloze-form"
         className="flex flex-col gap-4 rounded-lg"
