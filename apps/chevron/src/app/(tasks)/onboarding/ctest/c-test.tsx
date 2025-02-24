@@ -19,6 +19,7 @@ import { AdminButton } from "@/components/admin-button";
 import { ClozeData } from "@/drizzle/schema";
 import { routes } from "@/lib/navigation";
 import { WordItem } from "./word-item";
+import { get } from "http";
 
 interface Props {
   paragraphs: string[];
@@ -27,7 +28,7 @@ interface Props {
 }
 
 export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
-  const showLetter = mode === "cloze" ? 0 : 2;
+  const getShowLetter = (word: string) => mode === "cloze" ? 0 : Math.floor(word.length / 2);
   const formRef = useRef<HTMLFormElement>(null);
   const [showAnswers, setShowAnswers] = useState(false);
   const [results, setResults] = useState<{
@@ -160,24 +161,14 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
             if (pIndex === 0) {
               return (
                 <p key={pIndex}>
-                  {firstSentence &&
-                    splitWords({ text: paragraph, shouldTarget: false }).map(
-                      (wordObj, wIndex) => (
-                        <WordItem
-                          key={`${pIndex}-${wIndex}`}
-                          word={wordObj.text}
-                          showLetter={showLetter}
-                          isTarget={wordObj.isTarget}
-                        />
-                      )
-                    )}
+                  {firstSentence}
                   {firstParagraphRest &&
-                    splitWords({ text: paragraph, shouldTarget: true }).map(
+                    splitWords({ text: firstParagraphRest, shouldTarget: true }).map(
                       (wordObj, wIndex) => (
                         <WordItem
                           key={`${pIndex}-${wIndex}`}
                           word={wordObj.text}
-                          showLetter={showLetter}
+                          showLetter={getShowLetter(wordObj.text)}
                           isTarget={wordObj.isTarget}
                         />
                       )
@@ -193,7 +184,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
                     <WordItem
                       key={`${pIndex}-${wIndex}`}
                       word={wordObj.text}
-                      showLetter={showLetter}
+                      showLetter={getShowLetter(wordObj.text)}
                       isTarget={wordObj.isTarget}
                     />
                   )

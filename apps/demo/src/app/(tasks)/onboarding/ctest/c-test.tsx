@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@itell/ui/alert";
 import { Badge } from "@itell/ui/badge";
@@ -19,6 +19,7 @@ import { AdminButton } from "@/components/admin-button";
 import { ClozeData } from "@/drizzle/schema";
 import { routes } from "@/lib/navigation";
 import { WordItem } from "./word-item";
+import { get } from "http";
 
 interface Props {
   paragraphs: string[];
@@ -27,63 +28,141 @@ interface Props {
 }
 
 export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
-  const showLetter = mode === "cloze" ? 0 : 2;
+  const getShowLetter = (word: string) => mode === "cloze" ? 0 : Math.floor(word.length / 2);
   const formRef = useRef<HTMLFormElement>(null);
-  const [showAnswers, setShowAnswers] = useState(false);
+  const [uiState, setUiState] = useState<"initial" | "showingAnswers" | "showingContinue">("initial");
   const [results, setResults] = useState<{
     answers: Array<{ word: string; isCorrect: boolean }>;
     score?: number;
   } | null>(null);
+
+  useEffect(() => {
+    if (results && uiState === "initial") {
+      applyVisualFeedback();
+      setUiState("showingAnswers");
+      
+      // Add delay before showing continue button
+      const timer = setTimeout(() => {
+        setUiState("showingContinue");
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [results, uiState]);
+
+  const applyVisualFeedback = () => {
+    if (!formRef.current || !results) return;
+
+    const fields = Array.from(
+      formRef.current.querySelectorAll("fieldset[data-target-word]")
+    ) as HTMLFieldSetElement[];
+
+    fields.forEach((field, index) => {
+      const word = field.dataset.targetWord as string;
+      const inputs = Array.from(
+        field.querySelectorAll("input[type=text]")
+      ) as HTMLInputElement[];
+
+      const answer = results.answers.find((a) => a.word === word);
+
+      if (!answer) return;
+
+      const targetInputs = inputs.filter((input) => input.dataset.isTarget === "true");
+
+      targetInputs.forEach((input) => {
+        const inputIndex = targetInputs.indexOf(input);
+        const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : inputIndex;
+        const correctLetter = word[letterIndex];
+
+        input.readOnly = true;
+
+        if (answer.isCorrect) {
+          input.style.backgroundColor = "#d1fae5";
+          input.style.borderColor = "#10b981";
+          input.style.color = "#047857";
+        } else {
+          input.style.backgroundColor = "#fee2e2";
+          input.style.borderColor = "#ef4444";
+          input.style.color = "#b91c1c";
+          
+          if (input.value !== correctLetter) {
+            input.value = correctLetter;
+          }
+        }
+      });
+    });
+  };
+
+  const processForm = (form: HTMLFormElement) => {
+    const fields = Array.from(
+      form.querySelectorAll("fieldset[data-target-word]")
+    ) as HTMLFieldSetElement[];
+
+    let correctWords = 0;
+    const clozeData: ClozeData = [];
+    const answers: Array<{ word: string; isCorrect: boolean }> = [];
+
+    fields.forEach((field) => {
+      const word = field.dataset.targetWord as string;
+      const inputs = Array.from(
+        field.querySelectorAll("input[type=text]")
+      ) as HTMLInputElement[];
+
+      const result = {
+        word,
+        placeholders: [] as string[],
+        answers: [] as string[],
+      };
+      
+      inputs.forEach((input) => {
+        const isTarget = input.dataset.isTarget === "true";
+        if (isTarget) {
+          result.answers.push(input.value || " "); // allow empty answers
+        } else {
+          result.placeholders.push(input.value);
+        }
+      });
+
+      clozeData.push(result);
+      const joined = result.placeholders.join("") + result.answers.join("");
+      const isCorrect = joined === word;
+      
+      if (isCorrect) {
+        correctWords++;
+      }
+      answers.push({ word, isCorrect });
+    });
+
+    return {
+      clozeData,
+      answers,
+      correctWords,
+      totalWords: fields.length,
+      score: (correctWords / fields.length) * 100
+    };
+  };
+
+  const handleShowAnswers = () => {
+    const form = formRef.current;
+    if (!form) return;
+    
+    const { answers, score } = processForm(form);
+    setResults({ answers, score });
+    
+    toast.success("Review your answers before continuing");
+  };
 
   const { action, isPending, error } = useActionStatus(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       const form = e.currentTarget as HTMLFormElement;
-      const fields = Array.from(
-        form.querySelectorAll("fieldset[data-target-word]")
-      ) as HTMLFieldSetElement[];
+      const { clozeData, correctWords, totalWords } = processForm(form);
 
-      let correctWords = 0;
-      const clozeData: ClozeData = [];
-      const answers: Array<{ word: string; isCorrect: boolean }> = [];
-
-      fields.forEach((field) => {
-        const word = field.dataset.targetWord as string;
-        const inputs = Array.from(
-          field.querySelectorAll("input[type=text]")
-        ) as HTMLInputElement[];
-
-        const result = {
-          word,
-          placeholders: [] as string[],
-          answers: [] as string[],
-        };
-        inputs.forEach((input) => {
-          const isTarget = input.dataset.isTarget === "true";
-          if (isTarget) {
-            result.answers.push(input.value || ""); // allow empty answers
-          } else {
-            result.placeholders.push(input.value);
-          }
-        });
-
-        clozeData.push(result);
-        const joined = result.placeholders.join("") + result.answers.join("");
-        if (joined === word) {
-          correctWords++;
-        }
-        answers.push({ word, isCorrect: joined === word });
-      });
-
-      setResults({
-        answers,
-        score: (correctWords / fields.length) * 100,
-      });
 
       const [, err] = await createClozeAction({
         pageSlug: "ctest",
-        totalWords: fields.length,
+        totalWords,
         correctWords,
         data: clozeData,
       });
@@ -99,19 +178,17 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
           cause: err1,
         });
       }
-      setShowAnswers(true);
+
       toast.success(
         "All onboarding tasks completed. Redirecting to the textbook ..."
       );
+     
+      redirect(
+        user.pageSlug ? routes.textbook({ slug: user.pageSlug }) : routes.home()
+      );
+
     }
   );
-
-  const handleContinue = () => {
-    redirect(
-      user.pageSlug ? routes.textbook({ slug: user.pageSlug }) : routes.home()
-    );
-  };
-  if (paragraphs.length < 1) return <p>not enough paragraphs</p>;
 
   const { firstSentence, rest: firstParagraphRest } = splitFirstSentence(
     paragraphs[0]
@@ -160,24 +237,14 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
             if (pIndex === 0) {
               return (
                 <p key={pIndex}>
-                  {firstSentence &&
-                    splitWords({ text: paragraph, shouldTarget: false }).map(
-                      (wordObj, wIndex) => (
-                        <WordItem
-                          key={`${pIndex}-${wIndex}`}
-                          word={wordObj.text}
-                          showLetter={showLetter}
-                          isTarget={wordObj.isTarget}
-                        />
-                      )
-                    )}
+                  {firstSentence} 
                   {firstParagraphRest &&
-                    splitWords({ text: paragraph, shouldTarget: true }).map(
+                    splitWords({ text: firstParagraphRest, shouldTarget: true }).map(
                       (wordObj, wIndex) => (
                         <WordItem
                           key={`${pIndex}-${wIndex}`}
                           word={wordObj.text}
-                          showLetter={showLetter}
+                          showLetter={getShowLetter(wordObj.text)}
                           isTarget={wordObj.isTarget}
                         />
                       )
@@ -193,7 +260,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
                     <WordItem
                       key={`${pIndex}-${wIndex}`}
                       word={wordObj.text}
-                      showLetter={showLetter}
+                      showLetter={getShowLetter(wordObj.text)}
                       isTarget={wordObj.isTarget}
                     />
                   )
@@ -203,31 +270,29 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
           })}
         </div>
         <div className="flex gap-4">
-          {!showAnswers ? (
+          {uiState === "initial" ? (
             <Button
-              disabled={isPending}
-              pending={isPending}
-              type="submit"
+              type="button"
+              onClick={handleShowAnswers}
               className="w-40"
             >
               <span className="inline-flex items-center gap-2">
                 <SendHorizontalIcon className="size-3" />
-                Submit
+                Show Answers
               </span>
             </Button>
-          ) : (
-            <Button onClick={handleContinue} className="w-40">
+          ) : uiState === "showingContinue" && (
+            <Button 
+              type="submit"
+              disabled={isPending}
+              pending={isPending}
+              className="w-40"
+            >
               Continue to Textbook
             </Button>
           )}
         </div>
       </form>
-
-      {results && showAnswers && (
-        <div className="mt-4 space-y-2">
-          <p>Click any word to see the correct answer.</p>
-        </div>
-      )}
     </div>
   );
 };
