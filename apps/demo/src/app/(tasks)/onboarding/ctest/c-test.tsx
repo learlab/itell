@@ -2,24 +2,19 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
-import { Alert, AlertDescription, AlertTitle } from "@itell/ui/alert";
-import { Badge } from "@itell/ui/badge";
+import { Alert, AlertDescription } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
-import { Input } from "@itell/ui/input";
-import { cn } from "@itell/utils";
 import { User } from "lucia";
 import { SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
-
 import { createClozeAction } from "@/actions/cloze";
 import { updateUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
 import { ClozeData } from "@/drizzle/schema";
 import { routes } from "@/lib/navigation";
 import { WordItem } from "./word-item";
-import { get } from "http";
 
 interface Props {
   paragraphs: string[];
@@ -206,26 +201,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       </Alert>
       {user.isAdmin && <QuickFill />}
       {error && <Errorbox title={error.message} />}
-      {/* <div className="flex items-baseline"> */}
-      {/*   <span>sci</span> */}
-      {/*   <div className="group relative"> */}
-      {/*     <input */}
-      {/*       maxLength={4} */}
-      {/*       className="peer w-10 border-b-2 focus:outline-none focus:ring-0" */}
-      {/*     /> */}
-      {/*     <span */}
-      {/*       className={cn( */}
-      {/*         "absolute right-0 top-0 flex size-5 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border text-sm transition", */}
-      {/*         "peer-focus:w-fit peer-focus:-translate-y-full peer-focus:rounded-md peer-focus:p-2" */}
-      {/*       )} */}
-      {/*     > */}
-      {/*       4 */}
-      {/*       <span className="ml-1 hidden group-has-[:focus-visible]:inline"> */}
-      {/*         letters */}
-      {/*       </span> */}
-      {/*     </span> */}
-      {/*   </div> */}
-      {/* </div> */}
+      
       <form
         id="cloze-form"
         className="flex flex-col gap-4 rounded-lg"
