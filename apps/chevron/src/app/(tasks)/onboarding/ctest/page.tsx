@@ -9,7 +9,7 @@ export default async function Page() {
   const { user } = await getSession();
   if (!user) {
     return redirectWithSearchParams(routes.auth(), {
-      redirect_to: routes.cTest(),
+      redirect_to: routes.ctest(),
     });
   }
 

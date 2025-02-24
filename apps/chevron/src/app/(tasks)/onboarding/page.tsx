@@ -62,8 +62,8 @@ export default async function OnboardingPage({
     href = routes.consent();
   } else if (status.intakeSurvey !== "done") {
     href = routes.intakeSurvey();
-  } else if (status.cTest !== "done") {
-    href = routes.cTest();
+  } else if (status.ctest !== "done") {
+    href = routes.ctest();
   }
 
   return (

@@ -11,7 +11,7 @@ export const getOnboardingStatus = memoize(
       return {
         consent: "ready",
         intakeSurvey: "not-applicable",
-        cTest: "not-applicable",
+        ctest: "not-applicable",
       };
     }
     const intakeSession = await getSurveySessions(user.id, "intake");
@@ -20,7 +20,7 @@ export const getOnboardingStatus = memoize(
       return {
         consent: "done",
         intakeSurvey: intakeSession ? "in-progress" : "ready",
-        cTest: "not-applicable",
+        ctest: "not-applicable",
       };
     }
 
@@ -29,7 +29,7 @@ export const getOnboardingStatus = memoize(
     return {
       consent: "done",
       intakeSurvey: "done",
-      cTest: clozeSession ? "done" : "ready",
+      ctest: clozeSession ? "done" : "ready",
     };
   },
   { persist: false }
