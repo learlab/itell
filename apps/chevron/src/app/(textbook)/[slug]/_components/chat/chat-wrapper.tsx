@@ -62,7 +62,7 @@ function ChatHeader() {
       <button
         aria-label="Close chat"
         onClick={() => {
-          store.send({ type: "setOpen", value: false });
+          store.trigger.setOpen({ value: false });
         }}
         className="ml-auto"
       >

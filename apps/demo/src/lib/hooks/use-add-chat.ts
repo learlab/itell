@@ -12,6 +12,7 @@ import { reportSentry } from "../utils";
 
 export const useAddChat = () => {
   const store = useChatStore();
+  const { addMessage, updateMessage, setActive } = store.trigger;
   const [pending, setPending] = useState(false);
 
   const { execute, isError, error } = useServerAction(createChatsAction);
@@ -29,13 +30,12 @@ export const useAddChat = () => {
   }) => {
     setPending(true);
     const userTimestamp = Date.now();
-    store.send({
-      type: "addMessage",
+    addMessage({
       data: userMessage({ text, transform, isStairs: false }),
     });
     const botMessageId = crypto.randomUUID();
-    store.send({
-      type: "addMessage",
+
+    addMessage({
       data: botMessage({
         id: botMessageId,
         text: "",
@@ -65,8 +65,7 @@ export const useAddChat = () => {
           if (!done) {
             try {
               data = JSON.parse(d) as typeof data;
-              store.send({
-                type: "updateMessage",
+              updateMessage({
                 id: botMessageId,
                 text: data.text,
                 isStairs: false,
@@ -75,12 +74,11 @@ export const useAddChat = () => {
               console.log("invalid json", data);
             }
           } else {
-            store.send({ type: "setActive", id: null });
+            setActive({ id: null });
           }
         });
 
-        store.send({
-          type: "updateMessage",
+        updateMessage({
           id: botMessageId,
           isStairs: false,
           text: data.text,
@@ -114,8 +112,7 @@ export const useAddChat = () => {
       }
     } catch (err) {
       reportSentry("eval chat", { error: err, input: text, pageSlug });
-      store.send({
-        type: "updateMessage",
+      updateMessage({
         id: botMessageId,
         text: "Sorry, I'm having trouble connecting to ITELL AI, please try again later.",
         isStairs: false,

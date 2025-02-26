@@ -77,6 +77,7 @@ const conditions = [
 
 export function AdminToolsClient({ user, pageSlug, pages }: Props) {
   const store = useCRIStore();
+  const { finishPage } = store.trigger;
   const condition = getUserCondition(user, pageSlug);
   const [open, setOpen] = useState(false);
   const { execute, isPending, isError } = useServerAction(updateUserAction);
@@ -103,7 +104,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
 
     if (formData.get("page-unblur") === "on") {
       startTransition(() => {
-        store.send({ type: "finishPage" });
+        finishPage();
       });
     }
 

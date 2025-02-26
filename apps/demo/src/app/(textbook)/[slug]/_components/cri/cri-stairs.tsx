@@ -114,7 +114,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     // if answer is correct, mark chunk as finished
     // this will add the chunk to the list of finished chunks that gets excluded from stairs question
     if (score === 2) {
-      store.send({ type: "finishChunk", chunkSlug, passed: true });
+      store.trigger.finishChunk({ chunkSlug, passed: true });
 
       setState({
         status: StatusStairs.BOTH_CORRECT,

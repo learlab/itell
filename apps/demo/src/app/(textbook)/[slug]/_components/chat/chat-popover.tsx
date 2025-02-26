@@ -12,7 +12,6 @@ import { useChatStore } from "@/components/provider/page-provider";
 import { SelectOpen } from "@/lib/store/chat-store";
 import { scrollToLastChild } from "@/lib/utils";
 import { ChatBody } from "./chat-body";
-import { ChatInput } from "./chat-input";
 import { ChatWrapper } from "./chat-wrapper";
 
 type Props = {
@@ -118,7 +117,7 @@ export function ChatPopover({ pageSlug, updatedAt, messages }: Props) {
             isCompact ? "rounded-full p-4" : "rounded-lg px-6 py-4"
           )}
           onClick={() => {
-            store.send({ type: "setOpen", value: true });
+            store.trigger.setOpen({ value: true });
           }}
         >
           <MessageCircleIcon className="size-6" />

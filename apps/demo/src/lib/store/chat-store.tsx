@@ -14,9 +14,8 @@ export type StoreMessage = Message & { isStairs: boolean };
 export type ChatStore = ReturnType<typeof createChatStore>;
 
 export const createChatStore = () => {
-  return createStoreWithProducer(
-    produce,
-    {
+  return createStoreWithProducer(produce, {
+    context: {
       open: false as boolean,
       messages: [] as Message[],
       stairsMessages: [] as Message[],
@@ -26,7 +25,7 @@ export const createChatStore = () => {
       stairsQuestion: null as StairsQuestion | null,
       stairsTimestamp: null as number | null,
     },
-    {
+    on: {
       setOpen: (context, event: { value: boolean }) => {
         context.open = event.value;
       },
@@ -97,8 +96,8 @@ export const createChatStore = () => {
         context.stairsQuestion = event.data;
         context.stairsReady = false;
       },
-    }
-  );
+    },
+  });
 };
 
 export type CreateUserMessageInput = {

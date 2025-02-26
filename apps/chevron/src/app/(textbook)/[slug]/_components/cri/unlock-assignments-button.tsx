@@ -25,7 +25,7 @@ export function UnlockAssignmentsButton({
     <Button
       disabled={isSummaryReady}
       onClick={() => {
-        store.send({ type: "finishPage" });
+        store.trigger.finishPage();
 
         createEventAction({
           pageSlug,

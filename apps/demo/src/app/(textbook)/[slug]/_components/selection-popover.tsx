@@ -46,7 +46,7 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
         if (!content) {
           return toast.warning("Selection is empty");
         }
-        store.send({ type: "setOpen", value: true });
+        store.trigger.setOpen({ value: true });
 
         const text = `Please explain the following:\n\n <blockquote>${content}</blockquote> `;
         addChat({ text, pageSlug, transform: true, currentChunk: chunkSlug });
@@ -73,8 +73,7 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
           return toast.warning("Selection is empty");
         }
         const chunkSlug = findParentChunk(range);
-        noteStore.send({
-          type: "create",
+        noteStore.trigger.create({
           id: randomNumber(),
           highlightedText: text,
           color: noteColor,

@@ -29,6 +29,9 @@ export const createSummaryStore = ({
       isNextPageVisible: pageStatus.unlocked,
       showFloatingSummary,
     },
+    emits: {
+      toggleFloatingSummary() {},
+    },
     on: {
       submit: (context) => {
         context.error = null;
@@ -45,9 +48,9 @@ export const createSummaryStore = ({
       setInput: (context, event: { input: string }) => {
         context.input = event.input;
       },
-      toggleShowFloatingSummary: (context, _event: any, { emit }) => {
+      toggleShowFloatingSummary: (context, _: unknown, enqueue) => {
         context.showFloatingSummary = !context.showFloatingSummary;
-        emit({ type: "toggleShowFloatingSummary" });
+        enqueue.emit.toggleFloatingSummary({});
       },
       finishPage: (
         context,

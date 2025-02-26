@@ -28,12 +28,12 @@ export type UpdateNoteInput = {
 };
 
 type NoteStore = typeof noteStore;
-export const noteStore = createStoreWithProducer(
-  produce,
-  {
+
+export const noteStore = createStoreWithProducer(produce, {
+  context: {
     notes: [] as NoteData[],
   },
-  {
+  on: {
     initialize: (context, event: { data: NoteData[] }) => {
       context.notes = event.data;
     },
@@ -62,8 +62,8 @@ export const noteStore = createStoreWithProducer(
     delete: (context, event: { id: number }) => {
       context.notes = context.notes.filter((n) => n.id !== event.id);
     },
-  }
-);
+  },
+});
 
 type Selector<T> = (_: SnapshotFromStore<NoteStore>) => T;
 export const SelectNotes: Selector<NoteData[]> = (state) => state.context.notes;

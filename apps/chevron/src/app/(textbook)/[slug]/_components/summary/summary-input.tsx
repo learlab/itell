@@ -63,11 +63,10 @@ export const SummaryInput = ({
   useEffect(() => {
     // initialize summary text
     // 1. from searchParams, base64 encoded
-    // 2. from local storage
+    // 2. from localStorage
     // 3. from value prop
     const savedSummary = getSummaryLocal(pageSlug);
-    summaryStore.send({
-      type: "setInput",
+    summaryStore.trigger.setInput({
       input: summary
         ? Buffer.from(summary, "base64").toString("ascii")
         : savedSummary
@@ -104,8 +103,7 @@ export const SummaryInput = ({
           disabled={disabled}
           placeholder="This page is about ..."
           onChange={(e) => {
-            summaryStore.send({
-              type: "setInput",
+            summaryStore.trigger.setInput({
               input: e.currentTarget.value,
             });
           }}
@@ -116,19 +114,30 @@ export const SummaryInput = ({
               toast.warning("Copy & Paste is not allowed");
             }
           }}
-          className={
-            "flex min-h-[80px] w-full resize-none rounded-md border border-input bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-base xl:text-lg"
-          }
+          className={`flex min-h-[80px] w-full resize-none rounded-md border border-input
+            bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md
+            ring-offset-background placeholder:text-muted-foreground
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+            focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
+            md:text-base xl:text-lg`}
         />
       </Label>
 
       {pending ? (
-        <div className="absolute bottom-0 left-0 right-0 top-0 z-10 cursor-not-allowed gap-2 bg-background/80 backdrop-blur-sm transition-all duration-100 animate-in animate-out">
+        <div
+          className="absolute bottom-0 left-0 right-0 top-0 z-10 cursor-not-allowed gap-2
+            bg-background/80 backdrop-blur-sm transition-all duration-100 animate-in
+            animate-out"
+        >
           <SummaryProgress items={stages} />
         </div>
       ) : (
         disabled && (
-          <div className="absolute bottom-0 left-0 right-0 top-0 z-10 flex cursor-not-allowed items-center justify-center gap-2 bg-background/80 backdrop-blur-sm transition-all duration-100 animate-in animate-out">
+          <div
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex cursor-not-allowed items-center
+              justify-center gap-2 bg-background/80 backdrop-blur-sm transition-all
+              duration-100 animate-in animate-out"
+          >
             Please finish the entire page first
           </div>
         )
@@ -144,8 +153,7 @@ function Distance({ distance }: { distance: number }) {
       <div className="relative h-8 flex-1 overflow-hidden rounded-full bg-accent">
         <div
           className={`absolute left-0 top-0 h-full transition-all duration-300 ease-out ${
-            distance >= distanceThreshold ? "bg-info" : "bg-warning"
-          }`}
+            distance >= distanceThreshold ? "bg-info" : "bg-warning" }`}
           style={{ width: `${String(distance)}%` }}
         />
         <div

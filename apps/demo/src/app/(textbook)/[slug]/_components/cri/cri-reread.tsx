@@ -77,7 +77,7 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
     const data = await response.json();
     const score = data.score as QuestionScore;
 
-    store.send({ type: "finishChunk", chunkSlug, passed: false });
+    store.trigger.finishChunk({ chunkSlug, passed: false });
 
     setState((state) => ({
       ...state,

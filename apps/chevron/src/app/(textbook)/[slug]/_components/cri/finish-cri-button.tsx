@@ -17,6 +17,7 @@ type Props = {
 
 export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
   const store = useCRIStore();
+  const { finishPage, advanceChunk } = store.trigger;
   const currentChunk = useSelector(store, SelectCurrentChunk);
   const isSummaryReady = useSelector(store, SelectSummaryReady);
   const chunks = useChunks();
@@ -31,9 +32,9 @@ export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
       disabled={disabled}
       onClick={() => {
         if (isLastQuestion) {
-          store.send({ type: "finishPage" });
+          finishPage();
         } else {
-          store.send({ type: "advanceChunk", chunkSlug });
+          advanceChunk({ chunkSlug });
         }
         createEventAction({
           pageSlug,

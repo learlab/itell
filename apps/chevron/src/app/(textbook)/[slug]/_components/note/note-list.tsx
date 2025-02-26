@@ -16,7 +16,7 @@ export function NoteList({ notes, pageSlug }: Props) {
   const data = useSelector(noteStore, SelectNotes);
 
   useEffect(() => {
-    noteStore.send({ type: "initialize", data: notes });
+    noteStore.trigger.initialize({ data: notes });
   }, [notes]);
 
   if (data.length > 0) {

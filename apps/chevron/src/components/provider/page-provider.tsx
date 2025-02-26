@@ -99,7 +99,7 @@ export function PageProvider({
 
     if (summaryStoreRef.current) {
       summarySubscription = summaryStoreRef.current.on(
-        "toggleShowFloatingSummary",
+        "toggleFloatingSummary",
         () => {
           setShowFloatingSummary((prev) => !prev);
         }

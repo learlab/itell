@@ -16,7 +16,7 @@ export function ResetPage({ pageSlug }: { pageSlug: string }) {
       variant="ghost"
       onClick={() => {
         startTransition(() => {
-          store.send({ type: "resetPage" });
+          store.trigger.resetPage();
           clearSummaryLocal(pageSlug);
           window.location.reload();
         });

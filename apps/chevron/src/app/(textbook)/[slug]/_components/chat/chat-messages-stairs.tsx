@@ -23,7 +23,7 @@ export function ChatMessagesStairs() {
       node: (
         <StairsReadyButton
           onClick={() => {
-            store.send({ type: "setStairsReady" });
+            store.trigger.setStairsReady();
           }}
         />
       ),

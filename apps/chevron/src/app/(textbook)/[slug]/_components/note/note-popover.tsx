@@ -98,7 +98,9 @@ export const NotePopover = memo(
       setPending(true);
       popoverRef.current?.hidePopover();
       removeNotes(id);
-      noteStore.send({ type: "delete", id });
+
+      // eslint-disable-next-line drizzle/enforce-delete-with-where
+      noteStore.trigger.delete({ id });
       if (recordId) {
         // delete note in database
         await deleteNoteAction({ id: recordId });
@@ -128,8 +130,7 @@ export const NotePopover = memo(
       const noteText = getInput();
       if (shouldUpdate) {
         if (recordId) {
-          noteStore.send({
-            type: "update",
+          noteStore.trigger.update({
             id,
             data: {
               noteText,
@@ -438,7 +439,8 @@ function ColorPicker({ id, color, onChange }: ColorPickerProps) {
           ))}
           <button
             type="button"
-            className="col-span-1 inline-flex size-8 items-center justify-center rounded-md text-foreground"
+            className="col-span-1 inline-flex size-8 items-center justify-center rounded-md
+              text-foreground"
             style={{
               background: customBg,
             }}
