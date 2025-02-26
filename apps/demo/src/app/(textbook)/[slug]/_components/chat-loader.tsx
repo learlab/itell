@@ -10,10 +10,9 @@ import { ChatPopover } from "./chat/chat-popover";
 type Props = {
   user: User | null;
   pageSlug: string;
-  pageTitle: string;
 };
 
-export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
+export async function ChatLoader({ user, pageSlug }: Props) {
   if (!user || getUserCondition(user, pageSlug) !== Condition.STAIRS) {
     return null;
   }
@@ -32,8 +31,7 @@ export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
     <ChatPopover
       pageSlug={pageSlug}
       updatedAt={new Date(updatedAt)}
-      data={messages}
-      pageTitle={pageTitle}
+      messages={messages}
     />
   );
 }

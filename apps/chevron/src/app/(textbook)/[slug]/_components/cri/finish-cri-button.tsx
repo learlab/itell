@@ -2,6 +2,7 @@
 
 import { Button } from "@itell/ui/button";
 import { useSelector } from "@xstate/store/react";
+import { ChevronRightIcon } from "lucide-react";
 
 import { createEventAction } from "@/actions/event";
 import { useChunks, useCRIStore } from "@/components/provider/page-provider";
@@ -44,6 +45,7 @@ export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
         });
       }}
     >
+      <ChevronRightIcon className="mr-2" />
       {text}
     </Button>
   );

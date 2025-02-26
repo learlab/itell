@@ -12,6 +12,7 @@ type StairsQuestion = {
 };
 export type StoreMessage = Message & { isStairs: boolean };
 export type ChatStore = ReturnType<typeof createChatStore>;
+
 export const createChatStore = () => {
   return createStoreWithProducer(
     produce,
@@ -167,6 +168,8 @@ export const SelectStairsMessages: Selector<Message[]> = (state) =>
   state.context.stairsMessages;
 export const SelectMessages: Selector<Message[]> = (state) =>
   state.context.messages;
+export const SelectHasMessages: Selector<boolean> = (state) =>
+  state.context.messages.length > 0;
 export const SelectActiveMessageId: Selector<string | null> = (state) =>
   state.context.activeMessageId;
 export const SelectStairsReady: Selector<boolean> = (state) =>

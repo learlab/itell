@@ -9,6 +9,8 @@ module.exports = {
     "prettier-plugin-css-order",
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss",
+    "prettier-plugin-classnames",
+    "prettier-plugin-merge",
   ],
   importOrder: [
     "only$",

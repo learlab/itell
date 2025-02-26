@@ -28,7 +28,7 @@ export function ChatMessagesStairs() {
         />
       ),
     }),
-    []
+    [store]
   );
 
   useEffect(() => {

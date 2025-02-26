@@ -74,7 +74,7 @@ function TailwindIndicator() {
   if (isProduction) return null;
 
   return (
-    <div className="fixed bottom-4 right-1/2 z-50 flex aspect-square w-fit translate-x-1/2 items-center justify-center rounded-full border bg-accent p-2 text-accent-foreground">
+    <div className="fixed bottom-4 right-1/2 z-50 flex aspect-square size-9 w-fit translate-x-1/2 items-center justify-center rounded-full border bg-accent p-2 text-accent-foreground">
       <div className="block sm:hidden">xs</div>
       <div className="hidden sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
         sm

@@ -6,19 +6,11 @@ import { usePortal } from "@itell/core/hooks";
 import { SummaryResponse } from "@itell/core/summary";
 import { driver, removeInert, setInertBackground } from "@itell/driver.js";
 import { ChatStairs } from "@textbook/chat-stairs";
-import htmr from "htmr";
-import { createRoot } from "react-dom/client";
 
 import { createEventAction } from "@/actions/event";
-import {
-  Condition,
-  EventType,
-  STAIRS_TEXT_ANIMATION_DELAY,
-  STAIRS_TEXT_ANIMATION_WPM,
-} from "@/lib/constants";
+import { Condition, EventType } from "@/lib/constants";
 import { StairsQuestion } from "@/lib/store/summary-store";
 import { scrollToElement } from "@/lib/utils";
-import { AnimatedText } from "./stairs-chunk-animation";
 import { SummaryFeedbackDetails } from "./summary-feedback";
 
 type BaseConfig = {
@@ -96,15 +88,15 @@ const useDriver = (config: Config) => {
           Elements.STAIRS_HIGHLIGHTED_CHUNK
         );
         if (isStairsConfig && chunk && config.summaryResponse.current) {
-          const reactElements = htmr(chunk.innerHTML);
-          createRoot(chunk).render(
-            <AnimatedText
-              wpm={STAIRS_TEXT_ANIMATION_WPM}
-              start_delay={STAIRS_TEXT_ANIMATION_DELAY}
-            >
-              {reactElements}
-            </AnimatedText>
-          );
+          // const reactElements = htmr(chunk.innerHTML);
+          // createRoot(chunk).render(
+          //   <AnimatedText
+          //     wpm={STAIRS_TEXT_ANIMATION_WPM}
+          //     start_delay={STAIRS_TEXT_ANIMATION_DELAY}
+          //   >
+          //     {reactElements}
+          //   </AnimatedText>
+          // );
 
           const feedback = document.createElement("div");
           feedback.id = Elements.STAIRS_FEEDBACK_CONTAINER;

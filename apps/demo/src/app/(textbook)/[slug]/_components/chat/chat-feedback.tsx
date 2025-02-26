@@ -35,11 +35,14 @@ export function ChatFeedback({
   const { error, execute } = useServerAction(createChatFeedbackAction);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger aria-label={isPositive ? "Like" : "Dislike"}>
+      <DialogTrigger
+        aria-label={isPositive ? "Like" : "Dislike"}
+        className="group/item"
+      >
         {isPositive ? (
-          <ThumbsUpIcon className={"size-3 group-hover:stroke-info"} />
+          <ThumbsUpIcon className={"size-3 group-hover/item:stroke-info"} />
         ) : (
-          <ThumbsDownIcon className={"size-3 group-hover:stroke-info"} />
+          <ThumbsDownIcon className={"size-3 group-hover/item:stroke-info"} />
         )}
       </DialogTrigger>
       <DialogContent>

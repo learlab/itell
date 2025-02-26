@@ -132,7 +132,7 @@ export default async function Page(props: {
       </TextbookWrapper>
 
       <Suspense fallback={<ChatLoader.Skeleton />}>
-        <ChatLoader user={user} pageSlug={pageSlug} pageTitle={page.title} />
+        <ChatLoader user={user} pageSlug={pageSlug} />
       </Suspense>
 
       {user ? <NoteLoader userId={user.id} pageSlug={pageSlug} /> : null}
