@@ -87,7 +87,7 @@ export const SummaryInput = ({
       {distance !== undefined ? <Distance distance={distance} /> : null}
       <p
         aria-hidden="true"
-        className="absolute right-2 bottom-2 z-1 text-sm font-light opacity-70"
+        className="z-1 absolute bottom-2 right-2 text-sm font-light opacity-70"
       >
         {pluralize("word", numOfWords(input ?? ""), true)}
       </p>
@@ -114,27 +114,28 @@ export const SummaryInput = ({
               toast.warning("Copy & Paste is not allowed");
             }
           }}
-          className={`border-input ring-offset-background placeholder:text-muted-foreground
-            focus-visible:ring-ring flex min-h-[80px] w-full resize-none rounded-md border
-            bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md focus-visible:ring-2
-            focus-visible:ring-offset-2 focus-visible:outline-hidden
-            disabled:cursor-not-allowed disabled:opacity-50 md:text-base xl:text-lg`}
+          className={`focus-visible:outline-hidden flex min-h-[80px] w-full resize-none rounded-md
+            border border-input bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md
+            ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2
+            focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed
+            disabled:opacity-50 md:text-base xl:text-lg`}
         />
       </Label>
 
       {pending ? (
         <div
-          className="bg-background/80 animate-in animate-out absolute top-0 right-0 bottom-0 left-0
-            z-10 cursor-not-allowed gap-2 backdrop-blur-sm transition-all duration-100"
+          className="absolute bottom-0 left-0 right-0 top-0 z-10 cursor-not-allowed gap-2
+            bg-background/80 backdrop-blur-sm transition-all duration-100 animate-in
+            animate-out"
         >
           <SummaryProgress items={stages} />
         </div>
       ) : (
         disabled && (
           <div
-            className="bg-background/80 animate-in animate-out absolute top-0 right-0 bottom-0 left-0
-              z-10 flex cursor-not-allowed items-center justify-center gap-2 backdrop-blur-sm
-              transition-all duration-100"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex cursor-not-allowed items-center
+              justify-center gap-2 bg-background/80 backdrop-blur-sm transition-all
+              duration-100 animate-in animate-out"
           >
             Please finish the entire page first
           </div>
@@ -148,14 +149,14 @@ const distanceThreshold = 60;
 function Distance({ distance }: { distance: number }) {
   return (
     <div className="mb-2 flex items-center gap-2">
-      <div className="bg-accent relative h-8 flex-1 overflow-hidden rounded-full">
+      <div className="relative h-8 flex-1 overflow-hidden rounded-full bg-accent">
         <div
-          className={`absolute top-0 left-0 h-full transition-all duration-300 ease-out ${
+          className={`absolute left-0 top-0 h-full transition-all duration-300 ease-out ${
             distance >= distanceThreshold ? "bg-info" : "bg-warning" }`}
           style={{ width: `${String(distance)}%` }}
         />
         <div
-          className="bg-info absolute top-0 bottom-0 w-[4px]"
+          className="absolute bottom-0 top-0 w-[4px] bg-info"
           style={{ left: `${String(distanceThreshold)}%` }}
         />
         <div className="absolute inset-0 flex items-center justify-between px-3">

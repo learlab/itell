@@ -10,7 +10,7 @@ import { TextbookToc } from "@textbook/textbook-toc";
 import { lucia } from "@/lib/auth/lucia";
 import { PAGE_HEADER_PIN_COOKIE } from "@/lib/constants";
 import { getPageStatus } from "@/lib/page-status";
-import { allPagesSorted, getPage } from "@/lib/pages/pages.server";
+import { getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
