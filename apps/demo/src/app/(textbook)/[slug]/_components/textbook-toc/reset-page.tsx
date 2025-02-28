@@ -10,6 +10,10 @@ import { clearSummaryLocal } from "../summary/summary-input";
 export function ResetPage({ pageSlug }: { pageSlug: string }) {
   const [pending, startTransition] = useTransition();
   const store = useCRIStore();
+  if (!store) {
+    return undefined;
+  }
+
 
   return (
     <Button

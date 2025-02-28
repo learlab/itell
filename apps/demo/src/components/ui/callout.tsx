@@ -8,9 +8,9 @@ interface CalloutProps extends React.ComponentProps<"div"> {
 }
 
 const icons = {
-  info: <InfoIcon className="size-8 text-info" />,
-  warning: <CircleAlertIcon className="size-8 text-warning" />,
-  danger: <TriangleAlertIcon className="size-8 text-destructive" />,
+  info: <InfoIcon className="text-info size-8" />,
+  warning: <CircleAlertIcon className="text-warning size-8" />,
+  danger: <TriangleAlertIcon className="text-destructive size-8" />,
 };
 
 const titles = {
@@ -39,7 +39,10 @@ export function Callout({
   return (
     <div
       className={cn(
-        "duration-350 relative my-4 rounded-md border-l-4 bg-accent p-6 leading-relaxed transition-colors",
+        // HACK: my-4! is added as important because there are some default prose styles setting
+        // margin-top: 0
+        `duration-350 bg-accent my-4! relative rounded-md border-l-4 p-6 leading-relaxed
+        transition-colors`,
         {
           "border-l-info": variant === "info",
           "border-l-warning": variant === "warning",
@@ -49,7 +52,10 @@ export function Callout({
       )}
       {...props}
     >
-      <div className="absolute left-0 top-0 -translate-x-[calc(50%+1.5px)] -translate-y-1/2 transform rounded-full bg-background p-2 leading-[calc(1em+0.725rem)]">
+      <div
+        className="bg-background absolute left-0 top-0 -translate-x-[calc(50%+1.5px)]
+          -translate-y-1/2 transform rounded-full p-2 leading-[calc(1em+0.725rem)]"
+      >
         {icons[variant]}
       </div>
       <strong className="mb-2 block text-[1.1em] font-bold">

@@ -1,25 +1,11 @@
+// TODO: this config is not used after tailwind v4 upgrade, remove this in the future
+// the actual styling is in packages/ui/src/styles/globals.css
+// keeping this to enable completion in neovim https://github.com/luckasRanarison/tailwind-tools.nvim/issues/50
 import { AppPreset } from "@itell/tailwind";
 
 import type { Config } from "tailwindcss";
 
 export default {
   presets: [AppPreset],
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "../../packages/ui/src/*.tsx",
-    "./content/**/*.md",
-  ],
-  plugins: [],
-  itell: {
-    theme: {
-      root: {
-        info: "214 95% 67%",
-        warning: "34 100% 60%",
-      },
-      dark: {
-        info: "230 100% 69%",
-        warning: "34 100% 50%",
-      },
-    },
-  },
+  content: ["./src/**/*.{js,ts,jsx,tsx}", "./content/**/*.md"],
 } satisfies Config;

@@ -16,7 +16,7 @@ import {
 } from "@itell/core/summary";
 import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
-import { Warning } from "@itell/ui/callout";
+import { Errorbox } from "@itell/ui/callout";
 import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { Page } from "#content";
@@ -150,7 +150,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       }
 
       // 25% random rereading if the page is not unlocked
-      if (!pageStatus.unlocked && Math.random() <= 0.25 && !page.quiz) {
+      if (!pageStatus.unlocked && !page.quiz) {
         goToRandomChunk();
       }
     },
@@ -208,9 +208,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
             isAdmin={user.isAdmin}
             ref={ref}
           />
-          {isError ? (
-            <Warning role="alert">{ErrorFeedback[ErrorType.INTERNAL]}</Warning>
-          ) : null}
+          {isError && <Errorbox>{ErrorFeedback[ErrorType.INTERNAL]}</Errorbox>}
           {isDelayed ? <DelayMessage /> : null}
           <Button
             disabled={!isSummaryReady || isPending}

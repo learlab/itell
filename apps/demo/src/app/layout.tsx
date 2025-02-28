@@ -2,8 +2,7 @@ import { RootProvider } from "@/components/provider/root-provider";
 import { env } from "@/env.mjs";
 import { isProduction } from "@/lib/constants";
 
-import "@/styles/globals.css";
-import "@itell/ui/dist/style.css";
+import "@itell/ui/globals.css";
 
 import { Roboto_Slab as FontSerif } from "next/font/google";
 import { cn } from "@itell/utils";
@@ -74,7 +73,11 @@ function TailwindIndicator() {
   if (isProduction) return null;
 
   return (
-    <div className="fixed bottom-4 right-1/2 z-50 flex aspect-square size-9 w-fit translate-x-1/2 items-center justify-center rounded-full border bg-accent p-2 text-accent-foreground">
+    <div
+      className="fixed bottom-4 right-1/2 z-50 flex aspect-square size-9 w-fit translate-x-1/2
+        items-center justify-center rounded-full border bg-accent p-2
+        text-accent-foreground"
+    >
       <div className="block sm:hidden">xs</div>
       <div className="hidden sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
         sm

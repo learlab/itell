@@ -47,9 +47,9 @@ export function TextbookToc({ page, userPageSlug, userFinished }: Props) {
   const pagesWithStatus = getPagesWithStatus(userPageSlug, userFinished);
 
   return (
-    <>
+    <div className="pb-6">
       <TextbookTocList page={page} pages={pagesWithStatus} />
       <PageControl assignment={page.summary} pageSlug={page.slug} />
-    </>
+    </div>
   );
 }
