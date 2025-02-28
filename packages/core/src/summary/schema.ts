@@ -26,4 +26,9 @@ export const SummaryResponseSchema = z.object({
   suggested_keyphrases: z.array(z.string()).optional(),
 });
 
+export const RereadSummaryResponseSchema = z.object({
+  is_passed: z.boolean().optional(),
+  prompt: z.string().optional(),
+});
+
 export type SummaryResponse = z.infer<typeof SummaryResponseSchema>;

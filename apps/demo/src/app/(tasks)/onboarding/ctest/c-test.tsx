@@ -134,7 +134,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       {/*   <div className="group relative"> */}
       {/*     <input */}
       {/*       maxLength={4} */}
-      {/*       className="peer w-10 border-b-2 focus:outline-none focus:ring-0" */}
+      {/*       className="peer w-10 border-b-2 focus:outline-hidden focus:ring-0" */}
       {/*     /> */}
       {/*     <span */}
       {/*       className={cn( */}

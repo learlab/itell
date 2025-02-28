@@ -1,0 +1,499 @@
+@import "tailwindcss";
+
+@source "../../../../packages/ui/src/**/*.{js,ts,jsx,tsx}";
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.87 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.87 0 0);
+  --info: hsl(214 95% 67%);
+  --warning: hsl(34 100% 60%);
+  --nav-height: --spacing(16);
+  --expo-out: linear(
+    0 0%,
+    0.1684 2.66%,
+    0.3165 5.49%,
+    0.446 8.52%,
+    0.5581 11.78%,
+    0.6535 15.29%,
+    0.7341 19.11%,
+    0.8011 23.3%,
+    0.8557 27.93%,
+    0.8962 32.68%,
+    0.9283 38.01%,
+    0.9529 44.08%,
+    0.9711 51.14%,
+    0.9833 59.06%,
+    0.9915 68.74%,
+    1 100%
+  );
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+  --info: hsl(230 100% 69%);
+  --warning: hsl(34 100% 50%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-info: var(--info);
+  --color-warning: var(--warning);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+.content-chunk {
+  position: relative;
+}
+
+.blurred
+  > *:not(.continue-reading-button-container, .scroll-back-button-container) {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.continue-reading-button-container {
+  position: absolute;
+  top: min(4rem, 20%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.unlock-summary-button-container {
+  @apply flex items-center justify-center p-4;
+}
+.scroll-back-button-container {
+  display: flex;
+  position: absolute;
+  bottom: min(4rem, 20%);
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transform: translateX(-50%, -50%);
+  z-index: 1;
+  width: 100%;
+}
+
+#textbook-main-wrapper {
+  @apply mx-auto grid max-w-[1800px] flex-1 gap-2 md:grid-cols-[minmax(200px,1fr)_minmax(auto,65ch)] lg:grid-cols-[minmax(200px,1fr)_3fr_minmax(auto,200px)] lg:gap-4;
+}
+#textbook-nav {
+  @apply sticky top-16 z-30 hidden h-[calc(100vh-3.5rem)] border-r-2 md:block;
+}
+#textbook-main {
+  @apply relative p-4 lg:p-8 lg:pb-12;
+}
+#page-nav {
+  @apply hidden lg:block;
+}
+
+/* a11y */
+.skip-link {
+  position: absolute;
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clippath: rect(0px, 0px, 0px, 0px);
+}
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: auto;
+  clippath: auto;
+  padding: 12px;
+  textdecoration: underline;
+  textunderlineoffset: 0.4em;
+  textdecorationcolor: var(--primary);
+}
+
+.tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+}
+
+.fade-up {
+  animation: fade-up 0.3s ease-out;
+}
+
+.fade-in2 {
+  animation: fade-in2 0.3s ease-out;
+}
+
+.question-container {
+  margin: 1em 0;
+  user-select: none;
+}
+
+.driver-active {
+  #page-nav,
+  #textbook-nav,
+  #site-nav,
+  #chatbot-container,
+  #page-header,
+  #floating-summary,
+  .question-container {
+    display: none;
+  }
+
+  #textbook-wrapper {
+    grid-template-columns: 1fr;
+    margin-right: auto;
+    margin-left: 1rem;
+    max-width: 60%;
+  }
+
+  /* HACK: make chat feedback dialog clickable when stairs is activated  */
+  #chat-action-dialog {
+    left: 20%;
+  }
+}
+
+.driver-popover {
+  @apply bg-background! text-foreground! max-w-80!;
+}
+
+#page-content button,
+#page-content #page-pager,
+#page-content .note {
+  user-select: none;
+}
+
+#page-content {
+  & table,
+  & pre {
+    user-select: none;
+  }
+}
+
+thead: {
+  @apply text-muted-foreground px-4 text-left align-middle font-medium;
+}
+
+tr:hover {
+  @apply bg-muted/50;
+}
+
+tr: {
+  @apply border-b transition-colors;
+}
+
+td: {
+  @apply p-4 align-middle;
+}
+
+th: {
+  @apply max-w-[10rem];
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  scroll-margin-top: calc(var(--nav-height) + 4rem);
+}
+
+/* prose */
+.prose {
+  h1 {
+    margin-top: 1.25em;
+  }
+  h2 {
+    margin-top: 1em;
+  }
+  h3 {
+    margin-top: 0.75em;
+  }
+  h4 {
+    margin-top: 0.5em;
+  }
+  p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  ul {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    line-height: 1.5em;
+  }
+  li {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
+  figure {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  img {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::view-transition-group(root) {
+    animation-duration: 0.7s;
+    animation-timing-function: var(--expo-out);
+  }
+
+  ::view-transition-new(root) {
+    animation-name: reveal-light;
+  }
+
+  ::view-transition-old(root),
+  .dark::view-transition-old(root) {
+    z-index: -1;
+    animation: none;
+  }
+
+  .dark::view-transition-new(root) {
+    animation-name: reveal-dark;
+  }
+
+  @keyframes reveal-dark {
+    from {
+      clip-path: polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%);
+    }
+
+    to {
+      clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
+    }
+  }
+
+  @keyframes reveal-light {
+    from {
+      clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
+    }
+
+    to {
+      clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
+    }
+  }
+
+  [popover] {
+    animation: popover 0.2s ease-out;
+  }
+
+  /* animations */
+  @keyframes popover {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .shake {
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 2;
+    animation-name: shake;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+
+    20% {
+      transform: translateX(-10px);
+    }
+
+    40% {
+      transform: translateX(10px);
+    }
+
+    60% {
+      transform: translateX(-10px);
+    }
+
+    80% {
+      transform: translateX(10px);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-up {
+    0% {
+      transform: translateY(1rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in2 {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::view-transition-group(root),
+  ::view-transition-new(root),
+  ::view-transition-old(root),
+  .dark::view-transition-old(root),
+  .dark::view-transition-new(root) {
+    animation: none;
+  }
+
+  .shake {
+    animation: none;
+  }
+
+  [popover] {
+    animation: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

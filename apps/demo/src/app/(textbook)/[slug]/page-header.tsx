@@ -56,7 +56,10 @@ export function PageHeader({
     <header
       id="page-header"
       className={cn(
-        "sticky top-[calc(var(--nav-height))] z-40 col-span-full flex items-center justify-between border-b-2 bg-background/95 px-4 py-3 backdrop-blur transition-all duration-300 ease-in-out supports-[backdrop-filter]:bg-background/60",
+        `bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky
+        top-[calc(var(--nav-height))] z-40 col-span-full flex items-center
+        justify-between border-b-2 px-4 py-3 backdrop-blur transition-all duration-300
+        ease-in-out`,
         isVisible ? "translate-y-0" : "-translate-y-full"
       )}
     >

@@ -167,7 +167,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     return (
       <CRIShell>
         <CRIContent>
-          <p className="my-2 text-[0.9em] font-light">
+          <p className="my-2 text-sm font-light">
             You can skip the following question or click to reveal.
           </p>
           <div>
@@ -201,7 +201,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             streak !== undefined && streak >= 2 ? (
               <Tooltip>
                 <TooltipTrigger>
-                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <div className="text-muted-foreground flex items-center gap-1 text-sm">
                     <Flame color="#b91c1c" className={toClassName(streak)} />
                   </div>
                 </TooltipTrigger>
@@ -219,14 +219,14 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
         <CRIContent>
           <div role="status">
             {status === StatusStairs.BOTH_INCORRECT && (
-              <p className="text-sm text-destructive-foreground">
+              <p className="text-destructive-foreground text-sm">
                 <b>iTELL AI says:</b> You likely got a part of the answer wrong.
                 Please try again.
               </p>
             )}
 
             {status === StatusStairs.SEMI_CORRECT && (
-              <p className="text-sm text-warning">
+              <p className="text-warning text-sm">
                 <b>iTELL AI says:</b> You may have missed something, but you
                 were generally close.
               </p>
@@ -351,7 +351,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           </form>
         </CRIContent>
 
-        <CardFooter className="flex-col items-start gap-2 text-sm text-muted-foreground">
+        <CardFooter className="text-muted-foreground flex-col items-start gap-2 text-sm">
           <p className="m-0">
             Answer the question above the continue reading. iTELL evaluation is
             based on AI and may not always be accurate.{" "}

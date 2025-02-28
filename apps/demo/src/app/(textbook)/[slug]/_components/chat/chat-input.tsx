@@ -36,9 +36,9 @@ export function ChatInput({
       }}
     >
       <form
-        className="relative flex items-center rounded-lg border border-input bg-background px-3
-          py-1.5 pr-8 text-sm focus-within:outline-none focus-within:ring-2
-          focus-within:ring-ring/10 focus-within:ring-offset-0"
+        className="border-input bg-background focus-within:ring-ring/10 relative flex items-center
+          rounded-lg border px-3 py-1.5 pr-8 text-sm focus-within:ring-2
+          focus-within:ring-offset-0 focus-within:outline-hidden"
         onSubmit={(e) => {
           e.preventDefault();
           const input = e.currentTarget.input.value.trim();
@@ -52,8 +52,8 @@ export function ChatInput({
           autoFocus
           disabled={pending}
           placeholder="Enter a message"
-          className="flex-1 resize-none bg-transparent placeholder:text-muted-foreground
-            focus:outline-none"
+          className="placeholder:text-muted-foreground flex-1 resize-none bg-transparent
+            focus:outline-hidden"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
@@ -75,7 +75,7 @@ export function ChatInput({
             <Button
               variant={"ghost"}
               size="sm"
-              className="absolute bottom-1 right-1 size-6 rounded-full"
+              className="absolute right-1 bottom-1 size-6 rounded-full"
             >
               <ArrowUpIcon size={16} className="shrink-0" />
             </Button>
