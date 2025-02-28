@@ -21,12 +21,12 @@ const chartConfig = {
   passed: {
     label: "Passed",
     icon: CheckIcon,
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
   failed: {
     label: "Failed",
     icon: XIcon,
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 

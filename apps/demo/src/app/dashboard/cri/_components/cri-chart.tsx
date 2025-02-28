@@ -15,15 +15,15 @@ const chartConfig = {
   },
   poor: {
     label: "Poor",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
   good: {
     label: "Good",
-    color: "hsl(var(--chart-3))",
+    color: "var(--chart-3)",
   },
   excellent: {
     label: "Excellent",
-    color: "hsl(var(--chart-4))",
+    color: "var(--chart-4)",
   },
 } satisfies ChartConfig;
 

@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import { Elements } from "@itell/constants";
+import { SidebarInset, SidebarProvider } from "@itell/ui/sidebar";
 import { DashboardNav } from "@dashboard/dashboard-nav";
 import { DashboardSidebar } from "@dashboard/dashboard-sidebar";
 import { volume } from "#content";
 
-import { SidebarLayout } from "@/components/sidebar";
 import { SiteNav } from "@/components/site-nav";
 import { findTeacher } from "@/db/teacher";
 import { env } from "@/env.mjs";
@@ -81,30 +81,25 @@ export default async function DashboardLayout({
           (isTeacher ? ClassRole.TEACHER : ClassRole.STUDENT)) as Role
       }
     >
-      <SidebarLayout
+      <SidebarProvider
         defaultOpen={sidebarState ? sidebarState === "true" : true}
-        className="flex-col"
       >
         <DashboardSidebar isTeacher={isTeacher} />
-        <SiteNav mainContentId={Elements.DASHBOARD_MAIN}>
-          <DashboardNav />
-        </SiteNav>
-        <main
-          id={Elements.DASHBOARD_MAIN}
-          className="min-h-screen"
-          suppressHydrationWarning
-        >
-          <section
+        <SidebarInset>
+          <SiteNav mainContentId={Elements.DASHBOARD_MAIN}>
+            <DashboardNav />
+          </SiteNav>
+          <main
+            id={Elements.DASHBOARD_MAIN}
+            className="flex min-h-screen max-w-screen-xl flex-1 flex-col px-4 py-4
+              group-has-[[data-pending]]:animate-pulse lg:px-8"
+            suppressHydrationWarning
             aria-label="dashboard main panel"
-            className="flex max-w-screen-xl flex-col px-4 py-4 group-has-[[data-pending]]:animate-pulse lg:px-8"
-            aria-live="polite"
-            aria-atomic="true"
-            tabIndex={-1}
           >
             {children}
-          </section>
-        </main>
-      </SidebarLayout>
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
     </DashboardProvider>
   );
 }

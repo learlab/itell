@@ -1,10 +1,13 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
-  SidebarItem,
-  SidebarLabel,
-} from "@/components/sidebar";
+  SidebarMenu,
+} from "@itell/ui/sidebar";
+
 import { DashboardLinks } from "./nav-statistics";
 import { RoleSwitcher } from "./role-switch";
 
@@ -17,14 +20,14 @@ export function DashboardSidebar({ isTeacher }: { isTeacher: boolean }) {
             <RoleSwitcher />
           </SidebarHeader>
         ) : null}
-        <SidebarItem>
-          <SidebarLabel>Statistics</SidebarLabel>
-          <DashboardLinks />
-        </SidebarItem>
+        <SidebarGroup>
+          <SidebarGroupLabel>Statistics</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <DashboardLinks />
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarMenu></SidebarMenu>
       </SidebarContent>
-      {/* <SidebarFooter>
-				<SidebarTrigger className="flex items-center gap-2 w-full" />
-			</SidebarFooter> */}
     </Sidebar>
   );
 }
