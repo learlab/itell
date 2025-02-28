@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/*   NOTE: the file is imported from an apps project in src/app/layout, so the following path is 
+/*  relative from that folder 
+*/
 @source "../../../../packages/ui/src/**/*.{js,ts,jsx,tsx}";
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
