@@ -1,8 +1,6 @@
 import { redirect } from "next/navigation";
 import { volume } from "#content";
 
-import "./styles.css";
-
 import { updateUserAction } from "@/actions/user";
 import { getSession } from "@/lib/auth";
 import { routes } from "@/lib/navigation";
@@ -46,7 +44,7 @@ export default async function ConsentPage() {
 
 function ConsentDocument() {
   return (
-    <div id="consent-form">
+    <div id="consent-form" className="**:p:leading-relaxed">
       <div className="flex flex-col gap-6 rounded-lg border-4 px-6 py-4 shadow-md">
         <div className="space-y-2">
           <h1 className="text-center text-3xl font-bold">

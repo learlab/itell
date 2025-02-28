@@ -77,7 +77,8 @@ export default async function OnboardingLayout({
         items={sidebarItems}
         header={
           <Link
-            className="py-4 text-xl font-semibold tracking-tight hover:underline hover:underline-offset-2"
+            className="py-4 text-xl font-semibold tracking-tight hover:underline
+              hover:underline-offset-2"
             href={routes.onboarding()}
           >
             Onboarding Tasks
