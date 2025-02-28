@@ -179,8 +179,8 @@ export function ColorPicker({
                     className={cn(
                       "col-span-full rounded-md p-1",
                       isLight
-                        ? "text-[hsl(var(--foreground-light))]"
-                        : "text-[hsl(var(--foreground-dark))]"
+                        ? "text-(--color-foreground)"
+                        : "text-(--color-background)"
                     )}
                     style={{
                       backgroundColor: isLight ? lightColor : darkColor,

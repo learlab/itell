@@ -233,9 +233,9 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
   return (
     <div className={cn("grid gap-2 px-2", className)}>
       <form
-        className="relative flex items-center rounded-lg border border-input bg-background px-3
-          py-1.5 pr-8 text-sm focus-within:outline-none focus-within:ring-2
-          focus-within:ring-ring/10 focus-within:ring-offset-0"
+        className="border-input bg-background focus-within:ring-ring/10 relative flex items-center
+          rounded-lg border px-3 py-1.5 pr-8 text-sm focus-within:ring-2
+          focus-within:ring-offset-0 focus-within:outline-hidden"
         onSubmit={(e) => {
           e.preventDefault();
           if (!e.currentTarget.input.value) return;
@@ -258,8 +258,8 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
                   ? "Please return to the summary"
                   : "Answer the question"
               }
-              className="flex-1 resize-none bg-transparent placeholder:text-muted-foreground
-                focus:outline-none"
+              className="placeholder:text-muted-foreground flex-1 resize-none bg-transparent
+                focus:outline-hidden"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -280,7 +280,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
                 <Button
                   variant={"ghost"}
                   size="sm"
-                  className="absolute bottom-1 right-1 size-6 rounded-full"
+                  className="absolute right-1 bottom-1 size-6 rounded-full"
                 >
                   <ArrowUpIcon size={16} className="shrink-0" />
                 </Button>

@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState, useTransition } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { ClassRole, DASHBOARD_ROLE_COOKIE } from "@/lib/constants";
@@ -11,7 +18,9 @@ type DashboardContextType = {
   role: Role;
   switchRole: (_: Role) => void;
 };
-const DashboardContext = createContext<DashboardContextType>({} as DashboardContextType);
+const DashboardContext = createContext<DashboardContextType>(
+  {} as DashboardContextType
+);
 
 const routeMappings: Record<Role, Record<string, string | undefined>> = {
   teacher: {
@@ -60,7 +69,10 @@ export function DashboardProvider({
 
   return (
     <DashboardContext.Provider value={{ role, switchRole }}>
-      <div className="group flex flex-col" data-pending={pending ? "" : undefined}>
+      <div
+        className="group flex flex-col"
+        data-pending={pending ? "" : undefined}
+      >
         {children}
       </div>
     </DashboardContext.Provider>

@@ -73,7 +73,8 @@ export default async function Layout({
         items={items}
         header={
           <Link
-            className="py-4 text-xl font-semibold tracking-tight hover:underline hover:underline-offset-2"
+            className="py-4 text-xl font-semibold tracking-tight hover:underline
+              hover:underline-offset-2"
             href={routes.offboarding()}
           >
             Offboarindg Tasks

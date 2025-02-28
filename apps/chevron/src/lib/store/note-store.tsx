@@ -1,3 +1,5 @@
+"use client";
+
 import { createStoreWithProducer } from "@xstate/store";
 import { produce } from "immer";
 

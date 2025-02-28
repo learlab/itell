@@ -22,9 +22,9 @@ export function TrendChart({ label, prev, current }: Props) {
       color:
         current && prev
           ? current - prev > 0
-            ? "hsl(var(--chart-2))"
-            : "hsl(var(--chart-1))"
-          : "hsl(var(--chart-1))",
+            ? "var(--chart-2)"
+            : "var(--chart-1)"
+          : "var(--chart-1)",
     },
   } satisfies ChartConfig;
   const chartData = [

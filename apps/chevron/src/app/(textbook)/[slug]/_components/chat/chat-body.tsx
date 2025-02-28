@@ -40,7 +40,7 @@ export function ChatBody({ messages, updatedAt, pageSlug }: Props) {
             <h3 className="text-center text-lg font-medium tracking-tight xl:text-xl">
               How can I help you today?
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               ITELL AI is a chatbot that can answer your questions regarding the
               textbook content.
             </p>
@@ -73,7 +73,7 @@ function ChunksCarousel() {
   const { action: addChat } = useAddChat();
   return (
     <div className="mt-4 space-y-3 px-4">
-      <p className="text-sm text-muted-foreground">💡 I am confused about</p>
+      <p className="text-muted-foreground text-sm">💡 I am confused about</p>
       {chunks.length > 0 && (
         <Carousel>
           <CarouselContent className="-ml-2 md:-ml-4">
@@ -94,7 +94,7 @@ function ChunksCarousel() {
                     });
                   }}
                 >
-                  <Card className="flex h-full items-center text-accent-foreground transition group-hover:bg-accent">
+                  <Card className="text-accent-foreground group-hover:bg-accent flex h-full items-center transition">
                     <CardHeader className="p-3">
                       <CardTitle className="lg:text-normal line-clamp-2 text-sm font-semibold">
                         {c.title}
