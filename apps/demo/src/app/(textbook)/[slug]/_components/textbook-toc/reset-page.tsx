@@ -14,6 +14,7 @@ export function ResetPage({ pageSlug }: { pageSlug: string }) {
     return undefined;
   }
 
+
   return (
     <Button
       className="flex w-full items-center justify-start p-2 xl:text-lg"
