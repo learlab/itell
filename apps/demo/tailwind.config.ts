@@ -1,6 +1,5 @@
-// TODO: this config is not used after tailwind v4 upgrade, remove this in the future
-// the actual styling is in packages/ui/src/styles/globals.css
-// keeping this to enable completion in neovim https://github.com/luckasRanarison/tailwind-tools.nvim/issues/50
+// TODO: remove this file after tailwind v4 is supported in neovim https://github.com/luckasRanarison/tailwind-tools.nvim/issues/50
+// this file is not used after the v4 upgrade and the actual styling is in packages/ui/src/styles/globals.css
 import { AppPreset } from "@itell/tailwind";
 
 import type { Config } from "tailwindcss";

@@ -73,14 +73,14 @@ export function ChatItems({
               return <MessageItemMemo key={message.id} message={message} />;
             })}
             <div
-              className="my-4 flex items-center justify-center gap-2 text-center text-sm
-                text-muted-foreground"
+              className="text-muted-foreground my-4 flex items-center justify-center gap-2 text-center
+                text-sm"
             >
-              <div className="h-1 w-16 bg-muted" />
+              <div className="bg-muted h-1 w-16" />
               {updatedAt
                 ? `Last visited at ${updatedAt.toLocaleTimeString()}`
                 : null}
-              <div className="h-1 w-16 bg-muted" />
+              <div className="bg-muted h-1 w-16" />
             </div>
             {user?.isAdmin && pageSlug && (
               <div>
@@ -141,7 +141,7 @@ function DeleteChat({ pageSlug }: { pageSlug: string }) {
 
 function Blockquote({ children }: { children?: React.ReactNode }) {
   return (
-    <blockquote className="mt-2 border-l-4 border-primary bg-accent pl-4 italic">
+    <blockquote className="border-primary bg-accent mt-2 border-l-4 pl-4 italic">
       {children}
     </blockquote>
   );
@@ -184,7 +184,7 @@ function MessageItem({
         {message.text !== "" && (
           <div
             className={cn("flex-1 rounded-lg p-2", {
-              "border-2 bg-primary-foreground": !message.isUser,
+              "bg-primary-foreground border-2": !message.isUser,
               "bg-accent": message.isUser,
             })}
           >
@@ -201,7 +201,7 @@ function MessageItem({
       <AnimatePresence>
         {!message.isUser && (
           <footer
-            className="absolute bottom-0 right-0 z-10 mt-2 translate-y-1/2 rounded-lg border bg-accent
+            className="bg-accent absolute bottom-0 right-0 z-10 mt-2 translate-y-1/2 rounded-lg border
               px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
           >
             <ChatAction message={message} />
@@ -273,7 +273,7 @@ function ChatAction({ message }: { message: Message }) {
           toast.success("Message copied");
         }}
       >
-        <CopyIcon className={"size-3 group-hover/item:stroke-info"} />
+        <CopyIcon className={"group-hover/item:stroke-info size-3"} />
       </button>
       <ChatFeedback isPositive message={message} />
       <ChatFeedback isPositive={false} message={message} />

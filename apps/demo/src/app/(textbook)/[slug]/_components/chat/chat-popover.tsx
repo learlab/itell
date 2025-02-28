@@ -96,7 +96,7 @@ export function ChatPopover({ pageSlug, updatedAt, messages }: Props) {
   return (
     <motion.div
       layout
-      className="bg-background text-foreground fixed bottom-12 right-8 z-20 rounded-md"
+      className="fixed bottom-12 right-8 z-20 rounded-md bg-background text-foreground"
     >
       {isOpen ? (
         <ChatWrapper hasPrev={messages.length > 0}>

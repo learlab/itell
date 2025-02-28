@@ -1,3 +1,5 @@
+"use client";
+
 import { type ErrorType, type SummaryResponse } from "@itell/core/summary";
 import { createStoreWithProducer } from "@xstate/store";
 import { produce } from "immer";

@@ -1,3 +1,5 @@
+"use client";
+
 import { type Message } from "@itell/core/chat";
 import { createStoreWithProducer } from "@xstate/store";
 import { produce } from "immer";

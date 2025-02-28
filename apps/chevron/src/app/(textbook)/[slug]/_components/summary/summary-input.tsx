@@ -114,12 +114,11 @@ export const SummaryInput = ({
               toast.warning("Copy & Paste is not allowed");
             }
           }}
-          className={`flex min-h-[80px] w-full resize-none rounded-md border border-input
-            bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md
-            ring-offset-background placeholder:text-muted-foreground
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
-            focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
-            md:text-base xl:text-lg`}
+          className={`focus-visible:outline-hidden flex min-h-[80px] w-full resize-none rounded-md
+            border border-input bg-transparent p-4 px-3 py-2 text-sm font-normal shadow-md
+            ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2
+            focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed
+            disabled:opacity-50 md:text-base xl:text-lg`}
         />
       </Label>
 
