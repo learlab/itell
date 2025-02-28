@@ -1,3 +1,5 @@
+"use client";
+
 import { createStoreWithProducer } from "@xstate/store";
 import { type Page } from "#content";
 import { produce } from "immer";
@@ -89,12 +91,12 @@ export const createCRIStore = (
           context.currentChunk = chunks[nextIndex].slug;
         }
       },
-      finishPage: (context) => {
+      finishPage: (context, event: unknown) => {
         context.isSummaryReady = true;
         context.shouldBlur = false;
         context.currentChunk = slugs[lastIndex];
       },
-      resetPage: (context) => {
+      resetPage: (context, event: unknown) => {
         context.isSummaryReady = false;
         context.shouldBlur = true;
         context.currentChunk = slugs[0];

@@ -10,6 +10,7 @@ import { clearSummaryLocal } from "../summary/summary-input";
 export function ResetPage({ pageSlug }: { pageSlug: string }) {
   const [pending, startTransition] = useTransition();
   const store = useCRIStore();
+
   return (
     <Button
       className="flex w-full items-center justify-start p-2 xl:text-lg"
