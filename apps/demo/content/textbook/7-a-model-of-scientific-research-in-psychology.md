@@ -67,18 +67,7 @@ The research by Mehl and his colleagues is described nicely by this model. Their
 
 
 
-## Cell Phones and Driving {#Cell-Phones-and-Driving-1496t .sr-only} 
-
-<i-image
-  style="aspect-ratio:322/442;"
-  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/7.2.png-8d7cf678ae3303532b64ccea22d1f6f6.png"
-  alt="7.2.png"
-  width="322"
-  height="442">
-</i-image>
-
-Cell Phones and Driving
------------------------
+## Cell Phones and Driving {#Cell-Phones-and-Driving-1496t} 
 
 As another example, consider that as cell phones became more widespread during the 1990s, people began to wonder whether, and to what extent, cell phone use had a negative effect on driving. Many psychologists decided to tackle this question scientifically (e.g., Collet, Guillot, & Petit, 2010)[\[1\]](https://kpu.pressbooks.pub/psychmethods4e/chapter/a-model-of-scientific-research-in-psychology/#footnote-32-1). It was clear from previously published research that engaging in a simple verbal task impairs performance on a perceptual or motor task carried out at the same time, but no one had studied the effect specifically of cell phone use on driving. Under carefully controlled conditions, these researchers compared people’s driving performance while using a cell phone with their performance while not using a cell phone, both in the lab and on the road. They found that people’s ability to detect road hazards, reaction time, and maintain control of the vehicle were all impaired by cell phone use. Each new study was published and became part of the growing research literature on this topic. For instance, other research teams subsequently demonstrated that cell phone conversations carry a greater risk than conversations with a passenger who is aware of driving conditions, which often become a point of conversation (e.g., Drews, Pasupathi, & Strayer, 2004)[\[2\]](https://kpu.pressbooks.pub/psychmethods4e/chapter/a-model-of-scientific-research-in-psychology/#footnote-32-2).
 
