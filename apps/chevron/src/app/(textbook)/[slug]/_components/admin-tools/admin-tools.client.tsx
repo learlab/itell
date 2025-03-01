@@ -186,7 +186,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
                   <div className="space-y-2 text-balance">
                     <p className="font-semibold">{label}</p>
                     <p
-                      className="text-sm text-muted-foreground"
+                      className="text-muted-foreground text-sm"
                       id={`desc-${value}`}
                     >
                       {description}
@@ -230,7 +230,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
             <Label className="flex items-center justify-between gap-6 font-normal">
               <div className="flex flex-col gap-2 text-balance">
                 <p className="font-semibold">Unblur current page</p>
-                <p className="text-sm text-muted-foreground" id="unblur-desc">
+                <p className="text-muted-foreground text-sm" id="unblur-desc">
                   Unblur all chunks from the current page and unlock summary
                   submission
                 </p>
@@ -312,7 +312,7 @@ function RestartTextbook() {
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <div className="grid gap-2">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 This action will reset your progress to the first page and
                 delete all of your data, including summaries, chat messages,
                 question answers, etc.

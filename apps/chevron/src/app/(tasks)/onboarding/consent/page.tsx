@@ -51,7 +51,7 @@ function ConsentDocument() {
             <p>Vanderbilt University</p>
           </h1>
           <h1 className="text-center text-3xl font-medium">Consent Form</h1>
-          <div className="flex flex-col items-center justify-center gap-1.5 text-muted-foreground">
+          <div className="text-muted-foreground flex flex-col items-center justify-center gap-1.5">
             <p>
               <span className="font-bold">Title:</span> Intelligent Textbook
               Assessment

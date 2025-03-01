@@ -37,7 +37,7 @@ export function ChatWrapper({
 
 function ChatFooter() {
   return (
-    <footer className="mt-auto px-4 py-2 text-xs text-muted-foreground">
+    <footer className="text-muted-foreground mt-auto px-4 py-2 text-xs">
       <p>This content has been AI-generated and may contain errors.</p>
     </footer>
   );
@@ -47,7 +47,7 @@ function ChatHeader() {
   const store = useChatStore();
   return (
     <header
-      className="sticky top-0 z-30 flex items-center gap-1.5 bg-background px-3 py-4"
+      className="bg-background sticky top-0 z-30 flex items-center gap-1.5 px-3 py-4"
       aria-describedby="itell-ai-description"
     >
       <p id="itell-ai-description" className="sr-only">
@@ -69,7 +69,7 @@ function ChatHeader() {
         <svg
           viewBox="0 0 24 24"
           aria-hidden="true"
-          className="size-4 stroke-foreground"
+          className="stroke-foreground size-4"
         >
           <g>
             <path d="M12 11.59L3.96 3.54 2.54 4.96 12 14.41l9.46-9.45-1.42-1.42L12 11.59zm0 7l-8.04-8.05-1.42 1.42L12 21.41l9.46-9.45-1.42-1.42L12 18.59z"></path>
