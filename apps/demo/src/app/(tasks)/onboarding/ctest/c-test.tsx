@@ -52,39 +52,39 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       formRef.current.querySelectorAll("fieldset[data-target-word]")
     ) as HTMLFieldSetElement[];
 
-    fields.forEach((field, index) => {
+    fields.forEach((field) => {
       const word = field.dataset.targetWord as string;
       const inputs = Array.from(
-        field.querySelectorAll("input[type=text]")
+        field.querySelectorAll("input[data-is-target='true']")
       ) as HTMLInputElement[];
 
       const answer = results.answers.find((a) => a.word === word);
 
       if (!answer) return;
 
-      const targetInputs = inputs.filter((input) => input.dataset.isTarget === "true");
+      
+        inputs.forEach((input) => {
+          const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : 0;
+          const correctLetter = word[letterIndex];
 
-      targetInputs.forEach((input) => {
-        const inputIndex = targetInputs.indexOf(input);
-        const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : inputIndex;
-        const correctLetter = word[letterIndex];
+          input.readOnly = true;
 
-        input.readOnly = true;
-
-        if (answer.isCorrect) {
-          input.style.backgroundColor = "#d1fae5";
-          input.style.borderColor = "#10b981";
-          input.style.color = "#047857";
-        } else {
-          input.style.backgroundColor = "#fee2e2";
-          input.style.borderColor = "#ef4444";
-          input.style.color = "#b91c1c";
           
-          if (input.value !== correctLetter) {
-            input.value = correctLetter;
-          }
-        }
-      });
+            if (answer.isCorrect) {
+              input.style.backgroundColor = "#d1fae5";
+              input.style.borderColor = "#10b981";
+              input.style.color = "#047857";
+            } else {
+              input.style.backgroundColor = "#fee2e2";
+              input.style.borderColor = "#ef4444";
+              input.style.color = "#b91c1c";
+              
+              if (input.value !== correctLetter) {
+                input.value = correctLetter;
+              }
+            }
+          
+        });
     });
   };
 
