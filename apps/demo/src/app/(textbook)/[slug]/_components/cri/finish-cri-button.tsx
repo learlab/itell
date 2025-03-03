@@ -2,6 +2,7 @@
 
 import { Button } from "@itell/ui/button";
 import { useSelector } from "@xstate/store/react";
+import { ChevronRightIcon } from "lucide-react";
 
 import { createEventAction } from "@/actions/event";
 import { useChunks, useCRIStore } from "@/components/provider/page-provider";
@@ -16,6 +17,7 @@ type Props = {
 
 export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
   const store = useCRIStore();
+  const { finishPage, advanceChunk } = store.trigger;
   const currentChunk = useSelector(store, SelectCurrentChunk);
   const isSummaryReady = useSelector(store, SelectSummaryReady);
   const chunks = useChunks();
@@ -30,9 +32,9 @@ export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
       disabled={disabled}
       onClick={() => {
         if (isLastQuestion) {
-          store.send({ type: "finishPage" });
+          finishPage();
         } else {
-          store.send({ type: "advanceChunk", chunkSlug });
+          advanceChunk({ chunkSlug });
         }
         createEventAction({
           pageSlug,
@@ -44,6 +46,7 @@ export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
         });
       }}
     >
+      <ChevronRightIcon className="mr-2" />
       {text}
     </Button>
   );

@@ -20,11 +20,11 @@ import type { ChartConfig } from "@itell/ui/chart";
 const chartConfig = {
   userScaled: {
     label: "user",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   otherScaled: {
     label: "other",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 

@@ -1,7 +1,7 @@
+import { SidebarTrigger } from "@itell/ui/sidebar";
 import { DashboardNavMenu } from "@dashboard/nav";
 
 import { ContinueReading } from "@/components/continue-reading";
-import { SidebarTrigger } from "@/components/sidebar";
 import { getSession } from "@/lib/auth";
 
 export async function DashboardNav() {

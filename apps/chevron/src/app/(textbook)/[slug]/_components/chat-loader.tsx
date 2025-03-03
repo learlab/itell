@@ -10,10 +10,9 @@ import { ChatPopover } from "./chat/chat-popover";
 type Props = {
   user: User | null;
   pageSlug: string;
-  pageTitle: string;
 };
 
-export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
+export async function ChatLoader({ user, pageSlug }: Props) {
   if (!user || getUserCondition(user, pageSlug) !== Condition.STAIRS) {
     return null;
   }
@@ -32,15 +31,17 @@ export async function ChatLoader({ user, pageSlug, pageTitle }: Props) {
     <ChatPopover
       pageSlug={pageSlug}
       updatedAt={new Date(updatedAt)}
-      data={messages}
-      pageTitle={pageTitle}
+      messages={messages}
     />
   );
 }
 
 ChatLoader.Skeleton = function ChatLoaderSkeleton() {
   return (
-    <button className="fixed bottom-12 right-8 z-20 flex items-center justify-center gap-2 rounded-lg border-2 bg-background px-6 py-4 text-foreground">
+    <button
+      className="bg-background text-foreground fixed right-8 bottom-12 z-20 flex items-center
+        justify-center gap-2 rounded-lg border-2 px-6 py-4"
+    >
       <MessageCircleIcon className="size-6" />
       <span>Chat with AI</span>
     </button>

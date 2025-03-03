@@ -1,5 +1,4 @@
-import { Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import type { Config } from "tailwindcss";
 import { z } from "zod";
 
 export const ColorSchema = z.object({
@@ -231,12 +230,6 @@ export const themeConfig: Partial<Config> = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        serif: ["var(--font-serif)", ...fontFamily.serif],
-        mono: ["var(--font-mono)", ...fontFamily.mono],
-        handwritten: ["var(--font-handwritten)"],
       },
       keyframes: {
         "accordion-down": {

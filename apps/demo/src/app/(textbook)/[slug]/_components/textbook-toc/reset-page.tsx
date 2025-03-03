@@ -10,13 +10,18 @@ import { clearSummaryLocal } from "../summary/summary-input";
 export function ResetPage({ pageSlug }: { pageSlug: string }) {
   const [pending, startTransition] = useTransition();
   const store = useCRIStore();
+  if (!store) {
+    return undefined;
+  }
+
+
   return (
     <Button
       className="flex w-full items-center justify-start p-2 xl:text-lg"
       variant="ghost"
       onClick={() => {
         startTransition(() => {
-          store.send({ type: "resetPage" });
+          store.trigger.resetPage();
           clearSummaryLocal(pageSlug);
           window.location.reload();
         });

@@ -108,7 +108,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       clearStages();
-      summaryStore.send({ type: "submit" });
+      summaryStore.trigger.submit();
       addStage("Scoring");
 
       const formData = new FormData(e.currentTarget);
@@ -118,7 +118,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
       const error = validateSummary(input, prevInput);
 
       if (error) {
-        summaryStore.send({ type: "fail", error });
+        summaryStore.trigger.fail({ error });
         return;
       }
 
@@ -166,11 +166,11 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
             );
             if (parsed.success) {
               summaryResponseRef.current = parsed.data;
-              summaryStore.send({ type: "scored", response: parsed.data });
+              summaryStore.trigger.scored({ response: parsed.data });
               finishStage("Scoring");
             } else {
               clearStages();
-              summaryStore.send({ type: "fail", error: ErrorType.INTERNAL });
+              summaryStore.trigger.fail({ error: ErrorType.INTERNAL });
               // summaryResponse parsing failed, return early
               reportSentry(
                 "first chunk of stairs summary response in wrong shape",
@@ -209,7 +209,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
             const stairsData = JSON.parse(stairsString) as StairsQuestion;
             stairsDataRef.current = stairsData;
             finishStage("Analyzing");
-            chatStore.send({ type: "setStairsQuestion", data: stairsData });
+            chatStore.trigger.setStairsQuestion({ data: stairsData });
           } else {
             throw new Error("invalid stairs chunk", { cause: stairsChunk });
           }
@@ -253,17 +253,13 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           rocketBlast(blastYPos);
         }
 
-        summaryStore.send({
-          type: "finishPage",
+        summaryStore.trigger.finishPage({
           isNextPageVisible: data.canProceed ? !isLast : undefined,
           input,
         });
 
         if (stairsDataRef.current) {
-          summaryStore.send({
-            type: "stairs",
-            data: stairsDataRef.current,
-          });
+          summaryStore.trigger.stairs({ data: stairsDataRef.current });
 
           if (!data.canProceed) {
             const chunk = getChunkElement(stairsDataRef.current.chunk);
@@ -314,7 +310,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
 
   useEffect(() => {
     if (error) {
-      summaryStore.send({ type: "fail", error: ErrorType.INTERNAL });
+      summaryStore.trigger.fail({ error: ErrorType.INTERNAL });
       clearStages();
       reportSentry("score summary stairs", {
         requestBody: requestBodyRef.current,

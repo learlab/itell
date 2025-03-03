@@ -35,14 +35,19 @@ export function ChatFeedback({
   const { error, execute } = useServerAction(createChatFeedbackAction);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger aria-label={isPositive ? "Like" : "Dislike"}>
+      <DialogTrigger
+        aria-label={isPositive ? "Like" : "Dislike"}
+        className="group/item"
+      >
         {isPositive ? (
-          <ThumbsUpIcon className={"size-3 group-hover:stroke-info"} />
+          <ThumbsUpIcon className={"group-hover/item:stroke-info size-3"} />
         ) : (
-          <ThumbsDownIcon className={"size-3 group-hover:stroke-info"} />
+          <ThumbsDownIcon className={"group-hover/item:stroke-info size-3"} />
         )}
       </DialogTrigger>
-      <DialogContent>
+
+      {/* HACK: make chat feedback dialog clickable when stairs is activated */}
+      <DialogContent id="chat-action-dialog" className="driver-active-element">
         <DialogHeader>
           <DialogTitle>Share your experience with iTELL AI</DialogTitle>
         </DialogHeader>
@@ -87,7 +92,7 @@ export function ChatFeedback({
               className="border-none font-normal md:text-base xl:text-lg"
             />
           </Label>
-          <footer>
+          <footer className="mt-2">
             <ChatFeedbackSubmit />
           </footer>
         </form>
@@ -99,7 +104,7 @@ export function ChatFeedback({
 export function ChatFeedbackSubmit() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending} pending={pending} className="w-40">
+    <Button type="submit" disabled={pending} pending={pending} className="w-36">
       <span className="inline-flex items-center gap-2">
         <SendHorizontalIcon className="size-3" />
         Submit

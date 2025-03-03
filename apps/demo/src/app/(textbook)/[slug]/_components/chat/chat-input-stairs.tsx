@@ -34,6 +34,8 @@ interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
 
 export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
   const store = useChatStore();
+  const { addMessage, updateMessage, setActive, setStairsAnswered } =
+    store.trigger;
   const messages = useSelector(store, SelectStairsMessages);
   const stairsQuestion = useSelector(store, SelectStairsQuestion);
   const stairsAnswered = useSelector(store, SelectStairsAnswered);
@@ -55,25 +57,23 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
     setPending(true);
     const userTimestamp = Date.now();
 
-    // add the question to normal chat
-    store.send({
-      type: "addMessage",
+    // append the stairs question to normal chat as well
+    addMessage({
       data: botMessage({
         text: stairsQuestion?.text ?? "",
         isStairs: false,
       }),
     });
 
-    store.send({
-      type: "addMessage",
+    // add user message to stairs array
+    addMessage({
       data: userMessage({
         text,
         isStairs: true,
       }),
     });
 
-    store.send({
-      type: "addMessage",
+    addMessage({
       data: userMessage({
         text,
         isStairs: false,
@@ -81,16 +81,14 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
     });
 
     if (!stairsAnswered) {
-      store.send({
-        type: "setStairsAnswered",
+      setStairsAnswered({
         value: true,
       });
     }
 
     // init response message
     const botMessageId = crypto.randomUUID();
-    store.send({
-      type: "addMessage",
+    addMessage({
       data: botMessage({
         id: botMessageId,
         text: "",
@@ -108,10 +106,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
           current_chunk: stairsQuestion?.chunk ?? "",
         },
       });
-      store.send({
-        type: "setActive",
-        id: null,
-      });
+      setActive({ id: null });
 
       let data = {} as { text: string; context?: string[] };
       if (response.ok && response.body) {
@@ -119,8 +114,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
           if (!done) {
             try {
               data = JSON.parse(d) as typeof data;
-              store.send({
-                type: "updateMessage",
+              updateMessage({
                 id: botMessageId,
                 text: data.text,
                 isStairs: true,
@@ -132,8 +126,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
         });
 
         const context = data.context?.at(0);
-        store.send({
-          type: "updateMessage",
+        updateMessage({
           id: botMessageId,
           isStairs: true,
           text: data.text,
@@ -142,8 +135,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
 
         const botTimestamp = Date.now();
         // also add the final bot message to the normal chat
-        store.send({
-          type: "addMessage",
+        addMessage({
           data: botMessage({
             text: data.text,
             isStairs: false,
@@ -228,8 +220,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
         input: text,
         pageSlug,
       });
-      store.send({
-        type: "updateMessage",
+      updateMessage({
         id: botMessageId,
         text: "Sorry, I'm having trouble connecting to ITELL AI, please try again later.",
         isStairs: false,
@@ -242,7 +233,9 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
   return (
     <div className={cn("grid gap-2 px-2", className)}>
       <form
-        className="relative flex items-center rounded-lg border border-input bg-background px-3 py-1.5 pr-8 text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-ring/10 focus-within:ring-offset-0"
+        className="border-input bg-background focus-within:ring-ring/10 relative flex items-center
+          rounded-lg border px-3 py-1.5 pr-8 text-sm focus-within:ring-2
+          focus-within:ring-offset-0 focus-within:outline-hidden"
         onSubmit={(e) => {
           e.preventDefault();
           if (!e.currentTarget.input.value) return;
@@ -265,7 +258,8 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
                   ? "Please return to the summary"
                   : "Answer the question"
               }
-              className="flex-1 resize-none bg-transparent placeholder:text-muted-foreground focus:outline-none"
+              className="placeholder:text-muted-foreground flex-1 resize-none bg-transparent
+                focus:outline-hidden"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -286,7 +280,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
                 <Button
                   variant={"ghost"}
                   size="sm"
-                  className="absolute bottom-1 right-1 size-6 rounded-full"
+                  className="absolute right-1 bottom-1 size-6 rounded-full"
                 >
                   <ArrowUpIcon size={16} className="shrink-0" />
                 </Button>

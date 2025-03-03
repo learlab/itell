@@ -98,9 +98,7 @@ export function ToggleShowFloatingSummary() {
       <TooltipTrigger asChild>
         <button
           aria-label="Toggle show floating summary"
-          onClick={() =>
-            summaryStore.send({ type: "toggleShowFloatingSummary" })
-          }
+          onClick={() => summaryStore.trigger.toggleShowFloatingSummary()}
         >
           <PinIcon
             className={cn("size-4 rotate-45 transition-all", {
@@ -162,10 +160,11 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
                 <button
                   aria-label="Close floating summary"
                   onClick={() =>
-                    summaryStore.send({ type: "toggleShowFloatingSummary" })
+                    summaryStore.trigger.toggleShowFloatingSummary()
                   }
                   type="button"
-                  className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
+                  className="flex -translate-y-1/2 items-center justify-center rounded-full border
+                    border-accent-foreground bg-background p-1"
                 >
                   <XIcon className="size-4" />
                 </button>
@@ -173,7 +172,8 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
                   aria-label="Jump to summary submission"
                   onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
                   type="button"
-                  className="flex -translate-y-1/2 items-center justify-center rounded-full border border-accent-foreground bg-background p-1"
+                  className="flex -translate-y-1/2 items-center justify-center rounded-full border
+                    border-accent-foreground bg-background p-1"
                 >
                   <ArrowDownIcon className="size-4" />
                 </button>
@@ -200,8 +200,7 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
                     }
                   }}
                   onChange={(e) =>
-                    summaryStore.send({
-                      type: "setInput",
+                    summaryStore.trigger.setInput({
                       input: e.target.value,
                     })
                   }

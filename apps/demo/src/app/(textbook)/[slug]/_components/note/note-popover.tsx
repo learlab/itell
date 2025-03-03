@@ -98,7 +98,9 @@ export const NotePopover = memo(
       setPending(true);
       popoverRef.current?.hidePopover();
       removeNotes(id);
-      noteStore.send({ type: "delete", id });
+
+      // eslint-disable-next-line drizzle/enforce-delete-with-where
+      noteStore.trigger.delete({ id });
       if (recordId) {
         // delete note in database
         await deleteNoteAction({ id: recordId });
@@ -128,8 +130,7 @@ export const NotePopover = memo(
       const noteText = getInput();
       if (shouldUpdate) {
         if (recordId) {
-          noteStore.send({
-            type: "update",
+          noteStore.trigger.update({
             id,
             data: {
               noteText,
@@ -310,15 +311,15 @@ export const NotePopover = memo(
                 defaultValue={noteText}
                 placeholder="Add Note"
                 ref={textareaRef}
-                className="h-full resize-none rounded-md bg-transparent text-sm outline-none"
+                className="h-full resize-none rounded-md bg-transparent text-sm outline-hidden"
               />
             </Label>
 
             <footer className="flex items-center justify-between gap-1 border-t px-2 pt-2">
               {!recordId ? (
-                <p className="text-sm text-muted-foreground">unsaved</p>
+                <p className="text-muted-foreground text-sm">unsaved</p>
               ) : (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   last updated at{" "}
                   <time>
                     {(updatedAt ? updatedAt : new Date()).toLocaleString()}
@@ -326,7 +327,7 @@ export const NotePopover = memo(
                 </p>
               )}
               {positionFailed ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Can&apos;t find reference text for this note
                 </p>
               ) : null}
@@ -340,7 +341,7 @@ export const NotePopover = memo(
                       aria-label="delete note"
                       onClick={() => popoverRef.current?.hidePopover()}
                     >
-                      <TrashIcon className="size-4 group-hover:stroke-info" />
+                      <TrashIcon className="group-hover:stroke-info size-4" />
                     </button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -377,7 +378,7 @@ export const NotePopover = memo(
                   aria-label="save note"
                   onClick={handleUpsert}
                 >
-                  <CheckIcon className="size-4 group-hover:stroke-info" />
+                  <CheckIcon className="group-hover:stroke-info size-4" />
                 </button>
               </div>
             </footer>
@@ -412,7 +413,7 @@ function ColorPicker({ id, color, onChange }: ColorPickerProps) {
         popovertarget={popoverId}
         ref={triggerRef}
       >
-        <PaletteIcon className="size-4 group-hover:stroke-info" />
+        <PaletteIcon className="group-hover:stroke-info size-4" />
       </button>
       <div
         id={popoverId}
@@ -429,7 +430,7 @@ function ColorPicker({ id, color, onChange }: ColorPickerProps) {
               style={{ background: c }}
               className={cn(
                 "size-8 rounded-md",
-                c === color ? "border-2 border-primary" : ""
+                c === color ? "border-primary border-2" : ""
               )}
               onClick={() => {
                 onChange(c);
@@ -438,7 +439,8 @@ function ColorPicker({ id, color, onChange }: ColorPickerProps) {
           ))}
           <button
             type="button"
-            className="col-span-1 inline-flex size-8 items-center justify-center rounded-md text-foreground"
+            className="text-foreground col-span-1 inline-flex size-8 items-center justify-center
+              rounded-md"
             style={{
               background: customBg,
             }}

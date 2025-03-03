@@ -63,7 +63,7 @@ export function QuizTableClient({
             <DialogTrigger className="hover:underline">
               {count} / {page.quiz?.length}
             </DialogTrigger>
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="sm:max-w-2xl">
               <DialogHeader>
                 <DialogTitle>{row.original.name}</DialogTitle>
                 <DialogDescription>

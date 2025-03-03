@@ -31,6 +31,7 @@ type State = {
   pageStatus: PageStatus;
   condition: string;
   chunks: string[];
+  page: Page;
   criStore: CRIStore;
   chatStore: ChatStore;
   summaryStore: SummaryStore;
@@ -98,7 +99,7 @@ export function PageProvider({
 
     if (summaryStoreRef.current) {
       summarySubscription = summaryStoreRef.current.on(
-        "toggleShowFloatingSummary",
+        "toggleFloatingSummary",
         () => {
           setShowFloatingSummary((prev) => !prev);
         }
@@ -121,6 +122,7 @@ export function PageProvider({
         chatStore: chatStoreRef.current,
         summaryStore: summaryStoreRef.current,
         chunks: slugs,
+        page,
         condition,
       }}
     >
@@ -128,6 +130,11 @@ export function PageProvider({
     </PageContext.Provider>
   );
 }
+
+export const usePage = () => {
+  const state = useContext(PageContext);
+  return useMemo(() => state.page, [state.page]);
+};
 
 export const usePageStatus = () => {
   const state = useContext(PageContext);

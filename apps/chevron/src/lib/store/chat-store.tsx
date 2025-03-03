@@ -1,3 +1,5 @@
+"use client";
+
 import { type Message } from "@itell/core/chat";
 import { createStoreWithProducer } from "@xstate/store";
 import { produce } from "immer";
@@ -12,10 +14,10 @@ type StairsQuestion = {
 };
 export type StoreMessage = Message & { isStairs: boolean };
 export type ChatStore = ReturnType<typeof createChatStore>;
+
 export const createChatStore = () => {
-  return createStoreWithProducer(
-    produce,
-    {
+  return createStoreWithProducer(produce, {
+    context: {
       open: false as boolean,
       messages: [] as Message[],
       stairsMessages: [] as Message[],
@@ -25,7 +27,7 @@ export const createChatStore = () => {
       stairsQuestion: null as StairsQuestion | null,
       stairsTimestamp: null as number | null,
     },
-    {
+    on: {
       setOpen: (context, event: { value: boolean }) => {
         context.open = event.value;
       },
@@ -96,8 +98,8 @@ export const createChatStore = () => {
         context.stairsQuestion = event.data;
         context.stairsReady = false;
       },
-    }
-  );
+    },
+  });
 };
 
 export type CreateUserMessageInput = {
@@ -167,6 +169,8 @@ export const SelectStairsMessages: Selector<Message[]> = (state) =>
   state.context.stairsMessages;
 export const SelectMessages: Selector<Message[]> = (state) =>
   state.context.messages;
+export const SelectHasMessages: Selector<boolean> = (state) =>
+  state.context.messages.length > 0;
 export const SelectActiveMessageId: Selector<string | null> = (state) =>
   state.context.activeMessageId;
 export const SelectStairsReady: Selector<boolean> = (state) =>

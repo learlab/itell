@@ -1,3 +1,5 @@
+"use client";
+
 import { createStoreWithProducer } from "@xstate/store";
 import { type Page } from "#content";
 import { produce } from "immer";
@@ -53,56 +55,61 @@ export const createCRIStore = (
     shouldBlur: snapshot?.shouldBlur ?? !pageStatus.unlocked,
   };
 
-  return createStoreWithProducer(produce, initialState, {
-    finishChunk: (context, event: { chunkSlug: string; passed?: boolean }) => {
-      context.chunkStatus[event.chunkSlug].status = event.passed
-        ? "passed"
-        : "completed";
-    },
+  return createStoreWithProducer(produce, {
+    context: initialState,
+    on: {
+      finishChunk: (
+        context,
+        event: { chunkSlug: string; passed?: boolean }
+      ) => {
+        context.chunkStatus[event.chunkSlug].status = event.passed
+          ? "passed"
+          : "completed";
+      },
+      advanceChunk: (context, event: { chunkSlug: string }) => {
+        const currentIndex = slugs.indexOf(event.chunkSlug);
+        if (currentIndex < lastIndex) {
+          let nextIndex = currentIndex + 1;
+          if (nextIndex === lastIndex) {
+            context.currentChunk = slugs[lastIndex];
+            return;
+          }
 
-    advanceChunk: (context, event: { chunkSlug: string }) => {
-      const currentIndex = slugs.indexOf(event.chunkSlug);
-      if (currentIndex < lastIndex) {
-        let nextIndex = currentIndex + 1;
-        if (nextIndex === lastIndex) {
-          context.currentChunk = slugs[lastIndex];
-          return;
-        }
+          const nextSlug = chunks[nextIndex].slug;
+          if (context.chunkStatus[nextSlug].hasQuestion) {
+            context.currentChunk = nextSlug;
+            return;
+          }
 
-        const nextSlug = chunks[nextIndex].slug;
-        if (context.chunkStatus[nextSlug].hasQuestion) {
-          context.currentChunk = nextSlug;
-          return;
+          // otherwise, unlock following chunks till we encounter the next regular chunk
+          while (
+            nextIndex + 1 <= lastIndex &&
+            chunks[nextIndex + 1].type !== "regular"
+          ) {
+            nextIndex++;
+          }
+          context.currentChunk = chunks[nextIndex].slug;
         }
-
-        // otherwise, unlock following chunks till we encounter the next regular chunk
-        while (
-          nextIndex + 1 <= lastIndex &&
-          chunks[nextIndex + 1].type !== "regular"
-        ) {
-          nextIndex++;
-        }
-        context.currentChunk = chunks[nextIndex].slug;
-      }
-    },
-    finishPage: (context) => {
-      context.isSummaryReady = true;
-      context.shouldBlur = false;
-      context.currentChunk = slugs[lastIndex];
-    },
-    resetPage: (context) => {
-      context.isSummaryReady = false;
-      context.shouldBlur = true;
-      context.currentChunk = slugs[0];
-      context.chunkStatus = Object.fromEntries(
-        slugs.map((slug) => [
-          slug,
-          {
-            hasQuestion: status[slug],
-            status: undefined,
-          },
-        ])
-      );
+      },
+      finishPage: (context, event: unknown) => {
+        context.isSummaryReady = true;
+        context.shouldBlur = false;
+        context.currentChunk = slugs[lastIndex];
+      },
+      resetPage: (context, event: unknown) => {
+        context.isSummaryReady = false;
+        context.shouldBlur = true;
+        context.currentChunk = slugs[0];
+        context.chunkStatus = Object.fromEntries(
+          slugs.map((slug) => [
+            slug,
+            {
+              hasQuestion: status[slug],
+              status: undefined,
+            },
+          ])
+        );
+      },
     },
   });
 };

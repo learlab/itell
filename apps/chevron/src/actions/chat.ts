@@ -49,3 +49,20 @@ export const createChatsAction = authedProcedure
         );
     }
   });
+
+export const deleteChatsAction = authedProcedure
+  .input(
+    z.object({
+      pageSlug: z.string(),
+    })
+  )
+  .handler(async ({ ctx, input }) => {
+    return await db
+      .delete(chat_messages)
+      .where(
+        and(
+          (eq(chat_messages.userId, ctx.user.id),
+          eq(chat_messages.pageSlug, input.pageSlug))
+        )
+      );
+  });

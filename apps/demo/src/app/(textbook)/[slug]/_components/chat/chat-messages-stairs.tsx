@@ -19,16 +19,16 @@ export function ChatMessagesStairs() {
     () => ({
       id: crypto.randomUUID(),
       isUser: false,
-      text: "initial-message",
+      text: "stairs-initial-message",
       node: (
         <StairsReadyButton
           onClick={() => {
-            store.send({ type: "setStairsReady" });
+            store.trigger.setStairsReady();
           }}
         />
       ),
     }),
-    []
+    [store]
   );
 
   useEffect(() => {

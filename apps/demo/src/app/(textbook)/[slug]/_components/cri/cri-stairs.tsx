@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
-import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { CardFooter } from "@itell/ui/card";
@@ -13,7 +12,7 @@ import { TextArea } from "@itell/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
-import { BanIcon, Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
+import { Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
@@ -115,7 +114,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     // if answer is correct, mark chunk as finished
     // this will add the chunk to the list of finished chunks that gets excluded from stairs question
     if (score === 2) {
-      store.send({ type: "finishChunk", chunkSlug, passed: true });
+      store.trigger.finishChunk({ chunkSlug, passed: true });
 
       setState({
         status: StatusStairs.BOTH_CORRECT,
@@ -168,7 +167,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     return (
       <CRIShell>
         <CRIContent>
-          <p className="my-2 text-[0.9em] font-light">
+          <p className="my-2 text-sm font-light">
             You can skip the following question or click to reveal.
           </p>
           <div>
@@ -202,7 +201,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             streak !== undefined && streak >= 2 ? (
               <Tooltip>
                 <TooltipTrigger>
-                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <div className="text-muted-foreground flex items-center gap-1 text-sm">
                     <Flame color="#b91c1c" className={toClassName(streak)} />
                   </div>
                 </TooltipTrigger>
@@ -220,14 +219,14 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
         <CRIContent>
           <div role="status">
             {status === StatusStairs.BOTH_INCORRECT && (
-              <p className="text-sm text-destructive-foreground">
+              <p className="text-destructive-foreground text-sm">
                 <b>iTELL AI says:</b> You likely got a part of the answer wrong.
                 Please try again.
               </p>
             )}
 
             {status === StatusStairs.SEMI_CORRECT && (
-              <p className="text-sm text-warning">
+              <p className="text-warning text-sm">
                 <b>iTELL AI says:</b> You may have missed something, but you
                 were generally close.
               </p>
@@ -324,6 +323,11 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                       type="submit"
                       disabled={_isPending}
                       className="min-w-40"
+                      variant={
+                        status === StatusStairs.UNANSWERED
+                          ? "default"
+                          : "secondary"
+                      }
                     >
                       <span className="flex items-center gap-2">
                         <PencilIcon className="size-4" />
@@ -347,7 +351,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           </form>
         </CRIContent>
 
-        <CardFooter className="flex-col items-start gap-2 text-sm text-muted-foreground">
+        <CardFooter className="text-muted-foreground flex-col items-start gap-2 text-sm">
           <p className="m-0">
             Answer the question above the continue reading. iTELL evaluation is
             based on AI and may not always be accurate.{" "}

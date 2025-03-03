@@ -77,7 +77,7 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
     const data = await response.json();
     const score = data.score as QuestionScore;
 
-    store.send({ type: "finishChunk", chunkSlug, passed: false });
+    store.trigger.finishChunk({ chunkSlug, passed: false });
 
     setState((state) => ({
       ...state,
@@ -193,7 +193,11 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
                 pending={isPending}
                 type="submit"
                 disabled={_isPending}
-                variant="outline"
+                variant={
+                  state.status === StatusReread.UNANSWERED
+                    ? "default"
+                    : "secondary"
+                }
                 className="w-40"
               >
                 <span className="flex items-center gap-2">

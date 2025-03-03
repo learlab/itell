@@ -12,7 +12,7 @@ import type { ChartConfig } from "@itell/ui/chart";
 const chartConfig = {
   value: {
     label: "Reading Time",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 

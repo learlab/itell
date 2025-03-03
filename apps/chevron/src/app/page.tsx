@@ -54,7 +54,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
     <footer
       id={Elements.SITE_FOOTER}
       className={cn(
-        "flex flex-row items-center justify-between border-t-2 border-border px-16 py-8 lg:px-32",
+        `border-border flex flex-row items-center justify-between border-t-2 px-16 py-8
+        lg:px-32`,
         className
       )}
     >

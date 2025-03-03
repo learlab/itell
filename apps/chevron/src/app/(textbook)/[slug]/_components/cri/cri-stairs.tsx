@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
-import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { CardFooter } from "@itell/ui/card";
@@ -13,7 +12,7 @@ import { TextArea } from "@itell/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
-import { BanIcon, Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
+import { Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
@@ -115,7 +114,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     // if answer is correct, mark chunk as finished
     // this will add the chunk to the list of finished chunks that gets excluded from stairs question
     if (score === 2) {
-      store.send({ type: "finishChunk", chunkSlug, passed: true });
+      store.trigger.finishChunk({ chunkSlug, passed: true });
 
       setState({
         status: StatusStairs.BOTH_CORRECT,
@@ -324,6 +323,11 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                       type="submit"
                       disabled={_isPending}
                       className="min-w-40"
+                      variant={
+                        status === StatusStairs.UNANSWERED
+                          ? "default"
+                          : "secondary"
+                      }
                     >
                       <span className="flex items-center gap-2">
                         <PencilIcon className="size-4" />

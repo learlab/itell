@@ -48,9 +48,9 @@ export function CRISimple({ question, answer, pageSlug, chunkSlug }: Props) {
           onSubmit={(e) => {
             e.preventDefault();
             if (isLastQuestion) {
-              store.send({ type: "finishPage" });
+              store.trigger.finishPage();
             } else {
-              store.send({ type: "advanceChunk", chunkSlug });
+              store.trigger.advanceChunk({ chunkSlug });
             }
             createEventAction({
               type: EventType.CHUNK_REVEAL_QUESTION,

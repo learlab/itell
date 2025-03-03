@@ -5,7 +5,6 @@ import { DefaultPreferences, Elements } from "@itell/constants";
 import { serializeRange } from "@itell/core/note";
 import { Button } from "@itell/ui/button";
 import { cn, getChunkElement } from "@itell/utils";
-import { useSelector } from "@xstate/store/react";
 import { type User } from "lucia";
 import { PencilIcon, SparklesIcon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -16,7 +15,6 @@ import { useChatStore } from "@/components/provider/page-provider";
 import { getUserCondition } from "@/lib/auth/conditions";
 import { Condition } from "@/lib/constants";
 import { useAddChat } from "@/lib/hooks/use-add-chat";
-import { SelectOpen } from "@/lib/store/chat-store";
 import { noteStore } from "@/lib/store/note-store";
 
 type Props = {
@@ -27,7 +25,6 @@ type Props = {
 export const SelectionPopover = ({ user, pageSlug }: Props) => {
   const { theme } = useTheme();
   const store = useChatStore();
-  const open = useSelector(store, SelectOpen);
   const { action: addChat } = useAddChat();
   const target = useRef<HTMLElement | null>(null);
 
@@ -49,7 +46,7 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
         if (!content) {
           return toast.warning("Selection is empty");
         }
-        store.send({ type: "setOpen", value: true });
+        store.trigger.setOpen({ value: true });
 
         const text = `Please explain the following:\n\n <blockquote>${content}</blockquote> `;
         addChat({ text, pageSlug, transform: true, currentChunk: chunkSlug });
@@ -76,8 +73,7 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
           return toast.warning("Selection is empty");
         }
         const chunkSlug = findParentChunk(range);
-        noteStore.send({
-          type: "create",
+        noteStore.trigger.create({
           id: randomNumber(),
           highlightedText: text,
           color: noteColor,
@@ -154,7 +150,8 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
     createPortal(
       <div
         className={cn(
-          "absolute -ml-[75px] flex flex-row items-center justify-between gap-2 rounded-md border-2 border-gray-100 bg-background px-2 py-1 shadow-sm"
+          `absolute -ml-[75px] flex flex-row items-center justify-between gap-2 rounded-md
+          border-2 border-gray-100 bg-background px-2 py-1 shadow-sm`
         )}
         style={{
           left: `calc(${state.left.toString()}px + 4.6rem)`,

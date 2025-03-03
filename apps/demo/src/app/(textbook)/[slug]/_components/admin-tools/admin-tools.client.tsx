@@ -103,7 +103,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
 
     if (formData.get("page-unblur") === "on") {
       startTransition(() => {
-        store.send({ type: "finishPage" });
+        store.trigger.finishPage();
       });
     }
 
