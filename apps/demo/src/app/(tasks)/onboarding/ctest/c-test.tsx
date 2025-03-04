@@ -52,39 +52,38 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       formRef.current.querySelectorAll("fieldset[data-target-word]")
     ) as HTMLFieldSetElement[];
 
-    fields.forEach((field) => {
+    fields.forEach((field, index) => {
       const word = field.dataset.targetWord as string;
       const inputs = Array.from(
-        field.querySelectorAll("input[data-is-target='true']")
+        field.querySelectorAll("input[type=text]")
       ) as HTMLInputElement[];
 
       const answer = results.answers.find((a) => a.word === word);
 
       if (!answer) return;
 
-      
-        inputs.forEach((input) => {
-          const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : 0;
-          const correctLetter = word[letterIndex];
+      const targetInputs = inputs.filter((input) => input.dataset.isTarget === "true");
 
-          input.readOnly = true;
+      targetInputs.forEach((input) => {
+        const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : 0;
+        const correctLetter = word[letterIndex];
 
+        input.readOnly = true;
+
+        if (answer.isCorrect) {
+          input.style.backgroundColor = "#d1fae5";
+          input.style.borderColor = "#10b981";
+          input.style.color = "#047857";
+        } else {
+          input.style.backgroundColor = "#fee2e2";
+          input.style.borderColor = "#ef4444";
+          input.style.color = "#b91c1c";
           
-            if (answer.isCorrect) {
-              input.style.backgroundColor = "#d1fae5";
-              input.style.borderColor = "#10b981";
-              input.style.color = "#047857";
-            } else {
-              input.style.backgroundColor = "#fee2e2";
-              input.style.borderColor = "#ef4444";
-              input.style.color = "#b91c1c";
-              
-              if (input.value !== correctLetter) {
-                input.value = correctLetter;
-              }
-            }
-          
-        });
+          if (input.value !== correctLetter) {
+            input.value = correctLetter;
+          }
+        }
+      });
     });
   };
 
