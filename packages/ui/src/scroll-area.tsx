@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-
 import { cn } from "@itell/utils";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 

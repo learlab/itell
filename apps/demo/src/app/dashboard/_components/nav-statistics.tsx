@@ -21,7 +21,9 @@ export function DashboardLinks() {
         <li key={item.title}>
           <Link
             className={cn(
-              "flex h-9 items-center gap-2.5 overflow-hidden px-1.5 text-sm outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 lg:text-base",
+              `ring-ring hover:bg-accent hover:text-accent-foreground flex h-9 items-center
+              gap-2.5 overflow-hidden px-1.5 text-sm outline-hidden transition-all
+              focus-visible:ring-2 lg:text-base`,
               activeRoute === item.href && "bg-accent text-accent-foreground"
             )}
             href={item.href}
@@ -33,7 +35,7 @@ export function DashboardLinks() {
               });
             }}
           >
-            <item.icon className="h-4 w-4 shrink-0 translate-x-0.5 text-muted-foreground" />
+            <item.icon className="text-muted-foreground h-4 w-4 shrink-0 translate-x-0.5" />
             <div className="line-clamp-1 grow overflow-hidden pr-6 font-medium">
               {item.title}
             </div>

@@ -1,32 +1,34 @@
-import {
-  expect,
-  http,
-  HttpResponse,
-  passthrough,
-  test,
-} from "next/experimental/testmode/playwright/msw";
+import { chromium, expect, test } from "@playwright/test";
 
-test.use({
-  mswHandlers: [
-    http.get(
-      "https://accounts.google.com/v3/signin/identifier",
-      ({ request }) => {
-        console.log("intercepting google oauth requests");
-        const searchParams = new URL(request.url).searchParams;
-        const dst = new URL(searchParams.get("redirect_uri") as string);
-        dst.searchParams.append("state", searchParams.get("state") as string);
-        return HttpResponse.redirect(dst);
-      }
-    ),
-  ],
-});
+const userLogin = process.env.TEST_USER_EMAIL || "";
+const userPass = process.env.TEST_USER_PASS || "";
 
 test.describe("google oauth", () => {
-  test("can log in", async ({ page }) => {
-    await page.goto("/auth");
+  test("can log in", async ({}) => {
+    test.setTimeout(120_000);
+
+    const browser = await chromium.launch({ headless: false });
+    const context = await browser.newContext({
+      storageState: "tests/playwright/.auth/storage.json", // Load previous state if exists
+    });
+    const page = await context.newPage();
+
+    await page.goto("http://127.0.0.1:3000/auth");
+
+    if (await page.isVisible("text=Log out")) {
+      console.log("Already logged in");
+      return;
+    }
 
     await page.getByTestId("google-login-button").click();
 
-    await page.waitForURL("/auth/google");
+    // Wait for Google OAuth to redirect back to the app
+    await page.waitForURL("**/consent", { timeout: 60000 });
+
+    // Save storage state after login
+    console.log("Saving storage state...");
+    await context.storageState({ path: "tests/playwright/.auth/storage.json" });
+
+    await browser.close();
   });
 });

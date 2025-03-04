@@ -30,3 +30,6 @@ dist-ssr
 .env
 .vercel
 .protect-merge-cache
+.itell
+playwright-report
+test-results

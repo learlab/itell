@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useDebounce } from "@itell/core/hooks";
+import { Button } from "@itell/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { Page } from "#content";
 import { PinIcon, TableOfContentsIcon } from "lucide-react";
@@ -17,15 +19,15 @@ import { PageStatusInfo } from "./_components/page-status-info";
 export function PageHeader({
   page,
   pageStatus,
-  pin,
+  hide,
 }: {
   page: Page;
   pageStatus: PageStatus;
-  pin: boolean;
+  hide: boolean;
 }) {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [shouldAutoHide, setShouldAutoHide] = useState(pin);
+  const [shouldAutoHide, setShouldAutoHide] = useState(hide);
 
   useEffect(() => {
     const controlNavbar = () => {
@@ -54,38 +56,64 @@ export function PageHeader({
     <header
       id="page-header"
       className={cn(
-        "sticky top-[calc(var(--nav-height))] z-40 col-span-full flex items-center justify-between border-b-2 bg-background/95 px-4 py-3 backdrop-blur transition-all duration-300 ease-in-out supports-[backdrop-filter]:bg-background/60",
+        `bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky
+        top-[calc(var(--nav-height))] z-40 col-span-full flex items-center
+        justify-between border-b-2 px-4 py-3 backdrop-blur transition-all duration-300
+        ease-in-out`,
         isVisible ? "translate-y-0" : "-translate-y-full"
       )}
     >
-      <div className="flex items-center gap-4">
-        <h2 className="text-balance text-lg font-medium tracking-tight">
-          {page.title}
-        </h2>
-        <TableOfContents page={page} />
-      </div>
-      <div className="flex items-center gap-4">
-        <button
-          aria-hidden="true"
-          onClick={() => {
-            setShouldAutoHide(!shouldAutoHide);
+      <div className="flex items-center gap-2">
+        <HeaderControl
+          hide={shouldAutoHide}
+          onHideToggle={() => {
             setCookie(
               PAGE_HEADER_PIN_COOKIE,
               !shouldAutoHide ? "true" : "false"
             );
+            setShouldAutoHide(!shouldAutoHide);
           }}
-        >
-          <PinIcon
-            className={cn("size-4 rotate-45 transition-all", {
-              "rotate-0": !shouldAutoHide,
-            })}
-          />
-        </button>
-
+        />
+        <h2 className="text-balance text-lg font-medium tracking-tight">
+          {page.title}
+        </h2>
+      </div>
+      <div className="flex items-center gap-3">
+        <TableOfContents page={page} />
         <NoteCount />
         <PageStatusInfo status={pageStatus} />
       </div>
     </header>
+  );
+}
+
+function HeaderControl({
+  hide,
+  onHideToggle,
+}: {
+  hide: boolean;
+  onHideToggle: () => void;
+}) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          size={"sm"}
+          variant={"ghost"}
+          className="size-6"
+          onClick={onHideToggle}
+        >
+          <PinIcon
+            className={cn("size-4 shrink-0 rotate-45 transition-all", {
+              "rotate-0": !hide,
+            })}
+          />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent sideOffset={12} side="bottom">
+        {hide ? "Display" : "Hide"} header
+      </TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -131,19 +159,23 @@ function TableOfContents({ page }: { page: Page }) {
   return (
     <div className="hidden items-center gap-2 lg:flex">
       <Popover>
-        <PopoverTrigger aria-label="Table of Contents">
-          <div className="flex items-center gap-2">
-            <TableOfContentsIcon className="size-4" />
-            <p
+        <PopoverTrigger aria-label="Table of Contents" asChild>
+          <Button
+            className="items-center px-1.5 text-sm"
+            variant={"ghost"}
+            size={"sm"}
+          >
+            <TableOfContentsIcon className="mr-1 size-4" />
+            <span
               className={cn(
-                "font-light",
+                // add a fade-in effect except when activeHeading is the first section heading
                 _activeHeading !== page.chunks[0].slug && "fade-in2"
               )}
               key={activeHeadingTitle}
             >
               {activeHeadingTitle}
-            </p>
-          </div>
+            </span>
+          </Button>
         </PopoverTrigger>
         <PopoverContent>
           <ul className="flex flex-col gap-2">
@@ -153,9 +185,7 @@ function TableOfContents({ page }: { page: Page }) {
                   href={`#${chunk.slug}`}
                   className={cn(
                     "text-sm hover:underline",
-                    chunk.slug === activeHeading
-                      ? "font-semibold"
-                      : "font-light"
+                    chunk.slug === activeHeading && "font-semibold"
                   )}
                 >
                   {chunk.title}

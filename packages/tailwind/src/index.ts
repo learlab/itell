@@ -8,13 +8,13 @@ export { DefaultTheme, AppPlugin, UIPlugin, CodePlugin };
 
 // for using as a preset in the tailwind config for an app
 export const AppPreset = {
-	darkMode: "class",
-	content: [],
-	plugins: [animatePlugin, typographyPlugin, AppPlugin],
+  darkMode: "class",
+  content: [],
+  plugins: [animatePlugin, typographyPlugin, AppPlugin],
 } satisfies Config;
 
 export const UIPreset = {
-	darkMode: "class",
-	content: [],
-	plugins: [animatePlugin, typographyPlugin, UIPlugin],
+  darkMode: "class",
+  content: [],
+  plugins: [animatePlugin, typographyPlugin, UIPlugin],
 } satisfies Config;

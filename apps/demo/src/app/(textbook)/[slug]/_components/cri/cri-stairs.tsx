@@ -2,36 +2,27 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
-import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
+import { Errorbox } from "@itell/ui/callout";
 import { CardFooter } from "@itell/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@itell/ui/hover-card";
 import { Label } from "@itell/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
 import { StatusButton } from "@itell/ui/status-button";
 import { TextArea } from "@itell/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@itell/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
-import { BanIcon, Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
+import { Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
 
+import { createCRIAnswerAction, updateCRIStreakAction } from "@/actions/cri";
 import {
-  createCRIAnswerAction,
-  getCRIStreakAction,
-  updateCRIStreakAction,
-} from "@/actions/cri";
-import { useCRIStore } from "@/components/provider/page-provider";
+  useCRIStore,
+  usePageStatus,
+  useSession,
+} from "@/components/provider/page-provider";
 import { Confetti } from "@/components/ui/confetti";
 import { apiClient } from "@/lib/api-client";
 import { Condition, isProduction } from "@/lib/constants";
@@ -57,20 +48,18 @@ type State = {
 };
 
 export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
+  const { user } = useSession();
+  const pageStatus = usePageStatus();
   const store = useCRIStore();
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const form = useRef<HTMLFormElement>(null);
-
   const {
-    data: streak,
+    execute: updateStreak,
+    data: _streak,
     setOptimistic: setStreak,
-    execute: getStreak,
-  } = useServerAction(getCRIStreakAction);
-  const { execute: updateStreak } = useServerAction(updateCRIStreakAction);
-
-  useEffect(() => {
-    getStreak();
-  }, []);
+  } = useServerAction(updateCRIStreakAction);
+  const streak =
+    _streak === undefined ? (user?.personalization.cri_streak ?? 0) : _streak;
 
   const [collapsed, setCollapsed] = useState(!shouldBlur);
   const [state, setState] = useState<State>({
@@ -125,7 +114,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     // if answer is correct, mark chunk as finished
     // this will add the chunk to the list of finished chunks that gets excluded from stairs question
     if (score === 2) {
-      store.send({ type: "finishChunk", chunkSlug, passed: true });
+      store.trigger.finishChunk({ chunkSlug, passed: true });
 
       setState({
         status: StatusStairs.BOTH_CORRECT,
@@ -178,7 +167,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     return (
       <CRIShell>
         <CRIContent>
-          <p className="my-2 text-[0.9em] font-light">
+          <p className="my-2 text-sm font-light">
             You can skip the following question or click to reveal.
           </p>
           <div>
@@ -210,21 +199,19 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           question={question}
           headerRight={
             streak !== undefined && streak >= 2 ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Flame color="#b91c1c" className={toClassName(streak)} />
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>
-                      You have answered {streak} questions correctly in a row,
-                      good job!
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="text-muted-foreground flex items-center gap-1 text-sm">
+                    <Flame color="#b91c1c" className={toClassName(streak)} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    You have answered {streak} questions correctly in a row,
+                    good job!
+                  </p>
+                </TooltipContent>
+              </Tooltip>
             ) : null
           }
         />
@@ -232,14 +219,14 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
         <CRIContent>
           <div role="status">
             {status === StatusStairs.BOTH_INCORRECT && (
-              <p className="text-sm text-destructive-foreground">
+              <p className="text-destructive-foreground text-sm">
                 <b>iTELL AI says:</b> You likely got a part of the answer wrong.
                 Please try again.
               </p>
             )}
 
             {status === StatusStairs.SEMI_CORRECT && (
-              <p className="text-sm text-warning">
+              <p className="text-warning text-sm">
                 <b>iTELL AI says:</b> You may have missed something, but you
                 were generally close.
               </p>
@@ -265,18 +252,22 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 input={state.input}
               />
             )}
-            {status !== StatusStairs.UNANSWERED && (
-              <HoverCard>
-                <HoverCardTrigger asChild>
-                  <Button variant="link" type="button" className="gap-2">
+            {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="secondary" type="button" className="gap-2">
                     <KeyRoundIcon className="size-4" />
                     Reveal Answer
                   </Button>
-                </HoverCardTrigger>
-                <HoverCardContent className="w-80">
-                  <p className="no-select leading-relaxed">{answer}</p>
-                </HoverCardContent>
-              </HoverCard>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="no-select w-80 leading-relaxed"
+                  side="right"
+                  sideOffset={12}
+                >
+                  {answer}
+                </PopoverContent>
+              </Popover>
             )}
           </div>
 
@@ -331,8 +322,12 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                       pending={isPending}
                       type="submit"
                       disabled={_isPending}
-                      variant="outline"
                       className="min-w-40"
+                      variant={
+                        status === StatusStairs.UNANSWERED
+                          ? "default"
+                          : "secondary"
+                      }
                     >
                       <span className="flex items-center gap-2">
                         <PencilIcon className="size-4" />
@@ -352,22 +347,16 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 </>
               )}
             </div>
-            {state.error ? (
-              <Alert variant={"error"}>
-                <BanIcon />
-                <AlertTitle>{state.error}</AlertTitle>
-              </Alert>
-            ) : null}
+            {state.error ? <Errorbox title={state.error} /> : null}
           </form>
         </CRIContent>
 
-        <CardFooter>
-          <div className="flex items-center gap-1.5">
-            <p className="text-sm text-muted-foreground">
-              iTELL evaluation is based on AI and may not always be accurate.{" "}
-            </p>
+        <CardFooter className="text-muted-foreground flex-col items-start gap-2 text-sm">
+          <p className="m-0">
+            Answer the question above the continue reading. iTELL evaluation is
+            based on AI and may not always be accurate.{" "}
             <CRIFeedback pageSlug={pageSlug} chunkSlug={chunkSlug} />
-          </div>
+          </p>
         </CardFooter>
       </CRIShell>
     </>

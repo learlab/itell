@@ -11,7 +11,7 @@ import remarkHeadingAttrs from "remark-heading-attrs";
 import remarkMath from "remark-math";
 import { defineCollection, defineConfig, defineSchema, s } from "velite";
 
-import { SurveySchema } from "@/lib/survey";
+import { SurveySchema } from "@/lib/survey-data";
 
 const execAsync = promisify(exec);
 const timestamp = defineSchema(() =>
@@ -145,6 +145,7 @@ const volume = defineCollection({
     slug: s.string(),
     free_pages: s.array(s.string()),
     latex: s.boolean().default(false),
+    summary: s.string(),
   }),
 });
 

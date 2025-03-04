@@ -58,19 +58,19 @@ const conditions = [
   {
     label: "Simple",
     description:
-      "No question and summary. Workers will read short questions and their correct answers and read professional summaries of the chapter. Workers will also read about strategies that can increase text comprehension.",
+      "No question and summary. Users will read short questions and their correct answers and read professional summaries of the chapter. Users will also read about strategies that can increase text comprehension.",
     value: Condition.SIMPLE,
   },
   {
     label: "Random rereading",
     description:
-      "With question and summary, but no feedback on correctness. Can revise question answer. After writing a summary, workers will receive a random chunk to reread without stairs.",
+      "With question and summary, but no feedback on correctness. Can revise question answer. After writing a summary, users will receive a random chunk to reread without stairs.",
     value: Condition.RANDOM_REREAD,
   },
   {
     label: "Stairs",
     description:
-      "With question and summary, and feedback on correctness. User will interact with stairs for failing summaries.",
+      "With question and summary, and feedback on correctness. Users will interact with stairs for failing summaries with a probability.",
     value: Condition.STAIRS,
   },
 ];
@@ -103,7 +103,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
 
     if (formData.get("page-unblur") === "on") {
       startTransition(() => {
-        store.send({ type: "finishPage" });
+        store.trigger.finishPage();
       });
     }
 
@@ -164,12 +164,12 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
         <SheetHeader>
           <SheetTitle>Configure ITELL</SheetTitle>
           <SheetDescription className="text-left">
-            You can view this because you are recognized as an admin. Click
-            &quot;Apply Changes&quot; at the bottom to reload the page with the
-            new settings.
+            Click <b>Apply Changes</b> at the bottom to reload the page with new
+            settings.
           </SheetDescription>
         </SheetHeader>
         <form className="grid gap-8 py-4" onSubmit={onSubmit}>
+          <RestartTextbook />
           <fieldset className="flex flex-col border p-4">
             <legend className="font-semibold">Feedback</legend>
             <RadioGroup
@@ -216,7 +216,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Page</SelectLabel>
-                    <ScrollArea className="h-[300px]">
+                    <ScrollArea className="h-[300px] max-w-80">
                       {pages.map((page) => (
                         <SelectItem key={page.slug} value={page.slug}>
                           {page.title}
@@ -237,7 +237,6 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
               </div>
               <Switch name="page-unblur" aria-describedby="unblur-desc" />
             </Label>
-            <RestartTextbook />
           </fieldset>
 
           <fieldset className="flex flex-col gap-4 border p-4">

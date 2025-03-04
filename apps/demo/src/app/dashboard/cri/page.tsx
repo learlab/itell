@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@itell/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@itell/ui/card";
 import { CRIChart } from "@cri/cri-chart";
 import { DashboardHeader, DashboardShell } from "@dashboard/shell";
 import { groupBy } from "es-toolkit";
@@ -7,7 +13,7 @@ import pluralize from "pluralize";
 import { Meta } from "@/config/metadata";
 import { getCRIStats } from "@/db/cri";
 import { incrementView } from "@/db/dashboard";
-import { type ConstructedResponse } from "@/drizzle/schema";
+import { type CRI } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
 import { allPagesSorted, getPageData } from "@/lib/pages/pages.server";
 import { redirectWithSearchParams } from "@/lib/utils";
@@ -65,8 +71,8 @@ export default async function Page() {
             <div className="grid gap-2">
               <h2 className="text-xl font-semibold">All Records</h2>
               <p className="text-sm text-muted-foreground">
-                Due to randomness in question placement, you may not receive the same question set
-                for a chapter
+                Due to randomness in question placement, you may not receive the
+                same question set for a chapter
               </p>
               <div className="grid gap-4">
                 {pages.map((page) => {
@@ -77,26 +83,30 @@ export default async function Page() {
                       <CardHeader>
                         <CardTitle>{page.title}</CardTitle>
                         <CardDescription className="text-muted-foreground">
-                          {pluralize("answer", answers.length, true)}, {excellentAnswers.length}{" "}
-                          excellent
+                          {pluralize("answer", answers.length, true)},{" "}
+                          {excellentAnswers.length} excellent
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-2 divide-y divide-border border">
-                        {questions[page.slug].map(({ slug, question, answer }) => {
-                          const records = answers.filter((a) => a.chunkSlug === slug);
-                          if (records.length === 0) {
-                            return null;
-                          }
+                        {questions[page.slug].map(
+                          ({ slug, question, answer }) => {
+                            const records = answers.filter(
+                              (a) => a.chunkSlug === slug
+                            );
+                            if (records.length === 0) {
+                              return null;
+                            }
 
-                          return (
-                            <AnswerItem
-                              key={slug}
-                              answers={records}
-                              question={question}
-                              refAnswer={answer}
-                            />
-                          );
-                        })}
+                            return (
+                              <AnswerItem
+                                key={slug}
+                                answers={records}
+                                question={question}
+                                refAnswer={answer}
+                              />
+                            );
+                          }
+                        )}
                       </CardContent>
                     </Card>
                   );
@@ -115,7 +125,7 @@ function AnswerItem({
   question,
   refAnswer,
 }: {
-  answers: ConstructedResponse[];
+  answers: CRI[];
   question: string;
   refAnswer: string;
 }) {

@@ -1,21 +1,19 @@
+@reference "./styles/globals.css"
+
 .steps {
   @apply my-8 ml-4 border-l pl-8 [counter-reset:step];
 }
 
 .steps > h4 {
-  @apply step;
+  counter-increment: step;
 }
 
 .steps:first-child > h4:first-child {
   @apply mt-0;
 }
 
-.step {
-  counter-increment: step;
-}
-
-.step:before {
-  @apply absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center -indent-px font-mono text-base font-medium;
-  @apply ml-[-50px] mt-[-4px];
+.steps > h4:before {
+  @apply border-background bg-muted absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 text-center -indent-px font-mono text-base font-medium;
+  @apply mt-[-4px] ml-[-50px];
   content: counter(step);
 }

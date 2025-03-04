@@ -2,8 +2,7 @@
 
 # iTELL
 
-See our documentation here:
-[iTELL Wiki](https://github.com/learlab/itell-strapi-demo/wiki)
+See our documentation here: [iTELL Wiki](https://github.com/learlab/itell/wiki)
 
 ## Development Instructions
 
@@ -119,119 +118,84 @@ pnpm run build:deps
 pnpm run dev
 ```
 
-### Working with multiple volumes
+## Working with multiple volumes
 
 > [!NOTE]
 >
 > Feel free to skip this section if you don't need to change volumes other than
 > the demo.
 
-The `apps/demo` volume in the `main` branch is our master volume and should
-always contain the most up-to-date features. To synchronize other volumes, we
-use git branching. Different volumes reside in different branches we run merges
-from time to time to coordinate changes between them. Vercel deployments are
-also connecting to different branches.
+If you changed `apps/demo` and want to bring the changes to other volumes, run
 
-The mental model is: while you are operating on multiple volumes, 95% of the
-business logic is the same, they may only differ in some critical lines in a
-small subset of important files, such as condition assignments, log in options,
-etc. You should not need to create a separate project in `apps` for every
-volume. Instead use `apps/demo` as your workbench, and when it's necessary bring
-the changes to other branches by switching to it and merge with the main branch.
-
-There is a bash script `setup-protect-merge.sh` in the root directory that
-enhances git for this workflow, run it before you start working on a new volume
-
-```bash
-./setup-protect-merge.sh
+```
+pnpm sync
 ```
 
-The script add a new command git command called `protect-merge` that is a
-enhanced version of the `merge` command. For example, if you have want to update
-the `chevron` volume with the changes in main, you would run
+If you have already committed the changes, run
 
 ```bash
-git switch chevron # suppose this is the branch for the chevron volume
-git protect-merge main
-
-# switch back to main and work on the next feature
-git switch main
+pnpm sync --compare HEAD~1 # or other commit signatures
 ```
 
-The difference between `protect-merge` and `merge` is that `protect-merge`
-respects a custom `keep-ours` merge attribute configured in `.gitattributes`,
+The CLI respects configuration in `.itellrc.json` in the monorepo root
+
+```json
+// .itellrc.json
+{
+  // project to copy from
+  "mainProject": "apps/demo",
+  // projects to bring changes to
+  "targetProjects": ["apps/chevron"],
+  // files that should not be changed (relative to mainProject)
+  "protectedFiles": [
+    "src/drizzle/",
+    "src/lib/auth/conditions.ts",
+    "src/app/auth/_components/knowledge-carousel.tsx"
+  ]
+}
+```
+
+If you need to synchronize a file that is protected or outside of the `src`
+directory (whose changes are ignored by default), use the `-f` option:
 
 ```bash
-# .gitattributes
-apps/demo/content/**/* merge=keep-ours
-apps/demo/src/config/metadata.ts merge=keep-ours
-apps/demo/src/lib/auth/conditions.ts merge=keep-ours
-apps/demo/src/drizzle/**/* merge=keep-ours
+# this will sync apps/chevron/README.md against apps/demo/README.md
+pnpm sync -f README.md
 ```
 
-`protect-merge` will first run `git merge`, and if any of the changed files is
-listed in `.gitattributes` with a `keep-ours` annotation, it will revert the
-file to its original content in the current branch. This is helpful because
-certain files are volume-specific and should **not** be synced with the demo
-volume, e.g., textbook markdown files, metadata, database schemas, and
-experiment designs. For other feature files that should be synced,
-`protect-merge` just act like a normal merge.
-
-The usual workflow with the branching model is
-
-- if your changes apply to all volumes
-
-  - go to the main branch, add your changes and commit it. Go to the branches
-    for other volumes, run `git protect-merge main`, commit it. Finally multiple
-    pull requests for each branch.
-
-- if your changes apply to a subset of volumes
-
-  - go to the respective volume branches, commit changes and create pull
-    requests. Consider and discuss if the changed file should be added to
-    `.gitattributes` or it could be overwritten by the merge run by other
-    developers.
-
-If requirements for a volume is too complicated to fit in the branching model,
-the last resort is starting a new directory in `apps/`. This is not recommended
-because it is a fundamentally a different project and requires manual syncing.
-
-There is another git setup that changes `.env` when you switch branches, which
-is automatically set up by `pnpm setup` or after `pnpm install`. When you run
-`git switch`, it looks for a file `.branch-env-lookup` in `apps/demo` whose
-content is
+The CLI will update your working directory directly. It is recommended to use
+the `--dry-run` option if you are not sure what is going to happen:
 
 ```bash
-# .branch-env-lookup
-main .env.demo
-rmp .env.rmp
-.default .env.demo
+> pnpm sync -v -f "README.md" "src/drizzle/schema.ts" --dry-run
+
+[DRY RUN] Processing 2 files from apps/demo
+
+Syncing changes to apps/chevron...
+
+Results for apps/chevron:
++-----------------------+----------+------------+---------------------+
+| File                  | Status   | Action     | Reason             |
++-----------------------+----------+------------+---------------------+
+| src/drizzle/schema.ts | modified | Would Sync |                    |
+| README.md             | modified | Would Sync |                    |
++-----------------------+----------+------------+---------------------+
 ```
 
-This specifies which file to copy over to `.env` when you switch branches, note
-you need to create files such as `.env.demo` and `.env.rmp` yourself. The
-current setting is
-
-- when switching to `main`: copy `.env.demo` to `.env`
-
-- when switching to `rmp`: copy `.env.rmp` to `.env`
-
-- when switching to other branches: copy `.env.demo` to `.env`
-
-## With Dev Containers
-
-Dev containers are a convenient method for ensuring a completely reproducible
-development environment.
-
-1. Install Docker and VS Code.
-2. Install the Remote - Containers extension in VS Code.
-3. Clone this repository and open it in VS Code.
-4. Add a `.env` file to the root of the repository (speak to a team member for
-   the contents).
-5. Use the "Reopen in Container" command.
-6. Open a new VS Code terminal (inside the container) and run
-   `pnpm install turbo --global`.
-7. Make sure that the git repository is trusted. Use the "Git: Manage Unsafe
-   Repositories" command.
-8. Run `turbo run dev --filter=@itell/research-methods-in-psychology` (or
-   whichever iTELL volume/app you want to work on).
+<!-- ## With Dev Containers -->
+<!---->
+<!-- Dev containers are a convenient method for ensuring a completely reproducible -->
+<!-- development environment. -->
+<!---->
+<!-- 1. Install Docker and VS Code. -->
+<!-- 2. Install the Remote - Containers extension in VS Code. -->
+<!-- 3. Clone this repository and open it in VS Code. -->
+<!-- 4. Add a `.env` file to the root of the repository (speak to a team member for -->
+<!--    the contents). -->
+<!-- 5. Use the "Reopen in Container" command. -->
+<!-- 6. Open a new VS Code terminal (inside the container) and run -->
+<!--    `pnpm install turbo --global`. -->
+<!-- 7. Make sure that the git repository is trusted. Use the "Git: Manage Unsafe -->
+<!--    Repositories" command. -->
+<!-- 8. Run `turbo run dev --filter=@itell/research-methods-in-psychology` (or -->
+<!--    whichever iTELL volume/app you want to work on). -->

@@ -59,9 +59,11 @@ export function updatePersonalizationStreak(
   }
 
   // NOTE: don't log events if this is called from admin panel
+  // where it sets both summary and cri
   if (!(summary && cri)) {
     createEventAction({
       type: EventType.STREAK,
+
       pageSlug: user.pageSlug ?? "",
       data: {
         streakType: streakType,

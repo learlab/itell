@@ -3,149 +3,155 @@ import { getConfig } from "./config";
 import { setState } from "./state";
 
 export function easeInOutQuad(
-	elapsed: number,
-	initialValue: number,
-	amountOfChange: number,
-	duration: number,
+  elapsed: number,
+  initialValue: number,
+  amountOfChange: number,
+  duration: number,
 ): number {
-	const halfDuration = duration / 2;
-	if (elapsed < halfDuration) {
-		const t = elapsed / halfDuration;
-		return (amountOfChange / 2) * t * t + initialValue;
-	}
-	const t = (elapsed - halfDuration) / halfDuration;
-	return (-amountOfChange / 2) * (t * (t - 2) - 1) + initialValue;
+  const halfDuration = duration / 2;
+  if (elapsed < halfDuration) {
+    const t = elapsed / halfDuration;
+    return (amountOfChange / 2) * t * t + initialValue;
+  }
+  const t = (elapsed - halfDuration) / halfDuration;
+  return (-amountOfChange / 2) * (t * (t - 2) - 1) + initialValue;
 }
 
 export function getFocusableElements(parentEls: Element[] | HTMLElement[]) {
-	const focusableQuery =
-		'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])';
+  const focusableQuery =
+    'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])';
 
-	return parentEls
-		.flatMap((parentEl) => {
-			const isParentFocusable = parentEl.matches(focusableQuery);
-			const focusableEls: HTMLElement[] = Array.from(
-				parentEl.querySelectorAll(focusableQuery),
-			);
+  return parentEls
+    .flatMap((parentEl) => {
+      const isParentFocusable = parentEl.matches(focusableQuery);
+      const focusableEls: HTMLElement[] = Array.from(
+        parentEl.querySelectorAll(focusableQuery),
+      );
 
-			return [
-				...(isParentFocusable ? [parentEl as HTMLElement] : []),
-				...focusableEls,
-			];
-		})
-		.filter((el) => {
-			return (
-				getComputedStyle(el).pointerEvents !== "none" && isElementVisible(el)
-			);
-		});
+      return [
+        ...(isParentFocusable ? [parentEl as HTMLElement] : []),
+        ...focusableEls,
+      ];
+    })
+    .filter((el) => {
+      return (
+        getComputedStyle(el).pointerEvents !== "none" && isElementVisible(el)
+      );
+    });
 }
 
 export function bringInView(element: Element) {
-	if (!element || isElementInView(element)) {
-		return;
-	}
+  if (!element || isElementInView(element)) {
+    return;
+  }
 
-	const shouldSmoothScroll = getConfig("smoothScroll");
+  const shouldSmoothScroll = getConfig("smoothScroll");
 
-	element.scrollIntoView({
-		// Removing the smooth scrolling for elements which exist inside the scrollable parent
-		// This was causing the highlight to not properly render
-		behavior:
-			!shouldSmoothScroll || hasScrollableParent(element) ? "auto" : "smooth",
-		inline: "center",
-		block: "center",
-	});
+  element.scrollIntoView({
+    // Removing the smooth scrolling for elements which exist inside the scrollable parent
+    // This was causing the highlight to not properly render
+    behavior:
+      !shouldSmoothScroll || hasScrollableParent(element) ? "auto" : "smooth",
+    inline: "center",
+    block: "center",
+  });
 }
 
 function hasScrollableParent(e: Element) {
-	if (!e || !e.parentElement) {
-		return;
-	}
+  if (!e || !e.parentElement) {
+    return;
+  }
 
-	const parent = e.parentElement as HTMLElement & { scrollTopMax?: number };
+  const parent = e.parentElement as HTMLElement & { scrollTopMax?: number };
 
-	return parent.scrollHeight > parent.clientHeight;
+  return parent.scrollHeight > parent.clientHeight;
 }
 
 function isElementInView(element: Element) {
-	const rect = element.getBoundingClientRect();
+  const rect = element.getBoundingClientRect();
 
-	return (
-		rect.top >= 0 &&
-		rect.left >= 0 &&
-		rect.bottom <=
-			(window.innerHeight || document.documentElement.clientHeight) &&
-		rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-	);
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
 }
 
 export function isElementVisible(el: HTMLElement) {
-	return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+  return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
 }
 
+//  NOTE: itell patch for stairs
+// after the chunk is highlighted, the page may be refreshed and driverjs can lose track of the
+// active chunk (due to getSession revalidation after summary submission)
+// this function is called whenever we can't find the highlighted element in the event listener and
+// rebinds it to the content chunk
 export const fixHighlight = (activeHighlight: Element) => {
-	if (!document.body.contains(activeHighlight)) {
-		if (activeHighlight.classList.contains("content-chunk")) {
-			const id =
-				(activeHighlight as HTMLElement).dataset.subsectionId ||
-				(activeHighlight as HTMLElement).dataset.chunkSlug;
-			const el =
-				document.querySelector(`[data-subsection-id="${id}"]`) ||
-				document.querySelector(`[data-chunk-slug="${id}"]`);
-			if (el) {
-				el.classList.add("driver-active-element");
-				el.setAttribute("tabIndex", "0");
-				el.setAttribute("id", Elements.STAIRS_HIGHLIGHTED_CHUNK);
+  if (!document.body.contains(activeHighlight)) {
+    if (activeHighlight.classList.contains("content-chunk")) {
+      const id =
+        (activeHighlight as HTMLElement).dataset.subsectionId ||
+        (activeHighlight as HTMLElement).dataset.chunkSlug;
+      const el =
+        document.querySelector(`[data-subsection-id="${id}"]`) ||
+        document.querySelector(`[data-chunk-slug="${id}"]`);
+      if (el) {
+        el.classList.add("driver-active-element");
+        el.setAttribute("tabIndex", "0");
 
-				const oldLink = document.getElementById(Elements.STAIRS_ANSWER_LINK);
-				if (oldLink) {
-					oldLink.remove();
-				}
-				// append link to jump to the finish reading button
-				const link = document.createElement("a");
-				link.href = `#${Elements.STAIRS_RETURN_BUTTON}`;
-				link.textContent = "go to the finish reading button";
-				link.className = "sr-only";
-				link.id = Elements.STAIRS_ANSWER_LINK;
-				el.insertAdjacentElement("afterend", link);
+        el.setAttribute("id", Elements.STAIRS_HIGHLIGHTED_CHUNK);
 
-				setInertBackground(String(id));
+        const oldLink = document.getElementById(Elements.STAIRS_ANSWER_LINK);
+        if (oldLink) {
+          oldLink.remove();
+        }
+        // append link to jump to the finish reading button
+        const link = document.createElement("a");
+        link.href = `#${Elements.STAIRS_RETURN_BUTTON}`;
+        link.textContent = "go to the finish reading button";
+        link.className = "sr-only";
+        link.id = Elements.STAIRS_ANSWER_LINK;
+        el.insertAdjacentElement("afterend", link);
 
-				setState("__activeElement", el);
-				return el;
-			}
-		}
-	}
+        setInertBackground(String(id));
 
-	return activeHighlight;
+        setState("__activeElement", el);
+        return el;
+      }
+    }
+  }
+
+  return activeHighlight;
 };
 
 export const setInertBackground = (slug: string) => {
-	document.getElementById(Elements.SITE_NAV)?.setAttribute("inert", "true");
-	document.getElementById(Elements.TEXTBOOK_NAV)?.setAttribute("inert", "true");
-	document.getElementById(Elements.PAGE_NAV)?.setAttribute("inert", "true");
-	document
-		.getElementById(Elements.PAGE_ASSIGNMENTS)
-		?.setAttribute("inert", "true");
-	document.getElementById(Elements.PAGE_PAGER)?.setAttribute("inert", "true");
-	document.querySelectorAll(".content-chunk").forEach((el) => {
-		let chunk = el.getAttribute("data-subsection-id");
-		if (!chunk) {
-			chunk = el.getAttribute("data-chunk-slug");
-		}
-		if (chunk !== slug) {
-			el.setAttribute("inert", "true");
-		}
-	});
+  document.getElementById(Elements.SITE_NAV)?.setAttribute("inert", "true");
+  document.getElementById(Elements.TEXTBOOK_NAV)?.setAttribute("inert", "true");
+  document.getElementById(Elements.PAGE_NAV)?.setAttribute("inert", "true");
+  document
+    .getElementById(Elements.PAGE_ASSIGNMENTS)
+    ?.setAttribute("inert", "true");
+  document.getElementById(Elements.PAGE_PAGER)?.setAttribute("inert", "true");
+  document.querySelectorAll(".content-chunk").forEach((el) => {
+    let chunk = el.getAttribute("data-subsection-id");
+    if (!chunk) {
+      chunk = el.getAttribute("data-chunk-slug");
+    }
+    if (chunk !== slug) {
+      el.setAttribute("inert", "true");
+    }
+  });
 };
 
 export const removeInert = () => {
-	document.getElementById(Elements.SITE_NAV)?.removeAttribute("inert");
-	document.getElementById(Elements.TEXTBOOK_NAV)?.removeAttribute("inert");
-	document.getElementById(Elements.PAGE_NAV)?.removeAttribute("inert");
-	document.getElementById(Elements.PAGE_ASSIGNMENTS)?.removeAttribute("inert");
-	document.getElementById(Elements.PAGE_PAGER)?.removeAttribute("inert");
-	document.querySelectorAll(".content-chunk").forEach((el) => {
-		el.removeAttribute("inert");
-	});
+  document.getElementById(Elements.SITE_NAV)?.removeAttribute("inert");
+  document.getElementById(Elements.TEXTBOOK_NAV)?.removeAttribute("inert");
+  document.getElementById(Elements.PAGE_NAV)?.removeAttribute("inert");
+  document.getElementById(Elements.PAGE_ASSIGNMENTS)?.removeAttribute("inert");
+  document.getElementById(Elements.PAGE_PAGER)?.removeAttribute("inert");
+  document.querySelectorAll(".content-chunk").forEach((el) => {
+    el.removeAttribute("inert");
+  });
 };

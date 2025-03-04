@@ -7,6 +7,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 import dotenv from "dotenv";
 
+// const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 export const baseURL = "http://127.0.0.1:3000";
 /**
@@ -40,7 +41,7 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        // storageState: "playwright/.auth/storage.json",
+        // storageState: "tests/playwright/.auth/storage.json",
         launchOptions: {
           ignoreDefaultArgs: [
             "--disable-component-extensions-with-background-pages",
@@ -52,6 +53,7 @@ export default defineConfig({
             "--disable-setuid-sandbox",
             "--disable-infobars", // Hide the infobar about automation
             "--disable-dev-shm-usage",
+            "--disable-web-security",
           ],
         },
       },

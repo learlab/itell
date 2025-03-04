@@ -14,7 +14,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { SurveySubmission } from "@/app/survey/[surveyId]/[sectionId]/survey-question-renderer";
+import { SurveySubmission } from "@/lib/survey-question";
 import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 export const aal_level = pgEnum("aal_level", ["aal1", "aal2", "aal3"]);
@@ -96,8 +96,10 @@ export const users = pgTable("users", {
   classId: text("class_id"),
   finished: boolean("finished").default(false).notNull(),
   preferences: jsonb("preferences").$type<UserPreferences>(),
-  // do not mandate consent for the demo volume
-  consentGiven: boolean("consent_given").default(true),
+  // do not mandate onboarding tasks for the demo volume
+  consentGiven: boolean("consent_given"),
+  onboardingFinished: boolean("onboarding_finished").notNull().default(true),
+  offboardingFinished: boolean("offboarding_finished").notNull().default(false),
   personalization: jsonb("personalization_data").$type<PersonalizationData>(),
   conditionAssignments: jsonb("condition_assignments")
     .$type<ConditionAssignments>()
@@ -275,38 +277,42 @@ export const constructed_responses = pgTable(
   ]
 );
 
-export type ConstructedResponse = InferSelectModel<
-  typeof constructed_responses
->;
-export const CreateConstructedResponseSchema = createInsertSchema(
-  constructed_responses
-);
+export type CRI = InferSelectModel<typeof constructed_responses>;
+export const createCRISchema = createInsertSchema(constructed_responses);
 
-export const constructed_responses_feedback = pgTable(
-  "constructed_responses_feedback",
-  {
-    id: serial("id").primaryKey().notNull(),
-    userId: text("user_id")
-      .notNull()
-      .references(() => users.id, {
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      }),
-    pageSlug: text("page_slug").notNull(),
-    chunkSlug: text("chunk_slug").notNull(),
-    isPositive: boolean("is_positive").notNull(),
-    text: text("text").notNull(),
-    tags: text("tags").array().notNull(),
-    createdAt: CreatedAt,
-  }
-);
-export const CreateConstructedResponseFeedbackSchema = createInsertSchema(
-  constructed_responses_feedback,
-  {
-    // fix for https://github.com/drizzle-team/drizzle-orm/issues/1110
+export const feedbacks = pgTable("feedbacks", {
+  id: serial("id").primaryKey().notNull(),
+  type: text("type").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+  isPositive: boolean("is_positive").notNull(),
+  text: text("text"),
+  data: jsonb("data"),
+  createdAt: CreatedAt,
+});
+
+export const createCRIFeedbackSchema = createInsertSchema(feedbacks)
+  .extend({
+    pageSlug: z.string(),
+    chunkSlug: z.string(),
     tags: z.array(z.string()),
-  }
-);
+  })
+  .omit({ userId: true, type: true });
+
+export const createChatFeedbackSchema = createInsertSchema(feedbacks)
+  .extend({
+    pageSlug: z.string(),
+    history: z.array(z.any()),
+    message: z.any(),
+  })
+  .omit({
+    userId: true,
+    type: true,
+  });
 
 export const focus_times = pgTable(
   "focus_times",
@@ -330,7 +336,6 @@ export const focus_times = pgTable(
   ]
 );
 export const CreateFocusTimeSchema = createInsertSchema(focus_times);
-
 export const chat_messages = pgTable(
   "chat_messages",
   {
@@ -387,9 +392,34 @@ export const survey_sessions = pgTable("survey_sessions", {
 export const CreateSurveySessionSchema = createInsertSchema(survey_sessions);
 export const UpdateSurveySessionSchema = CreateSurveySessionSchema.partial();
 export type SurveySession = InferSelectModel<typeof survey_sessions>;
-
 // { sectionId: { questionId: answer } }
 export type SurveyData = Record<string, SurveySubmission>;
+
+export const cloze_answers = pgTable(
+  "cloze_answers",
+  {
+    id: serial("id").primaryKey().notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    pageSlug: text("page_slug").notNull(),
+    totalWords: integer("total_words").notNull(),
+    correctWords: integer("correct_words").notNull(),
+    data: jsonb("data").$type<ClozeData>().notNull(),
+    createdAt: CreatedAt,
+  },
+
+  (table) => [index("cloze_answers_page_slug_idx").on(table.pageSlug)]
+);
+
+export const ClozeDataSchema = z.array(
+  z.object({
+    word: z.string(),
+    placeholders: z.array(z.string()),
+    answers: z.array(z.string()),
+  })
+);
+export type ClozeData = z.infer<typeof ClozeDataSchema>;
 
 export const quiz_answers = pgTable(
   "quiz_answers",

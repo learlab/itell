@@ -18,13 +18,15 @@
     "format": "turbo run format",
     "clean": "turbo run clean",
     "patch": "pnpm patch-package",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sync": "pnpm itell sync -v"
   },
   "keywords": [
     "itell"
   ],
   "license": "MIT",
   "devDependencies": {
+    "@itell/cli": "workspace:*",
     "@types/node": "^22.10.5",
     "husky": "^9.1.7",
     "patch-package": "^8.0.0",
@@ -33,7 +35,7 @@
     "turbo": "^2.3.3",
     "typescript": "5.6.0-beta"
   },
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@9.15.5",
   "pnpm": {
     "overrides": {
       "typescript": "5.6.0-beta",

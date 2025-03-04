@@ -4,8 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Elements } from "@itell/constants";
 import {
   useDebounce,
-  useIsMobile,
   useKeystroke,
+  useScreenIssue,
   useTimer,
 } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
@@ -14,14 +14,14 @@ import {
   ErrorType,
   SummaryResponseSchema,
 } from "@itell/core/summary";
-import { driver } from "@itell/driver.js";
+import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
-import { Warning } from "@itell/ui/callout";
+import { Errorbox } from "@itell/ui/callout";
 import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { Page } from "#content";
 import { type User } from "lucia";
-import { SendHorizontalIcon } from "lucide-react";
+import { InfoIcon, SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
@@ -34,7 +34,7 @@ import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
-import { reportSentry, scrollToElement } from "@/lib/utils";
+import { reportSentry } from "@/lib/utils";
 import {
   getSummaryLocal,
   saveSummaryLocal,
@@ -50,8 +50,6 @@ type Props = {
   pageStatus: PageStatus;
 };
 
-const driverObj = driver();
-
 export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const pageSlug = page.slug;
   const prevInput = useRef<string | undefined>(undefined);
@@ -59,7 +57,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const [finished, setFinished] = useState(pageStatus.unlocked);
   const criStore = useCRIStore();
   const isSummaryReady = useSelector(criStore, SelectSummaryReady);
-  const isMobile = useIsMobile();
+  const screenIssue = useScreenIssue();
 
   const randomChunkSlug = useMemo(() => {
     const validChunks = page.chunks.filter((chunk) => chunk.type === "regular");
@@ -69,6 +67,19 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const { addStage, clearStages, finishStage, stages } = useSummaryStage();
   const requestBodyRef = useRef<string>("");
   const summaryResponseRef = useRef<SummaryResponse | null>(null);
+
+  const { portals, highlight } = useDriver({
+    pageSlug,
+    condition: Condition.RANDOM_REREAD,
+    randomChunkSlug,
+    exitButton: FinishReadingButton,
+  });
+  const goToRandomChunk = () => {
+    const el = getChunkElement(randomChunkSlug);
+    if (el) {
+      highlight(el);
+    }
+  };
 
   const {
     isError,
@@ -107,7 +118,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       const response = parsed.data;
       summaryResponseRef.current = response;
 
-      const [_, err] = await createSummaryAction({
+      const [, err] = await createSummaryAction({
         summary: {
           text: input,
           pageSlug,
@@ -121,7 +132,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
         keystroke: {
           start: prevInput.current ?? getSummaryLocal(pageSlug) ?? "",
           data: keystrokes,
-          isMobile: isMobile ?? false,
+          isMobile: screenIssue ? false : screenIssue === "mobile",
         },
       });
       if (err) {
@@ -139,20 +150,13 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       }
 
       // 25% random rereading if the page is not unlocked
-      if (!pageStatus.unlocked && Math.random() <= 0.25) {
-        goToRandomChunk(randomChunkSlug);
+      if (!pageStatus.unlocked && !page.quiz) {
+        goToRandomChunk();
       }
     },
     { delayTimeout: 10000 }
   );
   const isPending = useDebounce(_isPending, 100);
-
-  const { portals } = useDriver(driverObj, {
-    pageSlug,
-    condition: Condition.RANDOM_REREAD,
-    randomChunkSlug,
-    exitButton: FinishReadingButton,
-  });
 
   useEffect(() => {
     if (error) {
@@ -174,10 +178,13 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
         <div role="status">
           {finished && page.next_slug ? (
             <div className="flex flex-col gap-2">
-              <p>
-                You have finished this page and can move on. You are still
-                welcome to improve the summary.
-              </p>
+              <Alert variant={"success"}>
+                <InfoIcon className="size-4" />
+                <AlertTitle>
+                  You have finished this page and can move on. You are still
+                  welcome to improve the summary.
+                </AlertTitle>
+              </Alert>
               <div className="flex items-center gap-2">
                 <NextPageButton pageSlug={page.next_slug} />
               </div>
@@ -198,25 +205,22 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
             pageSlug={pageSlug}
             pending={isPending}
             stages={stages}
-            userRole={user.role}
+            isAdmin={user.isAdmin}
             ref={ref}
           />
-          {isError ? (
-            <Warning role="alert">{ErrorFeedback[ErrorType.INTERNAL]}</Warning>
-          ) : null}
+          {isError && <Errorbox>{ErrorFeedback[ErrorType.INTERNAL]}</Errorbox>}
           {isDelayed ? <DelayMessage /> : null}
-          <div className="flex justify-end">
-            <Button
-              disabled={!isSummaryReady || isPending}
-              pending={isPending}
-              type="submit"
-            >
-              <span className="flex items-center gap-2">
-                <SendHorizontalIcon className="size-3" />
-                Submit
-              </span>
-            </Button>
-          </div>
+          <Button
+            disabled={!isSummaryReady || isPending}
+            pending={isPending}
+            type="submit"
+            className="w-40"
+          >
+            <span className="flex items-center gap-2">
+              <SendHorizontalIcon className="size-3" />
+              Submit
+            </span>
+          </Button>
         </form>
       </div>
     </>
@@ -259,20 +263,3 @@ function FinishReadingButton({ onClick }: { onClick: (_: number) => void }) {
     </div>
   );
 }
-
-const goToRandomChunk = (chunkSlug: string) => {
-  const el = getChunkElement(chunkSlug, "data-chunk-slug");
-  if (el) {
-    setTimeout(() => {
-      scrollToElement(el);
-    }, 100);
-    driverObj.highlight({
-      element: el,
-      popover: {
-        description: "",
-        side: "right",
-        align: "start",
-      },
-    });
-  }
-};

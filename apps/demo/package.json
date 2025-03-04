@@ -1,7 +1,7 @@
 {
   "name": "@itell/demo",
-  "version": "0.1.0",
   "type": "module",
+  "version": "0.1.0",
   "scripts": {
     "setup": "pnpm install && pnpm drizzle-kit migrate && pnpm run build:deps && pnpm run assets",
     "build": "next build",
@@ -10,11 +10,12 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "dev": "next dev -p 3000",
+    "dev:scan": "next dev -p 3000 && react-scan localhost:3000",
     "start": "next start -p 3000",
     "analyze": "ANALYZE=true next build",
     "assets": "tsx assets.ts",
-    "test": "pnpm exec playwright test",
-    "test:ui": "pnpm exec playwright test --ui"
+    "test": "dotenv -e .env.test -- pnpm exec playwright test",
+    "test:ui": "dotenv -e .env.test -- pnpm exec playwright test --ui"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.13",
@@ -33,7 +34,7 @@
     "@next/third-parties": "15.1.0",
     "@sentry/nextjs": "^8.48.0",
     "@tanstack/react-table": "^8.20.6",
-    "@xstate/store": "^2.6.2",
+    "@xstate/store": "^3.2.0",
     "arctic": "2.2.1",
     "babel-plugin-react-compiler": "19.0.0-beta-6fc168f-20241025",
     "client-only": "^0.0.1",
@@ -45,7 +46,6 @@
     "export-to-csv": "^1.4.0",
     "geist": "^1.3.1",
     "hono": "^4.6.16",
-    "html-react-parser": "^5.2.2",
     "htmr": "^1.0.2",
     "immer": "^10.1.1",
     "lucia": "^3.2.2",
@@ -55,7 +55,6 @@
     "next-safe-navigation": "^0.3.3",
     "next-themes": "^0.2.1",
     "nextjs-better-unstable-cache": "^1.1.0",
-    "oslo": "^1.2.1",
     "pluralize": "^8.0.0",
     "postgres": "^3.4.5",
     "react": "19.0.0",
@@ -80,6 +79,7 @@
     "@itell/rehype-wrap-heading-section": "workspace:^",
     "@next/bundle-analyzer": "15.1.0",
     "@playwright/test": "^1.49.1",
+    "@tailwindcss/postcss": "^4.0.9",
     "@total-typescript/ts-reset": "^0.4.2",
     "@types/dom-view-transitions": "^1.0.5",
     "@types/hast": "^3.0.4",
@@ -87,14 +87,15 @@
     "@types/pluralize": "^0.0.31",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.1",
-    "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.28.1",
     "eslint-plugin-drizzle": "^0.2.3",
     "msw": "^2.7.0",
     "playwright-extra": "^4.3.6",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.3",
     "prettier": "^3.4.2",
+    "react-scan": "^0.1.3",
     "rehype-format": "^5.0.1",
     "rehype-katex": "^6.0.3",
     "rehype-unwrap-images": "^1.0.0",
@@ -102,7 +103,7 @@
     "remark-heading-attrs": "^0.0.2",
     "remark-math": "^6.0.0",
     "require-in-the-middle": "^7.4.0",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.0.9",
     "typescript": "5.6.0-beta"
   }
 }
