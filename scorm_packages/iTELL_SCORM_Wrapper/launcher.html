@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iTELL SCORM Wrapper</title>
+    <script src="scormdriver.js"></script>
+    <script>
+        // Initialize SCORM API on page load
+        var scorm = pipwerks.SCORM;
+        scorm.version = "1.2"; // or "2004" based on your LMS configuration
+        if (scorm.init()) {
+            scorm.set("cmi.core.lesson_status", "incomplete");
+        }
+
+        function loadItell() {
+            // Define the URL of your existing iTELL website.
+            // If needed, add query parameters for session/context.
+            var itellUrl = "https://demo.itell.ai";
+            document.getElementById("itellFrame").src = itellUrl;
+        }
+
+        window.onload = loadItell;
+
+        // Listen for messages from iTELL for progress updates
+        window.addEventListener("message", function(event) {
+            // Validate the origin for security (adjust the URL as needed)
+            if (event.origin === "https://demo.itell.ai") {
+                var data = event.data;
+                // Example: update score and lesson status based on data sent from iTELL
+                if(data.score !== undefined) {
+                    scorm.set("cmi.core.score.raw", data.score);
+                }
+                if(data.lessonStatus) {
+                    scorm.set("cmi.core.lesson_status", data.lessonStatus);
+                }
+                scorm.save();
+            }
+        }, false);
+
+        // End the SCORM session when the page is closed
+        window.onbeforeunload = function() {
+            scorm.quit();
+        };
+    </script>
+</head>
+<body>
+    <!-- Embed your iTELL website using an iframe -->
+    <iframe id="itellFrame" width="100%" height="100%" style="border:none;"></iframe>
+</body>
+</html>
