@@ -65,8 +65,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       const targetInputs = inputs.filter((input) => input.dataset.isTarget === "true");
 
       targetInputs.forEach((input) => {
-        const inputIndex = targetInputs.indexOf(input);
-        const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : inputIndex;
+        const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : 0;
         const correctLetter = word[letterIndex];
 
         input.readOnly = true;
