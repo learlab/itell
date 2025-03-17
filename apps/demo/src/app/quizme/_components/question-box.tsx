@@ -225,14 +225,16 @@ export default function QuizMeBox({
   return (
     <>
       <Card
-        className={cn("mx-auto max-w-3xl", borderColor, {
+        className={cn("mx-auto mt-4 h-1/2 w-2/3 max-w-6xl ", borderColor, {
           shake: state.status === StatusStairs.BOTH_INCORRECT,
         })}
       >
-        <CardContent>
+        <CardContent
+          className={cn("relative flex flex-col gap-6")}
+        >
           {streak > 0 && status !== StatusStairs.BOTH_INCORRECT ? (
-            <div className="absolute right-8 top-2 flex items-center p-4">
-              <Image src="/images/flame.gif" alt="Flame" />
+            <div className="flex justify-end p-2">
+              <Image src="/images/flame.gif" alt="Flame" width={16} height={16} />
               <span className="font-semibold text-warning"> {streak}</span>
             </div>
           ) : null}
