@@ -82,7 +82,6 @@ export function StudentsTable<TData, TValue>({
     (pagination.pageIndex + 1) * pagination.pageSize,
     numRows
   );
-  table.getFilteredRowModel().rows;
   return (
     <div>
       <div className="flex items-center py-4">

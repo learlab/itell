@@ -231,9 +231,9 @@ export default function QuizMeBox({
       >
         <CardContent>
           {streak > 0 && status !== StatusStairs.BOTH_INCORRECT ? (
-            <div className="absolute right-8 top-2 flex items-center p-4">
+            <div className="absolute top-2 right-8 flex items-center p-4">
               <Image src="/images/flame.gif" alt="Flame" />
-              <span className="font-semibold text-warning"> {streak}</span>
+              <span className="text-warning font-semibold"> {streak}</span>
             </div>
           ) : null}
           {status === StatusStairs.BOTH_CORRECT ||
@@ -271,7 +271,7 @@ export default function QuizMeBox({
                   <div className="icon-circle"></div>
                 </div>
               </div>
-              <div className="mb-3 mt-3 pb-2 pt-2">
+              <div className="mt-3 mb-3 pt-2 pb-2">
                 <p></p>
               </div>
               <div className="mt-3 flex items-center justify-center space-x-8 pt-4">
