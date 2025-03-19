@@ -16,13 +16,13 @@ export const azureProvider = new MicrosoftEntraId(
   env.AZURE_TENANT_ID,
   env.AZURE_CLIENT_ID,
   env.AZURE_CLIENT_SECRET,
-  `${env.NEXT_PUBLIC_HOST}/auth/azure/callback`,
+  `${env.NEXT_PUBLIC_HOST}/auth/azure/callback`
 );
 
 export const googleProvider = new Google(
   env.GOOGLE_CLIENT_ID,
   env.GOOGLE_CLIENT_SECRET,
-  `${env.NEXT_PUBLIC_HOST}/auth/google/callback`,
+  `${env.NEXT_PUBLIC_HOST}/auth/google/callback`
 );
 
 const cookieOptions: Partial<ResponseCookie> = {
