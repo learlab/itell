@@ -39,7 +39,8 @@ export function StyledLabel({
     <Label
       className={cn(
         buttonVariants({ size: "lg", variant: "ghost" }),
-        "h-fit justify-start text-wrap py-3 pl-2 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base",
+        `has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground h-fit
+        justify-start py-3 pl-2 text-wrap xl:text-base`,
         className
       )}
       {...props}
@@ -63,7 +64,7 @@ function SingleChoiceQuestion({
     <RadioGroup
       name={question.id}
       required={question.required}
-      className="flex flex-col gap-1.5 text-foreground"
+      className="text-foreground flex flex-col gap-1.5"
       defaultValue={defaultValue}
     >
       {question.options.map((option) => (

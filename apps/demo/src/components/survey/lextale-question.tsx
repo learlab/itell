@@ -125,7 +125,8 @@ export function LexTaleQuestion({
                     <Label
                       className={cn(
                         buttonVariants({ size: "lg", variant: "outline" }),
-                        "h-fit p-4 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base"
+                        `has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground h-fit p-4
+                        xl:text-base`
                       )}
                     >
                       <RadioGroupItem value={"yes"} className="sr-only" />
@@ -135,7 +136,8 @@ export function LexTaleQuestion({
                     <Label
                       className={cn(
                         buttonVariants({ size: "lg", variant: "outline" }),
-                        "h-fit p-4 has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground xl:text-base"
+                        `has-[:checked]:bg-primary/85 has-[:checked]:text-primary-foreground h-fit p-4
+                        xl:text-base`
                       )}
                     >
                       <RadioGroupItem value={"no"} className="sr-only" />
