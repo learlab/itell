@@ -99,11 +99,11 @@ export async function SurveySection({
           }}
         >
           {section.questions.map((question) => (
-            <Card key={question.id} id={question.id}>
+            <Card key={question.id} id={question.id} className="pt-0">
               {question.text && (
-                <CardHeader className="bg-muted">
+                <CardHeader className="bg-muted py-4">
                   <CardTitle className="flex items-start gap-2">
-                    <CircleHelp className="size-6 flex-shrink-0 stroke-muted-foreground" />
+                    <CircleHelp className="stroke-muted-foreground size-6 flex-shrink-0" />
                     <legend className="text-lg font-medium tracking-tight xl:text-xl">
                       {question.text}
                     </legend>
