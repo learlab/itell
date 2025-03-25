@@ -47,7 +47,127 @@ order: 6
 parent:
   title: '18: Intercultural and International Business Communication'
   slug: 18-intercultural-and-international-business-communication
-quiz: null
+quiz:
+- !Markdown
+  markdown: |-
+    - question: What is one of the main challenges in defining intercultural communication as discussed in the chapter?
+      answers:
+      - answer: It involves bridging divergent cultures with distinct values across languages and time zones.
+        correct: true
+      - answer: "It is only necessary when communicating internationally between different countries.
+        correct: false
+      - answer: "It requires individuals to abandon their own cultural perspectives entirely.
+        correct: false
+      - answer: "It focuses solely on verbal communication and ignores nonverbal cues.
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: What is one implication of viewing culture as a 'culture of one' according to the text?
+      answers:
+      - answer: Each individual represents a unique blend of cultural influences, making every interaction potentially intercultural.
+        correct: true
+      - answer: "It implies that all individuals from the same community have identical cultural perspectives.
+        correct: false
+      - answer: "It suggests that communication is only intercultural when it involves different nationalities.
+        correct: false
+      - answer: "It means that cultural differences are always a barrier to effective communication.
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: What aspect of communication does ethnocentrism primarily hinder according to the text?
+      answers:
+      - answer: Intercultural communication
+        correct: true
+      - answer: "Intrapersonal communication
+        correct: false
+      - answer: "Intraorganizational communication
+        correct: false
+      - answer: "Technological communication
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: What is the main obstacle to intercultural communication mentioned?
+      answers:
+      - answer: Ethnocentrism
+        correct: true
+      - answer: "Linguistic barriers
+        correct: false
+      - answer: "Technological limitations
+        correct: false
+      - answer: "Geographic distance
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: According to the chapter, what is an essential strategy for success in intercultural communication?
+      answers:
+      - answer: Being open to new ideas and diverse viewpoints
+        correct: true
+      - answer: "Relying solely on technological tools
+        correct: false
+      - answer: "Avoiding interactions with different cultures
+        correct: false
+      - answer: "Focusing only on one's own cultural norms
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: How does the text describe the role of culture in communication?
+      answers:
+      - answer: Culture influences all aspects of communication, including message, channel, feedback, context, environment, and interference.
+        correct: true
+      - answer: "Culture only affects verbal communication and not nonverbal cues.
+        correct: false
+      - answer: "Culture is solely represented by the language and traditions of a group.
+        correct: false
+      - answer: "Culture impacts communication only when individuals from different countries interact.
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: What is intercultural communication as defined by Everett Rogers and Thomas Steinfatt?
+      answers:
+      - answer: The exchange of information between individuals who are 'unalike culturally.'
+        correct: true
+      - answer: "The sharing of understanding and meaning across similar cultural backgrounds.
+        correct: false
+      - answer: "Communication that occurs only in international settings.
+        correct: false
+      - answer: "A process involving individuals from the same cultural group.
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: According to the text, which component is NOT considered a part of the intercultural communication process?
+      answers:
+      - answer: Geographic location
+        correct: true
+      - answer: "Feedback
+        correct: false
+      - answer: "Environment
+        correct: false
+      - answer: "Channel
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: What can be inferred about the role of culture in communication from the text?
+      answers:
+      - answer: Culture influences how communication is perceived and interpreted across different groups.
+        correct: true
+      - answer: "Culture only affects communication in cross-national contexts.
+        correct: false
+      - answer: "Culture does not impact communication within the same geographic region.
+        correct: false
+      - answer: "Culture is irrelevant to the feedback process in communication.
+        correct: false
+- !Markdown
+  markdown: |-
+    - question: What is one way the text suggests intercultural communication can occur within the same family?
+      answers:
+      - answer: A three-generation family may have different values and experiences, leading to intercultural communication between grandparents, parents, and children.
+        correct: true
+      - answer: "Intercultural communication happens only if family members speak different languages.
+        correct: false
+      - answer: "Intercultural communication requires family members to live in different countries.
+        correct: false
+      - answer: "Intercultural communication is limited to interactions between family members of different ethnic backgrounds.
+        correct: false
 slug: 18-7-the-international-assignment
 title: '18.7: The International Assignment'
 ---

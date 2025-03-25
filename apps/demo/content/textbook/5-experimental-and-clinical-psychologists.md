@@ -43,7 +43,8 @@ parent:
   title: I. The Science of Psychology
   slug: i-the-science-of-psychology
 quiz:
-- question: "1.\tWhich of the following is necessary for psychology to be considered a science? "
+- !Structured
+  question: "1.\tWhich of the following is necessary for psychology to be considered a science? "
   answers:
   - answer: "a.\tIt exclusively generates accurate findings"
     correct: false
@@ -53,7 +54,8 @@ quiz:
     correct: true
   - answer: "d.\tAll of the above"
     correct: false
-- question: "2.\tWhat is pseudoscience?"
+- !Structured
+  question: "2.\tWhat is pseudoscience?"
   answers:
   - answer: "a.\tA study with poor design"
     correct: false
@@ -63,7 +65,8 @@ quiz:
     correct: false
   - answer: "d.\tClaims that are intended to sound scientific, but are not based on scientific research or evidence"
     correct: true
-- question: "3.\tWhich of the following is not an empirical question that could be addressed by scientific research? "
+- !Structured
+  question: "3.\tWhich of the following is not an empirical question that could be addressed by scientific research? "
   answers:
   - answer: "a.\tWhat is the relationship between interest and learning? "
     correct: false
@@ -73,7 +76,8 @@ quiz:
     correct: false
   - answer: "d.\tDo more people drink Coke or Pepsi? "
     correct: false
-- question: "4.\tWhich of the following accurately describes replication, which is part of science as public knowledge? "
+- !Structured
+  question: "4.\tWhich of the following accurately describes replication, which is part of science as public knowledge? "
   answers:
   - answer: "a.\tOther researchers read the research and use it to inform their own research and practice."
     correct: false
@@ -83,7 +87,8 @@ quiz:
     correct: true
   - answer: "d.\tAll of the above"
     correct: false
-- question: "5.\tYour friend tells you that you should date someone you both just met. When you ask why you should date that person, your friend says it feels like you would be a good match. What method of knowing is your friend using? "
+- !Structured
+  question: "5.\tYour friend tells you that you should date someone you both just met. When you ask why you should date that person, your friend says it feels like you would be a good match. What method of knowing is your friend using? "
   answers:
   - answer: "a.\tIntuition"
     correct: true
@@ -95,7 +100,8 @@ quiz:
     correct: false
   - answer: "e.\tThe scientific method"
     correct: false
-- question: "6.\tWe learn a lot of information from what we read in textbooks and hear from professors, and we trust these sources to provide good information. According to the text, which \"method of knowing\" does this represent? "
+- !Structured
+  question: "6.\tWe learn a lot of information from what we read in textbooks and hear from professors, and we trust these sources to provide good information. According to the text, which \"method of knowing\" does this represent? "
   answers:
   - answer: "a.\tIntuition"
     correct: false
@@ -107,7 +113,8 @@ quiz:
     correct: false
   - answer: "e.\tThe scientific method"
     correct: false
-- question: "7.\tOne concern about making conclusions based on our intuitive beliefs and personal experience is that we may focus on cases or information consistent with our beliefs and ignore cases or information inconsistent with our beliefs. What is this bias called?  "
+- !Structured
+  question: "7.\tOne concern about making conclusions based on our intuitive beliefs and personal experience is that we may focus on cases or information consistent with our beliefs and ignore cases or information inconsistent with our beliefs. What is this bias called?  "
   answers:
   - answer: "a.\tConfirmation bias"
     correct: true
@@ -117,7 +124,8 @@ quiz:
     correct: false
   - answer: "d.\tBelief bias"
     correct: false
-- question: "8.\tImagine someone claims that holding a certain kind of crystal for an hour a day will relieve depression symptoms. Which of the following responses represents scientific skepticism based on this claim?"
+- !Structured
+  question: "8.\tImagine someone claims that holding a certain kind of crystal for an hour a day will relieve depression symptoms. Which of the following responses represents scientific skepticism based on this claim?"
   answers:
   - answer: "a.\t“Let’s assume this works, and start doing it. Crystals are natural, so they probably have some benefit.” "
     correct: false
@@ -127,7 +135,8 @@ quiz:
     correct: false
   - answer: "d.\t“Why is it that crystals are supposed to relieve depression? Is there any scientific evidence that this is true?”"
     correct: false
-- question: "9.\tYour book describes that clinical practice often involves “empirically supported treatments” like cognitive behavioral therapy. What does it mean to say these treatments are empirically supported? "
+- !Structured
+  question: "9.\tYour book describes that clinical practice often involves “empirically supported treatments” like cognitive behavioral therapy. What does it mean to say these treatments are empirically supported? "
   answers:
   - answer: "a.\tThe treatments have been shown through systematic observation to be more effective than a control"
     correct: true
@@ -137,7 +146,8 @@ quiz:
     correct: false
   - answer: "d.\tThe treatments are empirically supported if and only if they work in a specific case to which the clinician tries to apply them"
     correct: false
-- question: "11.\tSome people who believe in pseudoscience like psychic powers claim that you can’t observe these powers because they don’t work when someone is observing. What makes a claim like this non-scientific, according to the text?"
+- !Structured
+  question: "11.\tSome people who believe in pseudoscience like psychic powers claim that you can’t observe these powers because they don’t work when someone is observing. What makes a claim like this non-scientific, according to the text?"
   answers:
   - answer: "a.\tIt is false"
     correct: false
@@ -147,7 +157,8 @@ quiz:
     correct: true
   - answer: "d.\tNothing. This is a scientific claim."
     correct: false
-- question: "12.\tMajor research projects have sought to explore the risk factors for conditions like Alzheimer’s disease by measuring dozens of factors (e.g., genetics, education level, diet, etc.) for years to see who is more likely to develop the condition later on. Which purpose of science is this research primarily focused on? "
+- !Structured
+  question: "12.\tMajor research projects have sought to explore the risk factors for conditions like Alzheimer’s disease by measuring dozens of factors (e.g., genetics, education level, diet, etc.) for years to see who is more likely to develop the condition later on. Which purpose of science is this research primarily focused on? "
   answers:
   - answer: "a.\tTo describe"
     correct: false

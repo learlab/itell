@@ -24,7 +24,8 @@ parent:
   title: II. Overview of the Scientific Method
   slug: ii-overview-of-the-scientific-method
 quiz:
-- question: "1.\tAccording to the text, which of the following is least important when considering the interestingness of a scientific research question?"
+- !Structured
+  question: "1.\tAccording to the text, which of the following is least important when considering the interestingness of a scientific research question?"
   answers:
   - answer: "a.\tAre you personally curious about knowing the answer?"
     correct: true
@@ -34,7 +35,8 @@ quiz:
     correct: false
   - answer: "d.\tDoes the answer have practical implications? "
     correct: false
-- question: "2.\tWhich of the following practices is recommended by your text to ensure that a research question has feasibility? "
+- !Structured
+  question: "2.\tWhich of the following practices is recommended by your text to ensure that a research question has feasibility? "
   answers:
   - answer: "a.\tResearchers work independently, because working in a group just makes the project more difficult to complete"
     correct: false
@@ -44,7 +46,8 @@ quiz:
     correct: false
   - answer: "d.\tResearchers try to do the most complicated or difficult version of the research study because these are likely to be more impactful"
     correct: false
-- question: "3.\tWhat type of paper is described here: The paper deals with the correlation between growth mindset and college success. The paper summarizes 36 previous research reports about this correlation. In the paper, the authors calculate a statistical summary, based on all of the previous findings, estimating the overall correlation. "
+- !Structured
+  question: "3.\tWhat type of paper is described here: The paper deals with the correlation between growth mindset and college success. The paper summarizes 36 previous research reports about this correlation. In the paper, the authors calculate a statistical summary, based on all of the previous findings, estimating the overall correlation. "
   answers:
   - answer: "a.\tAn empirical research report"
     correct: false
@@ -54,7 +57,8 @@ quiz:
     correct: true
   - answer: "d.\tA peer-review"
     correct: false
-- question: "4.\tWhich of these steps comes first in the scientific method? "
+- !Structured
+  question: "4.\tWhich of these steps comes first in the scientific method? "
   answers:
   - answer: "a.\tChoose a research design"
     correct: false
@@ -64,7 +68,8 @@ quiz:
     correct: false
   - answer: "d.\tAnalyze your data"
     correct: false
-- question: "5.\tPrior to an exam, a researcher gave 30 participants caffeinated coffee and 30 participants decaf (control) coffee. She predicted that consuming caffeine prior to an exam would cause an improvement in exam scores. Which of the following represents the Independent Variable? "
+- !Structured
+  question: "5.\tPrior to an exam, a researcher gave 30 participants caffeinated coffee and 30 participants decaf (control) coffee. She predicted that consuming caffeine prior to an exam would cause an improvement in exam scores. Which of the following represents the Independent Variable? "
   answers:
   - answer: "a.\tThe students"
     correct: false
@@ -74,7 +79,8 @@ quiz:
     correct: false
   - answer: "d.\tThe improvement in exam scores because of caffeine"
     correct: false
-- question: "6.\tWhich hypothesis doesn’t make a “positive claim” and therefore cannot be tested in traditional hypothesis tests?"
+- !Structured
+  question: "6.\tWhich hypothesis doesn’t make a “positive claim” and therefore cannot be tested in traditional hypothesis tests?"
   answers:
   - answer: "a.\tCaffeine will have beneficial effect on exam scores"
     correct: false
@@ -84,7 +90,8 @@ quiz:
     correct: false
   - answer: "d.\tCaffeine will have no real effect on exam scores "
     correct: true
-- question: "7.\tWhich of the following best differentiates hypotheses and theories, according to the text?"
+- !Structured
+  question: "7.\tWhich of the following best differentiates hypotheses and theories, according to the text?"
   answers:
   - answer: "a.\tHypotheses are predictions, whereas theories are explanations"
     correct: true
@@ -94,7 +101,8 @@ quiz:
     correct: false
   - answer: "d.\tTheories are guesses with no data, whereas hypotheses have been proven by data"
     correct: false
-- question: "8.\tWhich of the following is TRUE of nonexperimental research?"
+- !Structured
+  question: "8.\tWhich of the following is TRUE of nonexperimental research?"
   answers:
   - answer: "a.\tIt involves measuring variables rather than manipulating them"
     correct: true
@@ -104,7 +112,8 @@ quiz:
     correct: false
   - answer: "d.\tAll of the above"
     correct: false
-- question: "9.\tWhich of the following is NOT an example of an operational definition of a psychological construct?"
+- !Structured
+  question: "9.\tWhich of the following is NOT an example of an operational definition of a psychological construct?"
   answers:
   - answer: "a.\tA child psychologist administers an intelligence test to assess the cognitive development of children"
     correct: false
@@ -114,7 +123,8 @@ quiz:
     correct: true
   - answer: "d.\tAn educational psychologist gathers high school GPA scores to serve as a measurement of school performance"
     correct: false
-- question: "10.\tLaboratory research tends to be higher in _______ validity, but field research tends to be higher in ______ validity"
+- !Structured
+  question: "10.\tLaboratory research tends to be higher in _______ validity, but field research tends to be higher in ______ validity"
   answers:
   - answer: "a.\tIndependent; Dependent"
     correct: false
@@ -124,7 +134,8 @@ quiz:
     correct: false
   - answer: "d.\tInternal; External"
     correct: true
-- question: "11.\tTypically in psychological research, details about the sample of the study are presented, including the percentage of participants in each gender category, and the mean and standard deviation of their ages. What type of statistics are used for this? "
+- !Structured
+  question: "11.\tTypically in psychological research, details about the sample of the study are presented, including the percentage of participants in each gender category, and the mean and standard deviation of their ages. What type of statistics are used for this? "
   answers:
   - answer: "a.\tInferential statistics"
     correct: false
@@ -134,7 +145,8 @@ quiz:
     correct: false
   - answer: "d.\tThere are no statistics involved here"
     correct: false
-- question: "12.\tPersonality researchers tend not to use _______ variables, which treat traits like extraversion as a binary (extravert vs. introvert). Instead, they typically allow each person to have a score along a spectrum from more introverted to more extraverted. "
+- !Structured
+  question: "12.\tPersonality researchers tend not to use _______ variables, which treat traits like extraversion as a binary (extravert vs. introvert). Instead, they typically allow each person to have a score along a spectrum from more introverted to more extraverted. "
   answers:
   - answer: "a.\tOperational"
     correct: false
@@ -144,7 +156,8 @@ quiz:
     correct: false
   - answer: "d.\tCategorical"
     correct: true
-- question: "13.\tWhich of the following can we conclude if the result of our study is found to be “statistically significant”? "
+- !Structured
+  question: "13.\tWhich of the following can we conclude if the result of our study is found to be “statistically significant”? "
   answers:
   - answer: "a.\tThe result is unlikely to be due to random error"
     correct: true

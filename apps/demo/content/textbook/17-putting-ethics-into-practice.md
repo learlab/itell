@@ -57,7 +57,8 @@ parent:
   title: III. Research Ethics
   slug: iii-research-ethics
 quiz:
-- question: "1.\tWhat is the primary issue your book discusses regarding ethical issues in research on vaccines and autism? "
+- !Structured
+  question: "1.\tWhat is the primary issue your book discusses regarding ethical issues in research on vaccines and autism? "
   answers:
   - answer: "a.\tExperimenting with vaccines is unethical because of the harm they cause"
     correct: false
@@ -67,7 +68,8 @@ quiz:
     correct: true
   - answer: "d.\tThe research community unethically suppressed research linking vaccines and autism in the 1990s"
     correct: false
-- question: "2.\tWhich of the following best describes the standards we use to consider risk of harm in evaluating research ethics?"
+- !Structured
+  question: "2.\tWhich of the following best describes the standards we use to consider risk of harm in evaluating research ethics?"
   answers:
   - answer: "a.\tAny study that involves risk of harm is unethical and cannot be conducted"
     correct: false
@@ -77,7 +79,8 @@ quiz:
     correct: false
   - answer: "d.\tThere is a specific set of risks that will designate a study as unethical. If the study involves any risk from this list, then it cannot be ethical "
     correct: false
-- question: "3.\tWhich event led to the development of the Nuremberg Code?"
+- !Structured
+  question: "3.\tWhich event led to the development of the Nuremberg Code?"
   answers:
   - answer: "a.\tThe war crime trials after World War II in the 1940s"
     correct: true
@@ -87,7 +90,8 @@ quiz:
     correct: false
   - answer: "d.\tSide effects from prescription medications in the 1980s"
     correct: false
-- question: "4.\tWhat did the Tuskegee study involve?"
+- !Structured
+  question: "4.\tWhat did the Tuskegee study involve?"
   answers:
   - answer: "a.\tInjecting unsuspecting patients with live cancer cells"
     correct: false
@@ -97,7 +101,8 @@ quiz:
     correct: false
   - answer: "d.\tHaving college students take the role of prisoners and prison guards"
     correct: false
-- question: "5.\tWhy was Milgram’s obedience study ethically questionable? "
+- !Structured
+  question: "5.\tWhy was Milgram’s obedience study ethically questionable? "
   answers:
   - answer: "a.\tParticipants were coerced to participate with an exorbitant fee"
     correct: false
@@ -107,7 +112,8 @@ quiz:
     correct: true
   - answer: "d.\tParticipants’ private data was not kept confidential"
     correct: false
-- question: "6.\tWhich of the following would demonstrate a violation of informed consent?"
+- !Structured
+  question: "6.\tWhich of the following would demonstrate a violation of informed consent?"
   answers:
   - answer: "a.\tThe researcher does not explain the potential harms of a study"
     correct: false
@@ -117,7 +123,8 @@ quiz:
     correct: false
   - answer: "d.\tAll of the above"
     correct: true
-- question: "7.\tWhich of the following are true about studies involving deception?"
+- !Structured
+  question: "7.\tWhich of the following are true about studies involving deception?"
   answers:
   - answer: "a.\tDeception is not permitted under any circumstances"
     correct: false
@@ -127,7 +134,8 @@ quiz:
     correct: false
   - answer: "d.\tStudies involving children cannot involve any deception"
     correct: false
-- question: "8.\tAccording to the text, which of the following is least important when considering the interestingness of a scientific research question?"
+- !Structured
+  question: "8.\tAccording to the text, which of the following is least important when considering the interestingness of a scientific research question?"
   answers:
   - answer: "a.\tAre you personally curious about knowing the answer?"
     correct: true
@@ -137,7 +145,8 @@ quiz:
     correct: false
   - answer: "d.\tDoes the answer have practical implications? "
     correct: false
-- question: "9.\tWhich of the following is the best way to ensure privacy, if possible? "
+- !Structured
+  question: "9.\tWhich of the following is the best way to ensure privacy, if possible? "
   answers:
   - answer: "a.\tMaintain confidentiality"
     correct: false
@@ -147,7 +156,8 @@ quiz:
     correct: true
   - answer: "d.\tMaintain a list of participants to contact for future research"
     correct: false
-- question: "10.\tOrganizations often have a group of professionals assigned to review research and to enforce ethical codes, called a(n) __________"
+- !Structured
+  question: "10.\tOrganizations often have a group of professionals assigned to review research and to enforce ethical codes, called a(n) __________"
   answers:
   - answer: "a.\tEthics and Responsibility Board (ERB)"
     correct: false
@@ -157,7 +167,8 @@ quiz:
     correct: true
   - answer: "d.\tIntegrity and Responsibility Board (IRB)"
     correct: false
-- question: "11.\tIf a study is found to involve more than “minimal risk,” what type of review is necessary?"
+- !Structured
+  question: "11.\tIf a study is found to involve more than “minimal risk,” what type of review is necessary?"
   answers:
   - answer: "a.\tExempt review"
     correct: false
@@ -167,7 +178,8 @@ quiz:
     correct: true
   - answer: "d.\tCriminal prosecution"
     correct: false
-- question: "12.\tAfter completing a research study participants will typically receive an explanation of the purpose of the study, with resources to seek help or contact the researchers if necessary. What is the name for this part of the ethical process?"
+- !Structured
+  question: "12.\tAfter completing a research study participants will typically receive an explanation of the purpose of the study, with resources to seek help or contact the researchers if necessary. What is the name for this part of the ethical process?"
   answers:
   - answer: "a.\tInformed consent"
     correct: false
@@ -177,7 +189,8 @@ quiz:
     correct: false
   - answer: "d.\tRisk mitigation"
     correct: false
-- question: "13.\tIn research with nonhuman subjects, researchers ________."
+- !Structured
+  question: "13.\tIn research with nonhuman subjects, researchers ________."
   answers:
   - answer: "a.\tDo not need to obtain informed consent"
     correct: true
@@ -187,7 +200,8 @@ quiz:
     correct: false
   - answer: "d.\tCompletely avoid causing discomfort or pain in the animals"
     correct: false
-- question: "14.\tWhich behavior is an example of plagiarism?"
+- !Structured
+  question: "14.\tWhich behavior is an example of plagiarism?"
   answers:
   - answer: "a.\tPublishing or submitting your own work twice with the intention of receiving credit twice (e.g., for two different publications or class assignments) "
     correct: false

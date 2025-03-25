@@ -43,8 +43,8 @@ cri:
 - question: What are some characteristics that define a culture?
   answer: Researchers have identified certain characteristics that tend to be present in nearly all cultures.
   slug: Formation-of-Cultural-Groups-2291
-- question: What are some common markers of passing from one stage of life to another in North American culture?
-  answer: Earning a driver's license, registering to vote, and acquiring the permission to purchase alcohol.
+- question: What are some examples of rites of initiation in business communities?
+  answer: New members may start with low-status tasks like getting the tough account or an office without a window, and as they navigate through the community, establish a track record, and get promoted, they pass the rite of initiation.
   slug: Rites-of-Initiation-2292
 - question: What do symbols such as a corner office with two windows, a ten-year service pin, and a military stripe on a sleeve represent?
   answer: Symbols such as a corner office with two windows, a ten-year service pin, and a military stripe on a sleeve represent rank, status, and affiliation within a group.
