@@ -45,7 +45,8 @@
     },
     "patchedDependencies": {
       "decode-named-character-reference@1.0.2": "patches/decode-named-character-reference@1.0.2.patch",
-      "htmr@1.0.2": "patches/htmr@1.0.2.patch"
+      "htmr@1.0.2": "patches/htmr@1.0.2.patch",
+      "hast-util-from-html-isomorphic@1.0.0": "patches/hast-util-from-html-isomorphic@1.0.0.patch"
     }
   }
 }

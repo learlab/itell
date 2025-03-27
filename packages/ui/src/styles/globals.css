@@ -292,7 +292,7 @@
   }
 }
 
-thead: {
+thead {
   @apply text-muted-foreground px-4 text-left align-middle font-medium;
 }
 
@@ -300,15 +300,15 @@ tr:hover {
   @apply bg-muted/50;
 }
 
-tr: {
+tr {
   @apply border-b transition-colors;
 }
 
-td: {
+td {
   @apply p-4 align-middle;
 }
 
-th: {
+th {
   @apply max-w-[10rem];
 }
 h1,

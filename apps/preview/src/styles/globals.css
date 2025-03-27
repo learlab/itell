@@ -1,15 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import "@itell/ui/dist/style.css";
-
 pre {
-    font-family: "Fira Code", monospace;
+  font-family: "Fira Code", monospace;
 }
 
 code {
-    font-family: "Fira Code", monospace;
+  font-family: "Fira Code", monospace;
 }
 
 h1,
@@ -17,154 +11,154 @@ h2,
 h3,
 h4,
 h5 {
-    scroll-margin-top: 0;
+  scroll-margin-top: 0;
 }
 
-.page-nav-active {
-    @apply text-primary font-semibold
-}
+/* .page-nav-active { */
+/*   @apply text-primary font-semibold; */
+/* } */
 
 table,
 pre,
 code {
-    user-select: auto;
+  user-select: auto;
 }
 
 .prose code.language-math::before {
-    content: none;
+  content: none;
 }
 
 .prose code.language-math::after {
-    content: none;
+  content: none;
 }
 
-.prose pre:has(code.language-math) {
-    @apply bg-background text-foreground
-}
+/* .prose pre:has(code.language-math) { */
+/*   @apply bg-background text-foreground; */
+/* } */
 
 #editor {
-    display: block;
-    width: 100%;
-    resize: none;
-    line-height: 1.5;
-    field-sizing: content;
-    min-height: 15lh;
+  display: block;
+  width: 100%;
+  resize: none;
+  line-height: 1.5;
+  field-sizing: content;
+  min-height: 15lh;
 }
 
-.gutter {
-    @apply bg-accent
-}
+/* .gutter { */
+/*   @apply bg-accent; */
+/* } */
 
 @media (prefers-reduced-motion: no-preference) {
-    html {
-        scroll-behavior: smooth;
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::view-transition-group(root) {
+    animation-duration: 0.7s;
+    animation-timing-function: var(--expo-out);
+  }
+
+  ::view-transition-new(root) {
+    animation-name: reveal-light;
+  }
+
+  ::view-transition-old(root),
+  .dark::view-transition-old(root) {
+    animation: none;
+    z-index: -1;
+  }
+
+  .dark::view-transition-new(root) {
+    animation-name: reveal-dark;
+  }
+
+  @keyframes reveal-dark {
+    from {
+      clip-path: polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%);
     }
 
-    ::view-transition-group(root) {
-        animation-duration: 0.7s;
-        animation-timing-function: var(--expo-out);
+    to {
+      clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
+    }
+  }
+
+  @keyframes reveal-light {
+    from {
+      clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
     }
 
-    ::view-transition-new(root) {
-        animation-name: reveal-light;
+    to {
+      clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
+    }
+  }
+
+  [popover] {
+    animation: popover 0.2s ease-out;
+  }
+
+  @keyframes popover {
+    0% {
+      opacity: 0;
     }
 
-    ::view-transition-old(root),
-    .dark::view-transition-old(root) {
-        animation: none;
-        z-index: -1;
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .shake {
+    animation-name: shake;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 2;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
     }
 
-    .dark::view-transition-new(root) {
-        animation-name: reveal-dark;
+    20% {
+      transform: translateX(-10px);
     }
 
-    @keyframes reveal-dark {
-        from {
-            clip-path: polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%);
-        }
-
-        to {
-            clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
-        }
+    40% {
+      transform: translateX(10px);
     }
 
-    @keyframes reveal-light {
-        from {
-            clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
-        }
-
-        to {
-            clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
-        }
+    60% {
+      transform: translateX(-10px);
     }
 
-    [popover] {
-        animation: popover 0.2s ease-out;
+    80% {
+      transform: translateX(10px);
     }
 
-    @keyframes popover {
-        0% {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
+    100% {
+      transform: translateX(0);
     }
-
-    .shake {
-        animation-name: shake;
-        animation-duration: 0.3s;
-        animation-timing-function: ease-out;
-        animation-iteration-count: 2;
-    }
-
-    @keyframes shake {
-        0% {
-            transform: translateX(0);
-        }
-
-        20% {
-            transform: translateX(-10px);
-        }
-
-        40% {
-            transform: translateX(10px);
-        }
-
-        60% {
-            transform: translateX(-10px);
-        }
-
-        80% {
-            transform: translateX(10px);
-        }
-
-        100% {
-            transform: translateX(0);
-        }
-    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
+  html {
+    scroll-behavior: auto;
+  }
 
-    ::view-transition-group(root),
-    ::view-transition-new(root),
-    ::view-transition-old(root),
-    .dark::view-transition-old(root),
-    .dark::view-transition-new(root) {
-        animation: none;
-    }
+  ::view-transition-group(root),
+  ::view-transition-new(root),
+  ::view-transition-old(root),
+  .dark::view-transition-old(root),
+  .dark::view-transition-new(root) {
+    animation: none;
+  }
 
-    .shake {
-        animation: none;
-    }
+  .shake {
+    animation: none;
+  }
 
-    [popover] {
-        animation: none;
-    }
+  [popover] {
+    animation: none;
+  }
 }
