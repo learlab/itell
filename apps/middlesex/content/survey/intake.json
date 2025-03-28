@@ -50,7 +50,7 @@
         },
         {
           "id": "tech_access_place",
-          "text": "Which of the following best describes your internet access situation for training?",
+          "text": "Which of the following best describes your internet access situation for this course?",
           "type": "single_choice",
           "options": [
             { "text": "I rely on strong home internet access", "value": 1 },
@@ -67,7 +67,7 @@
         },
         {
           "id": "tech_access",
-          "text": "All things considered, do you have concerns about access to the technology (devices OR internet access) that you need to complete your training?",
+          "text": "All things considered, do you have concerns about access to the technology (devices OR internet access) that you need to complete this course?",
           "type": "single_choice",
           "options": [
             {
@@ -430,7 +430,7 @@
         },
         {
           "id": "num_courses",
-          "text": "Number of training courses you are taking this quarter",
+          "text": "Number of courses you are taking this quarter",
           "type": "single_choice",
           "options": [
             {
