@@ -51,11 +51,11 @@ quiz:
       answers:
       - answer: Primary groups meet most interpersonal needs, while secondary groups focus on task completion.
         correct: true
-      - answer: "Primary groups include work-related interactions, while secondary groups are strictly personal.
+      - answer: Primary groups include work-related interactions, while secondary groups are strictly personal.
         correct: false
-      - answer: "Primary groups are temporary, whereas secondary groups are permanent within an organization.
+      - answer: Primary groups are temporary, whereas secondary groups are permanent within an organization.
         correct: false
-      - answer: "Primary groups require specialized skills, while secondary groups are based on social connections.
+      - answer: Primary groups require specialized skills, while secondary groups are based on social connections.
         correct: false
 - !Markdown
   markdown: |-
@@ -63,11 +63,11 @@ quiz:
       answers:
       - answer: It involves the exchange of information among culturally, linguistically, and/or geographically alike individuals.
         correct: true
-      - answer: "It is defined by the presence of at least two individuals who share similar interests.
+      - answer: It is defined by the presence of at least two individuals who share similar interests.
         correct: false
-      - answer: "It requires formalized roles and responsibilities to function effectively.
+      - answer: It requires formalized roles and responsibilities to function effectively.
         correct: false
-      - answer: "It is primarily concerned with resolving conflicts among group members.
+      - answer: It is primarily concerned with resolving conflicts among group members.
         correct: false
 - !Markdown
   markdown: |-
@@ -75,11 +75,11 @@ quiz:
       answers:
       - answer: Groups fulfill the needs for affiliation, affection, and control.
         correct: true
-      - answer: "Groups provide a platform for competitive spirit and rivalry.
+      - answer: Groups provide a platform for competitive spirit and rivalry.
         correct: false
-      - answer: "Groups aim to resolve conflicts and disagreements.
+      - answer: Groups aim to resolve conflicts and disagreements.
         correct: false
-      - answer: "Groups establish rigid roles and hierarchies for all members.
+      - answer: Groups establish rigid roles and hierarchies for all members.
         correct: false
 - !Markdown
   markdown: |-
@@ -87,11 +87,11 @@ quiz:
       answers:
       - answer: Cuchara
         correct: true
-      - answer: "Cuchillo
+      - answer: Cuchillo
         correct: false
-      - answer: "Tenedor
+      - answer: Tenedor
         correct: false
-      - answer: "Plato
+      - answer: Plato
         correct: false
 - !Markdown
   markdown: |-
@@ -99,11 +99,11 @@ quiz:
       answers:
       - answer: Primary groups fulfill most interpersonal needs, while secondary groups mainly focus on task completion.
         correct: true
-      - answer: "Primary groups primarily involve work-related tasks, whereas secondary groups are personal in nature.
+      - answer: Primary groups primarily involve work-related tasks, whereas secondary groups are personal in nature.
         correct: false
-      - answer: "Primary groups are composed of individuals with similar skills, while secondary groups are based on diverse expertise.
+      - answer: Primary groups are composed of individuals with similar skills, while secondary groups are based on diverse expertise.
         correct: false
-      - answer: "Primary groups are temporary, whereas secondary groups are permanent structures within an organization.
+      - answer: Primary groups are temporary, whereas secondary groups are permanent structures within an organization.
         correct: false
 - !Markdown
   markdown: |-
@@ -111,11 +111,11 @@ quiz:
       answers:
       - answer: Both prehistoric and modern groups rely on cooperation and competition to meet basic needs.
         correct: true
-      - answer: "Prehistoric groups were more focused on shared history, while modern groups prioritize future goals.
+      - answer: Prehistoric groups were more focused on shared history, while modern groups prioritize future goals.
         correct: false
-      - answer: "Modern groups emphasize individualized roles, unlike prehistoric groups that valued equality.
+      - answer: Modern groups emphasize individualized roles, unlike prehistoric groups that valued equality.
         correct: false
-      - answer: "Prehistoric groups had rigid hierarchies, whereas modern groups are entirely egalitarian.
+      - answer: Prehistoric groups had rigid hierarchies, whereas modern groups are entirely egalitarian.
         correct: false
 - !Markdown
   markdown: |-
@@ -123,11 +123,11 @@ quiz:
       answers:
       - answer: It symbolizes food, safety, and security, referring to having a job or earning a living.
         correct: true
-      - answer: "It signifies a tool used for eating, highlighting cultural dining practices.
+      - answer: It signifies a tool used for eating, highlighting cultural dining practices.
         correct: false
-      - answer: "It represents a social status symbol, indicating wealth and power.
+      - answer: It represents a social status symbol, indicating wealth and power.
         correct: false
-      - answer: "It describes a traditional culinary dish unique to Latin American cuisine.
+      - answer: It describes a traditional culinary dish unique to Latin American cuisine.
         correct: false
 - !Markdown
   markdown: |-
@@ -135,11 +135,11 @@ quiz:
       answers:
       - answer: Roles, status, and power are central to both prehistoric and modern groups.
         correct: true
-      - answer: "Prehistoric groups emphasized individualism, whereas modern groups focus on teamwork.
+      - answer: Prehistoric groups emphasized individualism, whereas modern groups focus on teamwork.
         correct: false
-      - answer: "Prehistoric groups had elaborate communication systems similar to modern groups.
+      - answer: Prehistoric groups had elaborate communication systems similar to modern groups.
         correct: false
-      - answer: "Both prehistoric and modern groups prioritized technological advancement.
+      - answer: Both prehistoric and modern groups prioritized technological advancement.
         correct: false
 - !Markdown
   markdown: |-
@@ -147,11 +147,11 @@ quiz:
       answers:
       - answer: Group norms emerge as a group forms and develop expectations that are self and group imposed.
         correct: true
-      - answer: "Group norms are predetermined and remain constant regardless of group changes.
+      - answer: Group norms are predetermined and remain constant regardless of group changes.
         correct: false
-      - answer: "Group norms are irrelevant in a business context as they don't affect communication.
+      - answer: Group norms are irrelevant in a business context as they don't affect communication.
         correct: false
-      - answer: "Group norms are solely based on the leader's expectations and requirements.
+      - answer: Group norms are solely based on the leader's expectations and requirements.
         correct: false
 - !Markdown
   markdown: |-
@@ -159,11 +159,11 @@ quiz:
       answers:
       - answer: Both rely on cooperation and competition to manage resources.
         correct: true
-      - answer: "Prehistoric groups focused solely on competition, while modern groups rely only on cooperation.
+      - answer: Prehistoric groups focused solely on competition, while modern groups rely only on cooperation.
         correct: false
-      - answer: "Both prehistoric and modern groups ignore resource scarcity as a challenge.
+      - answer: Both prehistoric and modern groups ignore resource scarcity as a challenge.
         correct: false
-      - answer: "Prehistoric groups used technology to address scarcity, unlike modern groups.
+      - answer: Prehistoric groups used technology to address scarcity, unlike modern groups.
         correct: false
 slug: 19-5-teamwork-and-leadership
 title: '19.5: Teamwork and Leadership'
