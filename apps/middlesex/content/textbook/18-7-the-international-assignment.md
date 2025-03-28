@@ -54,11 +54,11 @@ quiz:
       answers:
       - answer: It involves bridging divergent cultures with distinct values across languages and time zones.
         correct: true
-      - answer: "It is only necessary when communicating internationally between different countries.
+      - answer: It is only necessary when communicating internationally between different countries.
         correct: false
-      - answer: "It requires individuals to abandon their own cultural perspectives entirely.
+      - answer: It requires individuals to abandon their own cultural perspectives entirely.
         correct: false
-      - answer: "It focuses solely on verbal communication and ignores nonverbal cues.
+      - answer: It focuses solely on verbal communication and ignores nonverbal cues.
         correct: false
 - !Markdown
   markdown: |-
@@ -66,11 +66,11 @@ quiz:
       answers:
       - answer: Each individual represents a unique blend of cultural influences, making every interaction potentially intercultural.
         correct: true
-      - answer: "It implies that all individuals from the same community have identical cultural perspectives.
+      - answer: It implies that all individuals from the same community have identical cultural perspectives.
         correct: false
-      - answer: "It suggests that communication is only intercultural when it involves different nationalities.
+      - answer: It suggests that communication is only intercultural when it involves different nationalities.
         correct: false
-      - answer: "It means that cultural differences are always a barrier to effective communication.
+      - answer: It means that cultural differences are always a barrier to effective communication.
         correct: false
 - !Markdown
   markdown: |-
@@ -78,11 +78,11 @@ quiz:
       answers:
       - answer: Intercultural communication
         correct: true
-      - answer: "Intrapersonal communication
+      - answer: Intrapersonal communication
         correct: false
-      - answer: "Intraorganizational communication
+      - answer: Intraorganizational communication
         correct: false
-      - answer: "Technological communication
+      - answer: Technological communication
         correct: false
 - !Markdown
   markdown: |-
@@ -90,11 +90,11 @@ quiz:
       answers:
       - answer: Ethnocentrism
         correct: true
-      - answer: "Linguistic barriers
+      - answer: Linguistic barriers
         correct: false
-      - answer: "Technological limitations
+      - answer: Technological limitations
         correct: false
-      - answer: "Geographic distance
+      - answer: Geographic distance
         correct: false
 - !Markdown
   markdown: |-
@@ -102,11 +102,11 @@ quiz:
       answers:
       - answer: Being open to new ideas and diverse viewpoints
         correct: true
-      - answer: "Relying solely on technological tools
+      - answer: Relying solely on technological tools
         correct: false
-      - answer: "Avoiding interactions with different cultures
+      - answer: Avoiding interactions with different cultures
         correct: false
-      - answer: "Focusing only on one's own cultural norms
+      - answer: Focusing only on one's own cultural norms
         correct: false
 - !Markdown
   markdown: |-
@@ -114,11 +114,11 @@ quiz:
       answers:
       - answer: Culture influences all aspects of communication, including message, channel, feedback, context, environment, and interference.
         correct: true
-      - answer: "Culture only affects verbal communication and not nonverbal cues.
+      - answer: Culture only affects verbal communication and not nonverbal cues.
         correct: false
-      - answer: "Culture is solely represented by the language and traditions of a group.
+      - answer: Culture is solely represented by the language and traditions of a group.
         correct: false
-      - answer: "Culture impacts communication only when individuals from different countries interact.
+      - answer: Culture impacts communication only when individuals from different countries interact.
         correct: false
 - !Markdown
   markdown: |-
@@ -126,11 +126,11 @@ quiz:
       answers:
       - answer: The exchange of information between individuals who are 'unalike culturally.'
         correct: true
-      - answer: "The sharing of understanding and meaning across similar cultural backgrounds.
+      - answer: The sharing of understanding and meaning across similar cultural backgrounds.
         correct: false
-      - answer: "Communication that occurs only in international settings.
+      - answer: Communication that occurs only in international settings.
         correct: false
-      - answer: "A process involving individuals from the same cultural group.
+      - answer: A process involving individuals from the same cultural group.
         correct: false
 - !Markdown
   markdown: |-
@@ -138,11 +138,11 @@ quiz:
       answers:
       - answer: Geographic location
         correct: true
-      - answer: "Feedback
+      - answer: Feedback
         correct: false
-      - answer: "Environment
+      - answer: Environment
         correct: false
-      - answer: "Channel
+      - answer: Channel
         correct: false
 - !Markdown
   markdown: |-
@@ -150,11 +150,11 @@ quiz:
       answers:
       - answer: Culture influences how communication is perceived and interpreted across different groups.
         correct: true
-      - answer: "Culture only affects communication in cross-national contexts.
+      - answer: Culture only affects communication in cross-national contexts.
         correct: false
-      - answer: "Culture does not impact communication within the same geographic region.
+      - answer: Culture does not impact communication within the same geographic region.
         correct: false
-      - answer: "Culture is irrelevant to the feedback process in communication.
+      - answer: Culture is irrelevant to the feedback process in communication.
         correct: false
 - !Markdown
   markdown: |-
@@ -162,11 +162,11 @@ quiz:
       answers:
       - answer: A three-generation family may have different values and experiences, leading to intercultural communication between grandparents, parents, and children.
         correct: true
-      - answer: "Intercultural communication happens only if family members speak different languages.
+      - answer: Intercultural communication happens only if family members speak different languages.
         correct: false
-      - answer: "Intercultural communication requires family members to live in different countries.
+      - answer: Intercultural communication requires family members to live in different countries.
         correct: false
-      - answer: "Intercultural communication is limited to interactions between family members of different ethnic backgrounds.
+      - answer: Intercultural communication is limited to interactions between family members of different ethnic backgrounds.
         correct: false
 slug: 18-7-the-international-assignment
 title: '18.7: The International Assignment'
