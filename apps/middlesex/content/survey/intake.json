@@ -430,7 +430,7 @@
         },
         {
           "id": "num_courses",
-          "text": "Number of courses you are taking this quarter",
+          "text": "Number of courses you are taking this semester",
           "type": "single_choice",
           "options": [
             {
