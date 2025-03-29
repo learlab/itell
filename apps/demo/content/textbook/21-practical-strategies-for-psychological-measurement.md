@@ -53,8 +53,7 @@ parent:
   title: IV. Psychological Measurement
   slug: iv-psychological-measurement
 quiz:
-- !Structured
-  question: "1.\tWhich of the following best establishes validity when it comes to a psychological measurement?"
+- question: "1.\tWhich of the following best establishes validity when it comes to a psychological measurement?"
   answers:
   - answer: "a.\tThe measure represents the variable the researcher intends to measure "
     correct: true
@@ -64,8 +63,7 @@ quiz:
     correct: false
   - answer: "d.\tThe measure easy to understand and implement"
     correct: false
-- !Structured
-  question: "2.\tTo establish the reliability of a measure of personality, a researcher will often have individuals complete the questionnaire on two separate occasions to make sure their responses are similar across time. What type of reliability is demonstrated here? "
+- question: "2.\tTo establish the reliability of a measure of personality, a researcher will often have individuals complete the questionnaire on two separate occasions to make sure their responses are similar across time. What type of reliability is demonstrated here? "
   answers:
   - answer: "a.\tSplit-half reliability"
     correct: false
@@ -75,8 +73,7 @@ quiz:
     correct: true
   - answer: "d.\tInter-rater reliability"
     correct: false
-- !Structured
-  question: "3.\tTwo observers record similar observations on a behavioral rating scale for a group of children they are watching. The researchers have established what kind of reliability?"
+- question: "3.\tTwo observers record similar observations on a behavioral rating scale for a group of children they are watching. The researchers have established what kind of reliability?"
   answers:
   - answer: "a.\tSplit-half reliability"
     correct: false
@@ -86,8 +83,7 @@ quiz:
     correct: false
   - answer: "d.\tInter-rater reliability"
     correct: true
-- !Structured
-  question: "4.\tYou produce a new measure of emotional intelligence, and you find that this new measure does not correlate with cognitive tests of intelligence, suggesting to you that these constructs are different. What type of validity have you demonstrated?"
+- question: "4.\tYou produce a new measure of emotional intelligence, and you find that this new measure does not correlate with cognitive tests of intelligence, suggesting to you that these constructs are different. What type of validity have you demonstrated?"
   answers:
   - answer: "a.\tFace validity"
     correct: false
@@ -97,8 +93,7 @@ quiz:
     correct: false
   - answer: "d.\tDiscriminant validity"
     correct: true
-- !Structured
-  question: "5.\tA teacher separates students into three groups based on their level of performance on a math test (low, medium, and high performance), and plans to teach differently to the three groups. What scale of measurement is being used to create the three groups of students? "
+- question: "5.\tA teacher separates students into three groups based on their level of performance on a math test (low, medium, and high performance), and plans to teach differently to the three groups. What scale of measurement is being used to create the three groups of students? "
   answers:
   - answer: "a.\tNominal"
     correct: false
@@ -108,8 +103,7 @@ quiz:
     correct: false
   - answer: "d.\tRatio"
     correct: false
-- !Structured
-  question: "6.\tWhich of the following is true about psychological or mental “constructs” like self-esteem or happiness?"
+- question: "6.\tWhich of the following is true about psychological or mental “constructs” like self-esteem or happiness?"
   answers:
   - answer: "a.\tThey can be measured directly"
     correct: false
@@ -119,8 +113,7 @@ quiz:
     correct: true
   - answer: "d.\tThey don’t exist because they are all in your mind"
     correct: false
-- !Structured
-  question: "7.\tFor which type of scale is it impossible to calculate a mean and standard deviation? "
+- question: "7.\tFor which type of scale is it impossible to calculate a mean and standard deviation? "
   answers:
   - answer: "a.\tNominal"
     correct: true
@@ -130,8 +123,7 @@ quiz:
     correct: false
   - answer: "d.\tYou can calculate a mean and standard deviation for all of these"
     correct: false
-- !Structured
-  question: "8.\tWhich of the following demonstrates an example of socially desirable responding on a self-reported measure?"
+- question: "8.\tWhich of the following demonstrates an example of socially desirable responding on a self-reported measure?"
   answers:
   - answer: "a.\tA participant falsely claims that they have experienced hallucinations because they want to mess with the researchers"
     correct: false
@@ -141,8 +133,7 @@ quiz:
     correct: false
   - answer: "d.\tAll of the above"
     correct: false
-- !Structured
-  question: "9.\tWhich of the following is a “behavioral” measure of amount of sleep?"
+- question: "9.\tWhich of the following is a “behavioral” measure of amount of sleep?"
   answers:
   - answer: "a.\tParticipant complete a survey reporting how much they slept on each of the previous 7 days"
     correct: false
@@ -152,8 +143,7 @@ quiz:
     correct: true
   - answer: "d.\tParticipants are provided with melatonin which may help them sleep more"
     correct: false
-- !Structured
-  question: "10.\tIn terms of operational definitions, what does it mean to say that researchers use “converging operations” in the measurement of psychological constructs?"
+- question: "10.\tIn terms of operational definitions, what does it mean to say that researchers use “converging operations” in the measurement of psychological constructs?"
   answers:
   - answer: "a.\tThey use more than one operational definition to get a better estimate of the construct"
     correct: true
@@ -163,8 +153,7 @@ quiz:
     correct: false
   - answer: "d.\tThey observe behaviors for enough time that the observations converge on a reliable conclusion"
     correct: false
-- !Structured
-  question: "11.\tA researcher believes that the construct of “personality” involves 5 separate traits (Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism). They then create a measure of personality that only includes a single item (“do you have a good personality?”) and doesn’t cover that whole construct. What is the primary issue with this measurement?"
+- question: "11.\tA researcher believes that the construct of “personality” involves 5 separate traits (Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism). They then create a measure of personality that only includes a single item (“do you have a good personality?”) and doesn’t cover that whole construct. What is the primary issue with this measurement?"
   answers:
   - answer: "a.\tIt lacks reliability"
     correct: false
@@ -174,8 +163,7 @@ quiz:
     correct: false
   - answer: "d.\tIt lacks discriminant validity"
     correct: false
-- !Structured
-  question: "12.\tWhen conducting your own study, what does your textbook recommend about using existing measures, rather than creating your own?"
+- question: "12.\tWhen conducting your own study, what does your textbook recommend about using existing measures, rather than creating your own?"
   answers:
   - answer: "a.\tUsing existing measures is not recommended"
     correct: false
