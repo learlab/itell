@@ -2,7 +2,7 @@
   "name": "@itell/preview",
   "version": "0.0.0",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "pnpm build:docs && next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,7 +13,6 @@
     "@itell/content": "workspace:^",
     "@itell/js-sandbox": "workspace:^",
     "@itell/rehype-wrap-heading-section": "workspace:^",
-    "@itell/tailwind": "workspace:^",
     "@itell/ui": "workspace:^",
     "@itell/utils": "workspace:^",
     "@radix-ui/react-context-menu": "^2.2.1",
@@ -52,6 +51,8 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.24.7",
     "@strapi/strapi": "^4.25.8",
+    "@strapi/types": "^5.12.0",
+    "@tailwindcss/postcss": "^4.0.17",
     "@types/dom-view-transitions": "^1.0.4",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
@@ -61,10 +62,9 @@
     "autoprefixer": "^10.4.15",
     "jsdoc-babel": "^0.5.0",
     "jsdoc-to-markdown": "^8.0.3",
-    "postcss": "^8.4.29",
     "rehype-katex": "^6.0.3",
     "remark-math": "^6.0.0",
-    "tailwindcss": "^3.4.0",
+    "tailwindcss": "^4.0.17",
     "typescript": "5.6.0-beta",
     "velite": "^0.1.1"
   }

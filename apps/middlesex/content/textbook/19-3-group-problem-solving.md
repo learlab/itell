@@ -1,58 +1,58 @@
 ---
 assignments:
-- summary
+  - summary
 chunks:
-- title: Learning Objectives
-  slug: Learning-Objectives-984
-  type: plain
-- title: Define the Problem
-  slug: Define-the-Problem-985
-  type: plain
-- title: Analyze the Problem
-  slug: Analyze-the-Problem-2377
-  type: regular
-- title: Establish Criteria
-  slug: Establish-Criteria-986
-  type: plain
-- title: Consider Possible Solutions to the Problem
-  slug: Consider-Possible-Solutions-to-the-Problem-987
-  type: plain
-- title: Decide on a Solution
-  slug: Decide-on-a-Solution-2378
-  type: regular
-- title: Implement the Solution
-  slug: Implement-the-Solution-988
-  type: plain
-- title: Follow Up on the Solution
-  slug: Follow-Up-on-the-Solution-2379
-  type: regular
-- title: Key Takeaway
-  slug: Key-Takeaway-989
-  type: plain
-- title: References
-  slug: References-991
-  type: plain
+  - title: Learning Objectives
+    slug: Learning-Objectives-984
+    type: plain
+  - title: Define the Problem
+    slug: Define-the-Problem-985
+    type: plain
+  - title: Analyze the Problem
+    slug: Analyze-the-Problem-2377
+    type: regular
+  - title: Establish Criteria
+    slug: Establish-Criteria-986
+    type: plain
+  - title: Consider Possible Solutions to the Problem
+    slug: Consider-Possible-Solutions-to-the-Problem-987
+    type: plain
+  - title: Decide on a Solution
+    slug: Decide-on-a-Solution-2378
+    type: regular
+  - title: Implement the Solution
+    slug: Implement-the-Solution-988
+    type: plain
+  - title: Follow Up on the Solution
+    slug: Follow-Up-on-the-Solution-2379
+    type: regular
+  - title: Key Takeaway
+    slug: Key-Takeaway-989
+    type: plain
+  - title: References
+    slug: References-991
+    type: plain
 cri:
-- question: Why do customers often abandon the shopping cart before completing a purchase, especially when purchasing edibles?
-  answer: Customers often abandon the shopping cart before completing a purchase, especially when purchasing edibles, due to various factors such as unclear product descriptions, high prices, or lack of incentives to complete the purchase.
-  slug: Analyze-the-Problem-2377
-- question: What is Kevin's best suggestion based on the cost-benefit analysis?
-  answer: Integrating the cross-index feature in the ordering process so that customers can know immediately whether an item is in stock or on back order.
-  slug: Decide-on-a-Solution-2378
-- question: What challenges have the team at Favorites encountered when dealing with vendors for their top-selling edibles?
-  answer: Some vendors refused better discounts, others were 'stolen' by competitors, and one had to cease operations due to a fire, leading to sold-out items and the need for new vendors.
-  slug: Follow-Up-on-the-Solution-2379
+  - question: Why do customers often abandon the shopping cart before completing a purchase, especially when purchasing edibles?
+    answer: Customers often abandon the shopping cart before completing a purchase, especially when purchasing edibles, due to various factors such as unclear product descriptions, high prices, or lack of incentives to complete the purchase.
+    slug: Analyze-the-Problem-2377
+  - question: What is Kevin's best suggestion based on the cost-benefit analysis?
+    answer: Integrating the cross-index feature in the ordering process so that customers can know immediately whether an item is in stock or on back order.
+    slug: Decide-on-a-Solution-2378
+  - question: What challenges have the team at Favorites encountered when dealing with vendors for their top-selling edibles?
+    answer: Some vendors refused better discounts, others were 'stolen' by competitors, and one had to cease operations due to a fire, leading to sold-out items and the need for new vendors.
+    slug: Follow-Up-on-the-Solution-2379
 next_slug: 19-4-business-and-professional-meetings
 order: 9
 parent:
-  title: '19: Group Communication, Teamwork, and Leadership'
+  title: "19: Group Communication, Teamwork, and Leadership"
   slug: 19-group-communication-teamwork-and-leadership
 quiz: null
 slug: 19-3-group-problem-solving
-title: '19.3: Group Problem Solving'
+title: "19.3: Group Problem Solving"
 ---
 
-## Learning Objectives {#Learning-Objectives-984 .sr-only} 
+## Learning Objectives {#Learning-Objectives-984 .sr-only}
 
 <i-callout variant="info" title="Learning Objectives">
 
@@ -74,7 +74,7 @@ Once a group encounters a problem, the questions that come up range from “Wher
 
 Let's discuss each step in detail.
 
-## Define the Problem {#Define-the-Problem-985} 
+## Define the Problem {#Define-the-Problem-985}
 
 If you don’t know what the problem is, how do you know you can solve it? Defining the problem allows the group to set boundaries of what the problem is and what it is not and to begin to formalize a description or definition of the scope, size, or extent of the challenge the group will address. A problem that is too broadly defined can overwhelm the group. If the problem is too narrowly defined, important information will be missed or ignored.
 
@@ -84,7 +84,7 @@ Too broad: “Sales are off, our numbers are down, and we need more customers.�
 
 More precise: “Sales have been slipping incrementally for six of the past nine months and are significantly lower than a seasonally adjusted comparison to last year. Overall, this loss represents a 4.5 percent reduction in sales from the same time last year. However, when we break it down by product category, sales of our nonedible products have seen a modest but steady increase, while sales of edibles account for the drop off and we need to halt the decline.”
 
-## Analyze the Problem {#Analyze-the-Problem-2377} 
+## Analyze the Problem {#Analyze-the-Problem-2377}
 
 Now the group analyzes the problem, trying to gather information and learn more. The problem is complex and requires more than one area of expertise. Why do nonedible products continue selling well? What is it about the edibles that is turning customers off? Let’s meet our problem solvers at Favorites.
 
@@ -98,7 +98,7 @@ The problem-solving group members already have certain information on hand. They
 
 Another contributing factor seems to be that customers often abandon the shopping cart before completing a purchase, especially when purchasing edibles. The group members need to learn more about why this is happening.
 
-## Establish Criteria {#Establish-Criteria-986} 
+## Establish Criteria {#Establish-Criteria-986}
 
 Establishing the criteria for a solution is the next step. At this point, information is coming in from diverse perspectives, and each group member has contributed information from their perspective, even though there may be several points of overlap.
 
@@ -110,7 +110,7 @@ Mariah: There are four edible products that frequently sell out. So far, we have
 
 Suri: We know from a zip code analysis that most of our customers are from a few specific geographic areas associated with above-average incomes. We have very few credit cards declined, and the average sale is over $100. Shipping costs represent on average 8 percent of the total sales cost. We do not have sufficient information to produce a customer profile. There is no specific point in the purchase process where basket abandonment tends to happen; it happens fairly uniformly at all steps.
 
-## Consider Possible Solutions to the Problem {#Consider-Possible-Solutions-to-the-Problem-987} 
+## Consider Possible Solutions to the Problem {#Consider-Possible-Solutions-to-the-Problem-987}
 
 The group has listened to each other and now starts to brainstorm ways to address the challenges they have addressed while focusing resources on those solutions that are more likely to produce results.
 
@@ -120,22 +120,22 @@ Mariah: I recommend we hold a focus group where customers can sample our edible 
 
 Suri: If we want to know more about our customers, we need to give them an incentive to complete the postsale survey. How about a 5 percent off coupon code for the next purchase to get them to return and to help us better identify our customer base? We may also want to build in a customer referral rewards program, but it all takes better data in to get results out. We should also explore the supply side of the business by getting a more reliable supply of the leading products and trying to get discounts that are more advantageous from our suppliers, especially in the edible category.
 
-## Decide on a Solution {#Decide-on-a-Solution-2378} 
+## Decide on a Solution {#Decide-on-a-Solution-2378}
 
 Kevin, Mariah, and Suri may want to implement all the solution strategies, but they do not have the resources to do them all. They’ll complete a cost-benefit analysis, which ranks each solution according to its probable impact. The analysis is shown in Table 19.3.1.
 
-| Source | Proposed Solution | Cost | Benefit | Comment |
-| --- | --- | --- | --- | --- |
-| Kevin | Integrate the cross-index feature | High | High | Many of our competitors already have this feature |
-| Volume discount | Low | Medium | May increase sales slightly |
-| Free shipping | Low | Low | This has a downside in making customers more aware of shipping costs if their order doesn’t qualify for free shipping |
-| Mariah | Hold a focus group to taste edible products | High | Medium | Difficult to select participants representative of our customer base |
-| Search for alternative products to high performers | Medium | Medium | We can’t know for sure which products customers will like best |
-| Liquidate underperformers | Low | Low | Might create a “bargain basement” impression inconsistent with our brand |
-| Suri | Incentive for postsale survey completion | Low | Medium | Make sure the incentive process is easy for the customer |
-| Incentive for customer referrals | Low | Medium | People may feel uncomfortable referring friends if it is seen as putting them in a marketing role |
-| Find a more reliable supply of top-selling edibles | Medium | High | We already know customers want these products |
-| Negotiate better discounts from vendors | Low | High | If we can do this without alienating our best vendors, it will be a win-win |
+| Source                                             | Proposed Solution                           | Cost   | Benefit                                                                                                               | Comment                                                              |
+| -------------------------------------------------- | ------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Kevin                                              | Integrate the cross-index feature           | High   | High                                                                                                                  | Many of our competitors already have this feature                    |
+| Volume discount                                    | Low                                         | Medium | May increase sales slightly                                                                                           |
+| Free shipping                                      | Low                                         | Low    | This has a downside in making customers more aware of shipping costs if their order doesn’t qualify for free shipping |
+| Mariah                                             | Hold a focus group to taste edible products | High   | Medium                                                                                                                | Difficult to select participants representative of our customer base |
+| Search for alternative products to high performers | Medium                                      | Medium | We can’t know for sure which products customers will like best                                                        |
+| Liquidate underperformers                          | Low                                         | Low    | Might create a “bargain basement” impression inconsistent with our brand                                              |
+| Suri                                               | Incentive for postsale survey completion    | Low    | Medium                                                                                                                | Make sure the incentive process is easy for the customer             |
+| Incentive for customer referrals                   | Low                                         | Medium | People may feel uncomfortable referring friends if it is seen as putting them in a marketing role                     |
+| Find a more reliable supply of top-selling edibles | Medium                                      | High   | We already know customers want these products                                                                         |
+| Negotiate better discounts from vendors            | Low                                         | High   | If we can do this without alienating our best vendors, it will be a win-win                                           |
 
 Table 19.3.1: Cost-Benefit Analysis
 
@@ -143,7 +143,7 @@ Now that the options have been presented with their costs and benefits, it is ea
 
 A careful reading of the analysis indicates that Kevin’s best suggestion is to integrate the cross-index feature in the ordering process so that customers can know immediately whether an item is in stock or on back order. Mariah, meanwhile, suggests that searching for alternative products is probably the most likely to benefit Favorites, while Suri’s two supply-side suggestions are likely to result in positive outcomes.
 
-## Implement the Solution {#Implement-the-Solution-988} 
+## Implement the Solution {#Implement-the-Solution-988}
 
 Kevin is faced with the challenge of designing the computer interface without incurring unacceptable costs. He strongly believes that the interface will pay for itself within the first year—or, to put it more bluntly, that Favorites’ declining sales will get worse if the Web site does not have this feature soon. He asks to meet with top management to get budget approval and secures their agreement, on one condition: he must negotiate a compensation schedule with the Information Technology consultants that includes delayed compensation in the form of bonuses after the feature has been up and running successfully for six months.
 
@@ -151,7 +151,7 @@ Mariah knows that searching for alternative products is a never-ending process, 
 
 Suri decides to approach the vendors of the four frequently sold-out products and ask point blank, “What would it take to get you to produce these items more reliably in greater quantities?” By opening the channel of communication with these vendors, she is able to motivate them to make modifications that will improve the reliability and quantity. She also approaches the vendors of the less popular products with a request for better discounts in return for their cooperation in developing and test-marketing new products.
 
-## Follow Up on the Solution {#Follow-Up-on-the-Solution-2379} 
+## Follow Up on the Solution {#Follow-Up-on-the-Solution-2379}
 
 Kevin: After several beta tests, the cross-index feature was implemented and has been in place for thirty days. Now customers see either “in stock” or “available \[mo/da/yr\]” in the shopping basket. As expected, Kevin notes a decrease in the number of chat and phone inquiries to the effect of, “Will this item arrive before my wife’s birthday?” However, he notes an increase in inquiries asking, “Why isn’t this item in stock?” It is difficult to tell whether customer satisfaction is higher overall.
 
@@ -161,13 +161,12 @@ Suri: So far, the vendors supplying the four top-selling edibles have fulfilled 
 
 This scenario allows us to see that the problem may have several dimensions as well as solutions, but resources can be limited and not every solution is successful. Even though the problem is not immediately resolved, the group problem-solving pattern serves as a useful guide through the problem-solving process.
 
-## Key Takeaway {#Key-Takeaway-989} 
+## Key Takeaway {#Key-Takeaway-989}
 
 Group problem solving can be an orderly process when it is broken down into seven specific stages.
 
-## References {#References-991} 
+## References {#References-991}
 
 Adler, R. (1996). Communicating at work: Principles and practices for business and the professions. Boston, MA: McGraw-Hill.
 
 McLean, S. (2005). The basics of interpersonal communication. Boston, MA: Allyn & Bacon.
-
