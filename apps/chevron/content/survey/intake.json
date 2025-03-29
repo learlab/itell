@@ -236,7 +236,7 @@
             { "text": "I don't learn about economics", "value": 7 }
           ],
           "required": true
-        },
+        }
       ]
     },
     {
