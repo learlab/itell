@@ -27,7 +27,7 @@ export function CRIHeader({
   headerRight?: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <CardHeader className={cn("flex gap-1 py-2", className)} {...rest}>
+    <CardHeader className={cn("flex gap-1 py-1", className)} {...rest}>
       <CardTitle className="flex items-baseline justify-between font-normal">
         <div>
           <p>
@@ -50,7 +50,7 @@ export function CRIContent({
 }: { children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <CardContent
-      className={cn("flex flex-col gap-2 pb-6 pt-2", className)}
+      className={cn("flex flex-col gap-2 pt-2 pb-6", className)}
       {...rest}
     >
       {children}

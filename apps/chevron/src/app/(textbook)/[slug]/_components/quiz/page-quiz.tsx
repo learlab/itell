@@ -11,6 +11,7 @@ import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 import { User } from "lucia";
 
 import { createQuizAction } from "@/actions/quiz";
+import { incrementUserPageSlugAction } from "@/actions/user";
 import { QuizData } from "@/drizzle/schema";
 import { Tags } from "@/lib/constants";
 import { QuizQuickFill } from "./page-quick-fill";
@@ -30,6 +31,8 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
       pageSlug: page.slug,
       data: submission,
     });
+
+    await incrementUserPageSlugAction({ currentPageSlug: page.slug });
 
     revalidateTag(Tags.GET_QUIZ_ANSWER);
   };

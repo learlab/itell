@@ -160,7 +160,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
           </span>
         </AdminButton>
       </SheetTrigger>
-      <SheetContent className="overflow-y-scroll">
+      <SheetContent className="overflow-y-scroll px-2">
         <SheetHeader>
           <SheetTitle>Configure ITELL</SheetTitle>
           <SheetDescription className="text-left">

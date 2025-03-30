@@ -347,7 +347,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 </>
               )}
             </div>
-            {state.error ? <Errorbox title={state.error} /> : null}
+            {state.error && <Errorbox>{state.error}</Errorbox>}
           </form>
         </CRIContent>
 

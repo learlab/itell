@@ -9,7 +9,6 @@ import {
   CardTitle,
 } from "@itell/ui/card";
 import { Skeleton } from "@itell/ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@itell/ui/tabs";
 import { cn } from "@itell/utils";
 import { Page } from "#content";
 import { type User } from "lucia";
@@ -45,6 +44,7 @@ export async function PageAssignments({
   condition,
 }: Props) {
   if (page.assignments.length === 0) {
+    // currently on a free page, show "mark as completed"
     if (!pageStatus.unlocked) {
       return (
         <AssignmentsShell>
@@ -56,11 +56,22 @@ export async function PageAssignments({
     return null;
   }
   const hasQuiz = page.quiz && page.quiz.length > 0;
-  let quizReady = false;
-  let quizAnswered = false;
+  const quizAnswered = await isQuizAnswered(user.id, page.slug);
+
   if (hasQuiz) {
-    quizAnswered = await isQuizAnswered(user.id, page.slug);
-    quizReady = pageStatus.unlocked && !quizAnswered;
+    if (quizAnswered) {
+      if (user.isAdmin) {
+        return (
+          <div>
+            <DeleteQuiz pageSlug={page.slug} />;
+          </div>
+        );
+      } else {
+        return null;
+      }
+    } else {
+      return <PageQuiz page={page} user={user} />;
+    }
   }
 
   function PageSummary() {
@@ -95,7 +106,7 @@ export async function PageAssignments({
                 You can unlock the next page by submitting{" "}
                 <Link
                   href={`#${SUMMARY_DESCRIPTION_ID}`}
-                  className="font-semibold text-info underline underline-offset-4"
+                  className="text-info font-semibold underline underline-offset-4"
                 >
                   a good summary
                 </Link>{" "}
@@ -137,30 +148,9 @@ export async function PageAssignments({
     );
   }
 
-  if (quizReady) {
-    return (
-      <AssignmentsShell key={"quiz"}>
-        {quizAnswered && user.isAdmin && <DeleteQuiz pageSlug={page.slug} />}
-        <Tabs defaultValue="quiz">
-          <TabsList>
-            <TabsTrigger value="quiz">Quiz</TabsTrigger>
-            <TabsTrigger value="summary">Summary</TabsTrigger>
-          </TabsList>
-          <TabsContent value="quiz">
-            <PageQuiz page={page} user={user} />
-          </TabsContent>
-          <TabsContent value="summary">
-            <PageSummary />
-          </TabsContent>
-        </Tabs>
-      </AssignmentsShell>
-    );
-  }
-
   if (page.assignments.length !== 0) {
     return (
       <AssignmentsShell key={"summary"}>
-        {quizAnswered && user.isAdmin && <DeleteQuiz pageSlug={page.slug} />}
         <PageSummary />
       </AssignmentsShell>
     );
@@ -179,7 +169,7 @@ function AssignmentsShell({
       id={Elements.PAGE_ASSIGNMENTS}
       aria-labelledby="page-assignments-heading"
       className={cn(
-        "mt-6 space-y-4 border-t-2 pt-6 duration-1000 animate-in fade-in",
+        "animate-in fade-in mt-6 space-y-4 border-t-2 pt-6 duration-1000",
         className
       )}
       {...rest}
