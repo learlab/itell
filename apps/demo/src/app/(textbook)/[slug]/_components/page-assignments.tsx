@@ -48,7 +48,7 @@ export async function PageAssignments({
     // currently on a free page, show "mark as completed"
     if (!pageStatus.unlocked) {
       return (
-        <AssignmentsShell>
+        <AssignmentsShell showOverlay={false}>
           <MarkCompletedForm user={user} page={page} />
         </AssignmentsShell>
       );
@@ -167,8 +167,12 @@ export async function PageAssignments({
 function AssignmentsShell({
   children,
   className,
+  showOverlay = true,
   ...rest
-}: { children: React.ReactNode } & React.HtmlHTMLAttributes<HTMLDivElement>) {
+}: {
+  children: React.ReactNode;
+  showOverlay?: boolean;
+} & React.HtmlHTMLAttributes<HTMLDivElement>) {
   return (
     <section
       id={Elements.PAGE_ASSIGNMENTS}
@@ -182,7 +186,7 @@ function AssignmentsShell({
       <h2 className="sr-only" id="page-assignments-heading">
         assignments
       </h2>
-      <PageAssignmentsStatusOverlay />
+      {showOverlay && <PageAssignmentsStatusOverlay />}
       {children}
     </section>
   );

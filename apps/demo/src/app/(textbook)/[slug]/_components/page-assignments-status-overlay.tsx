@@ -14,7 +14,7 @@ export function PageAssignmentsStatusOverlay() {
     !isSummaryReady && (
       <div
         className="bg-background/80 animate-in animate-out absolute top-0 right-0 bottom-0 left-0
-          z-10 mt-4 flex cursor-not-allowed justify-center gap-2 backdrop-blur-sm
+          z-10 mt-4 mb-0 flex cursor-not-allowed justify-center gap-2 backdrop-blur-sm
           transition-all duration-100"
       >
         <Alert variant="warning" className="h-fit rounded-t-md">
