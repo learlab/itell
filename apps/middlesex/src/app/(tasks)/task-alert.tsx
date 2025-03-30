@@ -15,7 +15,7 @@ export function TaskNotApplicable() {
     <Alert variant={"error"}>
       <CircleAlert className="size-4" />
       <AlertTitle>Task not applicable</AlertTitle>
-      <AlertDescription className="xl:text-lg">
+      <AlertDescription>
         Please finish all previous tasks first.
       </AlertDescription>
     </Alert>

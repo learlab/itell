@@ -118,7 +118,7 @@ export default async function FormsPage() {
             <FileTextIcon className="size-6" />
             <span>Pending</span>
           </AccordionTrigger>
-          <AccordionContent className="space-y-2 xl:text-base">
+          <AccordionContent className="space-y-2">
             {items.pending.length === 0 ? (
               <p>No forms are required currently.</p>
             ) : (
@@ -169,7 +169,7 @@ function FormCards({ items }: { items: FormEntry[] }) {
 function FormCard({ item }: { item: FormEntry }) {
   return (
     <Link href={item.href} target="_blank">
-      <Card className="transition-all hover:bg-accent hover:text-accent-foreground">
+      <Card className="hover:bg-accent hover:text-accent-foreground transition-all">
         <CardHeader>
           <CardTitle>{item.title}</CardTitle>
           <CardDescription>{item.description}</CardDescription>

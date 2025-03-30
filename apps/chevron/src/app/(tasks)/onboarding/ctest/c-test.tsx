@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
@@ -34,6 +34,8 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
     answers: Array<{ word: string; isCorrect: boolean }>;
     score?: number;
   } | null>(null);
+
+  const router = useRouter();
 
   const applyVisualFeedback = useCallback(() => {
     if (!formRef.current || !results) return;
@@ -154,7 +156,9 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
     const { answers, score } = processForm(form);
     setResults({ answers, score });
 
-    toast.success("Review your answers before continuing");
+    toast.info(
+      "C Test finished, please take some time reviewing the correct answers before continuing"
+    );
   };
 
   const { action, isPending, error } = useActionStatus(
@@ -184,10 +188,10 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       }
 
       toast.success(
-        "All onboarding tasks completed. Redirecting to the textbook ..."
+        "All onboarding tasks completed, redirecting to the textbook."
       );
 
-      redirect(
+      router.push(
         user.pageSlug ? routes.textbook({ slug: user.pageSlug }) : routes.home()
       );
     }

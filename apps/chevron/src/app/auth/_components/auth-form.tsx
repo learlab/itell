@@ -17,7 +17,7 @@ export function AuthForm({ joinClassCode }: Props) {
   return (
     <div className="grid gap-4 px-4">
       {joinClassCode ? (
-        <p className="text-center font-light leading-relaxed tracking-tight">
+        <p className="text-center leading-relaxed font-light tracking-tight">
           After you log in, you will be automatically added to the class.
         </p>
       ) : null}
