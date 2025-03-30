@@ -38,7 +38,7 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
   };
 
   return (
-    <Card>
+    <Card className="border-info">
       <CardHeader>
         <CardTitle>Take Quiz</CardTitle>
         <CardDescription>

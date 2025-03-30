@@ -17,6 +17,7 @@ import { isQuizAnswered } from "@/db/quiz";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { MarkCompletedForm } from "./mark-completed-form";
+import { PageAssignmentsStatusOverlay } from "./page-assignments-status-overlay";
 import { PageQuiz } from "./quiz/page-quiz";
 import { DeleteQuiz } from "./quiz/page-quiz-delete-answer";
 import {
@@ -62,15 +63,19 @@ export async function PageAssignments({
     if (quizAnswered) {
       if (user.isAdmin) {
         return (
-          <div>
+          <AssignmentsShell>
             <DeleteQuiz pageSlug={page.slug} />;
-          </div>
+          </AssignmentsShell>
         );
       } else {
         return null;
       }
     } else {
-      return <PageQuiz page={page} user={user} />;
+      return (
+        <AssignmentsShell>
+          <PageQuiz page={page} user={user} />;
+        </AssignmentsShell>
+      );
     }
   }
 
@@ -169,7 +174,7 @@ function AssignmentsShell({
       id={Elements.PAGE_ASSIGNMENTS}
       aria-labelledby="page-assignments-heading"
       className={cn(
-        "animate-in fade-in mt-6 space-y-4 border-t-2 pt-6 duration-1000",
+        "animate-in fade-in relative mt-6 space-y-4 border-t-2 pt-6 duration-1000",
         className
       )}
       {...rest}
@@ -177,6 +182,7 @@ function AssignmentsShell({
       <h2 className="sr-only" id="page-assignments-heading">
         assignments
       </h2>
+      <PageAssignmentsStatusOverlay />
       {children}
     </section>
   );

@@ -137,12 +137,12 @@ export const SummaryFormSkip = memo(
 
           <p className="flex items-center">
             <FlameIcon className="mr-1 size-6 stroke-red-500" /> Streak count:{" "}
-            <span className="font-semibold text-warning">{streak}</span>{" "}
+            <span className="text-warning font-semibold">{streak}</span>{" "}
           </p>
           <p className="flex items-center">
-            <ArrowBigRightIcon className="mr-1 size-6 stroke-info" /> Summary
+            <ArrowBigRightIcon className="stroke-info mr-1 size-6" /> Summary
             skips available:{" "}
-            <span className="font-semibold text-warning">
+            <span className="text-warning font-semibold">
               {available_summary_skips}
             </span>{" "}
           </p>

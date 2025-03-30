@@ -56,14 +56,14 @@ export function ChunkControl({
         pageSlug={pageSlug}
         condition={condition}
       />,
-      buttonContainer,
+      buttonContainer
     );
     el.prepend(buttonContainer);
   };
 
   const insertUnlockAssignmentsButton = (
     el: HTMLElement,
-    chunkSlug: string,
+    chunkSlug: string
   ) => {
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "unlock-summary-button-container";
@@ -73,7 +73,7 @@ export function ChunkControl({
         chunkSlug={chunkSlug}
         condition={condition}
       />,
-      buttonContainer,
+      buttonContainer
     );
     el.appendChild(buttonContainer);
   };
@@ -114,7 +114,7 @@ export function ChunkControl({
   useEffect(() => {
     const currentChunkElement = getChunkElement(
       currentChunk,
-      "data-chunk-slug",
+      "data-chunk-slug"
     );
     if (!currentChunkElement) {
       return;
@@ -147,7 +147,7 @@ export function ChunkControl({
         const nextChunkSlug = chunks[idx + 1];
         const nextChunkElement = getChunkElement(
           nextChunkSlug,
-          "data-chunk-slug",
+          "data-chunk-slug"
         );
         if (nextChunkElement) {
           insertContinueButton(nextChunkElement, currentChunk);

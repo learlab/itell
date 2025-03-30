@@ -205,7 +205,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
           <fieldset className="flex flex-col gap-4 border p-4">
             <legend className="font-semibold">Progress</legend>
             <Label className="flex flex-col gap-2 font-normal">
-              <p className="font-semibold">Set your progress to a page</p>
+              <span className="font-semibold">Set your progress to a page</span>
               <Select
                 name="page-progress"
                 defaultValue={user.pageSlug ?? undefined}

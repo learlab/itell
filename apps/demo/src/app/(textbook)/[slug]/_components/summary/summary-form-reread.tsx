@@ -201,7 +201,6 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
           aria-labelledby="summary-form-heading"
         >
           <SummaryInput
-            disabled={!isSummaryReady}
             pageSlug={pageSlug}
             pending={isPending}
             stages={stages}
