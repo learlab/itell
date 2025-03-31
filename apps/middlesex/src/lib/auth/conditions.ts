@@ -1,5 +1,4 @@
 import { type Page } from "#content";
-import { shuffle } from "es-toolkit";
 import { type User } from "lucia";
 
 import { Condition } from "../constants";
@@ -23,7 +22,7 @@ export const getPageConditions = (pages: Page[]): Record<string, string> => {
 
 const getUniqueGroups = (pages: Page[]) => {
   return Array.from(
-    new Set(pages.map((page) => page.parent?.slug ?? page.slug)),
+    new Set(pages.map((page) => page.parent?.slug ?? page.slug))
   );
 };
 const assignConditionsToGroups = (groups: string[]): Record<string, string> => {
@@ -31,7 +30,7 @@ const assignConditionsToGroups = (groups: string[]): Record<string, string> => {
   const conditions: string[] = [
     ...(Array(halfLength).fill(Condition.STAIRS) as string[]),
     ...(Array(groups.length - halfLength).fill(
-      Condition.RANDOM_REREAD,
+      Condition.RANDOM_REREAD
     ) as string[]),
   ];
 

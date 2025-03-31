@@ -14,7 +14,6 @@ import {
   SelectShouldBlur,
 } from "@/lib/store/cri-store";
 import { ContinueChunkButton } from "./continue-chunk-button";
-import { ScrollBackButton } from "./scroll-back-button";
 import { UnlockAssignmentsButton } from "./unlock-assignments-button";
 
 type Props = {
@@ -22,13 +21,16 @@ type Props = {
   pageSlug: string;
   condition: string;
   hasAssignments: boolean;
+  hasQuiz: boolean;
 };
 
+// TODO: unify hasAssignments and hasQuiz
 export function ChunkControl({
   userId,
   pageSlug,
   condition,
   hasAssignments,
+  hasQuiz,
 }: Props) {
   const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
@@ -122,9 +124,10 @@ export function ChunkControl({
     const isLastChunk = currentChunk === chunks[chunks.length - 1];
 
     const hasQuestion = status[currentChunk].hasQuestion;
+
     if (isLastChunk) {
       // removePortal(portalIds.current.scrollBack);
-      if (hasAssignments && !hasQuestion) {
+      if ((hasAssignments || hasQuiz) && !hasQuestion) {
         insertUnlockAssignmentsButton(currentChunkElement, currentChunk);
       }
     }
@@ -149,6 +152,8 @@ export function ChunkControl({
           nextChunkSlug,
           "data-chunk-slug"
         );
+        console.log("next chunk slug");
+        console.log("next chunk element");
         if (nextChunkElement) {
           insertContinueButton(nextChunkElement, currentChunk);
         }

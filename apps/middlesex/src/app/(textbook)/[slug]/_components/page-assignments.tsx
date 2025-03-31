@@ -44,18 +44,6 @@ export async function PageAssignments({
   user,
   condition,
 }: Props) {
-  if (page.assignments.length === 0) {
-    // currently on a free page, show "mark as completed"
-    if (!pageStatus.unlocked) {
-      return (
-        <AssignmentsShell showOverlay={false}>
-          <MarkCompletedForm user={user} page={page} />
-        </AssignmentsShell>
-      );
-    }
-
-    return null;
-  }
   const hasQuiz = page.quiz && page.quiz.length > 0;
   const quizAnswered = await isQuizAnswered(user.id, page.slug);
 
@@ -64,7 +52,7 @@ export async function PageAssignments({
       if (user.isAdmin) {
         return (
           <AssignmentsShell>
-            <DeleteQuiz pageSlug={page.slug} />;
+            <DeleteQuiz pageSlug={page.slug} />
           </AssignmentsShell>
         );
       } else {
@@ -77,6 +65,19 @@ export async function PageAssignments({
         </AssignmentsShell>
       );
     }
+  }
+
+  if (page.assignments.length === 0) {
+    // currently on a free page, show "mark as completed"
+    if (!pageStatus.unlocked) {
+      return (
+        <AssignmentsShell showOverlay={false}>
+          <MarkCompletedForm user={user} page={page} />
+        </AssignmentsShell>
+      );
+    }
+
+    return null;
   }
 
   function PageSummary() {
