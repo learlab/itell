@@ -60,8 +60,8 @@ cri:
 - question: How does Hofstede describe the masculine-feminine dichotomy in different cultures?
   answer: Hofstede describes the dichotomy based on the extent to which a culture values traits that may be considered masculine or feminine, rather than who holds power.
   slug: Masculine-versus-Feminine-Orientation-2305
-- question: Do members of a materialistic culture place emphasis on external goods and services as a representation of self? Why?
-  answer: Yes, members of a materialistic culture place emphasis on external goods and services as a representation of self, power, and social rank.
+- question: What do members of a materialistic culture place emphasis on and why?
+  answer: Members of a materialistic culture place emphasis on external goods and services as a representation of self, power, and social rank.
   slug: Materialism-versus-Relationships-2306
 next_slug: 18-5-international-communication-and-the-global-marketplace
 order: 3
