@@ -30,8 +30,8 @@ cri:
 - question: How do early humans in prehistoric times meet their needs of air, food, water, and a sense of belonging?
   answer: Through cooperation and competition within the group.
   slug: Group-identity-Cooperation-and-Competition-2354
-- question: What types of groups within a business or organization were mentioned in the passage?
-  answer: Immediate coworkers, supervisors, leaders, members of other departments, colleagues who are personal friends, functional groups, and discipline-based groups.
+- question: What types of groups can individuals within a business or organization become members of?
+  answer: Individuals within a business or organization can become members of groups defined by function, developmental relationships, and their relationship to the individual and the degree to which they meet interpersonal needs.
   slug: Types-of-Groups-in-the-Workplace-2355
 - question: What are some common elements that describe relationships within a family and in a work context?
   answer: Common elements include shared challenges, collaborative efforts, and a sense of belonging.
@@ -84,7 +84,7 @@ In business, we may have marketing experts who are members of the marketing depa
   width="640"
   height="494">
 
-Figure 19.1.1: Groups and teams are an important part of businesscommunication. plantronicsgermany – calisto_620_group_conference_crop – CC BY-ND 2.0.
+Figure 19.1.1: Groups and teams are an important part of business communication. plantronicsgermany – calisto_620_group_conference_crop – CC BY-ND 2.0.
 
 </i-image>
 
@@ -117,8 +117,6 @@ The larger the group grows, the more likely it is to subdivide. Analysis of thes
 Small groups normally contain between three and eight people. One person may involve intrapersonal communication, while two may constitute interpersonal communication, and both may be present within a group communication context. You may think to yourself before making a speech or writing your next post, and you may turn to your neighbor or coworker and have a side conversation, but a group relationship normally involves three to eight people, and the potential for distraction is great.
 
 In Table  19.1.1, you can quickly see how the number of possible interactions grows according to how many people are in the group. At some point, we all find the possible and actual interactions overwhelming and subdivide into smaller groups. For example, you may have hundreds of friends on MySpace or Facebook, but how many of them do you regularly communicate with? You may be tempted to provide a number greater than eight, but if you exclude the “all to one” messages, such as a general tweet to everyone (but no one person in particular), you’ll find the group norms will appear.
-
- 
 
 |     |     |     |     |     |     |     |     |
 | --- | --- | --- | --- | --- | --- | --- | --- |
