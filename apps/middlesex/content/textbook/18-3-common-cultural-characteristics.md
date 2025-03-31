@@ -40,8 +40,8 @@ chunks:
   slug: Key-Takeaway-886
   type: plain
 cri:
-- question: What are some characteristics that define a culture?
-  answer: Researchers have identified certain characteristics that tend to be present in nearly all cultures.
+- question: How do shared experiences influence the formation of small group cultures?
+  answer: Shared experiences, such as attending the same classes or working closely with colleagues, help individuals form a sense of belonging and create their own small group cultures. These cultures develop common values, language, and norms that guide communication within the group.
   slug: Formation-of-Cultural-Groups-2291
 - question: What are some examples of rites of initiation in business communities?
   answer: New members may start with low-status tasks like getting the tough account or an office without a window, and as they navigate through the community, establish a track record, and get promoted, they pass the rite of initiation.

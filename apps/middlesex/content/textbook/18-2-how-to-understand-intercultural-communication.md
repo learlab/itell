@@ -60,26 +60,12 @@ Hall's Contributions to Intercultural Communication
 Hall is generally credited with eight contributions to our study of intercultural communication (Chen, G. and Starosta, W., 2000; Leeds-Hurwitz, W., 1990; McLean, S., 2005):
 
 1.  _Compare cultures._ Focus on the interactions versus general observations of culture.
-    
-     
 2.  _Shift to local perspective_. Local level versus global perspective.
-    
-     
 3.  _You don’t have to know everything to know something._ Time, space, gestures, and gender roles can be studied, even if we lack a larger understanding of the entire culture.
-    
-     
 4.  _There are rules we can learn._ People create rules for themselves in each community that we can learn from, compare, and contrast.
-    
-     
 5.  _Experience counts._ Personal experience has value in addition to more comprehensive studies of interaction and culture.
-    
-     
 6.  _Perspectives can differ._ Descriptive linguistics serves as a model to understand cultures, and the U.S. Foreign Service adopted it as a base for training.
-    
-     
 7.  _Intercultural communication can be applied to international business._ U.S. Foreign Service training yielded applications for trade and commerce and became a point of study for business majors.
-    
-     
 8.  _It integrates the disciplines._ Culture and communication are intertwined and bring together many academic disciplines.
 
 Hall shows us that emphasis on a culture as a whole, and how it operates, may lead us to neglect individual differences. Individuals may hold beliefs or practice customs that do not follow their own cultural norm. When we resort to the mental shortcut of a stereotype, we lose these unique differences. Stereotypes can be defined as a generalization about a group of people that oversimplifies their culture (Rogers, E. and Steinfatt, T., 1999).
