@@ -12,41 +12,67 @@
  *   scorm.quit();
  */
 var pipwerks = pipwerks || {};
-pipwerks.SCORM = (function() {
+pipwerks.SCORM = (function () {
     var scorm = {};
     // Set default version; override as needed
-    scorm.version = "1.2"; 
+    scorm.version = "1.2";
     scorm.API = null;
-    scorm.debug = false;
+    scorm.debug = true;
 
-    /**
-     * Attempts to locate the SCORM API by traversing the parent frames.
-     * @param {Window} win - The current window object.
-     * @returns {Object|null} The API object or null if not found.
-     */
-    function getAPI(win) {
-        var findAPITries = 0;
-        var maxTries = 500;
-        while ((!win.API && !win.API_1484_11) && win.parent && (win.parent !== win)) {
+    var findAPITries = 0;
+    function findAPI(win) {
+        // Check to see if the window (win) contains the API
+        // if the window (win) does not contain the API and
+        // the window (win) has a parent window and the parent window
+        // is not the same as the window (win)
+        
+        while ((win.API == null) &&
+            (win.parent != null) &&
+            (win.parent != win)) {
+            // increment the number of findAPITries
             findAPITries++;
-            if (findAPITries > maxTries) {
-                if (scorm.debug) {
-                    console.error("Error finding SCORM API - too many attempts.");
-                }
+
+            // Note: 7 is an arbitrary number, but should be more than sufficient
+            if (findAPITries > 7) {
+                alert("Error finding API -- too deeply nested.");
                 return null;
             }
+
+            // set the variable that represents the window being
+            // being searched to be the parent of the current window
+            // then search for the API again
             win = win.parent;
         }
-        return win.API || win.API_1484_11;
+        return win.API;
     }
 
+    function getAPI() {
+        // start by looking for the API in the current window
+        var theAPI = findAPI(window);
+        console.log("theAPI initially: ", theAPI);
+        // if the API is null (could not be found in the current window)
+        // and the current window has an opener window
+        if ((theAPI == null) &&
+            (window.opener != null) &&
+            (typeof (window.opener) != "undefined")) {
+            // try to find the API in the current window�s opener
+            theAPI = findAPI(window.opener);
+        }
+        // if the API has not been found
+        if (theAPI == null) {
+            // Alert the user that the API Adapter could not be found
+            alert("Unable to find an API adapter");
+        }
+        console.log("The api finally: ", theAPI);
+        return theAPI;
+    }
     /**
      * Initializes communication with the SCORM API.
      * @returns {Boolean} True if initialization succeeded, false otherwise.
      */
-    scorm.init = function() {
+    scorm.init = function () {
         var API = getAPI(window);
-        if (API === null) {
+        if (API === null || API === undefined) {
             if (scorm.debug) {
                 console.error("SCORM API not found.");
             }
@@ -70,6 +96,7 @@ pipwerks.SCORM = (function() {
             }
         }
         scorm.API = API;
+        console.log("SCORM API initialized.");
         return true;
     };
 
@@ -78,7 +105,7 @@ pipwerks.SCORM = (function() {
      * @param {String} parameter - The SCORM data model element to retrieve.
      * @returns {String} The value of the element, or an empty string if not found.
      */
-    scorm.get = function(parameter) {
+    scorm.get = function (parameter) {
         var value = "";
         if (scorm.API === null) {
             if (scorm.debug) {
@@ -100,7 +127,7 @@ pipwerks.SCORM = (function() {
      * @param {String} value - The value to assign.
      * @returns {Boolean} True if the operation succeeded, false otherwise.
      */
-    scorm.set = function(parameter, value) {
+    scorm.set = function (parameter, value) {
         var result;
         if (scorm.API === null) {
             if (scorm.debug) {
@@ -126,7 +153,7 @@ pipwerks.SCORM = (function() {
      * Commits the current data to the LMS.
      * @returns {Boolean} True if the commit was successful, false otherwise.
      */
-    scorm.save = function() {
+    scorm.save = function () {
         var result;
         if (scorm.API === null) {
             if (scorm.debug) {
@@ -152,7 +179,7 @@ pipwerks.SCORM = (function() {
      * Terminates communication with the LMS.
      * @returns {Boolean} True if the termination succeeded, false otherwise.
      */
-    scorm.quit = function() {
+    scorm.quit = function () {
         var result;
         if (scorm.API === null) {
             if (scorm.debug) {

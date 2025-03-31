@@ -1,7 +1,7 @@
 <manifest identifier="iTELL_SCORM" version="1.2">
-    <organizations default="org1">
-        <organization identifier="org1">
-            <title>iTELL: Intelligent Textbook SCORM Wrapper</title>
+    <organizations default="iTELL">
+        <organization identifier="iTELL">
+            <title>iTELL: AI-Powered Intelligent Textbook </title>
             <item identifier="item1" identifierref="resource1">
                 <title>Launch iTELL</title>
             </item>
