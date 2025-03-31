@@ -167,7 +167,7 @@ Group problem solving can be an orderly process when it is broken down into seve
 
 ## References {#References-991} 
 
-Adler, R. (1996). Communicating at work: Principles and practices for business and the professions. Boston, MA: McGraw-Hill.
+Adler, R. (1996). _Communicating at work: Principles and practices for business and the professions._ Boston, MA: McGraw-Hill.
 
-McLean, S. (2005). The basics of interpersonal communication. Boston, MA: Allyn & Bacon.
+McLean, S. (2005). _The basics of interpersonal communication._ Boston, MA: Allyn & Bacon.
 

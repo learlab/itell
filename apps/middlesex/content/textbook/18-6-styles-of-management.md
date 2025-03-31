@@ -69,13 +69,13 @@ Management Theories X, Y, and Z are examples of distinct and divergent views on 
 
 ## References {#References-932} 
 
-Luthans, F. (1989). Organisational behaviour. New York, NY: McGraw-Hill.
+Luthans, F. (1989). _Organisational behaviour._ New York, NY: McGraw-Hill.
 
-Maslow, A. (1954). Motivation and personality. New York, NY: Harper & Row.
+Maslow, A. (1954). _Motivation and personality._ New York, NY: Harper & Row.
 
-Maslow, A. (1970). Motivation and personality (2nd ed.). New York, NY: Harper & Row.
+Maslow, A. (1970). _Motivation and personality_ (2nd ed.). New York, NY: Harper & Row.
 
-Massie, J., & Douglas, J. (1992). Managing: A contemporary introduction. Englewood Cliffs, NJ: Prentice Hall.
+Massie, J., & Douglas, J. (1992). _Managing: A contemporary introduction._ Englewood Cliffs, NJ: Prentice Hall.
 
-McGregor, D. (1960). The human side of enterprise. New York, NY: McGraw-Hill.
+McGregor, D. (1960). _The human side of enterprise._ New York, NY: McGraw-Hill.
 

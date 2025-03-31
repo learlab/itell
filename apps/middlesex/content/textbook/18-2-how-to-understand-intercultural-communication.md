@@ -106,15 +106,15 @@ Ethnocentric tendencies, stereotyping, and assumptions of similarity can make it
 
 ## References {#References-875} 
 
-Allport, G. (1958). The nature of prejudice. New York, NY: Doubleday.
+Allport, G. (1958). _The nature of prejudice._ New York, NY: Doubleday.
 
-Chen, G., & Starosta, W. (2000). Foundations of intercultural communication. Boston, MA: Allyn & Bacon.
+Chen, G., & Starosta, W. (2000). _Foundations of intercultural communication._ Boston, MA: Allyn & Bacon.
 
-Hall, E. (1966). The hidden dimension. New York, NY: Doubleday.
+Hall, E. (1966). _The hidden dimension._ New York, NY: Doubleday.
 
-Leeds-Hurwitz, W. (1990). Notes in the history of intercultural communication: The foreign service institute and the mandate for intercultral training. Quarterly Journal of Speech, 76, 268–281.
+Leeds-Hurwitz, W. (1990). _Notes in the history of intercultural communication: The foreign service institute and the mandate for intercultural training._ Quarterly Journal of Speech, 76, 268–281.
 
-McLean, S. (2005). The basics of interpersonal communication. Boston, MA: Allyn & Bacon.
+McLean, S. (2005). _The basics of interpersonal communication._ Boston, MA: Allyn & Bacon.
 
-Rogers, E., & Steinfatt, T. (1999). Intercultural communication. Prospect Heights, IL: Waveland Press.
+Rogers, E., & Steinfatt, T. (1999). _Intercultural communication._ Prospect Heights, IL: Waveland Press.
 

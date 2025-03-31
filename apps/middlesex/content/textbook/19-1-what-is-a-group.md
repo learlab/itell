@@ -84,7 +84,7 @@ In business, we may have marketing experts who are members of the marketing depa
   width="640"
   height="494">
 
-Figure 19.1.119.1.1: Groups and teams are an important part of businesscommunication. plantronicsgermany – calisto_620_group_conference_crop – CC BY-ND 2.0.
+Figure 19.1.1: Groups and teams are an important part of businesscommunication. plantronicsgermany – calisto_620_group_conference_crop – CC BY-ND 2.0.
 
 </i-image>
 
@@ -137,11 +137,11 @@ Forming groups fulfills many human needs, such as the need for affiliation, affe
 
 ## References {#References-958} 
 
-Galanes, G., Adams, K., & Brilhart, J. (2000). Communication in groups: Applications and skills (4th ed.). Boston, MA: McGraw-Hill.
+Galanes, G., Adams, K., & Brilhart, J. (2000). _Communication in groups: Applications and skills_ (4th ed.). Boston, MA: McGraw-Hill.
 
-Harris, T., & Sherblom, J. (1999). Small group and team communication. Boston, MA: Allyn & Bacon.
+Harris, T., & Sherblom, J. (1999). _Small group and team communication._ Boston, MA: Allyn & Bacon.
 
-McLean, S. (2003). The basics of speech communication. Boston, MA: Allyn & Bacon.
+McLean, S. (2003). _The basics of speech communication._ Boston, MA: Allyn & Bacon.
 
-Schutz, W. (1966). The interpersonal underworld. Palo Alto, CA: Science and Behavior Books.
+Schutz, W. (1966). _The interpersonal underworld._ Palo Alto, CA: Science and Behavior Books.
 

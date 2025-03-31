@@ -227,19 +227,19 @@ Groups and their individual members come together and grow apart in predictable 
 
 ## References {#References-969} 
 
-Beene, K., & Sheats, P. (1948). Functional roles of group members. Journal of Social Issues, 37, 41–49.
+Beene, K., & Sheats, P. (1948). _Functional roles of group members._ Journal of Social Issues, 37, 41–49.
 
-Berger, C. (1986). Response uncertain outcome values in predicted relationships: Uncertainty reduction theory then and now. Human Communication Research, 13, 34–38.
+Berger, C. (1986). _Response uncertain outcome values in predicted relationships: Uncertainty reduction theory then and now._ Human Communication Research, 13, 34–38.
 
-Berger, C., & Calabrese, R. (1975). Some explorations in initial interactions and beyond: Toward a developmental theory of interpersonal communication. Human communication Research, 1, 99–112.
+Berger, C., & Calabrese, R. (1975). _Some explorations in initial interactions and beyond: Toward a developmental theory of interpersonal communication._ Human communication Research, 1, 99–112.
 
-Fisher, B. A. (1970). Decision emergence: Phases in group decision making. Speech Monographs, 37, 56–66.
+Fisher, B. A. (1970). _Decision emergence: Phases in group decision making._ Speech Monographs, 37, 56–66.
 
-Gudykunst, W. (1995). Anxiety/uncertainty management theory. In R. W. Wiseman (Ed.), Intercultural communication theory (pp. 8–58). Thousand Oaks, CA: Sage.
+Gudykunst, W. (1995). _Anxiety/uncertainty management theory._ In R. W. Wiseman (Ed.), _Intercultural communication theory_ (pp. 8–58). Thousand Oaks, CA: Sage.
 
-McLean, S. (2005). The basics of interpersonal communication. Boston, MA: Allyn & Bacon.
+McLean, S. (2005). _The basics of interpersonal communication._ Boston, MA: Allyn & Bacon.
 
-Moreland, R., & Levine, J. (1982). Socialization in small groups: Temporal changes in individual group relations. In L. Berkowitz (Ed.), Advances in Experimental Social Psychology, 15, 153.
+Moreland, R., & Levine, J. (1982). _Socialization in small groups: Temporal changes in individual group relations._ In L. Berkowitz (Ed.), _Advances in Experimental Social Psychology_, 15, 153.
 
-Tuckman, B. (1965). Developmental sequence in small groups. Psychological Bulletin, 63, 384–399.
+Tuckman, B. (1965). _Developmental sequence in small groups_. Psychological Bulletin, 63, 384–399.
 

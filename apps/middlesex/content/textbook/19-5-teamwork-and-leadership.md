@@ -1,6 +1,5 @@
 ---
-assignments:
-- summary
+assignments: []
 chunks:
 - title: Learning Objectives
   slug: Learning-Objectives-1026
@@ -232,11 +231,11 @@ Teamwork allows individuals to share their talents and energy to accomplish goal
 
 ## References {#References-1029} 
 
-Harris, T., & Sherblom, J. (1999). Small group and team communication. Boston, MA: Allyn & Bacon.
+Harris, T., & Sherblom, J. (1999). _Small group and team communication._ Boston, MA: Allyn & Bacon.
 
-Peters, T., & Austin, N. (1985). A passion for excellence: The leadership difference. New York, NY: Random House.
+Peters, T., & Austin, N. (1985). _A passion for excellence: The leadership difference._ New York, NY: Random House.
 
-Thill, J. V., & Bovee, C. L. (2002). Essentials of business communication. Upper Saddle River, NJ: Prentice Hall.
+Thill, J. V., & Bovee, C. L. (2002). _Essentials of business communication._ Upper Saddle River, NJ: Prentice Hall.
 
-Tuckman, B. (1965). Developmental sequence in small groups. Psychological Bulletin, 63, 384–399.
+Tuckman, B. (1965). _Developmental sequence in small groups._ Psychological Bulletin, 63, 384–399.
 

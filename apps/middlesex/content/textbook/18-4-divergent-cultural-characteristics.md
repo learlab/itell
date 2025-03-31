@@ -60,7 +60,7 @@ cri:
 - question: How does Hofstede describe the masculine-feminine dichotomy in different cultures?
   answer: Hofstede describes the dichotomy based on the extent to which a culture values traits that may be considered masculine or feminine, rather than who holds power.
   slug: Masculine-versus-Feminine-Orientation-2305
-- question: Do members of a materialistic culture place emphasis on external goods and services as a representation of self?
+- question: Do members of a materialistic culture place emphasis on external goods and services as a representation of self? Why?
   answer: Yes, members of a materialistic culture place emphasis on external goods and services as a representation of self, power, and social rank.
   slug: Materialism-versus-Relationships-2306
 next_slug: 18-5-international-communication-and-the-global-marketplace
@@ -165,15 +165,15 @@ Cultures have distinct orientations when it comes to rules, uncertainty, time an
 
 ## References {#References-906} 
 
-Berger, C., & Calabrese, R. (1975). Some explorations in initial interactions and beyond: Toward a fevelopmental theory of interpersonal communication. Human communication Research, 1, 99–112.
+Berger, C., & Calabrese, R. (1975). _Some explorations in initial interactions and beyond: Toward a developmental theory of interpersonal communication._ Human communication Research, 1, 99–112.
 
-Dodd, C. (1998). Dynamics of intercultural communication (5th ed.). New York, NY: Harper & Row.
+Dodd, C. (1998). _Dynamics of intercultural communication_ (5th ed.). New York, NY: Harper & Row.
 
-Hall, M. R., & Hall, E. T. (1987). Hidden differences: Doing business with the Japanese. New York, NY: Doubleday.
+Hall, M. R., & Hall, E. T. (1987). _Hidden differences: Doing business with the Japanese._ New York, NY: Doubleday.
 
-Hofstede, G. (1982). Culture’s consequences (2nd ed.). Newbury Park, CA: Sage.
+Hofstede, G. (1982). _Culture’s consequences_ (2nd ed.). Newbury Park, CA: Sage.
 
-Hofstede, G. (2001). Culture’s consequences: Comparing values, behaviors, institutions, and organizations across nations (2nd ed.). Thousand Oaks, CA: Sage.
+Hofstede, G. (2001). _Culture’s consequences: Comparing values, behaviors, institutions, and organizations across nations_ (2nd ed.). Thousand Oaks, CA: Sage.
 
-Hofstede, G. (2005). Cultures and organizations: Software of the mind (2nd ed.). New York, NY: McGraw-Hill.
+Hofstede, G. (2005). _Cultures and organizations: Software of the mind_ (2nd ed.). New York, NY: McGraw-Hill.
 

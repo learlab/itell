@@ -223,7 +223,7 @@ Meetings require planning, choice of appropriate technology, and understanding o
 
 ## References {#References-1013} 
 
-Guffey, M. (2007). Essentials of business communication (7th ed.). Mason, OH: Thomson/Wadsworth.
+Guffey, M. (2007). _Essentials of business communication_ (7th ed.). Mason, OH: Thomson/Wadsworth.
 
-Tucker, M., Meyer, G., & Westman, J. (1986). Thinking through communication: An introduction to the study of human communication. Boston, MA: Allyn & Bacon.
+Tucker, M., Meyer, G., & Westman, J. (1986). _Thinking through communication: An introduction to the study of human communication._ Boston, MA: Allyn & Bacon.
 

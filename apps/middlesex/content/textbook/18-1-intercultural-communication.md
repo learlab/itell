@@ -39,7 +39,7 @@ cri:
 - question: What are the eight components of communication that influence intercultural communication?
   answer: The eight components are source, receiver, message, channel, feedback, context, environment, and interference.
   slug: The-Eight-Components-of-Communication-and-Culture-2272
-- question: Can there be intercultural communication within the same family?
+- question: Can there be intercultural communication within the same family? Why?
   answer: Yes, communication across generations within the same family can represent intercultural communication due to differences in values, education, and experiences.
   slug: Cultural-Differences-Within-and-Across-Borders-2273
 - question: How do gender and societal expectations influence interaction among students of similar age and educational level?
@@ -140,9 +140,9 @@ Intercultural communication is an aspect of all communicative interactions, and 
 
 ## References {#References-862} 
 
-Klopf, D. (1991). Intercultural encounters: The fundamentals of intercultural communication (2nd ed.). Inglewood, CA: Morton Publishing Company.
+Klopf, D. (1991). _Intercultural encounters: The fundamentals of intercultural communication_ (2nd ed.). Inglewood, CA: Morton Publishing Company.
 
-Pearson, J., & Nelson, P. (2000). An introduction to human communication: Understanding and sharing. Boston, MA: McGraw-Hill.
+Pearson, J., & Nelson, P. (2000). _An introduction to human communication: Understanding and sharing._ Boston, MA: McGraw-Hill.
 
-Rogers, E., & Steinfatt, T. (1999). Intercultural communication. Prospect Heights, IL: Waveland Press.
+Rogers, E., & Steinfatt, T. (1999). _Intercultural communication._ Prospect Heights, IL: Waveland Press.
 

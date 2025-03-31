@@ -1,6 +1,5 @@
 ---
-assignments:
-- summary
+assignments: []
 chunks:
 - title: Learning Objectives
   slug: Learning-Objectives-943
@@ -257,9 +256,9 @@ Preparation is key to a successful international assignment. Living and working 
 
 ## References {#References-946} 
 
-Contreras, C. D. (2009). Should you accept the international assignment? BNET. Retrieved from findarticles.com/p/articles/mi\_qa5350/is\_200308/ai_n21334696.
+Contreras, C. D. (2009). _Should you accept the international assignment?_ BNET. Retrieved from findarticles.com/p/articles/mi\_qa5350/is\_200308/ai_n21334696.
 
-Rhinesmith, S. (1984). Returning home. Ottawa, Canada: Canadian Bureau for International Education.
+Rhinesmith, S. (1984). _Returning home._ Ottawa, Canada: Canadian Bureau for International Education.
 
-Tu, H., & Sullivan, S. (1994). Business horizons. Retrieved from findarticles.com/p/articles/mi\_m1038/is\_nl\_v37/ai\_14922926.
+Tu, H., & Sullivan, S. (1994). _Business horizons._ Retrieved from findarticles.com/p/articles/mi\_m1038/is\_nl\_v37/ai\_14922926.
 
