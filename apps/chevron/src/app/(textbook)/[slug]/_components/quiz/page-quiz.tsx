@@ -6,8 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@itell/ui/card";
-import { Label } from "@itell/ui/label";
-import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 import { User } from "lucia";
 
 import { createQuizAction } from "@/actions/quiz";
@@ -15,7 +13,7 @@ import { incrementUserPageSlugAction } from "@/actions/user";
 import { QuizData } from "@/drizzle/schema";
 import { Tags } from "@/lib/constants";
 import { QuizQuickFill } from "./page-quick-fill";
-import { PageQuizSubmitButton } from "./page-quiz-submit-button";
+import { QuizForm } from "./quiz-form";
 import type { PageData } from "@/lib/pages";
 
 export function PageQuiz({ user, page }: { user: User; page: PageData }) {
@@ -50,29 +48,7 @@ export function PageQuiz({ user, page }: { user: User; page: PageData }) {
 
       <CardContent className="space-y-4">
         {user.isAdmin && <QuizQuickFill />}
-        <form action={action} id="page-quiz" className="grid gap-4">
-          {page.quiz.map(({ question, answers }, qIndex) => (
-            <div key={question} className="grid gap-3">
-              <RadioGroup name={question} required className="gap-3">
-                <h4 className="text-lg font-medium">{question}</h4>
-                {answers.map(({ answer }, aIndex) => (
-                  <div key={String(answer)} className="flex items-center gap-3">
-                    <RadioGroupItem value={answer} id={`${qIndex}-${aIndex}`} />
-                    <Label
-                      htmlFor={`${qIndex}-${aIndex}`}
-                      className="font-normal lg:text-base"
-                    >
-                      {answer}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-          ))}
-          <footer>
-            <PageQuizSubmitButton />
-          </footer>
-        </form>
+        <QuizForm onSubmit={action} page={page} />
       </CardContent>
     </Card>
   );

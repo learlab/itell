@@ -21,7 +21,7 @@ import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
 import { InternalError } from "@/components/internal-error";
 import { isLastPage } from "@/lib/pages";
-import { reportSentry } from "@/lib/utils";
+import { makePageHref, reportSentry } from "@/lib/utils";
 
 export function MarkCompletedForm({ page }: { page: Page; user: User }) {
   const router = useRouter();
@@ -50,7 +50,7 @@ export function MarkCompletedForm({ page }: { page: Page; user: User }) {
       }
 
       if (page.next_slug) {
-        router.push(page.next_slug);
+        router.push(makePageHref(page.next_slug));
         return;
       }
     },

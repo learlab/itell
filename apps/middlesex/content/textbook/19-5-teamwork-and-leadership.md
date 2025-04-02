@@ -1,5 +1,6 @@
 ---
-assignments: []
+assignments:
+- quiz
 chunks:
 - title: Learning Objectives
   slug: Learning-Objectives-1026

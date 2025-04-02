@@ -4,7 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
-import { CardFooter } from "@itell/ui/card";
+import {
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@itell/ui/card";
 import { Label } from "@itell/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@itell/ui/popover";
 import { StatusButton } from "@itell/ui/status-button";
@@ -166,11 +171,11 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
   if (collapsed) {
     return (
       <CRIShell>
-        <CRIContent>
-          <p className="my-2 text-sm font-light">
+        <CardHeader>
+          <CardTitle className="text-base">
             You can skip the following question or click to reveal.
-          </p>
-          <div>
+          </CardTitle>
+          <CardDescription className="mt-2">
             <Button
               variant="outline"
               onClick={() => {
@@ -179,8 +184,8 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             >
               Reveal optional question
             </Button>
-          </div>
-        </CRIContent>
+          </CardDescription>
+        </CardHeader>
       </CRIShell>
     );
   }

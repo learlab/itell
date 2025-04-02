@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { Elements } from "@itell/constants";
+import { Alert, AlertTitle } from "@itell/ui/alert";
 import {
   Card,
   CardContent,
@@ -12,6 +13,7 @@ import { Skeleton } from "@itell/ui/skeleton";
 import { cn } from "@itell/utils";
 import { Page } from "#content";
 import { type User } from "lucia";
+import { InfoIcon } from "lucide-react";
 
 import { isQuizAnswered } from "@/db/quiz";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
@@ -47,26 +49,6 @@ export async function PageAssignments({
   const hasQuiz = page.quiz && page.quiz.length > 0;
   const quizAnswered = await isQuizAnswered(user.id, page.slug);
 
-  if (hasQuiz) {
-    if (quizAnswered) {
-      if (user.isAdmin) {
-        return (
-          <AssignmentsShell>
-            <DeleteQuiz pageSlug={page.slug} />
-          </AssignmentsShell>
-        );
-      } else {
-        return null;
-      }
-    } else {
-      return (
-        <AssignmentsShell>
-          <PageQuiz page={page} user={user} />;
-        </AssignmentsShell>
-      );
-    }
-  }
-
   if (page.assignments.length === 0) {
     // currently on a free page, show "mark as completed"
     if (!pageStatus.unlocked) {
@@ -77,7 +59,28 @@ export async function PageAssignments({
       );
     }
 
-    return null;
+    return <PageCompleted />;
+  }
+
+  if (hasQuiz) {
+    if (quizAnswered) {
+      if (user.isAdmin) {
+        return (
+          <AssignmentsShell>
+            <DeleteQuiz pageSlug={page.slug} />
+          </AssignmentsShell>
+        );
+      } else {
+        return <PageCompleted />;
+      }
+    }
+
+    // quiz not answered
+    return (
+      <AssignmentsShell>
+        <PageQuiz page={page} user={user} />;
+      </AssignmentsShell>
+    );
   }
 
   function PageSummary() {
@@ -154,7 +157,7 @@ export async function PageAssignments({
     );
   }
 
-  if (page.assignments.length !== 0) {
+  if (page.assignments.includes("summary")) {
     return (
       <AssignmentsShell key={"summary"}>
         <PageSummary />
@@ -162,7 +165,17 @@ export async function PageAssignments({
     );
   }
 
-  return null;
+  // ignore other assignment types
+  return <PageCompleted />;
+}
+
+function PageCompleted() {
+  return (
+    <Alert variant={"success"}>
+      <InfoIcon className="size-4" />
+      <AlertTitle>Page completed</AlertTitle>
+    </Alert>
+  );
 }
 
 function AssignmentsShell({

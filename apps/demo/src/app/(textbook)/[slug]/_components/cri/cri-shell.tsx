@@ -7,7 +7,10 @@ export function CRIShell({
   ...rest
 }: { children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <Card className={cn("border-info animate-in fade-in", className)} {...rest}>
+    <Card
+      className={cn("border-info animate-in fade-in gap-4 py-3", className)}
+      {...rest}
+    >
       {children}
     </Card>
   );
@@ -50,7 +53,7 @@ export function CRIContent({
 }: { children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <CardContent
-      className={cn("flex flex-col gap-2 pt-2 pb-6", className)}
+      className={cn("flex flex-col gap-2 pb-6", className)}
       {...rest}
     >
       {children}
