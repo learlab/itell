@@ -50,19 +50,16 @@ export function ScormProvider({ children }: { children: React.ReactNode }) {
 
     // Set up message listener
     const messageHandler = (event: MessageEvent) => {
-      console.log("Received message in iframe:", event.data);
       
-      // Log the origin for debugging
-      console.log("Message origin:", event.origin);
       
       if (event.data?.type === 'scormInit' && event.data?.scormUserId) {
-        console.log("Received SCORM user ID:", event.data.scormUserId);
+        
         setScormState({
           isScorm: true,
           scormUserId: event.data.scormUserId,
           isLoading: false,
         });
-        console.log("Redirecting to /auth/scorm with scormUserId:", event.data.scormUserId);
+        
         router.push(`/auth/scorm?scormUserId=${event.data.scormUserId}`);
       }
     };
