@@ -1,5 +1,6 @@
 ---
-assignments: []
+assignments:
+- quiz
 chunks:
 - title: 'Appendix A: Resources'
   slug: Appendix-A-Resources-794

@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { redirect } from "next/navigation";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { User } from "lucia";
-import { SendHorizontalIcon } from "lucide-react";
+import { ArrowLeftIcon, SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
+
 import { createClozeAction } from "@/actions/cloze";
 import { updateUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
@@ -23,29 +24,20 @@ interface Props {
 }
 
 export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
-  const getShowLetter = (word: string) => mode === "cloze" ? 0 : Math.ceil(word.length / 2);
+  const getShowLetter = (word: string) =>
+    mode === "cloze" ? 0 : Math.ceil(word.length / 2);
   const formRef = useRef<HTMLFormElement>(null);
-  const [uiState, setUiState] = useState<"initial" | "showingAnswers" | "showingContinue">("initial");
+  const [uiState, setUiState] = useState<
+    "initial" | "showingAnswers" | "showingContinue"
+  >("initial");
   const [results, setResults] = useState<{
     answers: Array<{ word: string; isCorrect: boolean }>;
     score?: number;
   } | null>(null);
 
-  useEffect(() => {
-    if (results && uiState === "initial") {
-      applyVisualFeedback();
-      setUiState("showingAnswers");
-      
-      // Add delay before showing continue button
-      const timer = setTimeout(() => {
-        setUiState("showingContinue");
-      }, 3000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [results, uiState]);
+  const router = useRouter();
 
-  const applyVisualFeedback = () => {
+  const applyVisualFeedback = useCallback(() => {
     if (!formRef.current || !results) return;
 
     const fields = Array.from(
@@ -62,11 +54,14 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
 
       if (!answer) return;
 
-      const targetInputs = inputs.filter((input) => input.dataset.isTarget === "true");
+      const targetInputs = inputs.filter(
+        (input) => input.dataset.isTarget === "true"
+      );
 
       targetInputs.forEach((input) => {
-        const inputIndex = targetInputs.indexOf(input);
-        const letterIndex = input.dataset.letterIndex ? parseInt(input.dataset.letterIndex) : inputIndex;
+        const letterIndex = input.dataset.letterIndex
+          ? parseInt(input.dataset.letterIndex)
+          : 0;
         const correctLetter = word[letterIndex];
 
         input.readOnly = true;
@@ -79,14 +74,31 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
           input.style.backgroundColor = "#fee2e2";
           input.style.borderColor = "#ef4444";
           input.style.color = "#b91c1c";
-          
+
           if (input.value !== correctLetter) {
             input.value = correctLetter;
           }
         }
       });
     });
-  };
+  }, [results]);
+
+  useEffect(() => {
+    if (results && uiState === "initial") {
+      applyVisualFeedback();
+      setUiState("showingAnswers");
+    }
+  }, [results, uiState, applyVisualFeedback]);
+
+  useEffect(() => {
+    if (uiState === "showingAnswers") {
+      const timer = setTimeout(() => {
+        setUiState("showingContinue");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [uiState]);
 
   const processForm = (form: HTMLFormElement) => {
     const fields = Array.from(
@@ -108,7 +120,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
         placeholders: [] as string[],
         answers: [] as string[],
       };
-      
+
       inputs.forEach((input) => {
         const isTarget = input.dataset.isTarget === "true";
         if (isTarget) {
@@ -121,7 +133,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       clozeData.push(result);
       const joined = result.placeholders.join("") + result.answers.join("");
       const isCorrect = joined === word;
-      
+
       if (isCorrect) {
         correctWords++;
       }
@@ -133,18 +145,20 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       answers,
       correctWords,
       totalWords: fields.length,
-      score: (correctWords / fields.length) * 100
+      score: (correctWords / fields.length) * 100,
     };
   };
 
   const handleShowAnswers = () => {
     const form = formRef.current;
     if (!form) return;
-    
+
     const { answers, score } = processForm(form);
     setResults({ answers, score });
-    
-    toast.success("Review your answers before continuing");
+
+    toast.info(
+      "C Test finished, please take some time reviewing the correct answers before continuing"
+    );
   };
 
   const { action, isPending, error } = useActionStatus(
@@ -153,7 +167,6 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
 
       const form = e.currentTarget as HTMLFormElement;
       const { clozeData, correctWords, totalWords } = processForm(form);
-
 
       const [, err] = await createClozeAction({
         pageSlug: "ctest",
@@ -175,13 +188,12 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       }
 
       toast.success(
-        "All onboarding tasks completed. Redirecting to the textbook ..."
-      );
-     
-      redirect(
-        user.pageSlug ? routes.textbook({ slug: user.pageSlug }) : routes.home()
+        "All onboarding tasks completed, redirecting to the textbook."
       );
 
+      router.push(
+        user.pageSlug ? routes.textbook({ slug: user.pageSlug }) : routes.home()
+      );
     }
   );
 
@@ -213,18 +225,19 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
             if (pIndex === 0) {
               return (
                 <p key={pIndex}>
-                  {firstSentence} 
+                  {firstSentence}
                   {firstParagraphRest &&
-                    splitWords({ text: firstParagraphRest, shouldTarget: true }).map(
-                      (wordObj, wIndex) => (
-                        <WordItem
-                          key={`${pIndex}-${wIndex}`}
-                          word={wordObj.text}
-                          showLetter={getShowLetter(wordObj.text)}
-                          isTarget={wordObj.isTarget}
-                        />
-                      )
-                    )}
+                    splitWords({
+                      text: firstParagraphRest,
+                      shouldTarget: true,
+                    }).map((wordObj, wIndex) => (
+                      <WordItem
+                        key={`${pIndex}-${wIndex}`}
+                        word={wordObj.text}
+                        showLetter={getShowLetter(wordObj.text)}
+                        isTarget={wordObj.isTarget}
+                      />
+                    ))}
                 </p>
               );
             }
@@ -247,24 +260,23 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
         </div>
         <div className="flex gap-4">
           {uiState === "initial" ? (
-            <Button
-              type="button"
-              onClick={handleShowAnswers}
-              className="w-40"
-            >
+            <Button type="button" onClick={handleShowAnswers} className="w-48">
               <span className="inline-flex items-center gap-2">
                 <SendHorizontalIcon className="size-3" />
                 Show Answers
               </span>
             </Button>
-          ) : uiState === "showingContinue" && (
-            <Button 
+          ) : (
+            <Button
               type="submit"
-              disabled={isPending}
+              disabled={isPending || uiState === "showingAnswers"}
               pending={isPending}
-              className="w-40"
+              className="w-48"
             >
-              Continue to Textbook
+              <span className="inline-flex items-center gap-2">
+                <ArrowLeftIcon className="size-3" />
+                Continue to textbook
+              </span>
             </Button>
           )}
         </div>

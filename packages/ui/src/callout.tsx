@@ -25,10 +25,10 @@ export function Keyterm({
 }) {
   return (
     <div className="my-4 rounded-md border-2 px-4 py-2">
-      <div className="border-b border-accent font-bold">
-        <h6 className="font-semibold leading-relaxed">{label}</h6>
+      <div className="border-accent border-b font-bold">
+        <h6 className="leading-relaxed font-semibold">{label}</h6>
       </div>
-      <div className="font-light leading-relaxed">{children}</div>
+      <div className="leading-relaxed font-light">{children}</div>
     </div>
   );
 }
@@ -42,7 +42,7 @@ export function Info({ title, children, className, ...rest }: Props) {
   return (
     <Alert
       className={cn(
-        "my-4 bg-info dark:border-2 dark:border-info dark:bg-inherit",
+        "bg-info dark:border-info my-4 dark:border-2 dark:bg-inherit",
         className
       )}
       variant={"info"}
@@ -80,7 +80,7 @@ export function Warning({ title, children, className, ...rest }: Props) {
   return (
     <Alert
       className={cn(
-        "my-4 bg-warning dark:border-warning dark:bg-inherit",
+        "bg-warning dark:border-warning my-4 dark:bg-inherit",
         className
       )}
       {...rest}

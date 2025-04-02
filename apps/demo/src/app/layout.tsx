@@ -4,10 +4,8 @@ import { isProduction } from "@/lib/constants";
 
 import "@itell/ui/globals.css";
 
-import { Roboto_Slab as FontSerif } from "next/font/google";
-import { cn } from "@itell/utils";
+import { Inter, Roboto_Slab } from "next/font/google";
 import { volume } from "#content";
-import { GeistSans as FontSans } from "geist/font/sans";
 
 import type { Metadata } from "next";
 
@@ -33,9 +31,14 @@ export function generateMetadata(): Metadata {
   };
 }
 
-const fontSerif = FontSerif({
+const fontSans = Inter({
+  variable: "--font-inter-sans",
   subsets: ["latin"],
-  variable: "--font-serif",
+});
+
+const fontSerif = Roboto_Slab({
+  variable: "--font-roboto-serif",
+  subsets: ["latin"],
 });
 
 export default function RootLayout({
@@ -54,11 +57,8 @@ export default function RootLayout({
         {volume.latex ? <link rel="prefetch" href="/katex.min.css" /> : null}
       </head>
       <body
-        className={cn(
-          "bg-background flex min-h-screen flex-col font-sans antialiased",
-          FontSans.className,
-          fontSerif.variable
-        )}
+        className={`${fontSans.variable} ${fontSerif.variable} flex min-h-screen flex-col font-sans
+          antialiased`}
       >
         <RootProvider>
           <TailwindIndicator />

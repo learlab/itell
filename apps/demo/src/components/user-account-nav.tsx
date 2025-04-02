@@ -22,6 +22,7 @@ import {
   LineChartIcon,
   LogOutIcon,
   PlayIcon,
+  ShieldQuestionIcon,
 } from "lucide-react";
 
 import { logout } from "@/lib/auth/actions";
@@ -46,6 +47,14 @@ const items = [
     icon: <CompassIcon className="size-4" />,
   },
 ];
+
+const extraItems = [
+  {
+    text: "Quiz Me",
+    href: "/quizme",
+    icon: <ShieldQuestionIcon className="size-4" />,
+  },
+]
 
 export function UserAccountNav({ user }: { user: User | null }) {
   const [open, setOpen] = useState(false);
@@ -143,6 +152,35 @@ export function UserAccountNav({ user }: { user: User | null }) {
               </DropdownMenuItem>
             ))
           )}
+          {
+            !user.finished ? (
+              null
+            ) : (
+              extraItems.map((item) => (
+                <DropdownMenuItem
+                  disabled={active === item.text && pending}
+                  key={item.href}
+                >
+                  <Link
+                    href={item.href}
+                    className="flex w-full items-center gap-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActive(item.text);
+                      startTransition(() => {
+                        setOpen(false);
+                        router.push(item.href);
+                        setActive("");
+                      });
+                    }}
+                  >
+                    {active === item.text ? <Spinner /> : item.icon}
+                    {item.text}
+                  </Link>
+                </DropdownMenuItem>
+              ))
+            )
+          }
           <DropdownMenuSeparator />
           <DropdownMenuItem
             disabled={logoutPending}

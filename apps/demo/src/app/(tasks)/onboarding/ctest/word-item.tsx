@@ -62,9 +62,12 @@ export function WordItem({
     }
   };
 
-  const handlePrev = async (currentIndex: number) => {
+  const handlePrev = async (currentIndex: number, clearPrev: boolean = false) => {
     const prevIndex = currentIndex - 1;
     if (prevIndex >= 0) {
+      if (clearPrev && inputRefs.current[prevIndex]) {
+        inputRefs.current[prevIndex].value = "";
+      }
       focusInput(prevIndex);
     } else if (currentIndex === 0) {
       let parent =
@@ -77,6 +80,9 @@ export function WordItem({
               "input[data-is-target='true']:last-of-type"
             ) as HTMLInputElement;
             if (input) {
+              if (clearPrev){
+                input.value = "";
+              }
               input.focus();
               break;
             }
@@ -135,7 +141,8 @@ export function WordItem({
             key={index}
             ref={setInputRef(index)}
             onNext={() => handleNext(index)}
-            onPrev={() => handlePrev(index)}
+            onPrev={(clearPrev) => handlePrev(index, clearPrev)}
+            letterIndex={showLetter + index}
           />
         ))}
       </fieldset>
@@ -168,7 +175,8 @@ interface LetterInputProps {
   className?: string;
   ref: (_: HTMLInputElement) => void;
   onNext?: () => void;
-  onPrev?: () => void;
+  onPrev?: (clearPrev?: boolean) => void;
+  letterIndex: number;
 }
 
 function LetterInput({
@@ -177,6 +185,7 @@ function LetterInput({
   onPrev,
   ref,
   className,
+  letterIndex,
 }: LetterInputProps) {
   const [, setIsCorrect] = useState<boolean | undefined>(undefined);
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -194,9 +203,8 @@ function LetterInput({
     if (e.key === "Backspace") {
       e.preventDefault();
       const value = e.currentTarget.value;
-      e.currentTarget.value = "";
       if (value === "") {
-        onPrev?.();
+        onPrev?.(true);
       } else {
         e.currentTarget.value = "";
         setIsCorrect(undefined);
@@ -219,6 +227,7 @@ function LetterInput({
     <Input
       required
       data-is-target={true}
+      data-letter-index={letterIndex}
       ref={ref}
       type="text"
       maxLength={1}

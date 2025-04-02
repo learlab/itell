@@ -48,7 +48,7 @@ const AlertTitle = React.forwardRef<
     aria-level={5}
     ref={ref}
     className={cn(
-      "mb-1 mt-0 font-medium leading-none tracking-tight",
+      "mt-0 mb-1 leading-none font-medium tracking-tight",
       className
     )}
     {...props}

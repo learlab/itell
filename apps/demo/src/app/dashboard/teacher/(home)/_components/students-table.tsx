@@ -82,7 +82,6 @@ export function StudentsTable<TData, TValue>({
     (pagination.pageIndex + 1) * pagination.pageSize,
     numRows
   );
-  table.getFilteredRowModel().rows;
   return (
     <div>
       <div className="flex items-center py-4">
@@ -185,7 +184,7 @@ export function StudentsTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-between pt-4">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           showing {`${String(pageStart)} to ${String(pageEnd)}`} of{" "}
           {pluralize("student", numRows, true)}
         </p>

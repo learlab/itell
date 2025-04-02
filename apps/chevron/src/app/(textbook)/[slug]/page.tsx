@@ -108,7 +108,7 @@ export default async function Page(props: {
             <PageContent title={page.title} html={page.html} />
             <SelectionPopover user={user} pageSlug={pageSlug} />
             {page.last_modified ? (
-              <p className="text-right text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-right text-sm">
                 <span>Last updated at </span>
                 <time>{page.last_modified}</time>
               </p>
@@ -148,6 +148,7 @@ export default async function Page(props: {
         userId={userId}
         pageSlug={pageSlug}
         hasAssignments={page.assignments.length > 0}
+        hasQuiz={page.quiz !== null}
         condition={userCondition}
       />
       {user ? <EventTracker pageSlug={pageSlug} /> : null}

@@ -393,7 +393,6 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           {isDelayed ? <DelayMessage /> : null}
 
           <SummaryInput
-            disabled={!isSummaryReady}
             pageSlug={pageSlug}
             pending={isPending}
             stages={stages}

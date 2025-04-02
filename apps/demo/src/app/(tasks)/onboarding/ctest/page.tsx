@@ -13,7 +13,7 @@ export default async function Page() {
     });
   }
 
-  const paragraphs = splitParagraphs(volume.summary);
+  const paragraphs = splitParagraphs(volume.summary || "placeholder summary");
   return <CTest paragraphs={paragraphs} user={user} mode="ctest" />;
 }
 

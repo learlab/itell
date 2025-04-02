@@ -73,9 +73,16 @@ export function GridQuestion({
                       className="peer sr-only"
                       required={true}
                     />
-                    <span className="relative inline-block h-6 w-6 rounded-full border-2 border-gray-300 transition-colors duration-200 ease-in-out peer-checked:border-info peer-focus:ring-2 peer-focus:ring-info peer-focus:ring-offset-2">
+                    <span
+                      className="peer-checked:border-info peer-focus:ring-info relative inline-block h-6 w-6
+                        rounded-full border-2 border-gray-300 transition-colors duration-200 ease-in-out
+                        peer-focus:ring-2 peer-focus:ring-offset-2"
+                    >
                       <span className="absolute inset-0 flex items-center justify-center">
-                        <span className="h-3 w-3 rounded-full bg-info opacity-0 transition-opacity duration-200 ease-in-out peer-checked:opacity-100"></span>
+                        <span
+                          className="bg-info h-3 w-3 rounded-full opacity-0 transition-opacity duration-200
+                            ease-in-out peer-checked:opacity-100"
+                        ></span>
                       </span>
                     </span>
                   </label>

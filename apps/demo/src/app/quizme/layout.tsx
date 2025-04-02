@@ -19,11 +19,7 @@ export default async function ConsentLayout({
   return (
     <>
       <MainNav />
-      <Card className="mx-auto mt-4 h-1/2 w-2/3 max-w-6xl border-transparent">
-        <CardContent className="relative flex flex-col gap-6 border-transparent">
-          <main>{children}</main>
-        </CardContent>
-      </Card>
+      <main>{children}</main>
     </>
   );
 }

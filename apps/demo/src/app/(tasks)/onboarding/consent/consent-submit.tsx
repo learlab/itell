@@ -35,17 +35,24 @@ export function ConsentSubmit({
       <RadioGroup
         name="agreement"
         required
+        className="flex flex-col gap-3"
         {...(value !== undefined ? { value } : { defaultValue: "yes" })}
       >
-        <Label className="group flex flex-row-reverse items-center justify-end gap-4 xl:text-lg">
-          <span className="underline-offset-2 group-has-[:checked]:underline">
+        <Label
+          className="flex flex-row-reverse items-center justify-end gap-4 has-[:checked]:underline
+            has-[:checked]:decoration-2 has-[:checked]:underline-offset-4 xl:text-lg"
+        >
+          <span>
             I have read and understood the information above, I am 18 years or
             older, and I agree to participate in this study.{" "}
           </span>
           <RadioGroupItem className="size-5 shrink-0" value="yes" />
         </Label>
-        <Label className="group flex flex-row-reverse items-center justify-end gap-4 xl:text-lg">
-          <span className="underline-offset-2 group-has-[:checked]:underline">
+        <Label
+          className="flex flex-row-reverse items-center justify-end gap-4 has-[:checked]:underline
+            has-[:checked]:decoration-2 has-[:checked]:underline-offset-4 xl:text-lg"
+        >
+          <span>
             I am under 18 and/or I do not agree to participate in the study.
           </span>
           <RadioGroupItem className="size-5 shrink-0" value="no" />

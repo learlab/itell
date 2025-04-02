@@ -21,9 +21,9 @@ const questions = allPagesSorted.reduce<Record<string, QuizMeObject[]>>(
 
 export default async function QuizMe() {
   const { user } = await getSession();
-  if (!user) {
+  if (!user || !user.finished) {
     return redirectWithSearchParams(routes.auth(), {
-      redirect_to: routes.ctest(),
+      redirect_to: routes.home(),
     });
   }
 
