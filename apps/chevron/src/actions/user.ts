@@ -24,12 +24,14 @@ import {
 import { isProduction, Tags } from "@/lib/constants";
 import { isLastPage } from "@/lib/pages";
 import {
+  allPagesSorted,
   firstPage,
   getPageData,
   isPageAfter,
   nextPage,
 } from "@/lib/pages/pages.server";
 import { authedProcedure } from "./utils";
+import { sendScormUpdate } from "@/lib/scorm/scorm-communication";
 
 /**
  * Check if user is a teacher
@@ -181,6 +183,9 @@ export const incrementUserPageSlugAction = authedProcedure
           personalization: newPersonalization,
         })
         .where(eq(users.id, ctx.user.id));
+
+        //update scorm page 
+      
     }
 
     revalidateTag(Tags.GET_SESSION);

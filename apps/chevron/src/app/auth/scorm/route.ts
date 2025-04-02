@@ -76,11 +76,12 @@ export async function GET(request: NextRequest) {
 
     // Use the same Response approach as the OAuth handler
     return new Response(null, {
-      status: 303,
-      headers: {
-        Location: "/1-operations-training-program-overview",
-      },
-    });
+        status: 303,
+        headers: {
+          "Location": `/${user.pageSlug ? user.pageSlug : "1-operations-training-program-overview"}`,
+          "Set-Cookie": `${sessionCookie.name}=${sessionCookie.value}; Max-Age=${sessionCookie.attributes.maxAge}; Path=${sessionCookie.attributes.path}; HttpOnly=true; Secure=true; SameSite=None`
+        }
+      });
   } catch (error) {
     if (error instanceof Error) {
       reportSentry("scorm auth error", {

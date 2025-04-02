@@ -22,6 +22,8 @@ import { DelayMessage } from "@/components/delay-message";
 import { InternalError } from "@/components/internal-error";
 import { isLastPage } from "@/lib/pages";
 import { reportSentry } from "@/lib/utils";
+import { sendScormUpdate } from "@/lib/scorm/scorm-communication";
+import { allPagesSorted } from "tests/utils";
 
 export function MarkCompletedForm({ page }: { page: Page; user: User }) {
   const router = useRouter();
@@ -42,17 +44,38 @@ export function MarkCompletedForm({ page }: { page: Page; user: User }) {
         throw new Error("increment user page slug action", { cause: err });
       }
 
+      
       if (isLastPage(page)) {
         toast.info("You have finished the entire textbook!", {
           duration: 100000,
         });
+       
+      sendScormUpdate({
+        progress: "completed",
+        completion: true,
+        lessonStatus: "completed",
+        score: 100,
+      });
         return;
       }
 
+      const totalPages = allPagesSorted.length;
+      const currentPageIndex = page.order;
+      const progressPercentage = Math.round(((currentPageIndex + 1) / totalPages) * 100);
+      
+      // Send SCORM updates
+      sendScormUpdate({
+        score: progressPercentage,
+        progress: page.title,
+        lessonStatus: isLastPage(page) ? "completed" : "incomplete",
+        completion: isLastPage(page)
+      });
+      
       if (page.next_slug) {
         router.push(page.next_slug);
         return;
       }
+      
     },
     { delayTimeout: 3000 }
   );
