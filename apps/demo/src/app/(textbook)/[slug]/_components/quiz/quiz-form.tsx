@@ -8,7 +8,7 @@ import { SendHorizontalIcon } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 
-import { PageData } from "@/lib/pages";
+import { isLastPage, PageData } from "@/lib/pages";
 import { makePageHref } from "@/lib/utils";
 
 export function QuizForm({
@@ -27,9 +27,15 @@ export function QuizForm({
 
         await onSubmit(new FormData(e.currentTarget));
 
-        toast.success("Quiz completed, you have unlocked the next page.");
+        if (isLastPage(page)) {
+          toast.info("You have finished the entire textbook!", {
+            duration: 100000,
+          });
+          return;
+        }
 
         if (page.next_slug) {
+          toast.success("Quiz completed, you have unlocked the next page.");
           router.push(makePageHref(page.next_slug));
         }
       }}
