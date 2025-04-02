@@ -62,8 +62,7 @@ export async function GET(request: NextRequest) {
       user = newUser;
     }
 
-    // Create session for the user
-    console.log("Creating session for user:", user);
+    
     const session = await lucia.createSession(user.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
     

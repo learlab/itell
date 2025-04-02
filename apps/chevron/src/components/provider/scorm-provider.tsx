@@ -37,7 +37,7 @@ export function ScormProvider({ children }: { children: React.ReactNode }) {
     const isInIframe = window !== window.parent;
     
     if (!isInIframe) {
-      console.log("Not in iframe, not in SCORM environment");
+      
       setScormState({
         isScorm: false,
         scormUserId: null,
@@ -46,7 +46,7 @@ export function ScormProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    console.log("In iframe, waiting for SCORM ID message...");
+    
 
     // Set up message listener
     const messageHandler = (event: MessageEvent) => {
@@ -69,16 +69,16 @@ export function ScormProvider({ children }: { children: React.ReactNode }) {
 
     // Signal to parent that we're ready to receive the SCORM user ID
     try {
-      console.log("Sending ready message to parent");
+     
       window.parent.postMessage({ type: "scormReady" }, "*");
-      console.log("Sent ready message to parent");
+      
     } catch (e) {
       console.error("Error sending ready message to parent:", e);
     }
 
     // Set a timeout to stop waiting for messages
     const timeoutId = setTimeout(() => {
-      console.log("Timeout waiting for SCORM initialization");
+      
       window.removeEventListener('message', messageHandler);
       setScormState({...scormState,
         isLoading: false,

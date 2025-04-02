@@ -58,13 +58,12 @@ export const isInIframe = (): boolean => {
  */
 export const sendScormReadyMessage = (): boolean => {
   if (!isInIframe()) {
-    console.log("Not in iframe, ready message not sent");
     return false;
   }
   
   try {
     window.parent.postMessage({ type: "scormReady" }, "*");
-    console.log("Sent scormReady message to parent");
+    
     return true;
   } catch (error) {
     console.error("Error sending ready message:", error);
@@ -77,14 +76,12 @@ export const sendScormReadyMessage = (): boolean => {
  */
 const postToScormContainer = (message: ScormMessage): boolean => {
   if (!isInIframe()) {
-    console.log("Not in iframe, SCORM message not sent:", message);
+    
     return false;
   }
 
   try {
-    console.log("Sending SCORM message:", message);
     window.parent.postMessage(message, "*");
-    console.log("Sent SCORM message:", message);
     return true;
   } catch (error) {
     console.error("Error sending SCORM message:", error);
@@ -150,7 +147,7 @@ export const sendScormUpdate = (options: {
 }): boolean => {
   // Validate score if provided
 
-  console.log("Sending SCORM update:", options);
+  
   if (options.score !== undefined) {
     options.score = Math.min(Math.max(options.score, 0), 100);
   }
@@ -236,8 +233,7 @@ export const listenForScormMessages = (
   if (typeof window === "undefined") return () => {};
   
   const handler = (event: MessageEvent) => {
-    // Log the message for debugging
-    console.log("Received message from parent:", event.data);
+    
     
     // Call the callback with the message data
     callback(event.data);

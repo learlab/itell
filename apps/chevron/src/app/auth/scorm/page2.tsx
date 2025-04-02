@@ -11,10 +11,8 @@ export default function ScormAuthPage() {
   const { scormUserId, isLoading } = useScorm();
 
   useEffect(() => {
-    console.log("ScormAuthPage useEffect, isLoading:", isLoading, "scormUserId:", scormUserId);
+    
     if (!isLoading && scormUserId) {
-      // Redirect to the route handler with the scormUserId as a query param
-      console.log("Redirecting to /auth/scorm with scormUserId:", scormUserId);
       router.replace(`/auth/scorm?scormUserId=${scormUserId}`);
     }
   }, [isLoading, scormUserId, router]);
