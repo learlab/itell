@@ -15,9 +15,11 @@ export type GetSessionData =
 
 export const getSession = memoize(
   async (): Promise<GetSessionData> => {
+    console.log("Running getSession");
     const c = await cookies();
     const sessionId = c.get(lucia.sessionCookieName)?.value ?? null;
     if (!sessionId) {
+      console.log("No session ID found");
       return {
         user: null,
         session: null,
@@ -45,6 +47,7 @@ export const getSession = memoize(
     } catch (err) {
       console.log("get session", err);
     }
+    console.log("getSession result", result);
     return result;
   },
   {
