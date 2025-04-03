@@ -1,7 +1,6 @@
 ---
 assignments:
 - summary
-- quiz
 chunks:
 - title: Learning Objectives
   slug: Learning-Objectives-462pt
