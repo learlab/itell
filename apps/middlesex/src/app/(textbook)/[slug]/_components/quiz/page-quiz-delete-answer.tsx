@@ -14,6 +14,7 @@ export function DeleteQuiz({ pageSlug }: { pageSlug: string }) {
       size={"lg"}
       pending={pending}
       disabled={pending}
+      variant={"outline"}
       onClick={() =>
         startTransition(async () => {
           await deleteQuizAction({ pageSlug });

@@ -59,7 +59,7 @@ export async function PageControl({
           aria-label="assignments for this page"
         />
       ) : null}
-      {/* <ResetPage pageSlug={pageSlug} /> */}
+      <ResetPage pageSlug={pageSlug} />
     </div>
   );
 }

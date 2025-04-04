@@ -119,7 +119,7 @@ export const resetUserAction = authedProcedure
     return await db.transaction(async (tx) => {
       await tx
         .update(users)
-        .set({ finished: false, pageSlug: null })
+        .set({ finished: false, pageSlug: null, personalization: {} })
         .where(eq(users.id, userId));
       await tx.delete(summaries).where(eq(summaries.userId, userId));
       await tx.delete(chat_messages).where(eq(chat_messages.userId, userId));
@@ -164,15 +164,12 @@ export const incrementUserPageSlugAction = authedProcedure
     const page = getPageData(input.currentPageSlug);
 
     if (page) {
-      let newPersonalization = ctx.user.personalization;
+      const newPersonalization = { ...ctx.user.personalization };
       if (input.withStreakSkip) {
-        newPersonalization = {
-          ...newPersonalization,
-          available_summary_skips:
-            newPersonalization.available_summary_skips > 0
-              ? newPersonalization.available_summary_skips - 1
-              : 0,
-        };
+        newPersonalization.available_summary_skips =
+          newPersonalization.available_summary_skips > 0
+            ? newPersonalization.available_summary_skips - 1
+            : 0;
       }
 
       await db

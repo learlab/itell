@@ -16,13 +16,12 @@ import {
   SummaryResponseSchema,
   validateSummary,
 } from "@itell/core/summary";
-import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { type User } from "lucia";
-import { FileQuestionIcon, InfoIcon, SendHorizontalIcon } from "lucide-react";
+import { FileQuestionIcon, SendHorizontalIcon } from "lucide-react";
 import Confetti from "react-dom-confetti";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
@@ -32,6 +31,7 @@ import { DelayMessage } from "@/components/delay-message";
 import {
   useChatStore,
   useCRIStore,
+  usePageStatus,
   useSummaryStore,
 } from "@/components/provider/page-provider";
 import { rocketBlast } from "@/lib/animations";
@@ -44,7 +44,6 @@ import { getHistory, SelectStairsAnswered } from "@/lib/store/chat-store";
 import { getExcludedChunks, SelectSummaryReady } from "@/lib/store/cri-store";
 import {
   SelectError,
-  SelectIsNextPageVisible,
   SelectPrevInput,
   SelectResponse,
   SelectStairs,
@@ -56,7 +55,6 @@ import {
   saveSummaryLocal,
   SummaryInput,
 } from "./summary-input";
-import { NextPageButton } from "./summary-next-page-button";
 import useDriver from "./use-driver";
 import type { StairsQuestion } from "@/lib/store/summary-store";
 import type { SummaryResponse } from "@itell/core/summary";
@@ -92,12 +90,12 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const chatStore = useChatStore();
   const criStore = useCRIStore();
   const summaryStore = useSummaryStore();
+  const pageStatus = usePageStatus();
 
   // states
   const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const response = useSelector(summaryStore, SelectResponse);
   const prevInput = useSelector(summaryStore, SelectPrevInput);
-  const isNextPageVisible = useSelector(summaryStore, SelectIsNextPageVisible);
   const stairsQuestion = useSelector(summaryStore, SelectStairs);
   const submissionError = useSelector(summaryStore, SelectError);
 
@@ -267,7 +265,6 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         }
 
         summaryStore.trigger.finishPage({
-          isNextPageVisible: data.canProceed ? !isLast : undefined,
           input,
         });
 
@@ -288,7 +285,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const isPending = useDebounce(_isPending, 100);
 
   useEffect(() => {
-    if (isNextPageVisible && summaryResponseRef.current) {
+    if (pageStatus.unlocked && summaryResponseRef.current) {
       if (isLast) {
         toast.info("You have finished the entire textbook!");
       } else {
@@ -301,7 +298,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           duration: 5000,
           action: page.next_slug
             ? {
-                label: "Next",
+                label: "➡️ Next",
                 onClick: () => {
                   router.push(makePageHref(page.next_slug));
                 },
@@ -310,7 +307,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
         });
       }
     }
-  }, [isLast, isNextPageVisible, page, router]);
+  }, [isLast, page, router, pageStatus]);
 
   const { portals, highlight } = useDriver({
     pageSlug,
@@ -342,43 +339,29 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           <SummaryResponseFeedback
             className={isPending ? "opacity-70" : ""}
             response={response}
-            needRevision={isLast ? !user.finished : !isNextPageVisible}
+            needRevision={isLast ? !user.finished : !pageStatus.unlocked}
           />
         ) : null}
 
         <div className="flex items-center gap-2">
-          {isNextPageVisible && page.next_slug ? (
-            <div className="flex flex-col gap-2">
-              <Alert variant={"success"}>
-                <InfoIcon className="size-4" />
-                <AlertTitle>
-                  You have finished this page and can move on. You are still
-                  welcome to improve the summary.
-                </AlertTitle>
-              </Alert>
-              <div className="flex items-center gap-2">
-                <NextPageButton pageSlug={page.next_slug} />
-                {stairsQuestion ? (
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      const chunk = getChunkElement(stairsQuestion.chunk);
-                      if (chunk) {
-                        highlight(chunk);
-                      }
-                    }}
-                  >
-                    <span className="flex items-center gap-2">
-                      <FileQuestionIcon className="size-4" />
-                      Reflection
-                    </span>
-                  </Button>
-                ) : null}
-              </div>
-            </div>
+          {stairsQuestion ? (
+            <Button
+              variant="outline"
+              onClick={() => {
+                const chunk = getChunkElement(stairsQuestion.chunk);
+                if (chunk) {
+                  highlight(chunk);
+                }
+              }}
+            >
+              <span className="flex items-center gap-2">
+                <FileQuestionIcon className="size-4" />
+                Reflection
+              </span>
+            </Button>
           ) : null}
+          <Confetti active={response?.is_passed ?? false} />
         </div>
-        <Confetti active={response?.is_passed ?? false} />
         <h2 id="summary-form-heading" className="sr-only">
           submit summary
         </h2>

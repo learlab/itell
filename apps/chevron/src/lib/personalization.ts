@@ -9,9 +9,11 @@ export function updatePersonalizationStreak(
   {
     summary,
     cri,
+    fromAdminTools,
   }: {
     summary?: { isPassed: boolean; isExcellent: boolean };
     cri?: { isCorrect: boolean };
+    fromAdminTools?: boolean;
   }
 ): PersonalizationData {
   const personalization = { ...user.personalization };
@@ -33,7 +35,9 @@ export function updatePersonalizationStreak(
 
     // every new passing summary after a streak allows user to skip one summary
     if (summary.isPassed && newSummaryStreak >= SKIP_SUMMARY_STREAK_THRESHOLD) {
-      personalization.available_summary_skips = 1;
+      if (!fromAdminTools) {
+        personalization.available_summary_skips = 1;
+      }
     } else {
       personalization.available_summary_skips = 0;
     }

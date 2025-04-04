@@ -10,10 +10,10 @@ import { clearSummaryLocal } from "../summary/summary-input";
 export function ResetPage({ pageSlug }: { pageSlug: string }) {
   const [pending, startTransition] = useTransition();
   const store = useCRIStore();
+  // HACK: fix for loading screens where the providider is not available
   if (!store) {
     return undefined;
   }
-
 
   return (
     <Button

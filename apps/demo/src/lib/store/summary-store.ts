@@ -28,7 +28,6 @@ export const createSummaryStore = ({
       error: null as ErrorType | null,
       response: null as SummaryResponse | null,
       stairsQuestion: null as StairsQuestion | null,
-      isNextPageVisible: pageStatus.unlocked,
       showFloatingSummary,
     },
     emits: {
@@ -54,13 +53,7 @@ export const createSummaryStore = ({
         context.showFloatingSummary = !context.showFloatingSummary;
         enqueue.emit.toggleFloatingSummary({});
       },
-      finishPage: (
-        context,
-        event: { isNextPageVisible?: boolean; input?: string }
-      ) => {
-        if (event.isNextPageVisible !== undefined) {
-          context.isNextPageVisible = event.isNextPageVisible;
-        }
+      finishPage: (context, event: { input?: string }) => {
         if (event.input !== undefined) {
           context.prevInput = event.input;
         }
@@ -76,8 +69,6 @@ export const SelectResponse: Selector<SummaryResponse | null> = (state) =>
   state.context.response;
 export const SelectPrevInput: Selector<string | undefined> = (state) =>
   state.context.prevInput;
-export const SelectIsNextPageVisible: Selector<boolean> = (state) =>
-  state.context.isNextPageVisible;
 export const SelectStairs: Selector<StairsQuestion | null> = (state) =>
   state.context.stairsQuestion;
 export const SelectError: Selector<ErrorType | null> = (state) =>

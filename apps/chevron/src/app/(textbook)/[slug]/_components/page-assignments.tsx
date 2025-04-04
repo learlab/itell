@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { Elements } from "@itell/constants";
-import { Alert, AlertTitle } from "@itell/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@itell/ui/alert";
 import {
   Card,
   CardContent,
@@ -32,6 +32,7 @@ import { SummaryFormReread } from "./summary/summary-form-reread";
 import { SummaryFormSimple } from "./summary/summary-form-simple";
 import { SummaryFormSkip } from "./summary/summary-form-skip";
 import { SummaryFormStairs } from "./summary/summary-form-stairs";
+import { NextPageButton } from "./summary/summary-next-page-button";
 
 type Props = {
   page: Page;
@@ -50,130 +51,160 @@ export async function PageAssignments({
   const quizAnswered = await isQuizAnswered(user.id, page.slug);
 
   if (page.assignments.length === 0) {
-    // currently on a free page, show "mark as completed"
-    if (!pageStatus.unlocked) {
-      return (
-        <AssignmentsShell showOverlay={false}>
-          <MarkCompletedForm user={user} page={page} />
-        </AssignmentsShell>
-      );
-    }
-
-    return <PageCompleted />;
+    return (
+      <AssignmentsShell showOverlay={false}>
+        <PageStatusInfo page={page} pageStatus={pageStatus} />
+        {!pageStatus.unlocked && <MarkCompletedForm user={user} page={page} />}
+      </AssignmentsShell>
+    );
   }
 
   if (hasQuiz) {
     if (quizAnswered) {
-      if (user.isAdmin) {
-        return (
-          <AssignmentsShell>
-            <DeleteQuiz pageSlug={page.slug} />
-          </AssignmentsShell>
-        );
-      } else {
-        return <PageCompleted />;
-      }
+      return (
+        <AssignmentsShell>
+          <PageStatusInfo page={page} pageStatus={pageStatus} />
+          {user.isAdmin && <DeleteQuiz pageSlug={page.slug} />}
+        </AssignmentsShell>
+      );
     }
 
     // quiz not answered
     return (
       <AssignmentsShell>
-        <PageQuiz page={page} user={user} />;
+        <PageQuiz page={page} user={user} />
       </AssignmentsShell>
-    );
-  }
-
-  function PageSummary() {
-    const canSkipSummary = user.personalization.available_summary_skips > 0;
-    if (condition !== Condition.SIMPLE && canSkipSummary) {
-      return (
-        <Card className="border-info">
-          <CardContent>
-            <SummaryFormSkip
-              pageStatus={pageStatus}
-              page={page}
-              streak={user.personalization.summary_streak}
-              available_summary_skips={
-                user.personalization.available_summary_skips
-              }
-            />
-          </CardContent>
-        </Card>
-      );
-    }
-
-    return (
-      <Card className="border-info">
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2">
-            <span>Summary</span>
-            <ToggleShowFloatingSummary />
-          </CardTitle>
-          <CardDescription>
-            {!pageStatus.unlocked && (
-              <>
-                You can unlock the next page by submitting{" "}
-                <Link
-                  href={`#${SUMMARY_DESCRIPTION_ID}`}
-                  className="text-info font-semibold underline underline-offset-4"
-                >
-                  a good summary
-                </Link>{" "}
-                of this page
-              </>
-            )}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {condition === Condition.SIMPLE ? (
-            <SummaryFormSimple page={page} pageStatus={pageStatus} />
-          ) : null}
-          {condition === Condition.RANDOM_REREAD ? (
-            <SummaryFormReread
-              user={user}
-              page={page}
-              pageStatus={pageStatus}
-            />
-          ) : condition === Condition.STAIRS ? (
-            <SummaryFormStairs
-              user={user}
-              page={page}
-              pageStatus={pageStatus}
-              afterSubmit={
-                <Suspense fallback={<SummaryCount.Skeleton />}>
-                  <SummaryCount pageSlug={page.slug} userId={user.id} />
-                </Suspense>
-              }
-            />
-          ) : null}
-          {condition !== Condition.SIMPLE ? (
-            <>
-              <SummaryDescription condition={condition} />
-              <FloatingSummary isAdmin={user.isAdmin} />
-            </>
-          ) : null}
-        </CardContent>
-      </Card>
     );
   }
 
   if (page.assignments.includes("summary")) {
     return (
       <AssignmentsShell key={"summary"}>
-        <PageSummary />
+        <PageStatusInfo page={page} pageStatus={pageStatus} />
+        <PageSummary
+          user={user}
+          condition={condition}
+          page={page}
+          pageStatus={pageStatus}
+        />
       </AssignmentsShell>
     );
   }
 
   // ignore other assignment types
-  return <PageCompleted />;
+  return (
+    <AssignmentsShell>
+      <PageStatusInfo page={page} pageStatus={pageStatus} />
+    </AssignmentsShell>
+  );
 }
 
-function PageCompleted() {
+function PageSummary({
+  user,
+  condition,
+  page,
+  pageStatus,
+}: {
+  user: User;
+  page: Page;
+  pageStatus: PageStatus;
+  condition: string;
+}) {
+  const canSkipSummary = user.personalization.available_summary_skips > 0;
+  if (condition !== Condition.SIMPLE && canSkipSummary) {
+    return (
+      <Card className="border-info">
+        <CardContent>
+          <SummaryFormSkip
+            pageStatus={pageStatus}
+            page={page}
+            streak={user.personalization.summary_streak}
+            available_summary_skips={
+              user.personalization.available_summary_skips
+            }
+          />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="border-info">
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2">
+          <span>Summary</span>
+          <ToggleShowFloatingSummary />
+        </CardTitle>
+        <CardDescription>
+          {!pageStatus.unlocked ? (
+            <p>
+              You can unlock the next page by submitting{" "}
+              <Link
+                href={`#${SUMMARY_DESCRIPTION_ID}`}
+                className="text-info font-semibold underline underline-offset-4"
+              >
+                a good summary
+              </Link>{" "}
+              of this page
+            </p>
+          ) : (
+            <p>
+              You are still welcome to review this page and improve your
+              summary.
+            </p>
+          )}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        {condition === Condition.SIMPLE ? (
+          <SummaryFormSimple page={page} pageStatus={pageStatus} />
+        ) : null}
+        {condition === Condition.RANDOM_REREAD ? (
+          <SummaryFormReread user={user} page={page} pageStatus={pageStatus} />
+        ) : condition === Condition.STAIRS ? (
+          <SummaryFormStairs
+            user={user}
+            page={page}
+            pageStatus={pageStatus}
+            afterSubmit={
+              <Suspense fallback={<SummaryCount.Skeleton />}>
+                <SummaryCount pageSlug={page.slug} userId={user.id} />
+              </Suspense>
+            }
+          />
+        ) : null}
+        {condition !== Condition.SIMPLE ? (
+          <>
+            <SummaryDescription condition={condition} />
+            <FloatingSummary isAdmin={user.isAdmin} />
+          </>
+        ) : null}
+      </CardContent>
+    </Card>
+  );
+}
+
+function PageStatusInfo({
+  page,
+  pageStatus,
+  title = "Page completed",
+}: {
+  page: Page;
+  pageStatus: PageStatus;
+  title?: string;
+}) {
+  if (!pageStatus.unlocked) {
+    return null;
+  }
   return (
     <Alert variant={"success"}>
       <InfoIcon className="size-4" />
-      <AlertTitle>Page completed</AlertTitle>
+      <AlertTitle>{title}</AlertTitle>
+      {page.next_slug && pageStatus.unlocked && (
+        <AlertDescription className="mt-3">
+          <NextPageButton pageSlug={page.next_slug} />
+        </AlertDescription>
+      )}
     </Alert>
   );
 }
