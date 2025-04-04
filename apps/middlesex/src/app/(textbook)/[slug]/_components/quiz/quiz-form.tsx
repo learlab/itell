@@ -1,11 +1,11 @@
 "use client";
 
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@itell/ui/button";
 import { Label } from "@itell/ui/label";
 import { RadioGroup, RadioGroupItem } from "@itell/ui/radio";
 import { SendHorizontalIcon } from "lucide-react";
-import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 
 import { isLastPage, PageData } from "@/lib/pages";
@@ -19,25 +19,26 @@ export function QuizForm({
   onSubmit: (formData: FormData) => Promise<void>;
 }) {
   const router = useRouter();
+  const [pending, startTransition] = useTransition();
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        e.stopPropagation();
 
-        await onSubmit(new FormData(e.currentTarget));
+        startTransition(async () => {
+          await onSubmit(new FormData(e.currentTarget));
+          if (isLastPage(page)) {
+            toast.info("You have finished the entire textbook!", {
+              duration: 100000,
+            });
+            return;
+          }
 
-        if (isLastPage(page)) {
-          toast.info("You have finished the entire textbook!", {
-            duration: 100000,
-          });
-          return;
-        }
-
-        if (page.next_slug) {
-          toast.success("Quiz completed, you have unlocked the next page.");
-          router.push(makePageHref(page.next_slug));
-        }
+          if (page.next_slug) {
+            toast.success("Quiz completed, you have unlocked the next page.");
+            router.push(makePageHref(page.next_slug));
+          }
+        });
       }}
       id="page-quiz"
       className="grid gap-4"
@@ -61,21 +62,18 @@ export function QuizForm({
         </div>
       ))}
       <footer>
-        <SubmitButton />
+        <Button
+          pending={pending}
+          disabled={pending}
+          className="w-40"
+          type="submit"
+        >
+          <span className="inline-flex items-center gap-2">
+            <SendHorizontalIcon className="size-3" />
+            Submit
+          </span>
+        </Button>
       </footer>
     </form>
-  );
-}
-
-export function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button pending={pending} disabled={pending} className="w-40" type="submit">
-      <span className="inline-flex items-center gap-2">
-        <SendHorizontalIcon className="size-3" />
-        Submit
-      </span>
-    </Button>
   );
 }

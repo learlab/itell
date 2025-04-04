@@ -63,7 +63,7 @@ export async function PageAssignments({
     if (quizAnswered) {
       return (
         <AssignmentsShell>
-          <PageStatusInfo page={page} pageStatus={pageStatus} />;
+          <PageStatusInfo page={page} pageStatus={pageStatus} />
           {user.isAdmin && <DeleteQuiz pageSlug={page.slug} />}
         </AssignmentsShell>
       );
@@ -72,7 +72,7 @@ export async function PageAssignments({
     // quiz not answered
     return (
       <AssignmentsShell>
-        <PageQuiz page={page} user={user} />;
+        <PageQuiz page={page} user={user} />
       </AssignmentsShell>
     );
   }
@@ -94,7 +94,7 @@ export async function PageAssignments({
   // ignore other assignment types
   return (
     <AssignmentsShell>
-      <PageStatusInfo page={page} pageStatus={pageStatus} />;
+      <PageStatusInfo page={page} pageStatus={pageStatus} />
     </AssignmentsShell>
   );
 }
