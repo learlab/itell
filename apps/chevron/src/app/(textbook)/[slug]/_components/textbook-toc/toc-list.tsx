@@ -62,7 +62,10 @@ export function TextbookTocList({ page, pages }: Props) {
                 className="pb-0"
               >
                 <AccordionItem value={item.slug} className="border-none">
-                  <AccordionTrigger className="px-2 py-4 text-left text-base hover:bg-accent hover:no-underline xl:text-lg 2xl:text-xl">
+                  <AccordionTrigger
+                    className="hover:bg-accent px-2 py-4 text-left text-base hover:no-underline xl:text-lg
+                      2xl:text-xl"
+                  >
                     {item.title}
                   </AccordionTrigger>
                   <AccordionContent className="pb-0">
@@ -117,7 +120,7 @@ export function TocItem({
   return (
     <li
       className={cn(
-        "relative border-l-2 transition duration-200 ease-in-out hover:bg-accent",
+        "hover:bg-accent relative border-l-2 transition duration-200 ease-in-out",
         {
           "bg-accent": item.slug === activePage,
           "text-muted-foreground": !visible,
@@ -136,7 +139,8 @@ export function TocItem({
           });
         }}
         className={cn(
-          "inline-flex w-full items-center justify-between text-balance p-2 text-left text-base xl:gap-4 xl:text-lg 2xl:text-xl",
+          `inline-flex w-full items-center justify-between p-2 text-left text-base
+          text-balance xl:gap-4 xl:text-lg 2xl:text-xl`,
           {
             "animate-pulse": pending,
             "text-base 2xl:text-lg": inGroup,
@@ -151,7 +155,7 @@ export function TocItem({
           {item.status.unlocked ? (
             <CheckCircle className="size-5 stroke-green-500" />
           ) : item.status.latest ? null : (
-            <LockIcon className="size-5 stroke-muted-foreground" />
+            <LockIcon className="stroke-muted-foreground size-5" />
           )}
         </span>
       </Link>

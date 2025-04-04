@@ -152,8 +152,6 @@ export function ChunkControl({
           nextChunkSlug,
           "data-chunk-slug"
         );
-        console.log("next chunk slug");
-        console.log("next chunk element");
         if (nextChunkElement) {
           insertContinueButton(nextChunkElement, currentChunk);
         }
