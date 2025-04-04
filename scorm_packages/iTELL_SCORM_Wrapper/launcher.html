@@ -28,14 +28,14 @@
                     scormUserId = "test-user-" + Math.floor(Math.random() * 10000);
                 }
                 
-                console.log("SCORM User ID: ", scormUserId);
+                
                 return true;
             } else {
                 console.error("SCORM API initialization failed.");
                 
                 // For testing outside of SCORM
                 scormUserId = "test-user-" + Math.floor(Math.random() * 10000);
-                console.log("Using test user ID: ", scormUserId);
+               
                 return false;
             }
         }
@@ -46,13 +46,13 @@
             initScorm();
             
             // Define the URL of your existing ITELL website
-            var itellUrl = "http://localhost:3000/";
+            var itellUrl = "https://chevron.itell.ai/";
             var iframe = document.getElementById("itellFrame");
             iframe.src = itellUrl;
 
             // Send the user ID to the iTELL iframe after it loads
             iframe.onload = function() {
-                console.log("iFrame loaded, waiting for ready message...");
+                sendScormId();
             };
         }
         
@@ -65,14 +65,14 @@
             
             var iframe = document.getElementById("itellFrame");
             try {
-                console.log("Sending SCORM ID to iframe:", scormUserId);
+                
                 iframe.contentWindow.postMessage({
                     type: "scormInit",
                     scormUserId: scormUserId
                 }, "*");  // Using * for development, restrict in production
                 
                 hasSentId = true;
-                console.log("Successfully sent SCORM ID to iframe");
+                
             } catch (e) {
                 console.error("Error sending SCORM ID to iframe:", e);
             }
@@ -80,9 +80,7 @@
 
         // Listen for messages from ITELL
         window.addEventListener("message", function(event) {
-            // Log all received messages for debugging
-            console.log("Received message in parent:", event.data);
-            console.log("Message origin:", event.origin);
+            
             
             // Accept messages from the iframe source
             if (event.source === document.getElementById("itellFrame").contentWindow) {
@@ -90,7 +88,7 @@
                 
                 // Send the SCORM ID when the iframe signals it's ready
                 if (data.type === "scormReady" && !hasSentId) {
-                    console.log("Received ready message from iframe, sending SCORM ID");
+                    
                     sendScormId();
                     return;
                 }
@@ -100,7 +98,6 @@
                     data.type === "progressUpdate" || data.type === "lessonStatusUpdate" ||
                     data.type === "completionUpdate") {
                     
-                    console.log("Processing SCORM update:", data);
                     
                     // Update score if provided
                     if (data.score !== undefined) {
