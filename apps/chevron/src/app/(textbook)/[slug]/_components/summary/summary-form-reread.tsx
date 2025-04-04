@@ -41,6 +41,8 @@ import {
 } from "./summary-input";
 import useDriver from "./use-driver";
 import type { SummaryResponse } from "@itell/core/summary";
+import { sendScormUpdate } from "@/lib/scorm/scorm-communication";
+import { allPagesSorted } from "tests/utils";
 
 type Props = {
   user: User;
@@ -137,6 +139,18 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
         throw new Error("create summary action", { cause: err });
       }
 
+      const totalPages = allPagesSorted.length;
+      const currentPageIndex = page.order;
+      const progressPercentage = Math.round(((currentPageIndex + 1) / totalPages) * 100);
+      
+      // Send SCORM updates
+      sendScormUpdate({
+        score: progressPercentage,
+        progress: page.title,
+        lessonStatus: isLastPage(page) ? "completed" : "incomplete",
+        completion: isLastPage(page)
+      });
+
       clearKeystroke();
       finishStage("Saving");
       prevInput.current = input;
@@ -150,6 +164,8 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       if (!pageStatus.unlocked && !page.quiz) {
         goToRandomChunk();
       }
+
+     
     },
     { delayTimeout: 10000 }
   );

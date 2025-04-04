@@ -10,6 +10,8 @@ import { volume } from "#content";
 import { GeistSans as FontSans } from "geist/font/sans";
 
 import type { Metadata } from "next";
+import { ScormProvider } from "@/components/provider/scorm-provider";
+import { ScormBase } from "@/components/scorm-base";
 
 export function generateMetadata(): Metadata {
   return {
@@ -61,8 +63,12 @@ export default function RootLayout({
         )}
       >
         <RootProvider>
-          <TailwindIndicator />
-          {children}
+          <ScormProvider>
+            <ScormBase>
+              <TailwindIndicator />
+              {children}
+            </ScormBase>
+          </ScormProvider>
         </RootProvider>
       </body>
     </html>

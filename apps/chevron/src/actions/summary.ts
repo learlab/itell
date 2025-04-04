@@ -21,9 +21,10 @@ import {
   Tags,
 } from "@/lib/constants";
 import { isLastPage } from "@/lib/pages";
-import { getPageData, isPageAfter, nextPage } from "@/lib/pages/pages.server";
+import { allPagesSorted, getPageData, isPageAfter, nextPage } from "@/lib/pages/pages.server";
 import { updatePersonalizationStreak } from "@/lib/personalization";
 import { authedProcedure } from "./utils";
+import { sendScormUpdate } from "@/lib/scorm/scorm-communication";
 
 /**
  * - Create summary record for current user
@@ -137,6 +138,8 @@ export const createSummaryAction = authedProcedure
               personalization: newPersonalization,
             })
             .where(eq(users.id, ctx.user.id));
+
+           
         }
       }
 

@@ -22,6 +22,9 @@ import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { PageData } from "@/lib/pages";
 import type { FormEvent } from "react";
+import { sendScormUpdate } from "@/lib/scorm/scorm-communication";
+import { allPagesSorted } from "tests/utils";
+
 
 type Props = {
   pageStatus: PageStatus;
@@ -55,6 +58,17 @@ export const SummaryFormSkip = memo(
           throw new Error("increment user page slug action", { cause: err });
         }
 
+        const totalPages = allPagesSorted.length;
+      const currentPageIndex = page.order;
+      const progressPercentage = Math.round(((currentPageIndex + 1) / totalPages) * 100);
+      
+      // Send SCORM updates
+      sendScormUpdate({
+        score: progressPercentage,
+        progress: page.title,
+        lessonStatus: isLastPage(page) ? "completed" : "incomplete",
+        completion: isLastPage(page)
+      });
         if (isLastPage(page)) {
           toast.info("You have finished the entire textbook!", {
             duration: 100000,
