@@ -30,7 +30,10 @@ export function NextPageButton({ text = "Next Page", pageSlug }: Props) {
         });
       }}
       className={cn(
-        "relative w-40 backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow dark:bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]",
+        `relative w-40 backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out
+        hover:shadow
+        dark:bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)]
+        dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]`,
         buttonVariants({ variant: "default" })
       )}
     >
@@ -56,7 +59,8 @@ export function NextPageButton({ text = "Next Page", pageSlug }: Props) {
           ) : null}
           <span
             className={cn(
-              "relative flex h-full w-full items-center justify-center gap-2 text-sm tracking-wide",
+              `relative flex h-full w-full items-center justify-center gap-2 text-sm
+              tracking-wide`,
               pending ? "invisible" : ""
             )}
             style={{
@@ -72,7 +76,9 @@ export function NextPageButton({ text = "Next Page", pageSlug }: Props) {
               mask: "linear-gradient(rgb(0,0,0), rgb(0,0,0)) content-box,linear-gradient(rgb(0,0,0), rgb(0,0,0))",
               maskComposite: "exclude",
             }}
-            className="absolute inset-0 z-10 block rounded-[inherit] bg-[linear-gradient(-75deg,hsl(var(--primary)/10%)_calc(var(--x)+20%),hsl(var(--primary)/50%)_calc(var(--x)+25%),hsl(var(--primary)/10%)_calc(var(--x)+100%))] p-px"
+            className="absolute inset-0 z-10 block rounded-[inherit]
+              bg-[linear-gradient(-75deg,hsl(var(--primary)/10%)_calc(var(--x)+20%),hsl(var(--primary)/50%)_calc(var(--x)+25%),hsl(var(--primary)/10%)_calc(var(--x)+100%))]
+              p-px"
           />
         </motion.span>
       </AnimatePresence>

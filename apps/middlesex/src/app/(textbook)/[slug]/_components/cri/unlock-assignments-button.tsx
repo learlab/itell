@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@itell/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { useSelector } from "@xstate/store/react";
 import { KeyIcon } from "lucide-react";
 
@@ -22,23 +23,32 @@ export function UnlockAssignmentsButton({
   const isSummaryReady = useSelector(store, SelectSummaryReady);
 
   return (
-    <Button
-      disabled={isSummaryReady}
-      onClick={() => {
-        store.trigger.finishPage();
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          disabled={isSummaryReady}
+          size={"lg"}
+          onClick={() => {
+            store.trigger.finishPage();
 
-        createEventAction({
-          pageSlug,
-          type: EventType.CHUNK_REVEAL,
-          data: {
-            chunkSlug,
-            condition,
-          },
-        });
-      }}
-    >
-      <KeyIcon className="mr-2 size-4" />
-      <span>Unlock assignments</span>
-    </Button>
+            createEventAction({
+              pageSlug,
+              type: EventType.CHUNK_REVEAL,
+              data: {
+                chunkSlug,
+                condition,
+              },
+            });
+          }}
+        >
+          <KeyIcon className="mr-2 size-4" />
+          <span>Unlock assignments</span>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        Start working on assessment items for this page, after you finish them,
+        you will gain access to the next page.
+      </TooltipContent>
+    </Tooltip>
   );
 }

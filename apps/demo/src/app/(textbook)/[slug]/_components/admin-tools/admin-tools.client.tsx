@@ -32,10 +32,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@itell/ui/sheet";
-import { Switch } from "@itell/ui/switch";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { type Page } from "#content";
 import { type User } from "lucia";
-import { SettingsIcon } from "lucide-react";
+import { GlassesIcon, RotateCw, SettingsIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 
@@ -76,7 +76,6 @@ const conditions = [
 ];
 
 export function AdminToolsClient({ user, pageSlug, pages }: Props) {
-  const store = useCRIStore();
   const condition = getUserCondition(user, pageSlug);
   const [open, setOpen] = useState(false);
   const { execute, isPending, isError } = useServerAction(updateUserAction);
@@ -101,12 +100,6 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
     newSummaryStreak = (newSummaryStreak ?? 0) - 1;
     newCRIStreak = (newCRIStreak ?? 0) - 1;
 
-    if (formData.get("page-unblur") === "on") {
-      startTransition(() => {
-        store.trigger.finishPage();
-      });
-    }
-
     const newCondition = String(formData.get("condition"));
     const newConditionAssignments = {
       ...user.conditionAssignments,
@@ -127,6 +120,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
       cri: {
         isCorrect: true,
       },
+      fromAdminTools: true,
     });
 
     const [, err] = await execute({
@@ -138,6 +132,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
     });
     if (!err) {
       setOpen(false);
+
       if (newPageSlug) {
         window.location.href = makePageHref(newPageSlug);
       } else {
@@ -168,8 +163,11 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
             settings.
           </SheetDescription>
         </SheetHeader>
-        <form className="grid gap-8 py-4" onSubmit={onSubmit}>
+        <div className="flex flex-col gap-2">
           <RestartTextbook />
+          <UnblurPage />
+        </div>
+        <form className="grid gap-8 py-4" onSubmit={onSubmit}>
           <fieldset className="flex flex-col border p-4">
             <legend className="font-semibold">Feedback</legend>
             <RadioGroup
@@ -226,16 +224,6 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </Label>
-            <Label className="flex items-center justify-between gap-6 font-normal">
-              <div className="flex flex-col gap-2 text-balance">
-                <p className="font-semibold">Unblur current page</p>
-                <p className="text-muted-foreground text-sm" id="unblur-desc">
-                  Unblur all chunks from the current page and unlock summary
-                  submission
-                </p>
-              </div>
-              <Switch name="page-unblur" aria-describedby="unblur-desc" />
             </Label>
           </fieldset>
 
@@ -297,6 +285,32 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
   );
 }
 
+function UnblurPage() {
+  const criStore = useCRIStore();
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          type="button"
+          onClick={() => {
+            startTransition(() => {
+              criStore.trigger.finishPage();
+              window.location.reload();
+            });
+          }}
+        >
+          <GlassesIcon className="mr-2 size-4" />
+          Unblur current page
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        Unblur all chunks from the current page and unlock summary submission
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
 const streakLevels = Array.from({ length: 10 }, (_, i) => i);
 
 function RestartTextbook() {
@@ -305,7 +319,10 @@ function RestartTextbook() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button>Restart textbook</Button>
+        <Button type="button">
+          <RotateCw className="mr-2 size-4" />
+          Restart textbook
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

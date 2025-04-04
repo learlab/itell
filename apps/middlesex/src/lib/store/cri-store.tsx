@@ -91,12 +91,12 @@ export const createCRIStore = (
           context.currentChunk = chunks[nextIndex].slug;
         }
       },
-      finishPage: (context, event: unknown) => {
+      finishPage: (context) => {
         context.isSummaryReady = true;
         context.shouldBlur = false;
         context.currentChunk = slugs[lastIndex];
       },
-      resetPage: (context, event: unknown) => {
+      resetPage: (context) => {
         context.isSummaryReady = false;
         context.shouldBlur = true;
         context.currentChunk = slugs[0];

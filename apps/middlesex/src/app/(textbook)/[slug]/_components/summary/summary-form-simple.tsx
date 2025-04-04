@@ -7,7 +7,7 @@ import { ErrorFeedback, ErrorType } from "@itell/core/summary";
 import { Warning } from "@itell/ui/callout";
 import { StatusButton } from "@itell/ui/status-button";
 import { useSelector } from "@xstate/store/react";
-import { ArrowRightIcon, CheckSquare2Icon } from "lucide-react";
+import { CheckIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
@@ -29,7 +29,6 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
   const criStore = useCRIStore();
   const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const router = useRouter();
-  const [finished, setFinished] = useState(pageStatus.unlocked);
 
   const {
     action,
@@ -40,15 +39,18 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
   } = useActionStatus(
     async (e: FormEvent) => {
       e.preventDefault();
-      if (finished && page.next_slug) {
-        router.push(page.next_slug);
-        return;
-      }
+
       const [, err] = await incrementUserPageSlugAction({
         currentPageSlug: page.slug,
       });
+
       if (err) {
         throw new Error("increment user page slug action", { cause: err });
+      }
+
+      if (page.next_slug) {
+        router.push(page.next_slug);
+        return;
       }
 
       if (isLastPage(page)) {
@@ -56,8 +58,6 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
           duration: 100000,
         });
       }
-
-      setFinished(true);
     },
     { delayTimeout: 3000 }
   );
@@ -83,9 +83,8 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
   return (
     <div className="flex flex-col gap-2">
       <p className="mb-4 text-lg font-light" role="status">
-        {finished
-          ? "You have completed this page, but you are still welcome to read the reference summary below to enhance understanding."
-          : "Below is a reference summary for this page. Please read it carefully to better understand the information presented."}
+        Below is a reference summary for this page. Please read it carefully to
+        better understand the information presented.
       </p>
       <p>placeholder text</p>
 
@@ -94,26 +93,20 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
       </h2>
       <form
         aria-labelledby="completion-form-heading"
-        className="flex justify-end gap-2"
+        className="flex gap-2"
         onSubmit={action}
       >
-        <StatusButton
-          pending={isPending}
-          disabled={finished ? !page.next_slug : false}
-          className="w-44"
-        >
-          {!finished ? (
+        {pageStatus.latest && (
+          <StatusButton
+            pending={isPending}
+            disabled={isPending}
+            className="w-44"
+          >
             <span className="inline-flex items-center gap-1">
-              <CheckSquare2Icon className="size-4" /> Mark as completed
+              <CheckIcon className="size-4" /> Mark as completed
             </span>
-          ) : page.next_slug ? (
-            <span className="inline-flex items-center gap-1">
-              <ArrowRightIcon className="size-4" /> Go to next page
-            </span>
-          ) : (
-            <span>Textbook finished</span>
-          )}
-        </StatusButton>
+          </StatusButton>
+        )}
       </form>
       {isError ? (
         <Warning role="alert">{ErrorFeedback[ErrorType.INTERNAL]}</Warning>

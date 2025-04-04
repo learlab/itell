@@ -67,18 +67,14 @@ export function ExplainCRIButton({ pageSlug, chunkSlug, input }: Props) {
     if (isError) {
       reportSentry("explain cr", { error });
     }
-  }, [isError]);
+  }, [isError, error]);
 
   return (
-    <div>
-      <div role="status">
-        {animatedResponse !== "" ? (
-          <p className="text-sm text-muted-foreground">{animatedResponse}</p>
-        ) : null}
-      </div>
-
+    // HACK: have the container take full width after response is generated, push the reveal answer
+    // button to a different row
+    <div className={animatedResponse ? "basis-full" : ""}>
       <Button
-        variant="secondary"
+        variant="outline"
         type="button"
         disabled={formPending || isPending}
         onClick={action}
@@ -92,6 +88,12 @@ export function ExplainCRIButton({ pageSlug, chunkSlug, input }: Props) {
           <p>How can I improve my answer?</p>
         </div>
       </Button>
+
+      <div role="status">
+        {animatedResponse !== "" ? (
+          <p className="text-muted-foreground text-sm">{animatedResponse}</p>
+        ) : null}
+      </div>
 
       {isError ? <Warning>{ErrorFeedback[ErrorType.INTERNAL]}</Warning> : null}
 

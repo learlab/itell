@@ -136,7 +136,7 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
       <CRIContent>
         <div role="status">
           {state.status === StatusReread.ANSWERED && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Thanks for completing this question. You can move on to the next
               section or refine your answer.
             </p>

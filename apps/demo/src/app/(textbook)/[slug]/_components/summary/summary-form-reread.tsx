@@ -14,14 +14,13 @@ import {
   ErrorType,
   SummaryResponseSchema,
 } from "@itell/core/summary";
-import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { Page } from "#content";
 import { type User } from "lucia";
-import { InfoIcon, SendHorizontalIcon } from "lucide-react";
+import { SendHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
@@ -40,7 +39,6 @@ import {
   saveSummaryLocal,
   SummaryInput,
 } from "./summary-input";
-import { NextPageButton } from "./summary-next-page-button";
 import useDriver from "./use-driver";
 import type { SummaryResponse } from "@itell/core/summary";
 
@@ -54,7 +52,6 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const pageSlug = page.slug;
   const prevInput = useRef<string | undefined>(undefined);
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
-  const [finished, setFinished] = useState(pageStatus.unlocked);
   const criStore = useCRIStore();
   const isSummaryReady = useSelector(criStore, SelectSummaryReady);
   const screenIssue = useScreenIssue();
@@ -111,6 +108,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       const json = await apiResponse.json();
       const parsed = SummaryResponseSchema.safeParse(json);
       if (!parsed.success) {
+        console.log("response", json);
         throw new Error("summary response in wrong shape", {
           cause: parsed.error,
         });
@@ -141,7 +139,6 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
 
       clearKeystroke();
       finishStage("Saving");
-      setFinished(true);
       prevInput.current = input;
 
       if (isLastPage(page)) {
@@ -175,23 +172,6 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
     <>
       <PortalContainer portals={portals} />
       <div className="flex flex-col gap-2" id={Elements.SUMMARY_FORM}>
-        <div role="status">
-          {finished && page.next_slug ? (
-            <div className="flex flex-col gap-2">
-              <Alert variant={"success"}>
-                <InfoIcon className="size-4" />
-                <AlertTitle>
-                  You have finished this page and can move on. You are still
-                  welcome to improve the summary.
-                </AlertTitle>
-              </Alert>
-              <div className="flex items-center gap-2">
-                <NextPageButton pageSlug={page.next_slug} />
-              </div>
-            </div>
-          ) : null}
-        </div>
-
         <h2 id="summary-form-heading" className="sr-only">
           submit summary
         </h2>

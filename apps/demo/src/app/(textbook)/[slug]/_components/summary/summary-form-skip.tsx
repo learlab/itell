@@ -1,18 +1,13 @@
 "use client";
 
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "@itell/core/hooks";
 import { ErrorFeedback, ErrorType } from "@itell/core/summary";
 import { Warning } from "@itell/ui/callout";
 import { StatusButton } from "@itell/ui/status-button";
 import { useSelector } from "@xstate/store/react";
-import {
-  ArrowBigRightIcon,
-  ArrowRightIcon,
-  FlameIcon,
-  StepForward,
-} from "lucide-react";
+import { ArrowBigRightIcon, FlameIcon, StepForward } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
@@ -20,7 +15,6 @@ import { createEventAction } from "@/actions/event";
 import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
 import { useCRIStore } from "@/components/provider/page-provider";
-import { Confetti } from "@/components/ui/confetti";
 import { EventType } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
@@ -42,7 +36,6 @@ export const SummaryFormSkip = memo(
     const criStore = useCRIStore();
     const isSummaryReady = useSelector(criStore, SelectSummaryReady);
     const router = useRouter();
-    const [pageFinished, setPageFinished] = useState(pageStatus.unlocked);
 
     const {
       action,
@@ -70,7 +63,6 @@ export const SummaryFormSkip = memo(
         }
 
         if (page.next_slug) {
-          setPageFinished(true);
           router.push(page.next_slug);
           return;
         }
@@ -105,10 +97,9 @@ export const SummaryFormSkip = memo(
 
     return (
       <div className="flex flex-col gap-2">
-        <Confetti active={pageFinished} />
         <h3 className="text-2xl font-extrabold">Nicely Done!</h3>
         <div className="flex flex-col gap-1 leading-relaxed">
-          {pageFinished ? (
+          {pageStatus.unlocked ? (
             <>
               <p>
                 You have earned the write to skip writing a summary by writing
@@ -156,11 +147,11 @@ export const SummaryFormSkip = memo(
           className="flex justify-end gap-2"
           onSubmit={action}
         >
-          <StatusButton
-            pending={isPending}
-            disabled={pageFinished ? !page.next_slug : false}
-            onClick={() => {
-              if (!pageFinished) {
+          {pageStatus.latest && (
+            <StatusButton
+              pending={isPending}
+              disabled={isPending}
+              onClick={() => {
                 createEventAction({
                   type: EventType.REWARD_SPENT,
                   pageSlug: page.slug,
@@ -168,22 +159,14 @@ export const SummaryFormSkip = memo(
                     rewardType: "summary-skip",
                   },
                 });
-              }
-            }}
-          >
-            {!pageFinished ? (
-              <span className="inline-flex items-center gap-1">
-                <StepForward className="size-4" /> Skip Summary{" "}
-                {page.quiz ? "and Take Quiz" : ""}
+              }}
+            >
+              <span className="flex items-center gap-2">
+                <StepForward className="size-4" />
+                <span>Skip Summary</span>
               </span>
-            ) : page.next_slug ? (
-              <span className="inline-flex items-center gap-1">
-                <ArrowRightIcon className="size-4" /> Go to next page
-              </span>
-            ) : (
-              <span>Textbook finished</span>
-            )}
-          </StatusButton>
+            </StatusButton>
+          )}
         </form>
         {isError ? (
           <Warning role="alert">{ErrorFeedback[ErrorType.INTERNAL]}</Warning>

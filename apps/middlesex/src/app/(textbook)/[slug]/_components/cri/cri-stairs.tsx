@@ -248,7 +248,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             Answer the question
           </h3>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {(status === StatusStairs.SEMI_CORRECT ||
               status === StatusStairs.BOTH_INCORRECT) && (
               <ExplainCRIButton
@@ -260,7 +260,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="secondary" type="button" className="gap-2">
+                  <Button variant="outline" type="button" className="gap-2">
                     <KeyRoundIcon className="size-4" />
                     Reveal Answer
                   </Button>
@@ -301,7 +301,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                   }
                 }}
                 onPaste={(e) => {
-                  if (isProduction) {
+                  if (isProduction && !user?.isAdmin) {
                     e.preventDefault();
                     toast.warning(
                       "Copy & Paste is disallowed, please answer with your own words."
