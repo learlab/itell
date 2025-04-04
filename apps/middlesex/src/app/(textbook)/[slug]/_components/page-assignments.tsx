@@ -67,6 +67,7 @@ export async function PageAssignments({
       if (user.isAdmin) {
         return (
           <AssignmentsShell>
+            <PageCompleted />
             <DeleteQuiz pageSlug={page.slug} />
           </AssignmentsShell>
         );
