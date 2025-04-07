@@ -20,6 +20,7 @@ export default async function Page({
   const { class_code_valid } = routes.home.$parseSearchParams(
     await searchParams
   );
+  
   return (
     <>
       <MainNav read />
