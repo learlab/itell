@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
           conditionAssignments: pageConditions,
           role: "user",
           classId: null,
-          onboardingFinished: true, // Skip onboarding for SCORM users
+          onboardingFinished: false, // Skip onboarding for SCORM users
         },
         provider_id: "scorm",
         provider_user_id: scormUserId,
