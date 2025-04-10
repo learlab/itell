@@ -330,7 +330,13 @@ const splitWords = ({
 
   parts.forEach((part) => {
     if (!part) return;
-    if (/^\s+$/.test(part) || /^[.!?,;:]$/.test(part)) {
+    if (
+      /^\s+$/.test(part) ||
+      part.startsWith("by") ||
+      /Edward/.test(part) ||
+      /Hofstede/.test(part) ||
+      /^[.!?,;:]$/.test(part)
+    ) {
       words.push({ text: part, isTarget: false });
       return;
     }

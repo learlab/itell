@@ -13,54 +13,9 @@ import { LinkIcon } from "lucide-react";
 
 const cards = [
   {
-    text: "The operator training programs at Chevron's Pascagoula Refinery encompass multi-year progression paths. Trainees achieve fully qualified status by completing required training through a building-block approach. The program evaluates knowledge and competency through written examinations, skill demonstrations, and verbal assessments, ensuring the Refinery maintains a well-qualified workforce.",
-    source: "1 Operations Training Program Overview",
-    href: "/1-operations-training-program-overview",
-  },
-  {
-    text: "The Formal Operator Training Program is a three-year program designed to develop the required skills, knowledge, and competencies of new hire operators. The program incorporates Global Formal Operator Training Program (GFOTP), On-the-Job Training, and Qualification Activities. Trainees must qualify on their first job within 12 months, second job within 24 months, and jobs three and four within 36 months.",
-    source: "2 Formal Operator Training Program (FOTP)",
-    href: "/2-formal-operator-training-program-fotp",
-  },
-  {
-    text: "A Fully Qualified Operator must continue training in each of their areas' remaining job roles. FQO Job qualification training provides continuing education for operators to assume duties of additional operator jobs, either within their current Business Unit or when re-assigned to another Business Unit. The maximum time expectation for completing job training requirements is 12 months.",
-    source: "3 Fully Qualified Operator (FQO) Training",
-    href: "/3-fully-qualified-operator-fqo-training",
-  },
-  {
-    text: "Control Room Operator training requires completion of specific job qualifications and fundamentals courses. The program includes post-fundamentals training with mentors, simulator training on Honeywell and Yokogawa systems, and hands-on console experience. CROs must maintain their qualification by working minimum shifts and completing regular refresher training.",
-    source: "4 Control Room Operator (CRO) Training",
-    href: "/4-control-room-operator-cro-training",
-  },
-  {
-    text: "The Head Operator training program focuses on developing well-qualified workforce leadership through standardized technical and professional skill development. It includes comprehensive field and console training requirements, with structured progression paths and evaluation processes. The program emphasizes leadership skills aligned with We Lead expectations and promotes Operational Excellence.",
-    source: "5 Head Operator (HO) Training",
-    href: "/5-head-operator-ho-training",
-  },
-  {
-    text: "Requalification requirements are determined by length of absence from the job through a Board of Review process. The matrix outlines specific requirements for trainees and qualified operators, with mandatory review of MOCs and procedure updates during absence. Training may include shadow training, solo operation, skill assessments, and job school attendance.",
-    source: "6 Requalification – Absence from Job",
-    href: "/6-requalification-absence-from-job",
-  },
-  {
-    text: "Other training encompasses new plant training requirements and Management of Change (MOC) training. For new plants, operations personnel must complete comprehensive unit schools, achieve minimum test scores, and complete qualification requirements. MOC training covers plant changes and procedure updates, managed through the MOC system and delivered by subject matter experts.",
-    source: "7 Other Training",
-    href: "/7-other-training",
-  },
-  {
-    text: "The Chevron internship program offers semester-long opportunities for students from Industrial Operations or Maintenance programs. Interns must maintain a 3.0 GPA and complete pre-hire requirements. The 12-14 week program provides hands-on experience under direct supervision, with potential transition to full-time operator trainee positions based on performance and business needs.",
-    source: "8 Interns",
-    href: "/8-interns",
-  },
-  {
-    text: "Unit School Instructors and OTJ Trainers are crucial for operator development. Qualified instructors must demonstrate teaching ability, complete Train-The-Trainer class, and possess extensive job knowledge. OTJ Trainers conduct shadow training using tools like Break-in Guides and Electronic Operating Manuals to ensure comprehensive skill development.",
-    source: "9 Unit School Instructors & OTJ Trainers",
-    href: "/9-unit-school-instructors-and-otj-trainers",
-  },
-  {
-    text: "The roles and responsibilities framework outlines duties for Operations Leadership, Unit Field Trainers, Learning & Development staff, and HR personnel. This structure ensures proper training delivery, performance evaluation, and program management while maintaining compliance with safety and regulatory requirements throughout the operator development process.",
-    source: "10 Roles & Responsibilities",
-    href: "/10-roles-and-responsibilities",
+    text: "From the choice of words (message), to how we communicate (in person, or by e-mail), to how we acknowledge understanding with a nod or a glance (nonverbal feedback), to the internal and external interference, all aspects of communication are influenced by culture.",
+    source: "18: Intercultural and International Business Communication",
+    href: "/18-1-intercultural-communication",
   },
 ];
 export function KnowledgeCarousel() {
@@ -106,7 +61,7 @@ export function KnowledgeCard({
               />
             </svg>
             <blockquote className="border-none">
-              <p className="text-lg font-light leading-snug text-muted-foreground">
+              <p className="text-muted-foreground text-lg leading-snug font-light">
                 {text}
               </p>
             </blockquote>
