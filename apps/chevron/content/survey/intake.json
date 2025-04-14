@@ -169,77 +169,6 @@
       ]
     },
     {
-      "id": "business_knowledge",
-      "title": "Business Knowledge",
-      "display_rules": {
-        "operator": "and",
-        "conditions": [
-          {
-            "question_id": "business_knowledge",
-            "operator": "ne",
-            "value": "None"
-          }
-        ]
-      },
-      "questions": [
-        {
-          "id": "business_knowledge",
-          "text": "How high would you rate your confidence in understanding business communication?",
-          "type": "single_choice",
-          "options": [
-            { "text": "Very high", "value": 5 },
-            { "text": "High", "value": 4 },
-            { "text": "Neutral", "value": 3 },
-            { "text": "Low", "value": 2 },
-            { "text": "Very low", "value": 1 }
-          ],
-          "required": true
-        },
-        {
-          "id": "business_course",
-          "text": "How many business courses have you taken?",
-          "type": "single_choice",
-          "options": [
-            { "text": "More than 5", "value": 5 },
-            { "text": "4-5", "value": 4 },
-            { "text": "2-3", "value": 3 },
-            { "text": "1", "value": 2 },
-            { "text": "Never taken a course on business", "value": 1 }
-          ],
-          "required": true
-        },
-        {
-          "id": "business_news",
-          "text": "How often do you follow business news?",
-          "type": "single_choice",
-          "options": [
-            { "text": "Very often", "value": 5 },
-            { "text": "Often", "value": 4 },
-            { "text": "Occasionally", "value": 3 },
-            { "text": "Rarely", "value": 2 },
-            { "text": "Never", "value": 1 }
-          ],
-          "required": true
-        },
-        {
-          "id": "business_sources",
-          "text": "What sources do you use to learn about business? (Check all that apply)",
-          "type": "multiple_select",
-          "options": [
-            { "text": "Newspapers", "value": 1 },
-            { "text": "Magazines", "value": 8 },
-            { "text": "Blogs", "value": 2 },
-            { "text": "Books", "value": 4 },
-            { "text": "Videos", "value": 3 },
-            { "text": "Podcasts", "value": 5 },
-            { "text": "Other sources", "value": 6 },
-            { "text": "I don't learn about economics", "value": 7 }
-          ],
-          "required": true
-        }
-      ]
-    },
-    {
       "id": "pre_attitudes",
       "title": "Pre-Attitudes",
       "questions": [
@@ -467,58 +396,6 @@
             {
               "text": "Prefer not to answer",
               "value": 11
-            }
-          ],
-          "required": true
-        },
-        {
-          "id": "work_schedule",
-          "text": "Your current work schedule:",
-          "type": "single_choice",
-          "options": [
-            {
-              "text": "Don't work",
-              "value": 1
-            },
-            {
-              "text": "Regular hours (part-time)",
-              "value": 2
-            },
-            {
-              "text": "Variable hours (e.g., gig work, hours change often)",
-              "value": 3
-            },
-            {
-              "text": "Regular hours (full-time)",
-              "value": 4
-            },
-            {
-              "text": "Regular hours (>40 per week)",
-              "value": 5
-            }
-          ],
-          "required": true
-        },
-        {
-          "id": "num_courses",
-          "text": "Number of training courses you are taking this quarter",
-          "type": "single_choice",
-          "options": [
-            {
-              "text": "One",
-              "value": 1
-            },
-            {
-              "text": "Two",
-              "value": 2
-            },
-            {
-              "text": "Three",
-              "value": 3
-            },
-            {
-              "text": "Four or more",
-              "value": 4
             }
           ],
           "required": true
