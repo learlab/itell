@@ -8,33 +8,6 @@
       "title": "Technology Access",
       "questions": [
         {
-          "id": "device_primary",
-          "text": "Which of the following do you use as your primary device for learning?",
-          "type": "single_choice",
-          "options": [
-            {
-              "text": "Your own personal laptop or desktop computer",
-              "value": 1
-            },
-            {
-              "text": "Shared or borrowed (e.g., household laptop or desktop computer)",
-              "value": 7
-            },
-            {
-              "text": "Public (e.g., library) laptop or desktop computer",
-              "value": 8
-            },
-            { "text": "Your own personal tablet", "value": 2 },
-            {
-              "text": "Shared or borrowed (e.g., household) tablet",
-              "value": 3
-            },
-            { "text": "Your own personal mobile/cellphone", "value": 4 },
-            { "text": "Shared or borrowed mobile/cellphone", "value": 9 }
-          ],
-          "required": true
-        },
-        {
           "id": "device_hours",
           "text": "How many hours per day do you use a computer, tablet, or smartphone?",
           "type": "single_choice",
@@ -45,47 +18,6 @@
             { "text": "2 to 3 hours", "value": 4 },
             { "text": "3 to 5 hours", "value": 5 },
             { "text": "More than 5 hours per day", "value": 6 }
-          ],
-          "required": true
-        },
-        {
-          "id": "tech_access_place",
-          "text": "Which of the following best describes your internet access situation for training?",
-          "type": "single_choice",
-          "options": [
-            { "text": "I rely on strong home internet access", "value": 1 },
-            {
-              "text": "I rely on weak or unreliable home internet access",
-              "value": 2
-            },
-            {
-              "text": "I rely on library, coffee shop, or other free wifi",
-              "value": 3
-            }
-          ],
-          "required": true
-        },
-        {
-          "id": "tech_access",
-          "text": "All things considered, do you have concerns about access to the technology (devices OR internet access) that you need to complete your training?",
-          "type": "single_choice",
-          "options": [
-            {
-              "text": "I am not concerned about my technology access.",
-              "value": 1
-            },
-            {
-              "text": "I am mildly concerned about my technology access.",
-              "value": 2
-            },
-            {
-              "text": "I am moderately concerned about my technology access.",
-              "value": 3
-            },
-            {
-              "text": "I am very concerned about my technology access.",
-              "value": 4
-            }
           ],
           "required": true
         }
@@ -118,187 +50,6 @@
             { "text": "4-10", "value": 3 },
             { "text": "10-20", "value": 4 },
             { "text": "More than 20", "value": 5 }
-          ],
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": "text_num_follow_up",
-      "title": "Digital Text Experience Follow-Up",
-      "display_rules": {
-        "operator": "and",
-        "conditions": [
-          {
-            "question_id": "text_num_per_week",
-            "operator": "ne",
-            "value": "None"
-          }
-        ]
-      },
-      "questions": [
-        {
-          "id": "text_satisfaction",
-          "text": "Overall, how satisfied or dissatisfied are you with the digital texts you have used?",
-          "type": "single_choice",
-          "options": [
-            { "text": "Extremely satisfied", "value": 5 },
-            { "text": "Somewhat satisfied", "value": 4 },
-            { "text": "Neither satisfied nor dissatisfied", "value": 3 },
-            { "text": "Somewhat dissatisfied", "value": 2 },
-            { "text": "Extremely dissatisfied", "value": 1 }
-          ],
-          "required": true
-        },
-        {
-          "id": "text_compare",
-          "text": "How would you compare your learning from printed texts to digital texts?",
-          "type": "single_choice",
-          "options": [
-            { "text": "Printed texts are much better.", "value": 1 },
-            { "text": "Printed texts are somewhat better.", "value": 2 },
-            {
-              "text": "I am neutral about printed texts and digital texts.",
-              "value": 3
-            },
-            { "text": "Digital texts are somewhat better.", "value": 4 },
-            { "text": "Digital texts are much better.", "value": 5 }
-          ],
-          "required": true
-        }
-      ]
-    },
-    {
-      "id": "pre_attitudes",
-      "title": "Pre-Attitudes",
-      "questions": [
-        {
-          "id": "pre_attitudes1",
-          "text": "Use the scale below to indicate your degree of agreement with each statement as it APPLIES TO YOU.",
-          "type": "grid",
-          "rows": [
-            {
-              "text": "I study best in a group or with others.",
-              "value": "1"
-            },
-            {
-              "text": "I am not very good at learning online.",
-              "value": "2"
-            },
-            {
-              "text": "Doing guided problems (in class or online) really helps me.",
-              "value": "3"
-            },
-            {
-              "text": "I have a difficult time finding enough time to study.",
-              "value": "4"
-            },
-            {
-              "text": "I often need help at unusual times (e.g., after 9 PM).",
-              "value": "5"
-            },
-            {
-              "text": "I am a fast learner.",
-              "value": "7"
-            },
-            {
-              "text": "I could use help remembering class details, like assignment and test dates.",
-              "value": "10"
-            },
-            {
-              "text": "I feel alone when working on homework problems online.",
-              "value": "11"
-            },
-            {
-              "text": "I study better when I am working with other students.",
-              "value": "12"
-            },
-            {
-              "text": "I like it when I can work a problem online at my own pace, rather than in class.",
-              "value": "13"
-            },
-            {
-              "text": "I think that using online learning tools will increase the amount of time I need for studying.",
-              "value": "14"
-            },
-            {
-              "text": "I think online learning tools are too hard to use.",
-              "value": "15"
-            },
-            {
-              "text": "I can usually figure out how to use online tools quickly.",
-              "value": "16"
-            },
-            {
-              "text": "I like having AI tools that can help me with my work.",
-              "value": "17"
-            },
-            {
-              "text": "I could use help getting to know/networking with other people in my classes.",
-              "value": "18"
-            },
-            {
-              "text": "I can tell whether I am learning something well.",
-              "value": "19"
-            },
-            {
-              "text": "I am aware of what strategies I use.",
-              "value": "20"
-            },
-            {
-              "text": "I am a hard worker.",
-              "value": "21"
-            },
-            {
-              "text": "I finish whatever I begin.",
-              "value": "22"
-            },
-            {
-              "text": "Setbacks discourage me.",
-              "value": "23"
-            },
-            {
-              "text": "I stay away from things I do not understand.",
-              "value": "24"
-            },
-            {
-              "text": "I love to learn.",
-              "value": "25"
-            },
-            {
-              "text": "I can learn new things.",
-              "value": "26"
-            },
-            {
-              "text": "I control my learning outcomes.",
-              "value": "27"
-            },
-            {
-              "text": "I do not work very well on my own.",
-              "value": "28"
-            }
-          ],
-          "columns": [
-            {
-              "text": "Strongly Disagree",
-              "value": "1"
-            },
-            {
-              "text": "Disagree",
-              "value": "2"
-            },
-            {
-              "text": "Neutral",
-              "value": "3"
-            },
-            {
-              "text": "Agree",
-              "value": "4"
-            },
-            {
-              "text": "Strongly Agree",
-              "value": "5"
-            }
           ],
           "required": true
         }
@@ -345,58 +96,6 @@
             { "text": "Maori", "value": 7 },
             { "text": "White", "value": 9 },
             { "text": "Prefer not to self-identify", "value": 10 }
-          ],
-          "required": true
-        },
-        {
-          "id": "populations",
-          "text": "Do you identify as part of one or more of these populations? Please check all that apply",
-          "type": "multiple_select",
-          "options": [
-            {
-              "text": "Single parent",
-              "value": 1
-            },
-            {
-              "text": "Primary caregiver of child under age 10",
-              "value": 2
-            },
-            {
-              "text": "Primary caregiver of child over age 10",
-              "value": 3
-            },
-            {
-              "text": "Out of work force individual / unemployed",
-              "value": 4
-            },
-            {
-              "text": "English learner",
-              "value": 5
-            },
-            {
-              "text": "Economically disadvantaged",
-              "value": 6
-            },
-            {
-              "text": "Non-traditional student (e.g. due to age)",
-              "value": 7
-            },
-            {
-              "text": "First in family to attend college",
-              "value": 8
-            },
-            {
-              "text": "Disabled",
-              "value": 9
-            },
-            {
-              "text": "None of the above",
-              "value": 13
-            },
-            {
-              "text": "Prefer not to answer",
-              "value": 11
-            }
           ],
           "required": true
         },
@@ -608,26 +307,6 @@
           "required": true
         },
         {
-          "id": "demo_interests",
-          "text": "What do you like to learn about?",
-          "type": "multiple_choice",
-          "options": [
-            { "text": "Engineering", "value": 1 },
-            { "text": "Business", "value": 2 },
-            { "text": "History", "value": 3 },
-            { "text": "English", "value": 4 },
-            { "text": "Mathematics", "value": 5 },
-            { "text": "Communications", "value": 6 },
-            { "text": "Education", "value": 8 },
-            { "text": "Sciences", "value": 9 },
-            { "text": "Psychology", "value": 10 },
-            { "text": "Computer Science", "value": 11 },
-            { "text": "Economics", "value": 12 },
-            { "text": "Other", "value": 13 }
-          ],
-          "required": true
-        },
-        {
           "id": "demo_education",
           "text": "What is the highest degree or level of school you have completed? If currently enrolled, highest degree received",
           "type": "single_choice",
@@ -646,20 +325,6 @@
             { "text": "Master’s degree", "value": 9 },
             { "text": "Professional degree", "value": 10 },
             { "text": "Doctorate degree", "value": 11 }
-          ],
-          "required": true
-        },
-        {
-          "id": "demo_income",
-          "text": "What is your total combined family income for the past 12 months, before taxes, from all sources, wages, public assistance/benefits, help from relatives, alimony, and so on? If you don't know your exact income, please estimate.",
-          "type": "single_choice",
-          "options": [
-            { "text": "Less than $9,999", "value": 1 },
-            { "text": "$10,000 - $19,999", "value": 2 },
-            { "text": "$20,000 - $49,999", "value": 3 },
-            { "text": "$50,000 - $99,999", "value": 4 },
-            { "text": "$100,000 - $149,999", "value": 5 },
-            { "text": "More than $150,000", "value": 6 }
           ],
           "required": true
         },
