@@ -1,5 +1,5 @@
 {
-  "id": "32db68ad-9a90-4d37-96d7-f97c46e153e8",
+  "id": "bfbf7d03-d346-41b9-a884-1bfd4fed3869",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -66,6 +66,92 @@
           ]
         }
       },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cloze_answers": {
+      "name": "cloze_answers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "page_slug": {
+          "name": "page_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_words": {
+          "name": "total_words",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "correct_words": {
+          "name": "correct_words",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "cloze_answers_page_slug_idx": {
+          "name": "cloze_answers_page_slug_idx",
+          "columns": [
+            {
+              "expression": "page_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "cloze_answers_user_id_users_id_fk": {
+          "name": "cloze_answers_user_id_users_id_fk",
+          "tableFrom": "cloze_answers",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -178,82 +264,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.constructed_responses_feedback": {
-      "name": "constructed_responses_feedback",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "page_slug": {
-          "name": "page_slug",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "chunk_slug": {
-          "name": "chunk_slug",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "is_positive": {
-          "name": "is_positive",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "text": {
-          "name": "text",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tags": {
-          "name": "tags",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "constructed_responses_feedback_user_id_users_id_fk": {
-          "name": "constructed_responses_feedback_user_id_users_id_fk",
-          "tableFrom": "constructed_responses_feedback",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.events": {
       "name": "events",
       "schema": "",
@@ -332,6 +342,76 @@
         "events_user_id_users_id_fk": {
           "name": "events_user_id_users_id_fk",
           "tableFrom": "events",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.feedbacks": {
+      "name": "feedbacks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_positive": {
+          "name": "is_positive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "feedbacks_user_id_users_id_fk": {
+          "name": "feedbacks_user_id_users_id_fk",
+          "tableFrom": "feedbacks",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -1022,8 +1102,21 @@
           "name": "consent_given",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": false
+        },
+        "onboarding_finished": {
+          "name": "onboarding_finished",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
           "default": true
+        },
+        "offboarding_finished": {
+          "name": "offboarding_finished",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "personalization_data": {
           "name": "personalization_data",
@@ -1061,104 +1154,7 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {
-    "public.aal_level": {
-      "name": "aal_level",
-      "schema": "public",
-      "values": [
-        "aal1",
-        "aal2",
-        "aal3"
-      ]
-    },
-    "public.action": {
-      "name": "action",
-      "schema": "public",
-      "values": [
-        "INSERT",
-        "UPDATE",
-        "DELETE",
-        "TRUNCATE",
-        "ERROR"
-      ]
-    },
-    "public.code_challenge_method": {
-      "name": "code_challenge_method",
-      "schema": "public",
-      "values": [
-        "s256",
-        "plain"
-      ]
-    },
-    "public.equality_op": {
-      "name": "equality_op",
-      "schema": "public",
-      "values": [
-        "eq",
-        "neq",
-        "lt",
-        "lte",
-        "gt",
-        "gte",
-        "in"
-      ]
-    },
-    "public.factor_status": {
-      "name": "factor_status",
-      "schema": "public",
-      "values": [
-        "unverified",
-        "verified"
-      ]
-    },
-    "public.factor_type": {
-      "name": "factor_type",
-      "schema": "public",
-      "values": [
-        "totp",
-        "webauthn"
-      ]
-    },
-    "public.key_status": {
-      "name": "key_status",
-      "schema": "public",
-      "values": [
-        "default",
-        "valid",
-        "invalid",
-        "expired"
-      ]
-    },
-    "public.key_type": {
-      "name": "key_type",
-      "schema": "public",
-      "values": [
-        "aead-ietf",
-        "aead-det",
-        "hmacsha512",
-        "hmacsha256",
-        "auth",
-        "shorthash",
-        "generichash",
-        "kdf",
-        "secretbox",
-        "secretstream",
-        "stream_xchacha20"
-      ]
-    },
-    "public.one_time_token_type": {
-      "name": "one_time_token_type",
-      "schema": "public",
-      "values": [
-        "confirmation_token",
-        "reauthentication_token",
-        "recovery_token",
-        "email_change_token_new",
-        "email_change_token_current",
-        "phone_change_token"
-      ]
-    }
-  },
+  "enums": {},
   "schemas": {},
   "sequences": {},
   "roles": {},
