@@ -63,6 +63,7 @@
     "react-error-boundary": "^4.1.2",
     "react-textarea-autosize": "^8.5.6",
     "recharts": "^2.15.0",
+    "rehype-pretty-code": "^0.13.2",
     "server-only": "^0.0.1",
     "sonner": "^1.7.1",
     "use-action-status": "^0.0.1",

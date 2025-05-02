@@ -5,6 +5,7 @@ import rehypeAddCri from "@itell/rehype-add-cri";
 import rehypeWrapHeadingSection from "@itell/rehype-wrap-heading-section";
 import rehypeFormat from "rehype-format";
 import rehypeKatex from "rehype-katex";
+import rehypePrettyCode from "rehype-pretty-code";
 import rehypeUnwrapImages from "rehype-unwrap-images";
 import remarkGfm from "remark-gfm";
 import remarkHeadingAttrs from "remark-heading-attrs";
@@ -97,6 +98,14 @@ const pages = defineCollection({
           rehypeWrapHeadingSection,
           // @ts-expect-error plugin has wrong type
           rehypeKatex,
+          () =>
+            rehypePrettyCode({
+              theme: {
+                dark: "one-dark-pro",
+                light: "github-light",
+              },
+              defaultLang: "python",
+            }),
           rehypeAddCri,
           rehypeFormat,
         ],
