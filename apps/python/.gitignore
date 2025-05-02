@@ -1,4 +1,0 @@
-.vercel
-.env*
-
-tests/playwright/.auth

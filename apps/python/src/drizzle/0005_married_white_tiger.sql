@@ -1,1 +1,0 @@
-ALTER TABLE "users" ALTER COLUMN "onboarding_finished" SET DEFAULT true;

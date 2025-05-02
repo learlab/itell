@@ -1,1 +1,0 @@
-ALTER TABLE "users" RENAME COLUMN "onboarding_tasks" TO "offboarding_finished";
