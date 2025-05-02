@@ -1,11 +1,11 @@
 {
-  "name": "@itell/demo",
+  "name": "@itell/python",
   "type": "module",
   "version": "0.1.0",
   "scripts": {
     "setup": "pnpm install && pnpm drizzle-kit migrate && pnpm run build:deps && pnpm run assets",
     "build": "next build",
-    "build:deps": "turbo run build --filter @itell/demo",
+    "build:deps": "turbo run build --filter @itell/python",
     "clean": "rm -rf .next .turbo .velite",
     "format": "prettier --write .",
     "lint": "eslint .",
