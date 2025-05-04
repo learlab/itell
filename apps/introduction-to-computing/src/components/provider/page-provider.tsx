@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useRef } from "react";
 import { useLocalStorage } from "@itell/core/hooks";
+import { PythonProvider as WebpyProvider } from "@webpy/react";
 import { type Subscription } from "@xstate/store";
 import { type Page } from "#content";
 
@@ -25,6 +26,11 @@ type Props = {
   page: Page;
   pageStatus: PageStatus;
 };
+
+const pythonSetupCode = `
+import io
+import contextlib
+`;
 
 type State = {
   session: GetSessionData;
@@ -126,7 +132,9 @@ export function PageProvider({
         condition,
       }}
     >
-      {children}
+      <WebpyProvider options={{ setUpCode: pythonSetupCode }}>
+        {children}
+      </WebpyProvider>
     </PageContext.Provider>
   );
 }

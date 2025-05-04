@@ -319,6 +319,10 @@ h5 {
   scroll-margin-top: calc(var(--nav-height) + 4rem);
 }
 
+.sandbox {
+  user-select: none;
+}
+
 /* prose */
 .prose {
   h1 {

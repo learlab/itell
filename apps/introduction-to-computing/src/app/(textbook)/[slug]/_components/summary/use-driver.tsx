@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, RefObject, useCallback, useEffect } from "react";
+import { JSX, RefObject, useCallback, useEffect, useMemo } from "react";
 import { Elements } from "@itell/constants";
 import { usePortal } from "@itell/core/hooks";
 import { SummaryResponse } from "@itell/core/summary";
@@ -36,7 +36,7 @@ function isStairs(config: Config): config is StairsConfig {
 }
 
 const useDriver = (config: Config) => {
-  const driverObj = driver();
+  const driverObj = useMemo(() => driver(), []);
   const { addPortal, removePortals, portals } = usePortal();
   const isStairsConfig = isStairs(config);
 

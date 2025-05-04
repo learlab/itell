@@ -1,0 +1,114 @@
+@reference "@itell/ui/globals.css";
+
+.prose code.language-math::before {
+  content: none;
+}
+
+.prose code.language-math::after {
+  content: none;
+}
+
+.prose pre:has(code.language-math) {
+  @apply bg-background text-foreground;
+}
+
+pre {
+  @apply rounded-lg !px-0;
+}
+
+code {
+  @apply text-sm leading-loose md:text-base;
+}
+
+pre > code {
+  counter-reset: line;
+}
+
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  background-color: var(--shiki-light-bg);
+  color: var(--shiki-light);
+}
+
+pre[data-theme*=" "] {
+  background-color: var(--shiki-light-bg);
+}
+
+.dark {
+  code[data-theme*=" "],
+  code[data-theme*=" "] span {
+    background-color: var(--shiki-dark-bg);
+    color: var(--shiki-dark);
+  }
+
+  pre[data-theme*=" "] {
+    background-color: var(--shiki-dark-bg);
+  }
+}
+
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply mr-4 inline-block w-4 text-right text-gray-500;
+}
+
+pre [data-line] {
+  @apply border-l-2 border-l-transparent px-4;
+}
+
+[data-highlighted-line] {
+  background: rgba(200, 200, 255, 0.1) !important;
+  @apply border-l-blue-400;
+}
+
+[data-highlighted-chars] {
+  @apply rounded bg-zinc-600/50;
+  box-shadow: 0 0 0 4px rgb(82 82 91 / 0.5);
+}
+
+[data-chars-id] {
+  @apply border-b-2 p-1 shadow-none;
+}
+
+[data-chars-id] span {
+  @apply !text-inherit;
+}
+
+[data-chars-id="v"] {
+  @apply border-b-pink-600 bg-rose-800/50 font-bold !text-pink-300;
+}
+
+[data-chars-id="s"] {
+  @apply border-b-yellow-600 bg-yellow-800/50 font-bold !text-yellow-300;
+}
+
+[data-chars-id="i"] {
+  @apply border-b-purple-600 bg-purple-800/50 font-bold !text-purple-200;
+}
+
+[data-rehype-pretty-code-title] {
+  @apply rounded-t-lg bg-[#746b4d] px-3 py-2 text-sm font-semibold text-[#f4f4f4] dark:bg-zinc-700 dark:text-zinc-200;
+}
+
+figure[data-rehype-pretty-code-figure]:has(> [data-rehype-pretty-code-title])
+  pre {
+  @apply rounded-t-none bg-[var(--shiki-light-bg)] dark:bg-[var(--shiki-dark-bg)];
+}
+
+figure[data-rehype-pretty-code-figure] figcaption {
+  text-align: center;
+}
+
+figure[data-rehype-pretty-code-figure] {
+  @apply mt-1 mb-6 rounded-md border p-2 shadow-md;
+}
+
+pre,
+code,
+figure {
+  @apply overflow-x-auto;
+}

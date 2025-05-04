@@ -2,6 +2,7 @@ import { Blockquote } from "@itell/ui/blockquote";
 import { Image } from "@itell/ui/image";
 import { Steps } from "@itell/ui/steps";
 
+import { Sandbox } from "./python/sandbox";
 import { Accordion, AccordionItem } from "./ui/accordion";
 import { Callout } from "./ui/callout";
 import { Question } from "./ui/question";
@@ -18,6 +19,7 @@ export const TextbookComponents = {
   "i-youtube": (props: { videoid: string }) => {
     return <YoutubeVideo videoid={props.videoid} />;
   },
+  "i-sandbox-py": Sandbox,
 };
 
 export const GuideComponents = {

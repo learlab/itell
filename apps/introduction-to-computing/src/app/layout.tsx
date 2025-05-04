@@ -3,6 +3,7 @@ import { env } from "@/env.mjs";
 import { isProduction } from "@/lib/constants";
 
 import "@itell/ui/globals.css";
+import "@/styles/code.css";
 
 import { Inter, Roboto_Slab } from "next/font/google";
 import { volume } from "#content";

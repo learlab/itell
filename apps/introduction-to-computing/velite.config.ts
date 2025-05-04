@@ -13,6 +13,7 @@ import remarkMath from "remark-math";
 import { defineCollection, defineConfig, defineSchema, s } from "velite";
 
 import { SurveySchema } from "@/lib/survey-data";
+import rehypeUnwrapSandbox from "./scripts/unwrap-sandbox";
 
 const execAsync = promisify(exec);
 const timestamp = defineSchema(() =>
@@ -108,6 +109,7 @@ const pages = defineCollection({
             }),
           rehypeAddCri,
           rehypeFormat,
+          rehypeUnwrapSandbox,
         ],
       }),
     })

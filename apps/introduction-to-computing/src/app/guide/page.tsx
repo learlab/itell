@@ -27,7 +27,10 @@ export default async function GuidePage() {
 
   return (
     <>
-      <h2 className="mb-4 text-balance text-center text-2xl font-extrabold tracking-tight md:text-3xl 2xl:text-4xl">
+      <h2
+        className="mb-4 text-center text-2xl font-extrabold tracking-tight text-balance md:text-3xl
+          2xl:text-4xl"
+      >
         iTELL User Guide
       </h2>
       <HtmlRenderer components={TextbookComponents} html={guide.html} />
