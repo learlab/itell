@@ -1,7 +1,4 @@
-/**
- * @import {Element, Root} from 'hast'
- */
-
+// @ts-nocheck
 import { interactive } from "hast-util-interactive";
 import { whitespace } from "hast-util-whitespace";
 import { SKIP, visit } from "unist-util-visit";

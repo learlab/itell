@@ -24,24 +24,24 @@ pre > code {
   counter-reset: line;
 }
 
-code[data-theme*=" "],
-code[data-theme*=" "] span {
+code[data-theme],
+code[data-theme] span {
   background-color: var(--shiki-light-bg);
   color: var(--shiki-light);
 }
 
-pre[data-theme*=" "] {
+pre[data-theme] {
   background-color: var(--shiki-light-bg);
 }
 
 .dark {
-  code[data-theme*=" "],
-  code[data-theme*=" "] span {
+  code[data-theme],
+  code[data-theme] span {
     background-color: var(--shiki-dark-bg);
     color: var(--shiki-dark);
   }
 
-  pre[data-theme*=" "] {
+  pre[data-theme] {
     background-color: var(--shiki-dark-bg);
   }
 }
