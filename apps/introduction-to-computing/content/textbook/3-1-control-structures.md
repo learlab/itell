@@ -133,28 +133,28 @@ The fundamental idea of control structures is that certain lines of code tell th
 
 Let’s look at this with a simple example of a conditional statement. We’ll talk more about conditionals in the next lesson, but for now, just know that the third line of Figure 3.1.1 says, “if myNum1 is less than myNum2, do the indented line of code below.”
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 1
 myNum2 = 2
 #Checks if myNum1 is less than myNum2
 if myNum1 < myNum2:
 	#Prints this if so
 	print("myNum2 is greater than myNum1!")
 #Prints this regardless
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.1**
 
-Notice in Figure 3.1.1 that both print statements ran. That’s because the conditional statement on line 4 said, “If this expression is true, run the indented code below.” When we change the results of the conditional statement by changing the values of myNum1 and myNum2, check out what happens in Figure 3.1.2.
+Notice in Figure 3.1.1 that both print statements ran. That’s because the conditional statement on line 4 said, “If this expression is true, run the indented code below.” When we change the results of the conditional statement by changing the values of myNum1 and myNum2, check out what happens in Figure 3.1.2. 
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 3
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 3
 myNum2 = 2
 #Checks if myNum1 is less than myNum2
 if myNum1 < myNum2:
 	#Prints this if so
 	print("myNum2 is greater than myNum1!")
 #Prints this regardless
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.2**
@@ -163,7 +163,7 @@ Here, the indented code on line 6 did not run because the conditional statement 
 
 This applies to multiple indented lines as well. None of the indented lines in Figure 3.1.3 executed. They are one code block that runs only if the conditional statement is true. This organizational method applies to every code structure we’ll talk about in this chapter: conditionals, loops, functions, and exception handling all group together code through indentation, and all mark their blocks of code with a colon at the end of the preceding line (here, if myNum1 < myNum2**:**).
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 3
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 3
 myNum2 = 2
 #Checks if myNum1 is less than myNum2
 if myNum1 < myNum2:
@@ -172,7 +172,7 @@ if myNum1 < myNum2:
 	print("Yes it is!")
 	print("Yes it is!")
 #Prints this regardless
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.3**
@@ -181,7 +181,7 @@ print("Execution complete!")`}>
 
 Indentation can be nested as well; this is how we create nested conditionals or nested loops. Look at Figure 3.1.4, with three numbers.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 1
 myNum2 = 2
 myNum3 = 3
 #Checks if myNum1 is less than myNum2
@@ -193,16 +193,16 @@ if myNum1 < myNum2:
 		#Prints this if so
 		print("myNum3 is also greater than myNum1")
 #Prints this regardless
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.4**
 
 Line 9 is also indented under line 5, so line 9 is controlled by line 5. Here, the conditional statement in line 5 is True, so the computer reaches line 9. The conditional statement in line 9 is also True, so the computer runs line 11. Notice what happens if the conditional statement in line 5 is False when we switch myNum1 and myNum2 in Figure 3.1.5.
 
-myNum1 is still less than myNum3, so _if_ the computer had reached line 9, it would have evaluated to True and printed line 11. However, line 9 is controlled by line 5, and line 5 was False, so the computer skips over the indented block (lines 6 through 11) containing line 9 and just runs the print statement in line 13.
+myNum1 is still less than myNum3, so _if_ the computer had reached line 9, it would have evaluated to True and printed line 11. However, line 9 is controlled by line 5, and line 5 was False, so the computer skips over the indented block (lines 6 through 11) containing line 9 and just runs the print statement in line 13. 
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 2
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 2
 myNum2 = 1
 myNum3 = 3
 #Checks if myNum1 is less than myNum2
@@ -214,7 +214,7 @@ if myNum1 < myNum2
 		#Prints this if so
 		print("myNum3 is also greater than myNum1")
 #Prints this regardless
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.5**
@@ -227,7 +227,7 @@ Nearly every programming language has some concept of scope. Scope most often de
 
 Let’s start with a simple example. Figure 3.1.6 is a revised version of the conditional we saw in Figure 3.1.1. The revision makes one change: instead of printing inside the conditional (the if statement), it saves the result to a string called result. It then prints result after the conditional has executed. What happens?
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 1
 myNum2 = 2
 #Checks if myNum1 is less than myNum2
 if myNum1 < myNum2:
@@ -235,22 +235,22 @@ if myNum1 < myNum2:
 	result = "myNum2 is greater than myNum1"
 #Prints the result
 print(result)
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.6**
 
-Well, myNum1 _is_ less than myNum2, so the contents of the conditional on line 4 run. The variable result is created, and it is then printed. Python didn’t care that result was created inside the conditional’s code block. This makes it different than many languages; many languages only define variables as existing within that code block.
+Well, myNum1 _is_ less than myNum2, so the contents of the conditional on line 4 run. The variable result is created, and it is then printed. Python didn’t care that result was created inside the conditional’s code block. This makes it different than many languages; many languages only define variables as existing within that code block. 
 
 In some ways, this makes programming in Python simpler. If we know that we’re going to create result at some point, we don’t have to worry about creating it at the wrong point. However, it isn’t all good news.
 
 ## The Dangers of Scope in Python {#The-Dangers-of-Scope-in-Python-2873} 
 
-Scope in Python also presents a danger. Take a look at the simple tweak in Figure 3.1.7 to the code from Figure 3.1.6. All we’ve done is change the values of myNum1 and myNum2 so that now the conditional statement on line 4 doesn’t trigger. That means line 6 never runs, which means result is never created. So, what happens when we run this code?
+Scope in Python also presents a danger. Take a look at the simple tweak in Figure 3.1.7 to the code from Figure 3.1.6. All we’ve done is change the values of myNum1 and myNum2 so that now the conditional statement on line 4 doesn’t trigger. That means line 6 never runs, which means result is never created. So, what happens when we run this code? 
 
  
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 2
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 2
 myNum2 = 1
 #Checks if myNum1 is less than mynum2
 if myNum1 < myNum2:
@@ -258,7 +258,7 @@ if myNum1 < myNum2:
 	result = "myNum2 is greater than myNum1!"
 #Prints the result
 print(result)
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.7**
@@ -269,7 +269,7 @@ This is the danger of scope in Python. When everything is working correctly, sco
 
 You can avoid this by creating variables outside the control structures just in case, as shown in Figure 3.1.8. Here, we create result initially before the condi- tional, so that even if the conditional doesn’t execute, result is still created. Gener- ally, for our purposes, knowledge of scope is most useful in debugging; when you encounter errors, one of the first things to check is whether the error is due to scope problems. Are you trying to access a variable that was created inside a conditional that didn’t run? Then you have a scope error.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 2
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 2
 myNum2 = 1
 #Creates an initial value for result
 result = "Result was unchanged."
@@ -278,7 +278,7 @@ if myNum1 < myNum2:
 	result = "myNum2 is greater than myNum1!"
 #Prints the result
 print(result)
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.1.8**

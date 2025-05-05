@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useRef, useState } from "react";
+import { Badge } from "@itell/ui/badge";
 import { Button } from "@itell/ui/button";
 import {
   Select,
@@ -187,37 +188,50 @@ export const Cell = memo(
                 }}
                 ref={editorRef}
               />
-              <div
-                className="absolute top-2 right-2 z-10"
-                {...register({
-                  order: 4,
-                  popover: {
-                    title: "Switch Editor Mode",
-                    description:
-                      "Switch between Script and REPL mode. In the REPL mode, the output of the last expression is displayed. In the Script mode, all output needs to be printed using the print function.",
-                  },
-                })}
-              >
-                <Select
-                  value={cellMode}
-                  onValueChange={(val) => setCellMode(val as CellMode)}
-                >
-                  <SelectTrigger className="w-[90px]">
-                    <SelectValue placeholder="Mode" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="script">Script</SelectItem>
-                    <SelectItem value="repl">REPL</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* <div */}
+              {/*   className="absolute top-2 right-2 z-10" */}
+              {/*   {...register({ */}
+              {/*     order: 4, */}
+              {/*     popover: { */}
+              {/*       title: "Switch Editor Mode", */}
+              {/*       description: */}
+              {/*         "Switch between Script and REPL mode. In the REPL mode, the output of the last expression is displayed. In the Script mode, all output needs to be printed using the print function.", */}
+              {/*     }, */}
+              {/*   })} */}
+              {/* > */}
+              {/*   <Select */}
+              {/*     value={cellMode} */}
+              {/*     onValueChange={(val) => setCellMode(val as CellMode)} */}
+              {/*   > */}
+              {/*     <SelectTrigger className="w-[90px]"> */}
+              {/*       <SelectValue placeholder="Mode" /> */}
+              {/*     </SelectTrigger> */}
+              {/*     <SelectContent> */}
+              {/*       <SelectItem value="script">Script</SelectItem> */}
+              {/*       <SelectItem value="repl">REPL</SelectItem> */}
+              {/*     </SelectContent> */}
+              {/*   </Select> */}
+              {/* </div> */}
             </div>
 
-            {result?.output && result.output !== "undefined" && (
-              <pre className="my-1 py-2">{result.output}</pre>
-            )}
-            {result?.error && (
-              <pre className="my-1 py-2 text-red-500">{result.error}</pre>
+            {result && (
+              <div
+                className="lg:text-normal relative mt-2 rounded-md border p-4 font-mono text-sm
+                  whitespace-break-spaces shadow-md xl:text-lg"
+              >
+                <Badge
+                  className="absolute top-0 right-0 -translate-y-1/2"
+                  variant={"outline"}
+                >
+                  Output
+                </Badge>
+                {result?.output && result.output !== "undefined" && (
+                  <div>{result.output}</div>
+                )}
+                {result?.error && (
+                  <div className="text-red-500">{result.error}</div>
+                )}
+              </div>
             )}
           </div>
         </div>
