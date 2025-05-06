@@ -1,4 +1,5 @@
 import { python } from "@codemirror/lang-python";
+import { indentUnit } from "@codemirror/language";
 import { EditorView, KeyBinding, keymap } from "@codemirror/view";
 
 export type PythonResult = {
@@ -25,4 +26,8 @@ export const createShortcuts = (keybindings: readonly KeyBinding[]) => {
   return keymap.of(keybindings);
 };
 
-export const baseExtensions = [python(), BaseEditorTheme];
+export const baseExtensions = [
+  python(),
+  BaseEditorTheme,
+  indentUnit.of("    "),
+];
