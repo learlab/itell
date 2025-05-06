@@ -37,7 +37,7 @@ export function ConsentSubmit({
         study, please indicate your agreement by clicking &quot;I am over 18
         years of age and I agree to having my data used in this study&quot;
       </p>
-      {!hasScrolledEnough && (
+      {!value && !hasScrolledEnough && (
         <div
           className="flex items-center gap-2 rounded-md bg-amber-50 p-3 text-amber-700
             dark:bg-amber-950 dark:text-amber-300"
