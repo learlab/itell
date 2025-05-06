@@ -62,7 +62,10 @@ export function WordItem({
     }
   };
 
-  const handlePrev = async (currentIndex: number, clearPrev: boolean = false) => {
+  const handlePrev = async (
+    currentIndex: number,
+    clearPrev: boolean = false
+  ) => {
     const prevIndex = currentIndex - 1;
     if (prevIndex >= 0) {
       if (clearPrev && inputRefs.current[prevIndex]) {
@@ -80,7 +83,7 @@ export function WordItem({
               "input[data-is-target='true']:last-of-type"
             ) as HTMLInputElement;
             if (input) {
-              if (clearPrev){
+              if (clearPrev) {
                 input.value = "";
               }
               input.focus();
@@ -105,16 +108,16 @@ export function WordItem({
 
   if (isRevealed) {
     return (
-      <span className="word-item inline-block whitespace-nowrap py-0.5">
-        <span className="text-green-600 font-medium px-1">{word}</span>
+      <span className="word-item inline-block py-0.5 whitespace-nowrap">
+        <span className="px-1 font-medium text-green-600">{word}</span>
       </span>
     );
   }
 
   return (
-    <span 
+    <span
       className={cn(
-        "word-item inline-block whitespace-nowrap py-0.5",
+        "word-item inline-block py-0.5 whitespace-nowrap",
         showAnswer && "cursor-pointer hover:opacity-80"
       )}
       onClick={handleClick}
@@ -159,12 +162,13 @@ function Letter({ letter, className }: LetterProps) {
   return (
     <Input
       className={cn(
-        "size-7 bg-muted text-center text-base text-muted-foreground xl:text-lg",
+        "bg-muted text-muted-foreground size-7 text-center text-base xl:text-lg",
         className
       )}
       type="text"
       defaultValue={letter}
       data-is-target={false}
+      tabIndex={-1}
       readOnly
     />
   );
@@ -234,7 +238,8 @@ function LetterInput({
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       className={cn(
-        "size-7 border bg-background text-center text-base focus-visible:border-2 focus-visible:border-info xl:text-lg",
+        `bg-background focus-visible:border-info size-7 border text-center text-base
+        focus-visible:border-2 xl:text-lg`,
         className
       )}
     />
