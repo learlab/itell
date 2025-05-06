@@ -159,9 +159,9 @@ One of the things that makes Python unique as a programming language is the acce
 
 For example, let’s imagine we’re creating an inventory program. In this case, our keys would be product names, and our values would be the current stock of that item. How would we declare a dictionary with product names as keys and inventories as values? Well, we used brackets for lists and parentheses for tuples, I bet you can guess what we’ll use for dictionaries.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
 myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15}
-print(myDictionary)`}>
+print(myDictionary)'>
 </i-sandbox-py>
 
 **Figure 4.5.1**
@@ -176,12 +176,12 @@ Keys in dictionaries must be immutable: strings, integers, and floats can be key
 
 Values, on the other hand, can change. In fact, if this program was to be used for inventory management, we would absolutely need to change the values. We can do this by accessing individual items from the dictionary, as shown in Figure 4.5.2.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
 myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15}
 print(myDictionary)
 
 myDictionary["sprockets"] += 1
-print(myDictionary)`}>
+print(myDictionary)'>
 </i-sandbox-py>
 
 **Figure 4.5.2**
@@ -192,14 +192,14 @@ The print() statements on lines 3 and 5 show that the operation on line 4 _does_
 
 So, we’ve created a dictionary in Figure 4.5.2. How do we add new items to it? You might be tempted to try to call an append() method like we used with lists, but in dictionaries, we don’t need to. We create new key:value pairs in dictionaries the same way we create new variables: by assigning a value to a new key. Figure 4.5.3 shows this in action.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
 myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15}
 print(myDictionary)
 
 myDictionary["gadgets"] = 1
 print(myDictionary)
 del myDictionary["gadgets"]
-print(myDictionary)`}>
+print(myDictionary)'>
 </i-sandbox-py>
 
 **Figure 4.5.3**
@@ -210,7 +210,7 @@ The reason we create and use keys this way is that a dictionary cannot have mult
 
 Sometimes, though, we might want to check to see if a key exists before assigning it. For example, imagine if we were building a phonebook app, and if the user tries to create a key that already exists, we want to prompt them for a different key instead of changing the phone number of the existing key. We can do that by checking if a key exists before referring to it, as shown in Figure 4.5.4.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myDictionary = {"David" : "4045551234", "Lucy" : "4045555678", "Vrushali" : "4045559101"}
+<i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"David" : "4045551234", "Lucy" : "4045555678", "Vrushali" : "4045559101"}
 print(myDictionary)
 
 if "David" in myDictionary:
@@ -218,7 +218,7 @@ if "David" in myDictionary:
 	myDictionary["David2"] = "4045551121"
 else
 	myDictionary["David"] = "4045551121"
-print(myDictionary)`}>
+print(myDictionary)'>
 </i-sandbox-py>
 
 **Figure 4.5.4**
@@ -227,8 +227,8 @@ The in operator, by default, operates on the keys of the dictionary. In Figure 4
 
 If we’re uncertain if a key will appear in the dictionary, we should either (a) check if it appears using in before trying to access it, or (b) be prepared to catch the KeyError shown in Figure 4.5.5.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myDictionary = {"David" : "4045551234", "Lucy" : "4045555678", "Vrushali" : "4045559101"}
-print(myDictionary["Dana"])`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"David" : "4045551234", "Lucy" : "4045555678", "Vrushali" : "4045559101"}
+print(myDictionary["Dana"])'>
 </i-sandbox-py>
 
 Figure 4.5.5
@@ -237,34 +237,34 @@ Figure 4.5.5
 
 As noted, the main benefit of dictionaries is that they give us useful keys so we can jump straight to the value we want. However, there will still be lots of times we want to traverse every item in a dictionary. For example, in our inventory program, perhaps we want to make sure to order more of any item that drops below 5. There are a number of ways we could do this. First, if we don’t care what key gives us these values, we could iterate over the values() directly, as shown in lines 5 through 7 of Figure 4.5.6.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
+<i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
 
 for value in myDictionary.values():
 	if value < 5:
-		print("A value less than 5 was found:", value)`}>
+		print("A value less than 5 was found:", value)'>
 </i-sandbox-py>
 
 **Figure 4.5.6**
 
 More commonly, though, we’ll want the key and the value. So, instead, we could iterate over the keys, and then grab the value from the dictionary based on the key, as shown in lines 5 through 8 of Figure 4.5.7. Notice that here we’re iterating over myDictionary.keys() in line 5, but this has the same effect as iterating over myDictionary itself; it assumes it should use keys if we don’t tell it otherwise.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
+<i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
 
 for key in myDictionary.keys():
 	value = myDictionary[key]
 	if value < 5:
-		print(key, "is less than 5:", value)`}>
+		print(key, "is less than 5:", value)'>
 </i-sandbox-py>
 
 **Figure 4.5.7**
 
 It’s also possible, however, to iterate over the keys and values simultaneously. This is a shortcut similar to the for-each loop itself where multiple parts of the sequence can be loaded into variables. Here, it’s assumed that the order is key, value, as shown in line 5 of Figure 4.5.8. So, we can iterate over the keys in the dictionary, the values in the dictionary, and the keys and values together.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
+<i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
 
 for (key, value) in myDictionary.items():
 	if value < 5:
-		print(key, "is  less than 5:", value)`}>
+		print(key, "is  less than 5:", value)'>
 </i-sandbox-py>
 
 **Figure 4.5.8**
@@ -277,9 +277,40 @@ Dictionaries are extremely powerful data structures, even when just used the way
 
 With a single dictionary, there are a lot of things you can do. For example, imagine you want to count the most common words in a book. If you have the book in plaintext, how would you do that? First, you’d likely replace all the punctuation marks and other symbols with spaces, so that you don’t get stuck treating a word with a period after it as a different word from its other appearances. Then, you’d probably change the entire thing to lower or upper case so you don’t have to worry about capitals.
 
+<i-image
+  style="aspect-ratio:658/406;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.5.9-b0081de4d167dcc0eee0c1af3ebd8d50.png"
+  alt="4.5.9"
+  width="658"
+  height="406">
+
+Figure 4.5.9
+
+</i-image><i-image
+  style="aspect-ratio:642/434;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.5.10-994e3d7068c2e4b8373bb971410cb440.png"
+  alt="4.5.10"
+  width="642"
+  height="434">
+
+Figure 4.5.10
+
+</i-image>
+
 After that, though, what would you do? You very likely might split the book by spaces, then start iterating over each individual word. When you find a word you haven’t seen before, you add it as a key to your dictionary with a value of 1. When you find a word you have seen before, you look for it in the dictionary and increment its value. In the end, your keys are all the words in the book, and your values are all the counts of each word.
 
 Alternatively, imagine you were creating a seating chart for a wedding. How would you do this? You could have a list of all the seats, or a list of tables each with a list of seats. However, this would mean you would need to know the table and seat number to look who was sitting there. In all likelihood, that’s backwards: you’re probably not looking for, “Who’s at table 5 seat 3?”, you’re looking for, “Where is Addison sitting?” So, you could do this with a dictionary instead: the keys are the individuals’ names, and the values are the seat assignments, as either strings (e.g. “5-3”) or as tuples (5, 3). That gets into our more complex application of dictionaries: merging dictionaries with lists, tuples, arrays, or other dictionaries.
+
+<i-image
+  style="aspect-ratio:654/302;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.5.11-b75e1ea0a17818eb776277ca492d714e.png"
+  alt="4.5.11"
+  width="654"
+  height="302">
+
+Figure 4.5.11
+
+</i-image>
 
 ## Dictionaries and Lists {#Dictionaries-and-Lists-3245} 
 
@@ -305,7 +336,7 @@ Before moving on to these super-advanced types of dictionaries, let’s explore 
 
 First, let’s see some code that counts the words in a string using a dictionary. This is shown in Figure 4.5.12.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "This is the string whose words we would like to count. This string contains some repeated words, as well as some unique words. It contains punctuation, and it contains words that are capitalized in different ways. If the method we write runs correctly, it will count 4 instances of the word 'it', 3 instances of the word 'this', and 3 instances of the word 'count'."
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "This is the string whose words we would like to count. This string contains some repeated words, as well as some unique words. It contains punctuation, and it contains words that are capitalized in different ways. If the method we write runs correctly, it will count 4 instances of the word 'it', 3 instances of the word 'this', and 3 instances of the word 'count'."
 
 myString = myString.replace(".", "")
 myString = myString.replace(",","")
@@ -321,7 +352,7 @@ for word in mySplitString:
 	else:
 		wordDictionary[word] = 1
 
-print(wordDictionary)`}>
+print(wordDictionary)'>
 </i-sandbox-py>
 
 **Figure 4.5.12**
@@ -332,13 +363,13 @@ We start by defining the string, myString, on line 1. We then modify it on lines
 
 For our classroom roster, we first define a dictionary of classes, as shown in lines 1 through 5 of Figure 4.5.14. Each class has a name as the key and a list of students (as defined by the brackets) as the value. Notice here how easily we can use lists as values instead of just simpler values on their own; we just put the same brackets and declaration as we usually would to define a list.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`classes = {"Math": ["David", "Lucy", "Dana"], "Physics": ["Addison", "Vrushali", "Bilbo"], "Chemistry": ["Sara", "Lugos", "Mireia", "Perle"],
+<i-sandbox-py  page-slug="__temp_slug__" code='classes = {"Math": ["David", "Lucy", "Dana"], "Physics": ["Addison", "Vrushali", "Bilbo"], "Chemistry": ["Sara", "Lugos", "Mireia", "Perle"],
 "Computing": ["Part", "Venijamin", "Terra", "Sofia"], "History": ["Tryphon", "Gevorg", "Raza", "Rein"]
 
 print("Students in Computing:", classes["Computing"])
 #Add Francis to History
 classes["History"].append("Francis")
-print("Students in History:", classes["History"])`}>
+print("Students in History:", classes["History"])'>
 </i-sandbox-py>
 
 **Figure 4.5.14**
@@ -347,10 +378,10 @@ Then, we look up all the students in Computing with classes\["Computing"\]. This
 
 For our address book, we sub out the lists for tuples, as shown in Figure 4.5.15. Here, we see on line 5 that we can print David’s complete information by printing his tuple, or we can print Dana’s phone number alone on line 6 by knowing that the phone number is at index 1. But that last note is exactly where we find some real power in dictionaries: why should we have to remember that the phone number is at index 1 when we can instead use a dictionary and store the phone number with key “phone number”?
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
+<i-sandbox-py  page-slug="__temp_slug__" code='addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
 
 print("David's Information:", addressBook["David"]
-print("Dana's Phone Number:", addressBook["Dana"][1])`}>
+print("Dana's Phone Number:", addressBook["Dana"][1])'>
 </i-sandbox-py>
 
 **Figure 4.5.15**
@@ -359,10 +390,10 @@ print("Dana's Phone Number:", addressBook["Dana"][1])`}>
 
 One of the most powerful parts of using dictionaries is the ability to have multiple dictionaries with the same keys, but different values. This data structure is a low-overhead version of object-oriented programming, which we’ll cover in the next chapter. To start, let’s convert that address book code to use these nested dictionaries in Figure 4.5.16.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
+<i-sandbox-py  page-slug="__temp_slug__" code='addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
 
 print("David's information:", addressBook["David"])
-print("Dana's Phone Number:", addressBook["Dana"]["phone"])`}>
+print("Dana's Phone Number:", addressBook["Dana"]["phone"])'>
 </i-sandbox-py>
 
 **Figure 4.5.16**
@@ -373,12 +404,12 @@ Note that this merely implements something resembling object-oriented programmin
 
 To show this off, let’s take one more example. Imagine we’re teaching a class with five students, and we gave a multiple choice test with five questions. Now, we want to grade the test. We could do that with dictionaries, as shown in Figure 4.5.17.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`ANSWER_KEY = {"1" : "A", "2" : "B", "3" : "C", "4" : "D", "5" : "A"}
+<i-sandbox-py  page-slug="__temp_slug__" code='ANSWER_KEY = {"1" : "A", "2" : "B", "3" : "C", "4" : "D", "5" : "A"}
 
 students = {}
 students["David"] = {"1" : "A", "2" : "B", "3" : "A", "4" : "B", "5" : "C"}
 students["Terra"] = {"1" : "A", "2" : "B", "3" : "C", "4" : "D", "5" : "A"}
-students["Lugos"] = {"1" : "A", "2" : "C", "3" : "C", "4" : "D", "5" : "A"}`}>
+students["Lugos"] = {"1" : "A", "2" : "C", "3" : "C", "4" : "D", "5" : "A"}'>
 </i-sandbox-py>
 
 **Figure 4.5.17**

@@ -114,7 +114,7 @@ cri:
 - question: What is the purpose of the shape command implemented using a for loop?
   answer: To let the user enter a number of sides and a side length and draw the corresponding regular polygon.
   slug: For-Loops-for-Drawing-Shapes-3035
-next_slug: 3-5-error-handling
+next_slug: 3-4-functions
 order: 2
 parent:
   title: 'Unit 3: Control Structures'

@@ -159,6 +159,14 @@ There are benefits to these different properties, so many languages will provide
 
 List-like structures go by various names: lists, arrays, tuples, vectors, tables, and more. The specific terms used depend on the language. Java, for example, uses “array” and “list” to refer to different things. “Tuple” is most commonly used in Python. Oftentimes, “array” is used to refer to a more primitive structure that only supports changing the existing values, whereas “list” refers to more complex data structures that support sorting, inserting, and other operations. “Tuples” are often immutable.
 
+<i-image
+  style="aspect-ratio:292/394;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.3.1-721253de59b0a426756d58e2a442b7ac.png"
+  alt="4.3.1"
+  width="292"
+  height="394">
+</i-image>
+
 As noted above, which specific implementation you’ll use depends on your language. The commonality among these list-like structures is that they contain an ordered series of values accessed via numeric indices.
 
 ## 2. Tuples in Python {#2-Tuples-in-Python-1556} 
@@ -169,21 +177,21 @@ Python has two major list-like structures: **tuples** and **lists.** Tuples are 
 
 To declare a tuple, we set a variable equal to a comma-separated series of values or variables, as shown on line 2 of Figure 4.3.2. Here, we’re creating a tuple (called a 3-tuple because it has three values) with the values 1, 2, and 3. We’ve done this here in terms of values, but if we use variables, it still pulls out the values and creates a tuple with these values, as shown on lines 7 and 8 in Figure 4.3.3.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates myTuple with the tuple (1, 2, 3)
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates myTuple with the tuple (1, 2, 3)
 myTuple = (1, 2, 3)
 
-print(myTuple)`}>
+print(myTuple)'>
 </i-sandbox-py>
 
 **Figure 4.3.2**
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myInt1 = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 1
 myInt2 = 2
 myInt3 = 3
 
 #Creates myTuple and assigns it the tuple #(myInt1, myInt2, myInt3)
 myTuple = (myInt1, myInt2, myInt3)
-print(myTuple)`}>
+print(myTuple)'>
 </i-sandbox-py>
 
 **Figure 4.3.3**
@@ -192,13 +200,13 @@ Note that the parentheses are optional in both Figure 4.3.2 and Figure 4.3.3; th
 
 Tuples can have multiple data types within them. For example, we could create a tuple of a string, a float, and an integer, as shown in Figure 4.3.4. Here, the first value of the tuple is a string, the second is a float, and the third is an integer. This follows Python’s general procedure of being loosely typed: Python never really cares what data types you’re using until you try to do something that doesn’t make sense. Imagine, though, if you assumed every value in the tuple was a string and attempted to call isupper() on each to check if they were uppercase. That would crash on the second item in the tuple because it isn’t a string, so we need to be careful to know what data types we’re dealing with.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "Hello, world!"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world!"
 myFloat = 5.1
 myInteger = 5
 
 #Creates myTuple as a tuple with the values of myString, myFloat, myInteger
 myTuple = (myString, myFloat, myInteger)
-print(myTuple)`}>
+print(myTuple)'>
 </i-sandbox-py>
 
 **Figure 4.3.4**
@@ -207,7 +215,7 @@ print(myTuple)`}>
 
 To access the individual items of a tuple, we use the same syntax we used for accessing individual characters in a string. As far as Python is concerned, strings, tuples, and lists are all pretty much the same.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "Hello, world!"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world!"
 myFloat = 5.1
 myInteger = 5
 
@@ -219,14 +227,14 @@ print(myTuple[0])
 #Prints the second element of myTuple
 print(myTuple[1])
 #Prints the third element of myTuple
-print(myTuple[2])`}>
+print(myTuple[2])'>
 </i-sandbox-py>
 
 **Figure 4.3.5**
 
 As shown in lines 10, 12, and 14 of Figure 4.3.5, to read an individual value from a tuple, we simply place the index in brackets after the variable name to access that specific element. This analogy to strings extends to slicing as well. We can access individual parts of the tuple using the same syntax we used with strings. Figure 4.3.6 shows a long tuple with some examples of slicing it the way we sliced strings on lines 11 through 19. All the same splicing syntax we used for strings works here for tuples as well.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "Hello, world!"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world!"
 myFloat = 5.1
 myInt1 = 5
 myCharacter = "Q"
@@ -241,14 +249,14 @@ print(myTuple[:2])
 #Prints the second and third values of myTuple
 print(myTuple[1:3])
 #Prints all but the last three values of myTuple
-print(myTuple[:-3])`}>
+print(myTuple[:-3])'>
 </i-sandbox-py>
 
 **Figure 4.3.6**
 
 Tuples also have a handy syntax for unpacking them, shown in line 11 of Figure 4.3.7. While technically this doesn’t allow us to do anything we couldn’t do before (since we could have referred to the tuple parts by index whenever we needed them), it allows us to easily unpack the parts of a tuple into variables with self-documenting names again rather than remembering what kind of data is held at each index.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "Hello, world!"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world!"
 myFloat = 5.1
 myInt1 = 5
 myCharacter = "Q"
@@ -264,7 +272,7 @@ print(myNewString)
 print(myNewFloat)
 print(myNewInt1)
 print(myNewCharacter)
-print(myNewInt2)`}>
+print(myNewInt2)'>
 </i-sandbox-py>
 
 **Figure 4.3.7**
@@ -277,7 +285,7 @@ In that case, what are tuples good for? You might be tempted to say, “A tuple 
 
 Rather, the real value of tuples comes in places where we can only pass one variable back and forth, but we want to pass multiple values. The most prominent example of that is the return statements of functions. A function or method can only return one value, but if it returns a tuple, it can actually return multiple values contained within that list. The receiving code merely needs to know what is located at each index of the tuple. Let’s try an example of this: imagine we want to tie together floor division and modulus so that we can call one function and get both the quotient and remainder for a division operation.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Returns a tuple containing the quotient and remainder
+<i-sandbox-py  page-slug="__temp_slug__" code='#Returns a tuple containing the quotient and remainder
 def quotientAndRemainder(dividend, divisor):
 	#Gets the quotient
 	quotient = dividend // divisor
@@ -293,7 +301,7 @@ tupleResults = quotientAndRemainder(myDividend, myDivisor)
 #Prints the first element of tupleResults
 print("Quotient:", tupleResults[0])
 #Prints the second element of tupleResults
-print("Remainder:", tupleResults[1])`}>
+print("Remainder:", tupleResults[1])'>
 </i-sandbox-py>
 
 **Figure 4.3.8**
@@ -302,7 +310,7 @@ In lines 2 through 8 of Figure 4.3.8, we define a function quotientAndRemainder 
 
 We can actually make this code shorter and more readable respectively by performing the operations in the tuple assignment and by using the unpacking trick we saw earlier, as shown in Figure 4.3.9. Here, we skip creating new temporary variables to hold the quotient and remainder by calculating them on line 4, and we make our code more readable by unpacking the resultant tuple into myQuotient and myRemainder on line 10 instead of referring to these values as tupleResults\[0\] and tupleResults\[1\]. This gives tuples what appear to be some considerable power. However, we’ll later see that Dictionaries are actually even better for this, at least in some ways.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Returns a tuple containing the quotient and remainder
+<i-sandbox-py  page-slug="__temp_slug__" code='#Returns a tuple containing the quotient and remainder
 def quotientAndRemainder(dividend, divisor):
 	#Returns the tuple of the quotient and remainder
 	return (dividend // divisor, dividend % divisor)
@@ -313,7 +321,7 @@ myDivisor = 4
 (myQUotient, myRemainder) = quotientAndRemainder(myDividend, myDivisor)
 
 print("Quotient:", myQuotient)
-print("Remainder:", myRemainder)`}>
+print("Remainder:", myRemainder)'>
 </i-sandbox-py>
 
 **Figure 4.3.9**
@@ -322,36 +330,36 @@ print("Remainder:", myRemainder)`}>
 
 Finally, tuples can be nested. You can have a tuple of tuples. First, we could do this by creating tuples, and then creating a tuple that contains those tuples, as shown in lines 1 through 5 in Figure 4.3.10.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myTuple1 = (1, 2, 3)
+<i-sandbox-py  page-slug="__temp_slug__" code='myTuple1 = (1, 2, 3)
 myTuple2 = (4, 5, 6)
 myTuple3 = (7, 8, 9)
 
 mySuperTuple = (myTuple1, myTuple2, myTuple3)
 
-print(mySuperTuple)`}>
+print(mySuperTuple)'>
 </i-sandbox-py>
 
 **Figure 4.3.10**
 
 The nested sets of parentheses in the output of Figure 4.3.10 show that these are nested tuples: the outer set of parentheses defines the tuple as a whole, and the inner sets of parentheses define each smaller tuple. You might notice that it looks like this syntax could be used in-line as well, and you would be correct, as shown in Figure 4.3.11.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`mySuperTuple = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+<i-sandbox-py  page-slug="__temp_slug__" code='mySuperTuple = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
 
-print(mySuperTuple)`}>
+print(mySuperTuple)'>
 </i-sandbox-py>
 
 **Figure 4.3.11**
 
 How would you then access individual values of this nested tuple? The first index you provide would determine which of the three tuples you grab, and the second index you provide would determine which element from that tuple you get. So, to get the first item of the second tuple, you ask for mySuperTuple\[1\]\[0\]), as shown in Figure 4.3.12.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myTuple1 = (1, 2, 3)
+<i-sandbox-py  page-slug="__temp_slug__" code='myTuple1 = (1, 2, 3)
 myTuple2 = (4, 5, 6)
 myTuple3 = (7, 8, 9)
 
 mySuperTuple = (myTuple1, myTuple2, myTuple3)
 
 #Prints the first item of the second tuple
-print(mySuperTuple[1][0])`}>
+print(mySuperTuple[1][0])'>
 </i-sandbox-py>
 
 **Figure 4.3.12**
@@ -368,7 +376,7 @@ Nearly everything we did with tuples, we can also do with lists. Figure 4.3.13 r
 
 Notice that the output of each block throughout this process matches the output of the corresponding block from the tuple examples in the previous lesson. The only difference is that lists are defined with brackets (as shown on line 7 of Figure 4.3.13) instead of parentheses.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Returns a tuple containing the quotient and
+<i-sandbox-py  page-slug="__temp_slug__" code='#Returns a tuple containing the quotient and
 def quotientAndRemainder(dividend, divisor)
 	#Returns the tuple of the quotient and remainder
 	return [dividend // divisor, dividend % divisor]
@@ -378,15 +386,15 @@ myDivisor = 4
 #Assigns the first value of the result to myQuotient and the second to myRemainder
 [myQuotient, myRemainder] = quotientAndRemainder(myDividend, myDivisor)
 print("Quotient:", myQuotient)
-print("Remainder:", myRemainder)`}>
+print("Remainder:", myRemainder)'>
 </i-sandbox-py>
 
 **Figure 4.3.14**
 
 The handy way of unpacking tuples into individual variables even works with lists, as shown in Figure 4.3.14. And nested lists work the same way as nested tuples, as shown in Figure 4.3.15. You could even mix lists and tuples to have a list of tuples or a tuple of lists, or a list with both lists and tuples or a tuple with both tuples and lists. Python is very flexible.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`mySuperTuple = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-print(mySuperTuple)`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='mySuperTuple = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(mySuperTuple)'>
 </i-sandbox-py>
 
 **Figure 4.3.15**
@@ -421,7 +429,7 @@ Remember, to iterate over a sequence means to execute some block of code for eac
 
 Recall that earlier when we talked about loops, we had a program where the user would enter a bunch of grades, and it would average those grades. Let’s revise that program to instead average the numbers in a list. In fact, let’s make it a function, so that it could be used in other ways by a hypothetical program.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Averages the numbers in a list
+<i-sandbox-py  page-slug="__temp_slug__" code='#Averages the numbers in a list
 def average(inList):
 	sum = 0
 	for number in inList:
@@ -432,7 +440,7 @@ myList1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 myList2 = [97, 87, 91, 83, 85, 91, 95, 99, 81, 85]
 
 print("The average of myList1 is:", average(myList1))
-print("The average of myList2 is:", average(myList))`}>
+print("The average of myList2 is:", average(myList))'>
 </i-sandbox-py>
 
 **Figure 4.3.17**
@@ -447,7 +455,7 @@ Generally, when dealing with lists, we use for loops. We can technically use whi
 
 Let’s take that a step further. We’ve mentioned that we can have **multi-dimensional lists,** or lists of lists. How do we iterate over those? Let’s imagine that instead of just averaging one set of numbers, we were interested in averaging several sets, each within themselves. Let’s call this a gradebook. In the gradebook, we have a list of lists of grades: each list of grades corresponds to one student, so we want to average each individual student’s grades. The result of this should be a separate list where each item in the list is the average of the corresponding item from the list of lists of grades. In other words, item #1 in the result should be the average of the numbers in list #1.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`def TwoDAverage(in2DList):
+<i-sandbox-py  page-slug="__temp_slug__" code='def TwoDAverage(in2DList):
 	result = []
 	#For each lsit in the list of lists
 	for numList in in2DList:
@@ -462,7 +470,7 @@ my2DList = [[91, 95, 89, 92, 85],
 			[79, 75, 85, 83, 89],
 			[81, 89, 91, 91, 90],
 			[99, 91, 95, 89, 90]]
-print("Averages:", TwoDAverage(my2DList))`}>
+print("Averages:", TwoDAverage(my2DList))'>
 </i-sandbox-py>
 
 **Figure 4.3.18**
@@ -479,7 +487,7 @@ This kind of nested loop structure is how we iterate over a two-dimensional list
 
 Lists are mutable. That means that if we pass a list to a function or method, the function or method _can_ change the values of the list, and those changes will persist out to the main program. Sometimes, this can be problematic. Imagine, for example, if the function from Figure 4.3.18 “popped” the grades in each list rather than iterating over them, as shown in Figure 4.3.19.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`def TwoDAverageWithPop(in2DList):
+<i-sandbox-py  page-slug="__temp_slug__" code='def TwoDAverageWithPop(in2DList):
 	result = []
 	while len(in2DList) > 0:
 		numList = in2DList.pop()
@@ -497,7 +505,7 @@ my2DList = [[91, 95, 89, 92, 85],
 			[81, 89, 91, 91, 90],
 			[99, 91, 95, 89, 90]]
 print("Averages:", TwoDAverage(my2DList))
-print("my2DList:", my2DList)`}>
+print("my2DList:", my2DList)'>
 </i-sandbox-py>
 
 **Figure 4.3.19**
@@ -506,7 +514,7 @@ The pop() method _removes_ and returns the last item in a list. It’s good when
 
 So, when dealing with lists and any other mutable data type, we have to be careful that we understand that all modifications we make to the list will persist. Most of the time, though, this will be useful: we can call functions to modify lists in place. We’ve actually seen an example of this. Compare the string methods to the list methods in Figure 4.3.20.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "Hello, world"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world"
 myList = [4, 1, 2, 3]
 
 print("myString before upper():", myString)
@@ -515,7 +523,7 @@ print("myList before sort():", myList, "\n")
 myString.upper()
 myList.sort()
 print("myString after upper():", myString)
-print("myList after sort():", myList)`}>
+print("myList after sort():", myList)'>
 </i-sandbox-py>
 
 **Figure 4.3.20**
@@ -544,9 +552,31 @@ Before we move on, let’s quickly cover three special kinds of list-like struct
 
 A **Stack** is a list-like structure that limits the ways in which you can add or remove information from the list. Rather than being able to insert or grab information from anywhere in the list, you can only add new information on top, and you can only access the information that is currently on the top. To add new data, we “push” it onto the top of the stack; to remove data, we “pop” it off the top of the stack. This is sometimes referred to as Last-In-First-Out, or LIFO. The last item added to the list is the first item removed from the list.
 
+<i-image
+  style="aspect-ratio:458/402;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.3.21-9a049dbe0c5e6940242d0b90307772dc.png"
+  alt="4.3.21"
+  width="458"
+  height="402">
+
+Figure 4.3.21
+
+</i-image>
+
 This makes a lot of sense when we’re dealing with physical objects: typically putting a new item on top blocks access to the ones below, so that should be the one we grab first when we need one. What about when there is no physical need to do so, though?
 
 Imagine you were programming a robot to search for your keys in your house or apartment. You would want it to search each room, and within each room search each piece of furniture, and within each piece of furniture search each drawer. So, what would you do? You’d initially give it three commands: search-Kitchen, search-Bedroom, and search-Bathroom. search-Kitchen, though, would be unpacked to find search-Counters, search-Drawers, and search-Cabinets. You would want the robot to do all three of these things before moving on to search the bedroom. So, you’d push those three commands on top of the stack of orders, then pop them off one by one. That way, you would ensure the robot would not move on to the bedroom until it had finished checking the kitchen.
+
+<i-image
+  style="aspect-ratio:322/426;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.3.22-ab0470cfa2a174dfb05eb36db6a8c2eb.png"
+  alt="4.3.22"
+  width="322"
+  height="426">
+
+Figure 4.3.22
+
+</i-image>
 
 This is actually analogous to an advanced computing topic called depth-first search that comes from the advanced data structure trees. These are both outside the scope of this material, but you’ll get to them in a future computing class.
 
@@ -555,6 +585,17 @@ This is actually analogous to an advanced computing topic called depth-first sea
 **Queues** work in exactly the opposite way of stacks: rather than Last-In-First-Out, queues are First-In-First-Out, or FIFO. Queues work the way most lines you experience in the real-world work: you are served in the order in which you got in line.
 
 Your call is answered in the order it was received. With queues, we’re restricted to removing items from the front of the list and adding items to the end of the list. We refer to this as “enqueuing” (adding an item to the end of the list) and “dequeuing” (removing an item from the start of the list).
+
+<i-image
+  style="aspect-ratio:748/316;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.3.23-1b53f8c1ff930fc33cac4d9f8c9f93c0.png"
+  alt="4.3.23"
+  width="748"
+  height="316">
+
+Figure 4.3.23
+
+</i-image>
 
 When designing programs, we might use queues to process tasks in the order they were launched. Interestingly, however, stacks end up being used more often in programming, for both theoretical and practical reasons. Theoretically, stacks lend themselves to the way in which programs are executed, as demonstrated by the analogy to a depth-first search above—you don’t need to understand the analogy right now, but rather just know that there exist concepts in computing that lend themselves nicely to stacks. For practical reasons, stacks tend to be a little more efficient as well: when using a queue, every time we dequeue an item, we have to update the indices of every other item in the list to decrease them by one. When using advanced computers that isn’t a big issue, but when you use computers of earlier generations, which are comparatively slower, that could present a major difficulty.
 
@@ -568,9 +609,31 @@ In lower-level languages (i.e., languages that are closer to the real functions 
 
 Higher-level languages abstract over this process. While they’re written to mimic interacting with a contiguous block of memory, in reality there might be pointers to different areas of memory. A list with five items might store those five items in various different places in memory, and when you request the second item, it goes and looks up the next item’s memory location. With older computers, though, even those look-ups could take some notable time, especially if you were doing a lot of them. Inserting was a particularly high-intensity operation: if you wanted to insert an item in the middle of a list, the computer had to go through and change its locations for every item after it in the list.
 
+<i-image
+  style="aspect-ratio:670/420;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.3.24-31d213d38c87bf7338ac15f437a32255.png"
+  alt="4.3.24"
+  width="670"
+  height="420">
+
+Figure 4.3.24
+
+</i-image>
+
 A linked list operates differently. Instead of one list of memory pointers, each item in the list would contain both its value _and_ a pointer to the next item in the list. So, if you wanted to get item #6, you would find its location from item #5. This makes certain operations significantly more efficient. Iterating, for example, wouldn’t require the computer to return to its list of memory locations each time it wanted to move to the next item: the next item’s location was stored with the current item. Inserting was a breeze as well: instead of having to update every item’s index, only the previous item had to be updated. If we wanted to insert a new item #6, we would just have to change item #5 to point to the new item #6; the new item #6 would then point to the old item #6, which is now #7.
 
 Of course, other operations are significantly less efficient. In a linked list, the computer has to iterate through _every_ previous item to find an item with a given index; there’s no way to jump straight to item #7 like there is with a regular list. But if we’re iterating and inserting far more than we’re jumping into the center of the list, then a linked list could grant some significant efficiency gains. Many of these issues have gone away as computers have gotten faster, but the underlying concepts are still part of the core of computing theory.
+
+<i-image
+  style="aspect-ratio:674/408;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.3.25-24d04b572147309448471bed51d6ef33.png"
+  alt="4.3.25"
+  width="674"
+  height="408">
+
+Figure 4.3.25
+
+</i-image>
 
 ## 6. Lists and Turtles {#6-Lists-and-Turtles-1560} 
 

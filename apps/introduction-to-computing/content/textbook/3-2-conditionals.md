@@ -255,9 +255,9 @@ Now that we’ve covered the basic principles of conditional statements, let’s
 
 Let’s start with the simple example: _if_ it’s raining, _then_ the user should wear a raincoat and rainboots. This reasoning is shown in Figure 3.2.2.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates todaysWeather and sets it
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it
 #equal to "raining"
-todaysWeather`}>
+todaysWeather'>
 </i-sandbox-py>
 
 **Figure 3.2.2**
@@ -281,7 +281,7 @@ Right now, the code just checks if it’s raining, and recommends a raincoat and
 
 We add an else block, and under the else block, we place the lines of code to print “t-shirt” and “shorts.” In Figure 3.2.4, todaysWeather does not equal “raining,” and so the conditional on line 6 is False, and the code it controls does not run. The else code runs if the corresponding conditional statement was False, so here, the else code block (lines 12 and 13) runs and prints “t-shirt” and “shorts.”
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates todaysWeather and sets it
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it
 #equal to "cold"
 todaysWeather = "cold"
 
@@ -293,7 +293,7 @@ if todaysWeather == "raining":
 else:
 	print("t-shirt")
 	print("shorts")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.4**
@@ -302,7 +302,7 @@ Notice the syntax in line 11, it’s important to get this right: the keyword el
 
 What happens if the first if statement was true? Then the code under the if statement runs, as shown in Figure 3.2.5. The else code block only runs if the if code block did _not_ run, and so here, the else code does not run. The final line that prints “Done!,” however, lies outside either code block, so it runs in both Figure 3.2.4 and 3.2.5.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates todaysWeather and sets it equal to "raining"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "raining"
 todaysWeather = "raining"
 
 #Checks if todaysWeather equals "raining"
@@ -313,7 +313,7 @@ if todaysWeather == "raining":
 else:
 	print("t-shirt")
 	print("shorts")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.5**
@@ -322,7 +322,7 @@ print("Done!")`}>
 
 Now let’s throw our else-if statements into the mix. We’ll start with just two checks: raining or cold.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates todaysWeather and sets it equal to "cold"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "cold"
 todaysWeather = "cold"
 
 #Checks if todaysWeather equals "raining"
@@ -337,14 +337,14 @@ elif todaysWeather == "cold":
 else:
 	print("t-shirt")
 	print("shorts")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.6**
 
 The majority of the code in Figure 3.2.6 is the same as the code from Figure 3.2.4, but we’ve put something in between the if and the else. Line 9 is nearly identical to the original if in line 5, but it starts with a slightly different keyword: elif. This is Python’s keyword for else-if. Other than the “el” at the beginning, it perfectly matches the original if. The only necessity for an elif statement is that it must come after an if and before any else at that level of indentation. And, as we said before, we can have more than one, as shown in Figure 3.2.7.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates todaysWeather and sets it equal to "windy"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "windy"
 todaysWeather = "windy"
 
 #Checks if todaysWeather equals "raining"
@@ -365,7 +365,7 @@ elif todaysWeather == "snowy":
 else:
 	print("t-shirt")
 	print("shorts")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.7**
@@ -374,7 +374,7 @@ How does the code in Figure 3.2.7 run? First it creates todaysWeather on line 2 
 
 We can preview a later lesson to examine this; later, we’ll talk about using operators along with conditionals. The code in Figure 3.2.8 approaches the same issue twice; note the difference.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates todaysWeather and sets it equal to "cold"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "cold"
 todaysWeather = "cold"
 
 #Checks if todaysWeather equals "cold"
@@ -391,7 +391,7 @@ elif todaysWeather == "cold":
 #Checks if todaysWeather equals "windy" or "cold"
 if todaysWeather == "cold" or todaysWeather == "windy":
 	print("jacket")
-print("Done! (Second block)")`}>
+print("Done! (Second block)")'>
 </i-sandbox-py>
 
 **Figure 3.2.8**
@@ -404,7 +404,7 @@ In the second segment (lines 13 through 17), we resolve this. Instead of making 
 
 Finally, note that a common error in programming conditionals is to “orphan” the else or the else-if conditionals, as shown in Figure 3.2.9.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates todaysWeather and sets it equal to "cold"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "cold"
 todaysWeather = "cold"
 
 #Checks if todaysWeather equals "cold"
@@ -418,7 +418,7 @@ print("Done!")
 #This else is unattached because the block was already broken!
 else:
 	print("t-shirt")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.9**
@@ -459,7 +459,7 @@ We’ve covered before the simple way we can use relational operators in conditi
 
 The greater-than-or-equal-to operator returns True if the first number is greater than or equal to the second, False if it is not. Since it returns True or False, we can use it in conditional statement in line 8 of Figure 3.2.10. 
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates balance and sets it equal to 20.0
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates balance and sets it equal to 20.0
 balance = 20.0
 #Creates purchasePrice and sets it equal to 19.0
 purchasePrice = 19.0
@@ -469,7 +469,7 @@ if balance >= purchasePrice:
 	print("Purchase possible!")
 else:
 	print("Purchase not possible!")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.10**
@@ -484,7 +484,7 @@ However, we can use mathematical operators along with relational operators. Imag
 
 In Figure 3.2.11, we’ve created a variable salesTax and given it the value 1.08, which mathematically is the multiplier for an 8% sales tax. Then, in the conditional, we multiply purchasePrice by salesTax. The computer automatically does this before checking the relational operator because of its internal order of operations. In this way, we can use mathematical operators within conditional statements.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates balance and sets it equal to 20.0
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates balance and sets it equal to 20.0
 balance = 20.0
 #Creates purchasePrice and sets it equal to 19.0
 purchasePrice = 19.0
@@ -496,7 +496,7 @@ if balance >= purchasePrice * salesTax:
 	print("Purchase possible!")
 else:
 	print("Purchase not possible!")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.11**
@@ -507,7 +507,7 @@ You might remember that one of the things that makes Python unique is easy acces
 
 Figure 3.2.12 shows a more complicated check for weather and clothing. Instead of checking each type of weather one-by-one and printing the corresponding articles of clothing, we could instead create lists of the weather conditions for each piece of clothing. On line 2, we see one of them: jacketWeather is a list of types of weather that suggest the user should wear a jacket: cold, windy, raining, and snowing.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates the list jacketWeather
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates the list jacketWeather
 jacketWeather = ["cold", "windy", "raining", "snowing"]
 #Creates todaysWeather and sets it equal to "raining"
 todaysWeather = "raining"
@@ -515,7 +515,7 @@ todaysWeather = "raining"
 #Checks if todaysWeather is in jacketWeather
 if todaysWeather in jacketWeather:
 	print("jacket")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.12**
@@ -526,7 +526,7 @@ The conditional on line 7 checks to see if todaysWeather is one of the items in 
 
 If a function returns a boolean, then we can use it in a conditional statement. For example, in Python, there is a function (well, technically a method, but don’t worry about the difference for now) called isdigit() that returns True if the string rep- resents a number, False if it does not. Figure 3.2.13 shows this in action.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNumericString = "12345"
+<i-sandbox-py  page-slug="__temp_slug__" code='myNumericString = "12345"
 myNonNumericString = "ABCDE"
 
 #Checks if myNumericString is purely numeric
@@ -538,7 +538,7 @@ else:
 if myNonNumericString.isdigit():
 	print("The second string is numerical.")
 else:
-	print("The second string is non-numerical.")`}>
+	print("The second string is non-numerical.")'>
 </i-sandbox-py>
 
 **Figure 3.2.13**
@@ -553,24 +553,24 @@ Finally, our boolean operators—and, or, and not—can be used to combine any o
 
 Figure 3.2.14 is a simplified version of one of our previous examples of elif, this time using just one if. Here, the conditional checks if todaysWeather is either cold _or_ windy. Note the syntax here: to check if one _or_ the other is true, we simply put the word or between the two logical expressions. Here, the first one evaluates to True and the second one evaluates to False, and True or False resolves to True: it’s true that the weather is either cold or windy.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`todaysWeather = "cold"
+<i-sandbox-py  page-slug="__temp_slug__" code='todaysWeather = "cold"
 
 #Checks if todaysWeather equals "windy" or "cold"
 if todaysWeather == "cold" or todaysWeather == "windy":
 	print("jacket")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.14**
 
 In Figure 3.2.15, had we used and instead of or, then the conditional would have been False. It would not be true that todaysWeather equals both “cold” and “windy” (and in fact, the way we’ve written this, that would be impossible since “cold” == “windy” itself is False).
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`todaysWeather = "cold"
+<i-sandbox-py  page-slug="__temp_slug__" code='todaysWeather = "cold"
 
 #Checks if todaysWeather equals "windy" and "cold"
 if todaysWeather == "cold" and todaysWeather == "windy":
 	print("jacket")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.15**
@@ -581,7 +581,7 @@ Now let’s try a more complex example. Previously, we’ve mentioned in the con
 
 Figure 3.2.16 shows a complex chunk of code that tests this. We’re putting together three logical expressions in one conditional with a pair of and operators. We check if the balance is greater than the purchase price plus sales tax, _and_ the cardholder is the current customer, _and_ the vendor is a trusted vendor. Only if all three of those things are True do we approve the purchase.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Sets up general information about the balance, tax, cardholder, and trusted vendors. 
+<i-sandbox-py  page-slug="__temp_slug__" code='#Sets up general information about the balance, tax, cardholder, and trusted vendors. 
 #Generally, the information in these lines would be sent into our program, not created here. 
 #Here, we create it manually to test out our code.
 balance = 20.0
@@ -599,14 +599,14 @@ if balance > purchasePrice * salesTax and cardholderName == \
 	print("Purchase approved!")
 else:
 	print("Purchase not approved!")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.16**
 
 This can get even more complicated. We might have logical expressions with boolean operators within the larger expression. Observe Figure 3.2.17 and note how it runs.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Sets up general information about the balance, tax, cardholder, and trusted vendors. 
+<i-sandbox-py  page-slug="__temp_slug__" code='#Sets up general information about the balance, tax, cardholder, and trusted vendors. 
 #Generally, the information in these lines would be sent into our program, not created here. 
 #Here, we create it manually to test out our code.
 balance = 20.0
@@ -625,7 +625,7 @@ if (balance > purchasePrice * salesTax or overdraftProtection) \
 	print("Purchase approved!")
 else:
 	print("Purchase not approved!")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.17**
@@ -650,11 +650,29 @@ Our original reasoning was, “If the balance is sufficient and the customer is 
 
 If that was confusing, don’t worry: this kind of branching reasoning is tough to explain in linear text. Instead, let’s take a look at two flowchart views of this.
 
-**Figure 3.2.18**
+<i-image
+  style="aspect-ratio:730/302;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/joyner.png-5a703f66adc337aea21309a8193efed8.png"
+  alt="3.2.2.png"
+  width="730"
+  height="302">
+
+Figure 3.2.18
+
+</i-image>
 
 Figure 3.2.18 was our original approach: one big decision with multiple conditions. If all are true, we go one way; if one is false, we go a different way.
 
-**Figure 3.2.19**
+<i-image
+  style="aspect-ratio:572/316;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/3.2.19-ea5251fe6b59c07bbc2624d3fbcbbfd4.png"
+  alt="3.2.19"
+  width="572"
+  height="316">
+
+Figure 3.2.19
+
+</i-image>
 
 Figure 3.2.19 is our new approach. Each individual decision is separate. If one is True, we go on to the next decision; if one is False, we go to the dedicated output for _that_ decision. Each conditional governs whether we move on to the next conditional or just exit. In some ways, this is similar to the else-if; however, where an else-if only runs if the previous if was False, a nested if only runs if the previous if was True because it’s part of the code block that only runs if the if statement was True.
 
@@ -666,7 +684,7 @@ Let’s take a look at what our previous purchase validation code would look lik
 
 Note that while one major benefit of nested conditionals is that we can take care of more combinations of conditions, another benefit is that in many ways, this code is more readable. Take a look at Figure 3.2.20.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`balance = 20.0
+<i-sandbox-py  page-slug="__temp_slug__" code='balance = 20.0
 salesTax = 1.08
 cardholderName = "David Joyner"
 trustedVendors = ["Maria's", "Bob's", "Vrushali's", "Ling's", "Tia's"]
@@ -689,7 +707,7 @@ if balance > purchasePrice * salesTax or overdraftProtection:
 		print("Purchase not approved; invalid customer.")
 else:
 	print("Purchase not approved; no funds or overdraft protection.")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.20**
@@ -704,7 +722,7 @@ This nesting applies on both sides of the structure as well. We can write code t
 
 This code performs exactly the same, but all the nesting is inside the else portions of the conditional. That’s because instead of checking whether the purchase _passes_ each requirement on lines 15, 18, and 21, it checks whether the purchase _fails_ each requirement; notice how the logical expressions have changed compared to Figure 3.2.20. If the purchase fails a condition, it prints that it’s failed and why; if not, it moves on to the next check. This is like saying that a purchase is approved if _none_ of the checks _fail_, rather than if _all_ of them _pass_: these mean the same thing, but they’re organized a little differently.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`balance = 20.0
+<i-sandbox-py  page-slug="__temp_slug__" code='balance = 20.0
 salesTax = 1.08
 cardholderName = "David Joyner"
 trustedVendors = ["Maria's", "Bob's", "Vrushali's", "Ling's", "Tia's"]
@@ -728,7 +746,7 @@ else:
 			print("Purchase not approved; untrusted vendor.")
 		else:
 			print("Purchase approved!")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.21**
@@ -743,14 +761,14 @@ So, let’s return to our earlier example of scope in a conditional now that we 
 
 Recall that this code creates the variable result outside the conditional. The scope of result is from line 4 until the program stops running. So, when line 6 inside the conditional comes up to change the value of result, result is still available. This line is within the scope of this variable. Within what we know now (and what we’ll learn until we get to functions), the scope of a variable is from the point at which it is created until the end of the program.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 1
 myNum2 = 2
 #Creates an initial value for result
 result = "Result was unchanged."
 if myNum1 < myNum2:
 	result = "myNum2 is greater than myNum1!"
 print(result)
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.2.22**
@@ -759,12 +777,12 @@ print("Execution complete!")`}>
 
 Note, however, that there is a risk. Imagine if you create a variable within an if statement’s code block, but then that code block doesn’t run. That means the variable was never created, and so if you try to access the variable outside the code block, your code will crash. You can see this happening in Figure 3.2.23.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 2
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 2
 myNum2 = 1
 if myNum1 < myNum2:
 	result = "myNum2 is greater than myNum1!"
 print(result)
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.2.23**
@@ -775,7 +793,7 @@ The best way to resolve this, in my opinion at least, is to never create variabl
 
 If we really want to create a variable inside a conditional to use outside of it, the least we can do is create it within each branch of the conditional, including an else. The if-then-else shown in Figure 3.2.24 guarantees that either the if code block _or_ the else code block will run. Since result is created in both, we guarantee result will have been created when we reach line 7. Again, I personally recommend that you avoid creating variables in conditionals that you need to access outside, but if you do, you can use this to guarantee they’re created.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNum1 = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 1
 myNum2 = 2
 #Checks if myNum1 is less than myNum2
 if myNum1 < myNum2:
@@ -783,7 +801,7 @@ if myNum1 < myNum2:
 else:
 	result = "myNum2 is not greater than myNum1!"
 print(result)
-print("Execution complete!")`}>
+print("Execution complete!")'>
 </i-sandbox-py>
 
 **Figure 3.2.24**

@@ -184,13 +184,57 @@ The term “passing by value” makes some sense. You’re passing some data int
 
 What does passing “by reference” mean, then? To understand that, we need to understand a little bit about the way a computer works on the inside. Imagine your computer like a giant file cabinet. It has thousands and millions of files. These files are the computer’s memory: they store everything that it knows at a given time. To access some data, you have to know where in the file cabinet the data is located. So, in our analogy, to access File A and File B, you have to know where they are.
 
+<i-image
+  style="aspect-ratio:660/150;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.1.1.png-5437e7a2ba691ae2450e68ffa9e78880.png"
+  alt="4.1.1.png"
+  width="660"
+  height="150">
+
+Figure 4.1.1
+
+</i-image>
+
 So, are they just labeled “File A” and “File B”? No; they’re labeled with some far more cryptic identifier like E1557. These identifiers are systematic and ordered; that’s why they’re relatively easy to navigate. We know that E1557 will come after E1556 and before E1558. These identifiers are tough to use, though. So, we create more accessible names, like “File A”, and somewhere we have a key indicating, “File A can be found at E1559.”
+
+<i-image
+  style="aspect-ratio:696/344;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.1.2.png-dbc0bd0308d106a2e413b1ff2e81bc68.png"
+  alt="4.1.2.png"
+  width="696"
+  height="344">
+
+Figure 4.1.2
+
+</i-image>
 
 That cryptic identifier is called a reference (or a memory address). It tells you where the variable itself can actually be found. When we pass by value, we grab the variable name (File A), find its reference (E1559), use the reference to find the value (5), and then tell the function the value (“Hey Addison, 5 and...”). The function never knows where the value came from.
 
-When we pass by reference, we grab the variable name (File A), find its refer- ence (E1559), and pass that reference _directly_ to the function (“Hey Addison, the value stored at E1559 and...”). The function then looks up the value on its own, but because it knows the reference, it can change the value if it wants to. It doesn’t have to, but it can.
+<i-image
+  style="aspect-ratio:688/342;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.1.3.png-1707934c254cd7f0831046ce88c9c41a.png"
+  alt="4.1.3.png"
+  width="688"
+  height="342">
+
+Figure 4.1.3
+
+</i-image>
+
+When we pass by reference, we grab the variable name (File A), find its reference (E1559), and pass that reference _directly_ to the function (“Hey Addison, the value stored at E1559 and...”). The function then looks up the value on its own, but because it knows the reference, it can change the value if it wants to. It doesn’t have to, but it can.
 
 That’s why these two approaches are called pass by value and pass by reference. With pass by value, we simply tell the function what value to operate on; with pass by reference, we tell it where to find the value, such that it could change the value if it wants to.
+
+<i-image
+  style="aspect-ratio:726/346;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.1.4.png-24d4928ed833c619cf333caa05fe77f1.png"
+  alt="4.1.4.png"
+  width="726"
+  height="346">
+
+Figure 4.1.4
+
+</i-image>
 
 ## 3. Passing by Value and Reference in Python {#3-Passing-by-Value-and-Reference-in-Python-1535} 
 
@@ -204,7 +248,7 @@ How does Python work? We could just answer that, or we could actually take a loo
 
 Note first that in Figure 4.1.5, we’ve started to include a label in our print statements. We’ll do that going forward to make our output a little easier to follow, even though it will make our code a little tougher to read.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Add one to anInteger
+<i-sandbox-py  page-slug="__temp_slug__" code='#Add one to anInteger
 def addOne(anInteger):
 	anInteger = anInteger + 1
 	print("anInteger:", anInteger)
@@ -214,7 +258,7 @@ myInteger = 5
 print("myInteger before addOne:", myInteger)
 #Call addOne on myInteger
 addOne(myInteger)
-print("myInteger after addOne:", myInteger)`}>
+print("myInteger after addOne:", myInteger)'>
 </i-sandbox-py>
 
 **Figure 4.1.5**
@@ -233,7 +277,7 @@ What is the result? When printed on line 11, myInteger retains the value 5, mean
 
 We noted above, though, that Java treats different data types differently. What about Python? Let’s check how it handles strings in Figure 4.1.6.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Add an exclamation to aString
+<i-sandbox-py  page-slug="__temp_slug__" code='#Add an exclamation to aString
 def addExc(aString):
 	aString = aString + "!"
 	print("aString:", aString)
@@ -242,7 +286,7 @@ def addExc(aString):
 myString = "Hello, world"
 print("myString before addExc:", myString)
 addExc(myString)
-print("myString after addExc:", myString)`}>
+print("myString after addExc:", myString)'>
 </i-sandbox-py>
 
 **Figure 4.1.6**
@@ -251,7 +295,7 @@ Just like Figure 4.1.5, we create a string myString on line 6, pass it into a fu
 
 When we described Java, though, we mentioned it was Java’s primitive types that were passed by value. Strings are somewhat primitive in Python, so let’s see how Python treats something more complex, like a list. We don’t know much about lists yet, but this example doesn’t need much understanding of them. Still, if this is confusing, revisit this after reading Chapter 4.3.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Add an item to aList
+<i-sandbox-py  page-slug="__temp_slug__" code='#Add an item to aList
 def addItem(aList):
 	aList.append("New Item!")
 	print("aList:", aList)
@@ -259,7 +303,7 @@ def addItem(aList):
 myList = ["One", "Two", "Three"]
 print("myList before addItem:", myList)
 addItem(myList)
-print("myList after addItem:", myList)`}>
+print("myList after addItem:", myList)'>
 </i-sandbox-py>
 
 **Figure 4.1.7**
@@ -274,24 +318,24 @@ This is a good time to briefly look at a related dynamic in how variables are as
 
 In Figure 4.1.8, we create myInt1 and give it the value 5 on line 1. Then we assign myInt2 to myInt1 on line 2. Then we change myInt1 to 7 on line 3. What is the result? myInt1 now has the value 7, its new value, as shown in the output of line 5. myInt2, though, keeps the value 5, as shown in the output of line 6. So, myInt2 isn’t set to equal myInt1 on line 2; it’s set to equal the _current value_ of myInt1 on line 2. This is similar to our notion of pass-by-value, although this is assignment- by-value. We assign myInt2 to the current value of myInt1. If the value of myInt1 changes, it doesn’t change myInt2 because it was only set to the value of myInt1 at one point in time.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myInt1 = 5
+<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 5
 myInt2 = myInt1
 myInt1 = 7
 
 print("myInt1:", myInt1)
-print("myInt2:", myInt2)`}>
+print("myInt2:", myInt2)'>
 </i-sandbox-py>
 
 **Figure 4.1.8**
 
 What happens when we try that with a list? The same thing happens in Figure 4.1.9 that happened with our function calls with lists in Figure 4.1.7. We create myList1 on line 1, then set myList2 equal to myList1 on line 2. We then change myList1 on line 3. When we print both lists, we find that myList2 _still_ equals myList1 on lines 5 and 6. It’s been set equal to the _reference_ to myList1. In other words, myList1 and myList2 now point to the same data: if we change myList1, we’re actually changing the data that myList1 and myList2 both point to. It’s kind of like myList2 is following myList1 around, copying its data, but really, it’s not even copying it: it’s pointing to the exact same data.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myList1 = ["One", "Two", "Three"]
+<i-sandbox-py  page-slug="__temp_slug__" code='myList1 = ["One", "Two", "Three"]
 myList2 = myList1
 myList1.append("Four")
 
 print("myList1:", myList1)
-print("myList2:", myList2)`}>
+print("myList2:", myList2)'>
 </i-sandbox-py>
 
 **Figure 4.1.9**
@@ -316,7 +360,7 @@ So, the values of myInteger and myString in Figures 4.1.5 and 4.1.6 didn’t cha
 
 The idea that integers and strings are immutable seems to be contradicted in the very same segment of code that is meant to demonstrate that they’re immutable. Let’s look at it again, shown here in Figure 4.1.10.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Add one to anInteger
+<i-sandbox-py  page-slug="__temp_slug__" code='#Add one to anInteger
 def addOne(anInteger):
 	anInteger = anInteger + 1
 	print("anInteger: ", anInteger)
@@ -326,7 +370,7 @@ myInteger = 5
 print("myInteger before addOne:", myInteger)
 #Call addOne on myInteger
 addOne(myInteger)
-print("myInteger after addOne:", myInteger)`}>
+print("myInteger after addOne:", myInteger)'>
 </i-sandbox-py>
 
 **Figure 4.1.10**
@@ -335,9 +379,9 @@ myInteger has the same value in lines 8 and 11 because myInteger is immutable, a
 
 Or, to make this even simpler, we can consider just the block of code shown in Figure 4.1.11. We’re changing myInteger right there on line 2, and the print statement on line 3 confirms its value changed! So how can integer be an immutable data type? We _just_ saw its value change in one of the simplest programs we can imagine.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myInteger = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='myInteger = 1
 myInteger = 2
-print(myInteger)`}>
+print(myInteger)'>
 </i-sandbox-py>
 
 **Figure 4.1.11**
@@ -360,7 +404,7 @@ Running it, what do we see? When we attempt to change the value of myInteger in 
 
 As before, first we define the addOne() function on line 2. Then, in our main program code, we create myInteger and assign it the value 5 on line 7. That means that Python creates a memory spot and plops the value 5 in it, and then points myInteger to that memory spot. Then, on line 10, we call addOne().
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Add one to anInteger
+<i-sandbox-py  page-slug="__temp_slug__" code='#Add one to anInteger
 def addOne(anInteger):
 	anInteger = anInteger + 1
 	print("anInteger:", anInteger)
@@ -372,7 +416,7 @@ print("myInteger before addOne:", myInteger)
 addOne(myInteger)
 print("myInteger after addOne:", myInteger)
 myInteger = myInteger + 1
-print("myInteger after increment:", myInteger)`}>
+print("myInteger after increment:", myInteger)'>
 </i-sandbox-py>
 
 **Figure 4.1.12**
@@ -387,16 +431,16 @@ However, telling anInteger to point at 6 instead of 5 doesn’t change where myI
 
 That all brings us to one last interesting thing we can do in Python. We mentioned above how every variable name actually points to a spot in memory, and when we change the value of an immutable variable (like an integer), we’re actually changing where the variable name is pointing. To make this a little easier, we _can_ print what spot of memory each variable is pointing at, as shown in Figure 4.1.13.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myInt1 = 5
+<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 5
 #Print the spot in memory to which myInt1 is pointing
-print(id(myInt1))`}>
+print(id(myInt1))'>
 </i-sandbox-py>
 
 **Figure 4.1.13**
 
 The id() function tells us what spot in memory a variable is pointing to. Here, it shows us that the variable myInt1 is pointing to the location in memory labeled 1407565448. If a data type is immutable, it just means that while the program is running, the data stored in that spot can’t be changed. It’s written in permanent marker, so to speak. Using this new function, we can see the difference between mutable and immutable data structures, as shown in Figure 4.1.14.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myInt1 = 5
+<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 5
 #Print the spot in memory to which myInt1 is pointing
 print(id(myInt1))
 myInt1 = 6
@@ -408,7 +452,7 @@ myList = ["One", "Two", "Three"]
 print(id(myList))
 myList.append("Four")
 #Print the spot in memory to which myInt1 is pointing
-print(id(myList))`}>
+print(id(myList))'>
 </i-sandbox-py>
 
 **Figure 4.1.14**
@@ -417,7 +461,7 @@ When we make a change to the immutable variable myInt1 on line 5, the memory add
 
 When we make a change to the mutable variable myList on line 14, however, the memory address to which it points doesn’t change. Notice that the print() statements on lines 13 and 17 print the same number, 40885824. Note, however, that this only applies to _changing_ the mutable variable. If we reassign it, it also gets a new memory address, as shown in Figure 4.1.15.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myList = ["One", "Two", "Three"]
+<i-sandbox-py  page-slug="__temp_slug__" code='myList = ["One", "Two", "Three"]
 #Print the spot in memory to which myInt1 is pointing
 print(id(myList))
 myList.append("Four")
@@ -426,7 +470,7 @@ print(id(myList))
 
 myList = ["Five", "Six", "Seven"]
 #Print the spot in memory to which myInt1 is pointing
-print(id(myList))`}>
+print(id(myList))'>
 </i-sandbox-py>
 
 **Figure 4.1.15**
@@ -435,17 +479,17 @@ Running append() on line 5 changes the value of the variable, but it doesn’t c
 
 Finally, it’s this strange oddity of Python that makes the code in Figure 4.1.16 print “True.” myInt1 and myInt2 are separately assigned to the value 5; yet, because Python creates 5 in memory, it simply assigns both variables to point at the same spot. So, not only do myInt1 and myInt2 have the same value, but they also refer to the same spot in memory. This only works because integers are immutable: otherwise, every time two variables coincidentally took on the same value, they would start interfering with each other.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myInt1 = 5
+<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 5
 myInt2 = 5
 #Prints True if myInt1 and myInt2 point to the same spot in memory
-print(id(myInt1) == id(myInt2))`}>
+print(id(myInt1) == id(myInt2))'>
 </i-sandbox-py>
 
 **Figure 4.1.16**
 
 Mutable variables will behave differently, as shown in Figure 4.1.17. Just like myInt1 and myInt2, myList1 and myList2 are assigned the same value. Because they are mutable, though, Python creates that value twice in memory, assigning them to point at the different memory locations; so, it is False that their memory locations are equal, as shown by line 4. This is what allows us to call append() on myList2 without affecting myList1, as shown by lines 6 through 9: had they pointed at the same memory location, changing the value via one variable name would have changed the value for the other variable name.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myList1 = ["One", "Two", "Three"]
+<i-sandbox-py  page-slug="__temp_slug__" code='myList1 = ["One", "Two", "Three"]
 myList2 = ["One", "Two", "Three"]
 
 print(id(myList1) == id(myList2))
@@ -453,7 +497,7 @@ print(id(myList1) == id(myList2))
 myList2.append("Four")
 
 print(myList1)
-print(myList2)`}>
+print(myList2)'>
 </i-sandbox-py>
 
 **Figure 4.1.17**
@@ -480,13 +524,13 @@ isdigit() is a boolean method that is part of the string data structure. It chec
 
 The answer lies in the fact that isdigit() is contained _within_ the string data type. That means every string has access to the isdigit() method. When called, the isdigit() method acts on whatever string called it, as shown in Figure 4.1.18. When we call myNumericString.isdigit(), isdigit() looks at myNumericString. When we call myNonNumericString.isdigit(), isdigit() checks myNonNumericString.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myNumericString = "12345"
+<i-sandbox-py  page-slug="__temp_slug__" code='myNumericString = "12345"
 myNonNumericString = "ABCDE"
 
 #Prints True if myNumericString is digital
 print(myNumericString.isdigit())
 #Prints True if myNonNumericString is digital
-print(myNonNumericString.isdigit())`}>
+print(myNonNumericString.isdigit())'>
 </i-sandbox-py>
 
 **Figure 4.1.18**
@@ -501,7 +545,7 @@ If this is still confusing, don’t worry. Like I’ve said, you don’t really 
 
 If this is still confusing but functions made sense, then there’s a little equivalent syntax you can think of that will be true for the rest of this unit. A method is like a function that takes the variable referencing it as its first parameter. myString. isdigit() can be thought of largely as the same as isdigit(myString), where isdigit() is a function that checks if myString is all digits, as shown in Figure 4.1.19. This won’t work when we reach Chapter 5.1, but it’s sufficiently equivalent to let you proceed with Unit 4.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`import string
+<i-sandbox-py  page-slug="__temp_slug__" code='import string
 #Return True if inString contains all digits
 def isdigit(inString):
 	#Check each character one-by-one
@@ -515,7 +559,7 @@ def isdigit(inString):
 
 myString = "52672"
 print(isdigit(myString))
-print(myString.isdigit())`}>
+print(myString.isdigit())'>
 </i-sandbox-py>
 
 **Figure 4.1.19**

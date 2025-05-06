@@ -1,5 +1,5 @@
 description: Written by David Joyner
 free_pages: []
 slug: introduction-to-computing
-summary: null
+summary: The text discusses fundamental programming concepts such as control structures and data management techniques. Control structures like loops, conditionals, functions, and error handling enhance code flexibility and robustness, allowing for repetitive tasks, decision-making, and graceful error management. These constructs underpin procedural programming by dictating execution flow and facilitating complex software development. Additionally, the text explores dictionaries, a data structure that organizes information into key-value pairs for efficient and intuitive data retrieval. Unlike lists, dictionaries allow for descriptive access to data, supporting tasks like inventory management and address book creation. By using modular functions with dictionaries, programmers can simplify code, improve maintainability, and enhance program extensibility.
 title: Introduction to Computing
