@@ -173,36 +173,36 @@ I know what you’re probably thinking: we’ve declared lots of strings, why do
 
 So far, we’ve always used one method to declare strings, as shown in Figure 4.2.2.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "12345"
-print(myString)`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "12345"
+print(myString)'>
 </i-sandbox-py>
 
 **Figure 4.2.2**
 
 myString on line 1 is the variable name, and to tell it that its data type is a string, we enclose the value assigned to it on the right in quotation marks. If we didn’t, it would become an integer with value 12345. Simple enough, let’s move on... except, there’s a special case we can’t handle here. What do we do if we want to put a quotation mark _inside_ a string? Right now the string’s value is the text 12345; what if we wanted its value to be “12345”, where the quotation marks were actually _part_ of the value? If we just write the obvious declaration, we get Figure 4.2.3.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = ""12345""
-print(myString)`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = ""12345""
+print(myString)'>
 </i-sandbox-py>
 
 **Figure 4.2.3**
 
 In Figure 4.2.3, Python gives us an error. How come? A quotation mark opens and closes the string. How could the computer know the second quotation mark was supposed to be a part of the string rather than the end of the string? Here, Python sees this as an empty string “”, followed by the number 12345, followed by another empty string “”, with no operators. It doesn’t know how to interpret that.
 
-So, how can we include quotation marks in the string? Fortunately, Python gives us three ways to define strings, and we can use whichever way is compatible with the string content we want, as shown in Figure 4.2.4.
+So, how can we include quotation marks in the string? Fortunately, Python gives us three ways to define strings, and we can use whichever way is compatible with the string content we want, as shown in Figure 4.2.4
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString1 = '"12345"'
-myString2 = "'12345'"
-myString3 = '''"'12345'"'''
-myString4 = "'''12345'''"
+.
 
-print(myString1)
-print(myString2)
-print(myString3)
-print(myString4)`}>
-</i-sandbox-py>
+<i-image
+  style="aspect-ratio:984/456;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.2.4.png-e9df647f1ac124bb6d9f7c31708dffd4.png"
+  alt="4.2.4.png"
+  width="984"
+  height="456">
 
-**Figure 4.2.4**
+Figure 4.2.4
+
+</i-image>
 
 We can use quotation marks, apostrophes, or triple-apostrophes to declare strings. If we want our string to include quotation marks, we can instead declare it with apostrophes. If we want our string to include apostrophes, we can instead declare it with quotation marks. If we want our string to include both quotation marks and apostrophes, then we can declare it with triple-apostrophes (or triple quotation marks, even!). No matter what we use to start the string, the string does not end until we encounter that character or character sequence again.
 
@@ -210,17 +210,17 @@ We can use quotation marks, apostrophes, or triple-apostrophes to declare string
 
 We mentioned previously that everything in text is technically a character, including things like tabs and line breaks. Can we then include these in our strings? Yes, though we have to know how. If we try to just put a newline character into the middle of a string, Python isn’t sure what to make of it, as shown in Figure 4.2.5.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myStringWithNewline = "12345
+<i-sandbox-py  page-slug="__temp_slug__" code='myStringWithNewline = "12345
 						67890"
-print(myStringWithNewline)`}>
+print(myStringWithNewline)'>
 </i-sandbox-py>
 
 **Figure 4.2.6**
 
 Python sees line 1 as ending before the string is closed because Python interprets the newline character in terms of the code, not as part of the string. In other words, Python sees the newline character at the end of line 1 as terminating line 1 with an unclosed string, and it sees line 2 as starting with an unopened string. We need a character that tells Python, “Hey, when running this code, include this newline as part of this string.” It’s shown in Figure 4.2.6.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myStringWithNewline = "12345\n67890"
-print(myStringWithNewline)`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='myStringWithNewline = "12345\n67890"
+print(myStringWithNewline)'>
 </i-sandbox-py>
 
 **Figure 4.2.6**
@@ -229,8 +229,8 @@ The character sequence \\n in line 1 is translated by Python into the newline ch
 
 This actually represents a general principle: inside a string, the forward slash is called an “escape” character, and it starts an **escape sequence**. When Python sees the forward slash, it tries to interpret it and the next character as a special sequence that carries special meaning. The \\n sequence carries the special meaning “newline.” A couple of others are shown in Figure 4.2.7.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "12345\n67890\tabcde\"fghijklm\\no"
-print(myString)`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "12345\n67890\tabcde\"fghijklm\\no"
+print(myString)'>
 </i-sandbox-py>
 
 **Figure 4.2.7**
@@ -246,13 +246,16 @@ Note that it’s also alright to simply put a tab directly into the string by pr
 
 Note also that our triple-apostrophe method would let us simply write the new line directly, as shown in Figure 4.2.8. Python interprets strings started by triple apostrophes differently, and allows new lines in them.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = '''12345
-67890'''
+<i-image
+  style="aspect-ratio:1188/326;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.2.8.png-9d1a0e475eb30985f7009cb151f4abfe.png"
+  alt="4.2.8.png"
+  width="1188"
+  height="326">
 
-print(myString)`}>
-</i-sandbox-py>
+Figure 4.2.8
 
-**Figure 4.2.8**
+</i-image>
 
 ## 3. String Concatenation and Slicing in Python {#3-String-Concatenation-and-Slicing-in-Python-1545} 
 
@@ -262,13 +265,13 @@ We now have the ability to define lots of strings. What can we do with them? Her
 
 **String concatenation** means putting multiple strings together. It comes from the word “concatenate,” which simply means to link things together in an ordered series or chain. We actually can just do this with the + operator, as shown in Figure 4.2.9.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString1 = "12345"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString1 = "12345"
 myString2 = "67890"
 myString3 = myString1 + myString2
 print("Assignment Concatenation: " + myString3)
 print("In-Line Concatenation: " + myString1 + myString2)
 myString1 += myString2
-print("Self-Assignment Concatenation: " + myString1)`}>
+print("Self-Assignment Concatenation: " + myString1)'>
 </i-sandbox-py>
 
 **Figure 4.2.9**
@@ -277,11 +280,11 @@ In Figure 4.2.9, we see three kinds of concatenation. We declare myString1 and m
 
 Notice how this works if we throw in a newline character in Figure 4.2.10. When we print a string with a newline character inside it on line 3, we get an extra blank line: print() automatically ends with a newline character, so having one inside the string adds a second newline. Then, when we concatenate myString1 and its newline character with myString2 on line 5, printing them together breaks the second half onto its own line; technically, we’re printing “In-Line Concatenation: 12345\\n67890”, and Python interprets the \\n as the escape sequence for a newline.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString1 = "12345\n"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString1 = "12345\n"
 myString2 = "67890"
 print(myString1)
 print(myString2)
-print("In-Line Concatenation: " + myString1 + myString2)`}>
+print("In-Line Concatenation: " + myString1 + myString2)'>
 </i-sandbox-py>
 
 **Figure 4.2.10**
@@ -292,30 +295,30 @@ print("In-Line Concatenation: " + myString1 + myString2)`}>
 
 Let’s start simple. How would you get just a single character out of a string? Python has some dedicated syntax for that: brackets. Whenever you have a data structure that is a list of multiple items, you can follow the variable name with brackets and a number, called the index, to get a certain item from the list.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 #Prints the 0th (1st) character of the string
 print(myString[0])
 #Prints the 1st (2nd) character of the string
-print(myString[1])`}>
+print(myString[1])'>
 </i-sandbox-py>
 
 **Figure 4.2.11**
 
 The tricky thing here is that Python treats the first item in a string as the “0th” item. So, to get the first item, you ask for the 0th item, as shown in line 4 of Figure 4.2.11. This is called zero-indexing: the indices of a list start with 0. It also means that the last item in the list is one fewer than the length of the list, and if we try to access a list item that doesn’t exist, we get an error, as shown in line 7 of Figure 4.2.12.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 #Prints the 4th (5th) character of the string
 print(myString[4])
 #Prints the 5st (6nd) character of the string
-print(myString[5])`}>
+print(myString[5])'>
 </i-sandbox-py>
 
 **Figure 4.2.12**
 
 IndexErrors are the error that arises when we try to access an index that doesn’t exist for a particular list. In Figure 4.2.12, the index 5 does not exist because the characters in a five-character string are numbered 0, 1, 2, 3, and 4. Remember also, strings are immutable, which means we cannot use this syntax to change indi- vidual characters, as shown in line 2 of Figure 4.2.13.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
-myString[4] = "F"`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
+myString[4] = "F"'>
 </i-sandbox-py>
 
 **Figure 4.2.13**
@@ -326,36 +329,36 @@ Why **zero-indexing**? This goes all the way back to the early days of computing
 
 But what if you want to create a string made up of a part of another string? What if you wanted to grab the first three characters and create a new string? Remember, we can traverse a string with a for-each loop, as shown in Figure 4.2.14.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 mySubstring = ""
 #Run a loop for each character in myString
 for character in myString:
 	#Add character i to mySubstring
 	mySubstring += character
-print("mySubstring: " + mySubstring)`}>
+print("mySubstring: " + mySubstring)'>
 </i-sandbox-py>
 
 **Figure 4.2.14**
 
 The fact that we can traverse each character of a string that way is a useful takeaway on its own. However, there’s no straightforward way to stop the for-each loop on line 4 before it reaches the end of the string, and in this example, we wanted to grab just the first three characters. So, we could do this the hard way, with a regular for loop from 0 to 2, as shown in Figure 4.2.15.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 mySubstring = ""
 #Run a loop from i = 0 to i = 2
 for i in range(0, 3):
 	#Add character i to mySubstring
 	mySubstring += myString[i]
-print("First three characters: " + mySubstring)`}>
+print("First three characters: " + mySubstring)'>
 </i-sandbox-py>
 
 **Figure 4.2.15**
 
 We run a for loop from 0 to 2, grabbing characters 0, 1, and 2 from myString and adding them to mySubstring. That was a lot of work to do that; there has to be a better way. One better way would be to create a function that just takes as parameters the string and the number of characters, and in fact, that’s how many languages do this. However, Python makes this even simpler with its string slicing syntax, as shown in Figure 4.2.16.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 start = 0
 end = 3
-print("First three characters: " + myString[start:end]`}>
+print("First three characters: " + myString[start:end]'>
 </i-sandbox-py>
 
 **Figure 4.2.16**
@@ -364,19 +367,19 @@ In Figure 4.2.16, we’re using the same brackets on line 4 that we used before,
 
 One nice thing about this is that we don’t need to use variables: we can put in the indices directly, as shown in lines 2 and 3 of Figure 4.2.17. That’s much simpler than our for loop!
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 print("First three characters: " + myString[0:3])
-print("Characters 1 through 3: " + myString[1:4])`}>
+print("Characters 1 through 3: " + myString[1:4])'>
 </i-sandbox-py>
 
 **Figure 4.2.17**
 
 Python also takes this a step further by allowing us to omit either the start or end, as shown in Figure 4.2.18. If we skip the “start” number as shown in line 2, Python assumes 0. If we skip the “end” number as shown in line 3, Python assumes “to the end.” If our “end” number is beyond the length of the string as shown in line 4, then Python stops at the end of the string.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 print("First three characters: " + myString[:3])
 print("Characters from 3 to the end: " + myString[3:])
-print("Characters from 3 to 10: " + myString[3:10])`}>
+print("Characters from 3 to 10: " + myString[3:10])'>
 </i-sandbox-py>
 
 **Figure 4.2.18**
@@ -387,17 +390,17 @@ Those methods all covered getting things like the “first five characters” or
 
 We could do it the hard way. The hard way would be to use the length of the string to figure out what index to start at to get the last few characters. For example, if we wanted the last two characters, we’d start at the length of the string minus two, as shown in Figure 4.2.19.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
-print("Last two characters: " + myString[len(myString)-2:])`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
+print("Last two characters: " + myString[len(myString)-2:])'>
 </i-sandbox-py>
 
 **Figure 4.2.19**
 
 That works, but that’s really complex. We have to find the end of the string, count backward by two, then count forward again. It works just fine, and in many languages this is exactly what you have to do. Python tries to make things easier, though, with negative indices. Negative indices (i.e., using a negative number as an index) count backward from the end of the string, as shown in Figure 4.2.20.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 print("All but the last two characters: " + myString[:-2])
-print("Last two characters: " + myString[-2:])`}>
+print("Last two characters: " + myString[-2:])'>
 </i-sandbox-py>
 
 **Figure 4.2.20**
@@ -416,7 +419,7 @@ When we covered operators, we talked about the in operator in Python. The in ope
 
 The in operator can be used with strings to check if a substring is part of a string, as shown in Figure 4.2.21. The conditional on line 3 correctly identifies that “BC” is in the string “ABCDE”, and the conditional on line 8 correctly identifies that “GH” is _not_ in the string.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 if "BC" in myString:
 	print("BC was found!")
 else:
@@ -425,14 +428,14 @@ else:
 if "GH" in myString:
 	print("GH was found!")
 else:
-	print("GH was not found!")`}>
+	print("GH was not found!")'>
 </i-sandbox-py>
 
 **Figure 4.2.21**
 
 In reality, we would probably package this together as a function, as shown in Figure 4.2.22. So, we can use the in operator to check to see if a string is present in another string.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Checks if searchString is in checkString
+<i-sandbox-py  page-slug="__temp_slug__" code='#Checks if searchString is in checkString
 def checkInString(checkString, searchString):
 	if searchString in checkString:
 		print(searchString + " was found!")
@@ -441,14 +444,14 @@ def checkInString(checkString, searchString):
 
 myString = "ABCDE"
 checkInString(myString, "BC")
-checkInString(myString, "GH")`}>
+checkInString(myString, "GH")'>
 </i-sandbox-py>
 
 **Figure 4.2.22**
 
 Similarly, we could use not in to check the inverse, as shown in Figure 4.2.23. Same result here, but the reasoning is in reversed. If it’s _not_ in the string, we print that it’s not in the string; else, we print that it is.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Checks if searchString is not in checkString
+<i-sandbox-py  page-slug="__temp_slug__" code='#Checks if searchString is not in checkString
 def checkNotInString(checkString, searchString):
 	if searchString not in checkString:
 		print(searchString + " was not found!")
@@ -457,7 +460,7 @@ def checkNotInString(checkString, searchString):
 
 myString = "ABCDE"
 checkNotInString(myString, "BC")
-checkNotInString(myString, "GH")`}>
+checkNotInString(myString, "GH")'>
 </i-sandbox-py>
 
 **Figure 4.2.23**
@@ -468,19 +471,19 @@ Sometimes, though, we’re not just interested in finding out _if_ a string is i
 
 In Figure 4.2.24, “CDE” starts at index 2 in myString (due to zero-indexing, “A” is 0, “B” is 1, and “C” is 2, so “CDE” starts at 2), so myString.find(“CDE”) on line 4 returns 2. “ACE” is not found in myString—while each individual character is in “ABCDE”, the continuous string “ACE” is not found. So, myString. find(“ACE”) on line 6 returns −1.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
 
 #Prints the index of "CDE" in myString
 print(myString.find("CDE"))
 #Prints the index of "ACE" in myString
-print(myString.find("ACE"))`}>
+print(myString.find("ACE"))'>
 </i-sandbox-py>
 
 **Figure 4.2.24**
 
 Note that in this way, find() subsumes all the reasoning of the in operator, as shown in Figure 4.2.25. If the result of find() is positive on line 3, it means that the substring was found; if it’s negative, it means it wasn’t found. What happens, though, if the string we’re trying to find is in two places in the string that we’re searching?
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Checks if searchString is in checkString
+<i-sandbox-py  page-slug="__temp_slug__" code='#Checks if searchString is in checkString
 def checkInString(checkString, searchString):
 	if checkString.find(searchString) >= 0:
 		print(searchString + " was found!")
@@ -488,27 +491,27 @@ def checkInString(checkString, searchString):
 		print(searchString + " was not fouhnd!")
 myString = "ABCDE"
 checkInString(myString, "BC")
-checkInString(myString, "GH")`}>
+checkInString(myString, "GH")'>
 </i-sandbox-py>
 
 **Figure 4.2.25**
 
 As shown on line 4 of Figure 4.2.26, find() only finds the first index; after all, it can only return one number. We’ll talk in a moment about how to use find() more flexibly.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDEABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDE"
 
 #Prints the index of "CDE" in myString
-print(myString.find("CDE"))`}>
+print(myString.find("CDE"))'>
 </i-sandbox-py>
 
 **Figure 4.2.26**
 
 Before that, though, note also that the find() method is case-sensitive, as shown in Figure 4.2.27. Remember, the computer doesn’t see “c” and “C” as the same character; they’re as different as “b” and “Q”. So, searching for “cde” on line 4 won’t turn up anything in “ABCDEABCDE”.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDEABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDE"
 
 #Prints the index of "CDE" in myString
-print(myString.find("cde"))`}>
+print(myString.find("cde"))'>
 </i-sandbox-py>
 
 **Figure 4.2.27**
@@ -519,7 +522,7 @@ We can extend find() by using some of its optional parameters. Optionally, we ca
 
 Figure 4.2.28 shows five different find() calls on myString using “CDE”. On line 4, it finds the first index of “CDE” at 2. On line 6, it searches only after the index 5; the first occurrence of “CDE” after the index 5 is at 7. On line 8, it searches only after the index 13; “CDE” doesn’t occur after 8, though, so it returns −1 to say the string was not found. On line 10, it searches only between the indices 4 and 10; the first occurrence there is at 7. In this way, it skips both the first and last overall appearances and only gets the one in the middle. Then, on line 12, it searches between 3 and 6, but finds nothing and returns −1.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDEABCDEABCDE"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDEABCDE"
 
 #Prints the first index of "CDE" in myString
 print(myString.find("CDE"))
@@ -531,14 +534,14 @@ print(myString.find("CDE", 8))
 print(myString.find("CDE", 4, 10))
 #Prints the first index of "CDE" in myString between 3 and 6
 print(myString.find("CDE", 3, 6))
-myString = "ABCDEABCDEABCDE"`}>
+myString = "ABCDEABCDEABCDE"'>
 </i-sandbox-py>
 
 **Figure 4.2.28**
 
 We can use find() to build a list of all the appearances of a particular string within another string. We’ll talk about making it a list later; for now, let’s just print out all the indices. Figure 4.2.29 shows the code to do this—we’ll make the string we’re searching a little longer and more complicated to make things interesting.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDEABCDEABCDEFGHIJFGHIJFGHIJABCDEABCDEFGHIJ"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDEABCDEFGHIJFGHIJFGHIJABCDEABCDEFGHIJ"
 findString = "CDE"
 #Find findString in myString and assign its index to currentLocation
 currentLocation = myString.find(findString)
@@ -548,7 +551,7 @@ while currentLocation >= 0:
 	#Print the index
 	print(findString, "found at", currentLocation)
 	#Get the next index, or -1 if there are no more
-	currentLocation = myString.find(findString, currentLocation + 1)`}>
+	currentLocation = myString.find(findString, currentLocation + 1)'>
 </i-sandbox-py>
 
 **Figure 4.2.29**
@@ -559,7 +562,7 @@ So, let’s step through this. Initially, currentLocation is assigned to 2, the 
 
 Note that if findString is not found anywhere in myString, then the initial assignment to currentLocation will be −1, and the while loop will never run even once, as shown in Figure 4.2.30. In this way, we can build a segment of code that gathers every instance where a particular string was found in another string.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDEABCDEABCDEFGHIJFGHIJFGHIJABCDEABCDEFGHIJ"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDEABCDEFGHIJFGHIJFGHIJABCDEABCDEFGHIJ"
 findString = "BOB"
 #Find findString in myString and assign its index to currentLocation
 currentLocation = myString.find(findString)
@@ -569,16 +572,16 @@ while currentLocation >= 0:
 	#Print the index
 	print(findString, "found at", currentLocation)
 	#Get the next index, or -1 if there are no more
-	currentLocation = myString.find(findString, currentLocation + 1)`}>
+	currentLocation = myString.find(findString, currentLocation + 1)'>
 </i-sandbox-py>
 
 **Figure 4.2.30**
 
 Note that we can also use a different method, count(), to simply count the instances without finding them, as shown in Figure 4.2.31. This confirms there are five instances of “CDE” in myString. count() can also take the same parameters as find(), start and end to mark off within what portion of the string it should count. Note also this is a somewhat complex print() statement on line 3: we have our label, “Count of”, which is concatenated with the value of findString and a colon. That is then also concatenated with the result of myString.count(findString).
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "ABCDEABCDEABCDEFGHIJFGHIJFGHIJABCDEABCDEFGHIJ"
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDEABCDEFGHIJFGHIJFGHIJABCDEABCDEFGHIJ"
 findString = "CDE"
-print("Count of", findString, ":", myString.count(findString))`}>
+print("Count of", findString, ":", myString.count(findString))'>
 </i-sandbox-py>
 
 **Figure 4.2.31**
@@ -593,35 +596,35 @@ The split() method divides the string up into several substrings based on the se
 
 In Figure 4.2.32, myString is a long string with 13 words. When we call myString.split() on line 3, it splits it up by the space character. The result is a list of 13 strings, each one word from the original string. It removes the spaces themselves as well.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString. "This is my text. It has thirteen " 
+<i-sandbox-py  page-slug="__temp_slug__" code='myString. "This is my text. It has thirteen " 
 \ "words. It also has three sentences."
-print(myString.split())`}>
+print(myString.split())'>
 </i-sandbox-py>
 
 **Figure 4.2.32**
 
 We can also specify our own unique separator as an argument to split(), as shown in Figure 4.2.33. Here, instead of splitting the string up into 13 strings based on spaces, it splits it into 4 strings based on periods. Note, though, a couple issues. First, the spaces at the beginning of each sentence are still there. Second, there’s an empty string at the end: Python sees the period at the end and splits between two strings, regardless of the fact that nothing comes after that period.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString. "This is my text. It has thirteen " 
+<i-sandbox-py  page-slug="__temp_slug__" code='myString. "This is my text. It has thirteen " 
 \ "words. It also has three sentences."
-print(myString.split("."))`}>
+print(myString.split("."))'>
 </i-sandbox-py>
 
 **Figure 4.2.33**
 
 We can resolve this by instead splitting on the entire “.” string, as shown in Figure 4.2.34. This still isn’t perfect; this means that Python removes the period character from the first two sentences (since it’s part of the “.” string being used to split), but not the third. Still, we’re closer now to what we wanted.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString. "This is my text. It has thirteen " 
+<i-sandbox-py  page-slug="__temp_slug__" code='myString. "This is my text. It has thirteen " 
 \ "words. It also has three sentences."
-print(myString.split(". "))`}>
+print(myString.split(". "))'>
 </i-sandbox-py>
 
 **Figure 4.2.34**
 
 This split() method is especially useful when we deal with comma-, tab-, or newline-separated lists. It’s common to ask users to enter multiple options separated by commas. For example, imagine we were asking the users to enter the first names of each person they want to e-mail as part of an e-mail application. We could have them enter the names one at a time until they type “exit” or something similar, or we could have them enter the names all at once separated by commas. Then, we can use the split() method with “,” as the argument to pull out the individual names, as shown in Figure 4.2.35.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`names = input("Enter a list of names: ")
-print(names.split(","))`}>
+<i-sandbox-py  page-slug="__temp_slug__" code='names = input("Enter a list of names: ")
+print(names.split(","))'>
 </i-sandbox-py>
 
 **Figure 4.2.35**

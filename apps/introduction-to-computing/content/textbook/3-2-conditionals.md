@@ -32,7 +32,7 @@ chunks:
 - title: If-Then-Else-If-Else
   slug: If-Then-Else-If-Else-2916
   type: regular
-- title: Common Ero
+- title: Common Errors
   slug: Common-Ero-2917
   type: regular
 - title: 3. Conditionals and Operators
@@ -69,8 +69,8 @@ chunks:
   slug: Boolean-Operators-II-2926
   type: regular
 - title: 5. Nested Conditionals
-  slug: 5-Nested-Conditionals-2967
-  type: regular
+  slug: 5-Nested-Conditionals-1726
+  type: plain
 - title: Nested Conditionals in a Flowchart
   slug: Nested-Conditionals-in-a-Flowchart-2968
   type: regular
@@ -144,8 +144,8 @@ cri:
 - question: How can mathematical operators be used within conditional statements?
   answer: Mathematical operators can be used along with relational operators within conditional statements.
   slug: Relational-and-Mathematical-Operators-2922
-- question: Automatic question-generation has failed. Please try again.
-  answer: Automatic answer-generation has failed. Please try again.
+- question: What does the conditional 'if todaysWeather in jacketWeather' check for in Python?
+  answer: It checks if the value of todaysWeather is one of the items in the list jacketWeather.
   slug: Set-Membership-Operators-2923
 - question: What does the isdigit() method in Python do?
   answer: The isdigit() method in Python returns True if the string represents a number, False if it does not.
@@ -260,7 +260,7 @@ Let’s start with the simple example: _if_ it’s raining, _then_ the user shou
 todaysWeather'>
 </i-sandbox-py>
 
-**Figure 3.2.2**
+**Figure 3.2.2 **
 
 In line 3, we’re creating the variable to store todaysWeather; if we were actually developing a program to do this, we would probably load this value from the Internet, but for testing we would give it a value manually to test the rest of our code. Then on line 6, we use the relational equality operator, ==, to check if todaysWeather is equal to “raining.” Here, it is, so “raincoat” and “rainboots” are printed from lines 8 and 10. What if todaysWeather didn’t equal “raining?”
 
@@ -400,7 +400,7 @@ In Figure 3.2.8, we’re trying to print “scarf” if it’s cold and “jacke
 
 In the second segment (lines 13 through 17), we resolve this. Instead of making it an elif, we just make it another if. It’s not indented under conditional beginning on line 13, so it runs either way. The second segment checks both conditionals because neither one is an else-if for the other. So, only use else-if if you want the conditional to be skipped if a previous part of the structure was true.
 
-## Common Ero {#Common-Ero-2917} 
+## Common Errors {#Common-Ero-2917} 
 
 Finally, note that a common error in programming conditionals is to “orphan” the else or the else-if conditionals, as shown in Figure 3.2.9.
 
@@ -638,7 +638,7 @@ Note that we put parentheses around this or expression on line 18 to force the c
 
 As we said before, we could take these principles and combine them with the complex if-then-else-if-else statement structures from earlier.
 
-## 5. Nested Conditionals {#5-Nested-Conditionals-2967} 
+## 5. Nested Conditionals {#5-Nested-Conditionals-1726} 
 
 In our example of evaluating whether a purchase would be approved, there was a weakness. We evaluated whether or not multiple conditions were all true, and if they all were, then we approved the purchase; if not, we rejected it. However, this doesn’t tell us _why_ the purchase was rejected. We know that if it was approved, all the conditions were true, but if it was rejected, we don’t know which part caused the rejection. We can resolve this by using a more complex structure: a nested conditional.
 

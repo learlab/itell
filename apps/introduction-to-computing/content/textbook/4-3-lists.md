@@ -165,6 +165,9 @@ List-like structures go by various names: lists, arrays, tuples, vectors, tables
   alt="4.3.1"
   width="292"
   height="394">
+
+Figure 4.3.1
+
 </i-image>
 
 As noted above, which specific implementation you’ll use depends on your language. The commonality among these list-like structures is that they contain an ordered series of values accessed via numeric indices.

@@ -273,16 +273,15 @@ Imagine you’re writing some code that will be used by an online store that doe
 
 To start with, let’s just write a simple function printYen() that will print the character ¥; no input, no output. How do we do that?
 
-```python 
-#Defines the function "printYen"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Defines the function "printYen"
 def printYen():
 	#Prints "¥", without the new line afterward
 	print("¥", end="")
 
 #Calls the function "printYen"
 printYen()
-print(5)
-```
+print(5)'>
+</i-sandbox-py>
 
 **Figure 3.4.3**
 
@@ -310,16 +309,15 @@ The function we defined in Figure 3.4.3 is of limited usefulness. Chances are, w
 
 In Figure 3.4.4, we’ve changed line 4. Instead of printing ¥, we return it. What does this mean? It means that wherever we call returnYen(), it gets replaced by the string “¥”. That was our goal, after all: to make it so we didn’t have to keep going and finding the symbol. Now, instead, whenever we need to use it we can just call returnYen().
 
-```python 
-#Defines the function "returnYen"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Defines the function "returnYen"
 def returnYen():
 	#Returns "¥"
 	return "¥"
 
 #Prints the output of returnYen()
 print(returnYen(), end = "")
-print(5)
-```
+print(5)'>
+</i-sandbox-py>
 
 **Figure 3.4.4**
 
@@ -327,15 +325,14 @@ Let’s trace through how this code executes. Just like before, when the compute
 
 The outcome is exactly the same, but notice that this design means we could have used returnYen() in other ways. Specifically, we could cut the two print statements down to one, as shown in Figure 3.4.5.
 
-```python 
-#Defines the function "returnYen"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Defines the function "returnYen"
 def returnYen():
 	#Returns "¥"
 	return "¥"
 
 #Prints the output of returnYen(), then 5
-print(returnYen(), 5, end = "")
-```
+print(returnYen(), 5, end = "")'>
+</i-sandbox-py>
 
 **Figure 3.4.5**
 
@@ -345,15 +342,14 @@ Because returnYen() returns “¥” to replace the function call instead of jus
 
 The function from Figure 3.4.5 just returns the “¥” symbol. However, are we ever going to use this symbol without an amount of currency following it? ...well, we might, but for a moment let’s pretend we won’t. So, instead of forcing the main program to always add the amount separately, why don’t we instead make this function simply return the string version of the amount of currency preceded by the ¥ symbol? To do that, we need to send in the amount of currency to use as input into the function, as shown in Figure 3.4.6.
 
-```python 
-#Defines the function "returnYenAmount"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Defines the function "returnYenAmount"
 def returnYenAmount(amount):
 	#Returns "¥" with the amount
 	return "¥" + str(amount)
 
 #Prints the output of returnYenAmount(5)
-print(returnYenAmount(5))
-```
+print(returnYenAmount(5))'>
+</i-sandbox-py>
 
 **Figure 3.4.6**
 
@@ -363,16 +359,15 @@ As before, execution then skips line 6 because the function returnYen- Amount() 
 
 So far, all our arguments have been values themselves, but we can (and usually will) use variables themselves as arguments. In this case, the value of the variable becomes the value of the parameter. For example, let’s convert this to a user-facing program that asks the user to input the amount they want added to the currency symbol.
 
-```python 
-#Defines the function "returnYenAmount"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Defines the function "returnYenAmount"
 def returnYenAmount(amount):
 	#Returns "¥" with the amount
 	return "¥" + str(amount)
 
 inputAmount = int(input("Enter the amount: "))
 #Prints the output of returnYenAmount(inputAmount)
-print(returnYenAmount(inputAmount))
-```
+print(returnYenAmount(inputAmount))'>
+</i-sandbox-py>
 
 **Figure 3.4.7**
 
@@ -384,8 +379,7 @@ If a function is defined with multiple inputs, then it is assumed that the order
 
 In Figure 3.4.8, we’ve revised the function definition to change the name (now currencyAmount) and have two parameters: currency and amount. The body of the function is a series of conditionals that checks to see if the currency is one of three expected types: JPY for Japanese yen, USD for US dollars, or GBP for British pounds. If currency isn’t one of these, it simply returns amount as a string. Notice here how we have multiple returns, but only one will be reachable at a time based on the value of currency.
 
-```python 
-#Defines the function "currencyAmount"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Defines the function "currencyAmount"
 def currencyAmount(currency, amount):
 	if currency == "JPY":
 		return "¥" + str(amount)
@@ -397,8 +391,8 @@ def currencyAmount(currency, amount):
 		return str(amount)
 
 #Prints the output of currencyAmount("GBP", 5)
-print(currencyAmount("GBP", 5))
-```
+print(currencyAmount("GBP", 5))'>
+</i-sandbox-py>
 
 **Figure 3.4.8**
 
@@ -473,10 +467,9 @@ For required parameters, what we’ve said so far is true with regard to assumin
 
 The print() function is a good example of this. The print() function takes as input one or more strings to print in order. We haven’t seen it printing multiple strings before, but we can see it now in Figure 3.4.11.
 
-```python 
-print("A", "B", "C")
-print("D", "E", "F")
-```
+<i-sandbox-py  page-slug="__temp_slug__" code='print("A", "B", "C")
+print("D", "E", "F")'>
+</i-sandbox-py>
 
 **Figure 3.4.11**
 
@@ -484,10 +477,9 @@ When we give print() multiple strings, it prints them one at a time in the order
 
 The print() function assumes we want spaces between the individual strings, and a new line at the end of each print() call. What if we don’t want that? What if we want no spaces between strings, and no new line at the end of each line? Then, we use keyword parameters, as shown in Figure 3.4.12.
 
-```python 
-print("A", "B", "C", sep = "", end = "")
-print("D", "E", "F", sep = "", end = "")
-```
+<i-sandbox-py  page-slug="__temp_slug__" code='print("A", "B", "C", sep = "", end = "")
+print("D", "E", "F", sep = "", end = "")'>
+</i-sandbox-py>
 
 **Figure 3.4.12**
 
@@ -509,8 +501,7 @@ So, how do we create keyword parameters? In our function declaration, we include
 
 In Figure 3.4.14, we’ve revised our function declaration to say currency = "USD" in the parameter list instead of just currency. We switched the order because keyword parameters must come after regular (also called positional) parameters.
 
-```python 
-#Defines the function "currencyAmount"
+<i-sandbox-py  page-slug="__temp_slug__" code='#Defines the function "currencyAmount"
 def currencyAmount(amount, currency = "USD"):
 	if currency == "JPY":
 		return "¥" + str(amount)
@@ -524,8 +515,8 @@ def currencyAmount(amount, currency = "USD"):
 #Prints the output of currencyAmount(5)
 print(currencyAmount(5))
 #Prints the output of currencyAmount(5, currency = "GBP")
-print(currencyAmount(5, currency = "GBP"))
-```
+print(currencyAmount(5, currency = "GBP"))'>
+</i-sandbox-py>
 
 **Figure 3.4.14**
 
