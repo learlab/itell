@@ -4,7 +4,7 @@ condition: summary_description_stairs
 
 <i-accordion value="first">
 
-<i-accordion-item value='first' title="What m\nakes a successful summary">
+<i-accordion-item value='first' title="What makes a successful summary">
 
 A successful summary will
 

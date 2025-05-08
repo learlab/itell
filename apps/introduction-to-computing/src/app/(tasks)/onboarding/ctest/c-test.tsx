@@ -6,7 +6,11 @@ import { Alert, AlertDescription } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { User } from "lucia";
-import { ArrowLeftIcon, SendHorizontalIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  SendHorizontalIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
@@ -274,8 +278,8 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
               className="w-48"
             >
               <span className="inline-flex items-center gap-2">
-                <ArrowLeftIcon className="size-3" />
                 Continue to textbook
+                <ArrowRightIcon className="size-4" />
               </span>
             </Button>
           )}
