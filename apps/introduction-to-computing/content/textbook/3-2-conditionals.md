@@ -117,14 +117,14 @@ cri:
 - question: What is the purpose of using else-if in a conditional structure?
   answer: else-if checks additional conditions if the earlier ones were false.
   slug: Conditionals-Recap-2896
-- question: What happens if todaysWeather doesn't equal 'raining'?
-  answer: The 'raincoat' and 'rainboots' won't get printed.
+- question: What happens if todaysWeather doesn't equal "raining"?
+  answer: The "raincoat" and "rainboots" won't get printed. The only thing printed is "Done!"
   slug: If-Then-2897
 - question: How do we add a recommendation for t-shirt and shorts when it's not raining?
   answer: We add an else block with the corresponding lines of code to print t-shirt and shorts.
   slug: If-Then-Else-2904
-- question: What happens in the first segment of the code in Figure 3.2.8?
-  answer: The conditional on line 5 triggers, so its code block runs and prints 'scarf.' The elif statement doesn't run because the first if statement executed.
+- question: What is the purpose of using 'elif' in Python conditional statements?
+  answer: The 'elif' keyword is used to create an else-if statement that is only checked if the preceding condition was false.
   slug: If-Then-Else-If-Else-2916
 - question: Why does the code in Figure 3.2.9 give us a SyntaxError?
   answer: Between the elif on line 9 and the if on line 5, there is a line at the same level of indentation as the if, breaking the code block.
@@ -156,6 +156,9 @@ cri:
 - question: What is the purpose of the overdraftProtection variable in the code?
   answer: To allow the customer to charge more than their balance and pay it off later.
   slug: Boolean-Operators-II-2926
+- question: What is the main difference between the original approach (Figure 3.2.18) and the new approach (Figure 3.2.19) in branching reasoning?
+  answer: The main difference is that the new approach (Figure 3.2.19) has separate individual decisions, while the original approach (Figure 3.2.18) had one big decision with multiple conditions.
+  slug: Nested-Conditionals-in-a-Flowchart-2968
 - question: What is a major benefit of nested conditionals mentioned in the passage?
   answer: Nested conditionals make the code more readable.
   slug: Ifs-Within-Ifs-2989
@@ -216,7 +219,7 @@ Just like the original then, there could be multiple actions that follow an else
 
 ## If-Then-Else-If {#If-Then-Else-If-2894} 
 
-Sometimes, though, our reasoning might be more complex. We might need multiple pathways depending on different checks. In this case, we might employ an else-if statement. Like an else, an else-if only runs if the original if-then did not. Unlike an else, however, an else-if has its own conditions to check; if the condi- tions aren’t met, it doesn’t run either.
+Sometimes, though, our reasoning might be more complex. We might need multiple pathways depending on different checks. In this case, we might employ an else-if statement. Like an else, an else-if only runs if the original if-then did not. Unlike an else, however, an else-if has its own conditions to check; if the conditions aren’t met, it doesn’t run either.
 
 Consider this more complex version of our weather example: _If_ it’s raining, then wear a raincoat; _else, if_ it’s cold, then wear a long-sleeved shirt; _else_, wear a t-shirt. Here, we check two things: whether it’s raining, and whether it’s cold. If it’s raining, we don’t need to bother checking if it’s cold: we wear a raincoat regardless. Otherwise, or _else_, we need to check if it’s cold, and if so, wear a long-sleeved shirt. That’s what makes this an else-if: it only runs if the original if wasn’t true, but it still has its own conditions.
 
@@ -255,17 +258,35 @@ Now that we’ve covered the basic principles of conditional statements, let’s
 
 Let’s start with the simple example: _if_ it’s raining, _then_ the user should wear a raincoat and rainboots. This reasoning is shown in Figure 3.2.2.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it
-#equal to "raining"
-todaysWeather'>
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "raining"
+todaysWeather = "raining"
+
+#Checks if todaysWeather equals "raining"
+if todaysWeather == "raining":
+	#Prints "raincoat" if so
+	print("raincoat")
+	#Prints "rainboots" if so
+	print("rainboots")
+#Prints "Done!" when complete
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.2.2 **
 
 In line 3, we’re creating the variable to store todaysWeather; if we were actually developing a program to do this, we would probably load this value from the Internet, but for testing we would give it a value manually to test the rest of our code. Then on line 6, we use the relational equality operator, ==, to check if todaysWeather is equal to “raining.” Here, it is, so “raincoat” and “rainboots” are printed from lines 8 and 10. What if todaysWeather didn’t equal “raining?”
 
-<i-sandbox-js page-slug="__temp_slug__" code="">
-</i-sandbox-js>
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "raining"
+todaysWeather = "cold"
+
+#Checks if todaysWeather equals "raining"
+if todaysWeather == "raining":
+	#Prints "raincoat" if so
+	print("raincoat")
+	#Prints "rainboots" if so
+	print("rainboots")
+#Prints "Done!" when complete
+print("Done!")'>
+</i-sandbox-py>
 
 **Figure 3.2.3**
 
@@ -370,7 +391,7 @@ print("Done!")'>
 
 **Figure 3.2.7**
 
-How does the code in Figure 3.2.7 run? First it creates todaysWeather on line 2 and gives it the value “windy.” Then it checks on line 5 if todaysWeather equals “raining.” It doesn’t, so it skips the conditional’s code block (lines 6 and 7). Then it checks the first elif on line 9. todaysWeather doesn’t equal “cold,” so it skips this code block (lines 10 and 11), too. Then it checks the second elif on line 13. todaysWeather _does_ equal “windy,” though, so it runs the contents of that code block (line 14) and prints “jacket.” Now that one of the parts of the if-then-else-if- else block _has_ run, it doesn’t check the rest. From the start, it goes to the first True conditional it finds, runs its code block, and skips the rest. In this case, that means it skips the elif on line 16 and the else on line 19.
+How does the code in Figure 3.2.7 run? First it creates todaysWeather on line 2 and gives it the value “windy.” Then it checks on line 5 if todaysWeather equals “raining.” It doesn’t, so it skips the conditional’s code block (lines 6 and 7). Then it checks the first elif on line 9. todaysWeather doesn’t equal “cold,” so it skips this code block (lines 10 and 11), too. Then it checks the second elif on line 13. todaysWeather _does_ equal “windy,” though, so it runs the contents of that code block (line 14) and prints “jacket.” Now that one of the parts of the if-then-else-if-else block _has_ run, it doesn’t check the rest. From the start, it goes to the first True conditional it finds, runs its code block, and skips the rest. In this case, that means it skips the elif on line 16 and the else on line 19.
 
 We can preview a later lesson to examine this; later, we’ll talk about using operators along with conditionals. The code in Figure 3.2.8 approaches the same issue twice; note the difference.
 
@@ -524,7 +545,7 @@ The conditional on line 7 checks to see if todaysWeather is one of the items in 
 
 ## Boolean Functions {#Boolean-Functions-2924} 
 
-If a function returns a boolean, then we can use it in a conditional statement. For example, in Python, there is a function (well, technically a method, but don’t worry about the difference for now) called isdigit() that returns True if the string rep- resents a number, False if it does not. Figure 3.2.13 shows this in action.
+If a function returns a boolean, then we can use it in a conditional statement. For example, in Python, there is a function (well, technically a method, but don’t worry about the difference for now) called isdigit() that returns True if the string represents a number, False if it does not. Figure 3.2.13 shows this in action.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myNumericString = "12345"
 myNonNumericString = "ABCDE"
