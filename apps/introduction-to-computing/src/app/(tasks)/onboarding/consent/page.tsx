@@ -65,7 +65,7 @@ function ConsentDocument() {
 
         <FormSection id="study-purpose" title="Purpose of the Study">
           <p>
-            The purpose of this study is to collect data from trainees using an
+            The purpose of this study is to collect data from students using an
             intelligent training text which focuses on read-to-write tasks.
             Read-to-write tasks like summaries and short answer-questions are a
             common approach for assessing learning. Activities within an
@@ -84,24 +84,12 @@ function ConsentDocument() {
           <ol className="list-disc space-y-3 pl-6">
             <li>Complete a demographic and individual differences survey</li>
             <li>Complete a short language proficiency assessment</li>
-            <li>
-              Complete a pretest quiz that includes 14 true/false questions
-            </li>
-            <li>
-              Complete an assessment of your previous understanding of the topic
-            </li>
-            <li>
-              Read the text <span className="italic">{volume.title}</span>
-            </li>
-            <li>
-              Complete a post-test quiz that includes 14 true/false questions
-            </li>
+            <li>Read the text <span className="italic">{volume.title}</span></li>
             <li>
               Take a survey on engagement, motivation, and user experience that
               focuses on user experiences with intelligent texts
             </li>
           </ol>
-          <p>This study will take about an hour to complete.</p>
         </FormSection>
 
         <FormSection id="compensation" title="Compensation">
