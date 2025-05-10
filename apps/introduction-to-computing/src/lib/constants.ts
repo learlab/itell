@@ -38,12 +38,13 @@ export const EventType = {
   CHUNK_REVEAL_QUESTION: "post-question-chunk-reveal",
   EXPLAIN: "explain-constructed-response",
   STAIRS: "stairs",
-  RANDOM_REREAD: "random_reread",
+  RANDOM_REREAD: "random-reread",
   SIMPLE: "simple",
   QUIZ: "quiz",
   STREAK: "streak",
   REWARD_SPENT: "reward-spent",
   QUIZME: "quizme",
+  RUNCODE: "run-code",
 } as const;
 
 export const Condition = {
@@ -66,4 +67,3 @@ export const Survey = {
 
 export const STAIRS_TEXT_ANIMATION_WPM = 300;
 export const STAIRS_TEXT_ANIMATION_DELAY = 1; // seconds
-
