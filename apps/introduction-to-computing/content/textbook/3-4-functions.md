@@ -277,7 +277,6 @@ To start with, let’s just write a simple function printYen() that will print t
 def printYen():
 	#Prints "¥", without the new line afterward
 	print("¥", end="")
-
 #Calls the function "printYen"
 printYen()
 print(5)'>
@@ -313,7 +312,6 @@ In Figure 3.4.4, we’ve changed line 4. Instead of printing ¥, we return it. W
 def returnYen():
 	#Returns "¥"
 	return "¥"
-
 #Prints the output of returnYen()
 print(returnYen(), end = "")
 print(5)'>
@@ -329,7 +327,6 @@ The outcome is exactly the same, but notice that this design means we could have
 def returnYen():
 	#Returns "¥"
 	return "¥"
-
 #Prints the output of returnYen(), then 5
 print(returnYen(), 5, end = "")'>
 </i-sandbox-py>
@@ -346,7 +343,6 @@ The function from Figure 3.4.5 just returns the “¥” symbol. However, are we
 def returnYenAmount(amount):
 	#Returns "¥" with the amount
 	return "¥" + str(amount)
-
 #Prints the output of returnYenAmount(5)
 print(returnYenAmount(5))'>
 </i-sandbox-py>
@@ -363,7 +359,6 @@ So far, all our arguments have been values themselves, but we can (and usually w
 def returnYenAmount(amount):
 	#Returns "¥" with the amount
 	return "¥" + str(amount)
-
 inputAmount = int(input("Enter the amount: "))
 #Prints the output of returnYenAmount(inputAmount)
 print(returnYenAmount(inputAmount))'>
@@ -389,7 +384,6 @@ def currencyAmount(currency, amount):
 		return "£" + str(amount)
 	else:
 		return str(amount)
-
 #Prints the output of currencyAmount("GBP", 5)
 print(currencyAmount("GBP", 5))'>
 </i-sandbox-py>
@@ -420,7 +414,6 @@ def currencyAmount(currency, amount):
 		return "£" + str(amount)
 	else:
 		return str(amount)
-
 #Prints the output of currencyAmount(5)
 print(currencyAmount(5))'>
 </i-sandbox-py>
@@ -443,7 +436,6 @@ def currencyAmount(currency, amount):
 		resultString = "£" + str(amount)
 	else:
 		resultString = str(amount)
-
 #Runs currencyAmount(5)
 currencyAmount("GBP", 5)
 print(resultString)'>
@@ -511,7 +503,6 @@ def currencyAmount(amount, currency = "USD"):
 		return "£" + str(amount)
 	else:
 		return str(amount)
-
 #Prints the output of currencyAmount(5)
 print(currencyAmount(5))
 #Prints the output of currencyAmount(5, currency = "GBP")

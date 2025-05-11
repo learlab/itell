@@ -67,7 +67,7 @@ export const GET = async (req: Request) => {
         >
           <p>{header}</p>
           <p style={{ marginLeft: "auto" }}>
-            An intelligent textbook by LearLab
+            An intelligent textbook by LEAR Lab
           </p>
         </header>
         <div

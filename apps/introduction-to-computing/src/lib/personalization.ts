@@ -2,7 +2,6 @@ import { User } from "lucia";
 
 import { createEventAction } from "@/actions/event";
 import { EventType, SKIP_SUMMARY_STREAK_THRESHOLD } from "@/lib/constants";
-import type { PersonalizationData } from "@/drizzle/schema";
 
 export function updatePersonalizationStreak(
   user: User,
@@ -15,7 +14,7 @@ export function updatePersonalizationStreak(
     cri?: { isCorrect: boolean };
     fromAdminTools?: boolean;
   }
-): PersonalizationData {
+) {
   const personalization = { ...user.personalization };
 
   let streakType = "";

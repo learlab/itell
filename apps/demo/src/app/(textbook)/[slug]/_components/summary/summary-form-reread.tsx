@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import Link from "next/link";
 import { Elements } from "@itell/constants";
 import {
   useDebounce,
@@ -16,7 +17,7 @@ import {
 } from "@itell/core/summary";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
-import { getChunkElement } from "@itell/utils";
+import { cn, getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { Page } from "#content";
 import { type User } from "lucia";
@@ -33,7 +34,7 @@ import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
-import { reportSentry } from "@/lib/utils";
+import { makePageHref, reportSentry } from "@/lib/utils";
 import {
   getSummaryLocal,
   saveSummaryLocal,
@@ -71,6 +72,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
     randomChunkSlug,
     exitButton: FinishReadingButton,
   });
+
   const goToRandomChunk = () => {
     const el = getChunkElement(randomChunkSlug);
     if (el) {
@@ -95,6 +97,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       const input = String(formData.get("input")).replaceAll("\u0000", "");
 
       saveSummaryLocal(pageSlug, input);
+
       requestBodyRef.current = JSON.stringify({
         summary: input,
         page_slug: pageSlug,
@@ -146,9 +149,23 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
         return;
       }
 
-      // 25% random rereading if the page is not unlocked
-      if (!pageStatus.unlocked && !page.quiz) {
+      // 25% random rereading
+      if (Math.random() <= 0.25 && !pageStatus.unlocked && !page.quiz) {
         goToRandomChunk();
+      } else {
+        toast.success("You can continue to the next page", {
+          description: () =>
+            page.next_slug ? (
+              <Link
+                href={makePageHref(page.next_slug)}
+                className={cn(
+                  "flex items-center gap-1 font-semibold underline underline-offset-4"
+                )}
+              >
+                Next Page
+              </Link>
+            ) : undefined,
+        });
       }
     },
     { delayTimeout: 10000 }
@@ -222,8 +239,9 @@ function FinishReadingButton({ onClick }: { onClick: (_: number) => void }) {
       tabIndex={-1}
     >
       <p className="p-2 leading-tight tracking-tight">
-        Please re-read the highlighted section. when you are finished, press the
-        &quot;I finished rereading&quot; button.
+        Before you continue to the next page, please re-read the highlighted
+        section. when you are finished, press the &quot;I finished
+        rereading&quot; button.
       </p>
 
       <a className="sr-only" href={`#${Elements.STAIRS_HIGHLIGHTED_CHUNK}`}>
@@ -233,6 +251,8 @@ function FinishReadingButton({ onClick }: { onClick: (_: number) => void }) {
         onClick={() => {
           onClick(time);
           clearTimer();
+
+          toast.success("You can continue to the next page");
         }}
         size="sm"
         id={Elements.STAIRS_RETURN_BUTTON}

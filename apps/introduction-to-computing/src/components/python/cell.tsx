@@ -7,7 +7,7 @@ import { Button } from "@itell/ui/button";
 import { cn } from "@itell/utils";
 import { keymap } from "@codemirror/view";
 import { githubDark, githubLight } from "@uiw/codemirror-theme-github";
-import { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import { debounce } from "es-toolkit";
 import {
   HelpCircleIcon,
@@ -27,15 +27,15 @@ import { Spinner } from "../spinner";
 import { baseExtensions, PythonResult } from "./editor-config";
 import { CellData, CellMode, CellStatus } from "./types";
 
-const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
-  ssr: false,
-  loading: () => (
-    <p className="flex items-center gap-2">
-      <Spinner />
-      Loading code editor
-    </p>
-  ),
-});
+// const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
+//   ssr: false,
+//   loading: () => (
+//     <p className="flex items-center gap-2">
+//       <Spinner />
+//       Loading code editor
+//     </p>
+//   ),
+// });
 
 // io and contextlib is imported as setup code in providers
 const codeWithStd = (code: string) => {

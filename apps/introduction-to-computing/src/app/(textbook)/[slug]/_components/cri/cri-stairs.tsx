@@ -172,10 +172,10 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     return (
       <CRIShell>
         <CardHeader>
-          <CardTitle className="text-base">
+          <CardTitle className="!my-0 text-base">
             You can skip the following question or click to reveal.
           </CardTitle>
-          <CardDescription className="mt-2">
+          <CardDescription>
             <Button
               variant="outline"
               onClick={() => {

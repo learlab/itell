@@ -72,7 +72,7 @@
     "recharts": "^2.15.0",
     "rehype-pretty-code": "^0.13.2",
     "server-only": "^0.0.1",
-    "sonner": "^1.7.1",
+    "sonner": "^2.0.3",
     "use-action-status": "^0.0.1",
     "use-driver": "^1.0.1",
     "use-immer": "^0.9.0",

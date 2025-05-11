@@ -165,10 +165,10 @@ Let’s start with a loop where we know how many times we want to run it. Imagin
 
 Figure 3.3.1 shows the syntax for this simple loop. Let’s walk through it part by part. First, just like we started with if to do a conditional, we start with for to do a for loop on line 2. Then, we define a variable name. Generally, self-documenting code is the goal, but we use loops so commonly that it’s not uncommon to use a single character—usually i or n—here. We call this the **loop control variable**.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Loop this for the numbers 1 through 10
+<i-sandbox-py  page-slug="__temp_slug__" code='# Loop this for the numbers 1 through 10
 for i in range(1, 11):
 	#Prints the current number
-	print(i)`}>
+	print(i)'>
 </i-sandbox-py>
 
 **Figure 3.3.1**
@@ -183,14 +183,14 @@ So, let’s trace this one. When the computer hits for i on line 2, it creates a
 
 One interesting (but non-essential) note: if you modify i within the body of the loop, the modified value will be used for the rest of _that_ iteration of the loop; however, when that iteration ends, it restores the previous value of i. The _contents_ of the loop can’t control the loop itself. You likely won’t ever encounter this, but it’s an interesting idiosyncrasy of the Python language; in Java and other languages, the contents of the loop _can_ control the loop itself.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Loop this for the numbers 1 through 10
+<i-sandbox-py  page-slug="__temp_slug__" code='#Loop this for the numbers 1 through 10
 for i in range(1, 11):
 	#Prints i with a label
 	print("Before addition:", i)
 	#Adds 1 to i
 	i += 1
 	#Prints i with a label
-	print("After addition:", i)`}>
+	print("After addition:", i)'>
 </i-sandbox-py>
 
 **Figure 3.3.2**
@@ -201,16 +201,16 @@ One common use of the for loop is to average numbers. So, let’s try that out. 
 
 First, we need to create sum on line 2, outside the loop with a value of 0 since we haven’t started adding numbers to it. Interesting thought experiment, though: why do we have to create it outside the loop? Couldn’t we create it inside like declaring variables inside our conditionals? The reason is that every time the loop runs, we need to set sum equal to the previous sum plus the new number; if sum didn’t exist before, there is no previous sum, and so the program crashes because we’re not in sum’s scope the first time it runs!
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates sum with the value 0
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates sum with the value 0
 sum = 0
 #Loop 10 times
 for i in range(1, 11):
-	#Gets the user's number
+	#Gets the number from user
 	nextNumber = int(input("Enter number #" + str(i) + ": "))
 	#Add the inputted number to the sum
 	sum += nextNumber
 #Print the sum over 10
-print(sum/10)`}>
+print(sum/10)'>
 </i-sandbox-py>
 
 **Figure 3.3.3**
@@ -221,7 +221,7 @@ However, what if we didn’t want to just average 10 numbers? What if we wanted 
 
 In Figure 3.3.4, instead of just jumping straight to range(1, 11), we instead first prompt the user for the count of numbers to average. Then, we run the loop from 1 to numCount + 1—the plus 1 is so the loop _runs_ the number of times the user inputted instead of stopping one short. Remember, a loop from 1 to 11 runs 10 times, so if the user wants to run 5 times, we need a loop from 1 to 6.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates sum with the value 0
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates sum with the value 0
 sum = 0
 #Get the number of numbers to average
 numCount = int(input("How many numbers will you average? "))
@@ -232,7 +232,7 @@ for i in range(1, numCount + 1):
 	#Add the inputted number to the sum
 	sum += nextNumber
 #Print the sum over numCount
-print(sum/numCount)`}>
+print(sum/numCount)'>
 </i-sandbox-py>
 
 **Figure 3.3.4**
@@ -252,15 +252,14 @@ We haven’t covered lists, but you’ve seen them a couple times by now. We’l
 
 In Figure 3.3.5, line 3 creates a list of numbers. The list is called listOfNumbers, and inside the brackets on the right, we list numbers separated by commas. The result is a list of 10 numbers, 91 through 100. We’ll talk about this more in Unit 4. As before, we then create sum and give it the value 0.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates listOfNumbers and assigns it to a list of ten numbers, 91 through 100
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates listOfNumbers and assigns it to a list of ten numbers, 91 through 100
 listOfNumbers = [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
 sum = 0
-
-#Runs this loop once for each item, assigning the current item to the variable 'currentNumber'
+#Runs this loop once for each item, assigning the current item to the variable "currentNumber"
 for currentNumber in listOfNumbers:
 	sum += currentNumber
 #Divides sum by the number of items in the list
-print(sum / len(listOfNumbers))`}>
+print(sum / len(listOfNumbers))'>
 </i-sandbox-py>
 
 **Figure 3.3.5**
@@ -271,15 +270,14 @@ So, let’s trace through this. On the first run of the loop, currentNumber is g
 
 To see the equivalence of these different types of for loops, note that the for-each loop in Figure 3.3.5 is identical to the for loop in Figure 3.3.6. In Figure 3.3.6, we run the for loop from 0 to the length of the list of numbers. We start at 0 because the computer sees the first item in the list as the “zeroth” item, for reasons we’ll describe in Unit 4. Then, for each iteration of the list, the first thing we do is grab item i (e.g., item 4) from the list, assign it to currentNumber, and then add currentNumber to sum. It works exactly the same, it just introduces some more manual work: we have to manually get the length of the list and the current number.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates listOfNumbers and assigns it to a list of ten numbers, 91 through 100
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates listOfNumbers and assigns it to a list of ten numbers, 91 through 100
 listOfNumbers = [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
 sum = 0
-
 for i in range(0, len(listOfNumbers)):
 	currentNumber = listOfNumbers[i]
 	sum += currentNumber
 #Divides sum by the number of items in the list
-print(sum / len(listOfNumbers))`}>
+print(sum / len(listOfNumbers))'>
 </i-sandbox-py>
 
 **Figure 3.3.6**
@@ -292,15 +290,14 @@ For example, imagine we wanted to count the number of words in a string. We migh
 
 In Figure 3.3.7, we’re doing something more complicated than what we’ve done before: we’re using a conditional _inside_ a for-each loop. We check each character (currentCharacter) of the string to see if it equals a space on line 7; if it does, it increments numSpaces on line 8. Then, at the end on line 9, it prints numSpaces + 1, which would be the number of words.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`myString = "There are seven words in this string."
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "There are seven words in this string."
 numSpaces = 0
-
 #Runs this loop for each character in the string
 for currentCharacter in myString:
 	#Checks if the character is a space
 	if currentCharacter == " ":
 		numSpaces += 1
-print("There are " + str(numSpaces + 1) + " words in the string.")`}>
+print("There are " + str(numSpaces + 1) + " words in the string.")'>
 </i-sandbox-py>
 
 **Figure 3.3.7**
@@ -323,11 +320,11 @@ Any of our for loops could have been rewritten as while loops. However, while lo
 
 Let’s take a simple example of this. You might notice what we’re about to write is similar to something we wrote previously with for loops. That’s exactly right: any for loop can be written as a while loop. Figure 3.3.8 shows some code to count up to a number with a while loop.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`i = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='i = 1
 #Repeat while i is less than 11
 while i < 11:
 	print(i)
-	i += 1`}>
+	i += 1'>
 </i-sandbox-py>
 
 **Figure 3.3.8**
@@ -342,10 +339,10 @@ Notice how similar this is to our for loops. With our for loop, we noted that wh
 
 Let’s try to create a small game using while loops. In this game, we’ll randomly generate a number from 1 to 100, and we’ll ask the user to guess the number. While their guess is wrong, we’ll give them feedback on which direction to guess and repeat until it’s correct. The code for this is shown in Figure 3.3.9.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`import random
+<i-sandbox-py  page-slug="__temp_slug__" code='import random
 #Get a random number from 1 to 100
 hiddenNumber = random.randint(1, 100)
-#Creates userGuess and give it a value that can't be correct
+#Creates userGuess and give it a value that cannot be correct
 userGuess = 0
 #Repeat until the guess is correct
 while not userGuess == hiddenNumber:
@@ -359,7 +356,7 @@ while not userGuess == hiddenNumber:
 		print("Too low!")
 	#The guess must be right!
 	else:
-		print("That's right!")`}>
+		print("That's right!")'>
 </i-sandbox-py>
 
 **Figure 3.3.9**
@@ -380,9 +377,9 @@ You might notice in the previous example that something risky could happen. What
 
 These are very easy to create. This simple loop in Figure 3.3.10, for example, will never end. We create i, our loop control variable, and assign it the value 1. Then, we create a while loop that repeats as long as i is greater than 0. Every time it repeats, we just print i. What will the result be here? Simple: it will just print 1 over and over and over again, millions of times per second if our computer allows it. If the loop repeats so long as i is greater than 0 and the value of i never changes, then the loop will never terminate.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`i = 1
+<i-sandbox-py  page-slug="__temp_slug__" code='i = 1
 while i > 0:
-	print(i)`}>
+	print(i)'>
 </i-sandbox-py>
 
 **Figure 3.3.10**
@@ -399,9 +396,8 @@ Earlier, we used for-each loops to loop over lists of strings and characters in 
 
 Figure 3.3.11 shows the code that does this. First, in lines 3 through 5, note that we have another way to tell the computer to interpret multiple lines as one line for human readability. If we’re creating a list and separating our list items with commas, we can create a new line and continue the list. Python knows that the list isn’t over until it sees that closed bracket, so it knows we’re still creating the list—that lets us break the line up into multiple visual lines so that we can read it more easily.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates listOfStrings and assigns it a list of strings each with multiple words
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates listOfStrings and assigns it a list of strings each with multiple words
 listOfStrings = ["This is the first string", "This is the second string", "This is the third string", "This is the fourth string", "This is the fifth string"]
-
 numSpaces = 0
 #Loops over each string in listOfStrings
 for currentString in listOfStrings:
@@ -410,9 +406,8 @@ for currentString in listOfStrings:
 		#Checks if the current character is a space
 		if currentCharacter == " ":
 			numSpaces += 1
-
 numWords = numSpaces + len(listOfStrings)
-print("There are ", numWords, " words in these strings.")`}>
+print("There are ", numWords, " words in these strings.")'>
 </i-sandbox-py>
 
 **Figure 3.3.11**
@@ -427,14 +422,14 @@ After this code has iterated over every character in every string, it then creat
 
 The previous example showed nesting for loops (and as an added bonus, nesting a conditional inside a for loop). What about nesting while loops inside for loops, or for loops inside while loops? Let’s try that out. Let’s take our previous while loop-enabled number-guessing game and extend it to allow the player to decide in advance how many games they’d like to play. Note that we’re about to get pretty complicated, so if you find yourself confused, don’t worry: try to trace through the code line-by-line to understand how it’s running.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`import random
+<i-sandbox-py  page-slug="__temp_slug__" code='import random
 numGames = int(input("How many games would you like to play? "))
 #Repeats this the number of games the user chose
 for i in range(0, numGames):
 	print("Game start!")
 	#Get a random number from 1 to 100
 	hiddenNumber = random.randint(1, 100)
-	#Create userGuess and give it a value that can't be correct
+	#Create userGuess and give it a value that cannot be correct
 	userGuess = 0
 	#Repeat until the guess is correct
 	while not userGuess == hiddenNumber:
@@ -448,7 +443,7 @@ for i in range(0, numGames):
 			print("Too low!")
 		#The guess must be right!
 		else:
-			print("That's right!")`}>
+			print("That's right!")'>
 </i-sandbox-py>
 
 **Figure 3.312**
@@ -461,7 +456,7 @@ Third and most importantly, though, notice that it took only two lines (lines 2 
 
 This is still a little bit of an odd design, though. What if the user decides halfway through they want to quit? Or what if they reach the end and decide they want to keep playing? We can take care of that by switching this to nested while loops, as shown in Figure 3.3.13.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`import random
+<i-sandbox-py  page-slug="__temp_slug__" code='import random
 keepPlaying = "y"
 #While keepPlaying is "y"
 while KeepPlaying == "y"
@@ -474,7 +469,7 @@ while KeepPlaying == "y"
 	while not userGuess == hiddenNumber:
 		#Get the user's next guess as an integer
 		userGuess = int(input("guess a number: "))
-		#Checks if the guess is too high`}>
+		#Checks if the guess is too high'>
 </i-sandbox-py>
 
 **Figure 3.3.13**
@@ -493,7 +488,7 @@ There are three final keywords with loops that are worth covering, although to b
 
 The first is the continue statement. The continue statement forces the current iteration of the loop to stop, skipping over any remaining code inside the loop, as shown in Figure 3.3.14.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Runs this loop 20 times
+<i-sandbox-py  page-slug="__temp_slug__" code='#Runs this loop 20 times
 for i in range(1, 21):
 	#Checks if i is even
 	if i % 2 == 0:
@@ -501,7 +496,7 @@ for i in range(1, 21):
 		continue
 	#Prints that i is odd
 	print(i, "is odd.")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.3.14**
@@ -510,7 +505,7 @@ This code runs 20 times and prints the odd numbers. It does this by checking if 
 
 The second advanced structure is the break statement. Like the continue statement, the break statement forces the entire loop to terminate; it will not iterate any further even if the conditions governing the loop remain True, as shown in Figure 3.3.15.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Runs this loop 20 times
+<i-sandbox-py  page-slug="__temp_slug__" code='#Runs this loop 20 times
 for i in range(1, 21):
 	#Checks if i is even
 	if i % 2 == 0:
@@ -518,7 +513,7 @@ for i in range(1, 21):
 		break
 	#Prints that i is odd
 	print(i, "is odd.")
-print("Done!")`}>
+print("Done!")'>
 </i-sandbox-py>
 
 **Figure 3.3.15**
@@ -535,24 +530,24 @@ With conditionals, this presented a challenge if a variable was created inside a
 
 However, loops create a different issue for creating variables inside loops. The first time you assign a value to a variable, Python creates the variable. The second time, Python just changes the variable’s value. That means if you create a variable inside a loop, then every time the loop runs, its value is _replaced_, as shown in Figure 3.3.16. Many times that’s perfectly fine; if you only need the value of that variable within one iteration of the loop, then there’s no problem replacing its old value with the new one.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Get the number of numbers to average
+<i-sandbox-py  page-slug="__temp_slug__" code='#Get the number of numbers to average
 numCount = int(input("How many numbers will you average? "))
 #Loop numCount times
 for i in range(1, numCount + 1):
 	#Creates sum with the value 0
 	sum = 0
-	#Gets the user's number
+	#Gets the number from user
 	nextNumber = int(input("Enter number #" + str(i) + ": "))
 	sum += nextNumber
 #Prints the sum over numCount
-print(sum / numCount)`}>
+print(sum / numCount)'>
 </i-sandbox-py>
 
 **Figure 3.3.16**
 
 However, if you’re going to reference the variable outside the loop, _usually_ it’s because you wanted that variable to persist across different iterations of the loop. If the variable was created inside the loop, then referencing it after the loop will just give you the value the variable received the last time the loop ran, which is rarely what we want. So, the same advice I had in conditionals applies here, too: generally, if you need to refer to a variable outside a loop, don’t create it inside a loop. Create it before the loop, as shown in Figure 3.3.17.
 
-<i-sandbox-py  page-slug="__temp_slug__" code={`#Creates sum with the value 0
+<i-sandbox-py  page-slug="__temp_slug__" code='#Creates sum with the value 0
 sum = 0
 #Get the number of numbers to average
 numCount = int(input("How many numbers would you like to average? "))
@@ -562,9 +557,8 @@ for i in range(1, numCount + 1):
 	nextNumber = int(input("Enter number #" + str(i) + ": "))
 	#Add the inputted number to sum 
 	sum += nextNumber
-
 #Print the sum over numCount
-print(sum / numCount)`}>
+print(sum / numCount)'>
 </i-sandbox-py>
 
 **Figure 3.3.17**

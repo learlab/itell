@@ -112,7 +112,7 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
     return (
       <CRIShell>
         <CRIContent>
-          <p className="my-2 text-[0.9em] font-light">
+          <p className="!my-0 text-[0.9em] font-light">
             You can skip the following question or click to reveal.
           </p>
           <div>

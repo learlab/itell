@@ -58,7 +58,7 @@ export default async function SummaryPage(props: PageProps) {
               {summary.isPassed ? "Passed" : "Failed"}
             </Badge>
           </div>
-          <p className="text-sm tracking-tight text-muted-foreground">
+          <p className="text-muted-foreground text-sm tracking-tight">
             Click on the title to review this page&apos;s content.
           </p>
         </div>
@@ -69,7 +69,7 @@ export default async function SummaryPage(props: PageProps) {
             </PageLink>
           </div>
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-center text-sm">
             Created at <time>{summary.createdAt.toLocaleDateString()}</time>
           </p>
 

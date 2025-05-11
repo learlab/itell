@@ -260,7 +260,6 @@ Let’s start with the simple example: _if_ it’s raining, _then_ the user shou
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "raining"
 todaysWeather = "raining"
-
 #Checks if todaysWeather equals "raining"
 if todaysWeather == "raining":
 	#Prints "raincoat" if so
@@ -277,7 +276,6 @@ In line 3, we’re creating the variable to store todaysWeather; if we were actu
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "raining"
 todaysWeather = "cold"
-
 #Checks if todaysWeather equals "raining"
 if todaysWeather == "raining":
 	#Prints "raincoat" if so
@@ -305,12 +303,11 @@ We add an else block, and under the else block, we place the lines of code to pr
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it
 #equal to "cold"
 todaysWeather = "cold"
-
 #Checks if todaysWeather equals "raining"
 if todaysWeather == "raining":
 	print("raincoat")
 	print("rainboots")
-#If todaysWeather didn't equal "raining", do the following
+#If todaysWeather did not equal to "raining", do the following
 else:
 	print("t-shirt")
 	print("shorts")
@@ -325,12 +322,11 @@ What happens if the first if statement was true? Then the code under the if stat
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "raining"
 todaysWeather = "raining"
-
 #Checks if todaysWeather equals "raining"
 if todaysWeather == "raining":
 	print("raincoat")
 	print("rainboots")
-#If todaysWeather didn't equal "raining", do the following
+#If todaysWeather did not equal to "raining", do the following
 else:
 	print("t-shirt")
 	print("shorts")
@@ -345,7 +341,6 @@ Now let’s throw our else-if statements into the mix. We’ll start with just t
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "cold"
 todaysWeather = "cold"
-
 #Checks if todaysWeather equals "raining"
 if todaysWeather == "raining":
 	print("raincoat")
@@ -354,7 +349,7 @@ if todaysWeather == "raining":
 elif todaysWeather == "cold":
 	print("long-sleeved shirt")
 	print("scarf")
-#If todaysWeather didn't equal "raining", do the following
+#If todaysWeather did not equal to "raining", do the following
 else:
 	print("t-shirt")
 	print("shorts")
@@ -367,7 +362,6 @@ The majority of the code in Figure 3.2.6 is the same as the code from Figure 3.2
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "windy"
 todaysWeather = "windy"
-
 #Checks if todaysWeather equals "raining"
 if todaysWeather == "raining":
 	print("raincoat")
@@ -382,7 +376,7 @@ elif todaysWeather == "windy":
 #Checks if todaysWeather equals "snowy"
 elif todaysWeather == "snowy":
 	print("snowboots")
-#If todaysWeather didn't equal any of these, do the following
+#If todaysWeather did not equal to any of these, do the following
 else:
 	print("t-shirt")
 	print("shorts")
@@ -397,7 +391,6 @@ We can preview a later lesson to examine this; later, we’ll talk about using o
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "cold"
 todaysWeather = "cold"
-
 #Checks if todaysWeather equals "cold"
 if todaysWeather == "cold":
 	print("scarf")
@@ -427,7 +420,6 @@ Finally, note that a common error in programming conditionals is to “orphan”
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates todaysWeather and sets it equal to "cold"
 todaysWeather = "cold"
-
 #Checks if todaysWeather equals "cold"
 if todaysWeather == "cold":
 	print("scarf")
@@ -484,7 +476,6 @@ The greater-than-or-equal-to operator returns True if the first number is greate
 balance = 20.0
 #Creates purchasePrice and sets it equal to 19.0
 purchasePrice = 19.0
-
 #Checks if balance is greater than or equal to purchasePrice
 if balance >= purchasePrice:
 	print("Purchase possible!")
@@ -511,7 +502,6 @@ balance = 20.0
 purchasePrice = 19.0
 #Creates salesTax and sets it equal to 1.08
 salesTax = 1.08
-
 #Checks if balance is greater than or equal to purchasePrice times salesTax
 if balance >= purchasePrice * salesTax:
 	print("Purchase possible!")
@@ -532,7 +522,6 @@ Figure 3.2.12 shows a more complicated check for weather and clothing. Instead o
 jacketWeather = ["cold", "windy", "raining", "snowing"]
 #Creates todaysWeather and sets it equal to "raining"
 todaysWeather = "raining"
-
 #Checks if todaysWeather is in jacketWeather
 if todaysWeather in jacketWeather:
 	print("jacket")
@@ -549,7 +538,6 @@ If a function returns a boolean, then we can use it in a conditional statement. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myNumericString = "12345"
 myNonNumericString = "ABCDE"
-
 #Checks if myNumericString is purely numeric
 if myNumericString.isdigit():
 	print("The first string is numerical.")
@@ -575,7 +563,6 @@ Finally, our boolean operators—and, or, and not—can be used to combine any o
 Figure 3.2.14 is a simplified version of one of our previous examples of elif, this time using just one if. Here, the conditional checks if todaysWeather is either cold _or_ windy. Note the syntax here: to check if one _or_ the other is true, we simply put the word or between the two logical expressions. Here, the first one evaluates to True and the second one evaluates to False, and True or False resolves to True: it’s true that the weather is either cold or windy.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='todaysWeather = "cold"
-
 #Checks if todaysWeather equals "windy" or "cold"
 if todaysWeather == "cold" or todaysWeather == "windy":
 	print("jacket")
@@ -587,7 +574,6 @@ print("Done!")'>
 In Figure 3.2.15, had we used and instead of or, then the conditional would have been False. It would not be true that todaysWeather equals both “cold” and “windy” (and in fact, the way we’ve written this, that would be impossible since “cold” == “windy” itself is False).
 
 <i-sandbox-py  page-slug="__temp_slug__" code='todaysWeather = "cold"
-
 #Checks if todaysWeather equals "windy" and "cold"
 if todaysWeather == "cold" and todaysWeather == "windy":
 	print("jacket")
@@ -608,12 +594,10 @@ Figure 3.2.16 shows a complex chunk of code that tests this. We’re putting tog
 balance = 20.0
 salesTax = 1.08
 cardholderName = "David Joyner"
-trustedVendors = ["Maria's", "Bob's", "Vrushali's", "Ling's", "Tia's"]
-
+trustedVendors = ["Maria", "Bob", "Vrushali", "Ling", "Tia"]
 purchasePrice = 19.0
 customerName = "David Joyner"
-vendor = "Vrushali's"
-
+vendor = "Vrushali"
 #This long conditional checks whether the balance. is greater than the total price, whether the cardholder is also the customer, and whether the vendor is trusted.
 if balance > purchasePrice * salesTax and cardholderName == \
 		customerName and vendor in trustedVendors:
@@ -633,13 +617,11 @@ This can get even more complicated. We might have logical expressions with boole
 balance = 20.0
 salesTax = 1.08
 cardholderName = "David Joyner"
-trustedVendors = ["Maria's", "Bob's", "Vrushali's", "Ling's", "Tia's"]
-
+trustedVendors = ["Maria", "Bob", "Vrushali", "Ling", "Tia"]
 purchasePrice = 19.0
 customerName = "David Joyner"
-vendor = "Vrushali's"
+vendor = "Vrushali"
 overdraftProtection = True
-
 #This long conditional checks whether the balance. is greater than the total price, whether the cardholder is also the customer, and whether the vendor is trusted.
 if (balance > purchasePrice * salesTax or overdraftProtection) \
 		and cardholderName == customerName and vendor in trustedVendors:
@@ -708,13 +690,11 @@ Note that while one major benefit of nested conditionals is that we can take car
 <i-sandbox-py  page-slug="__temp_slug__" code='balance = 20.0
 salesTax = 1.08
 cardholderName = "David Joyner"
-trustedVendors = ["Maria's", "Bob's", "Vrushali's", "Ling's", "Tia's"]
-
+trustedVendors = ["Maria", "Bob", "Vrushali", "Ling", "Tia"]
 purchasePrice = 19.0
 customerName = "David Joyner"
-vendor = "Freddy's"
+vendor = "Freddy"
 overdraftProtection = True
-
 #This nested conditional checks whether the balance is greater than
 #the total price or overdraft protection is available, then whether 
 #the cardholder is the customer, and then whether the vendor is trusted.
@@ -746,13 +726,11 @@ This code performs exactly the same, but all the nesting is inside the else port
 <i-sandbox-py  page-slug="__temp_slug__" code='balance = 20.0
 salesTax = 1.08
 cardholderName = "David Joyner"
-trustedVendors = ["Maria's", "Bob's", "Vrushali's", "Ling's", "Tia's"]
-
+trustedVendors = ["Maria", "Bob", "Vrushali", "Ling", "Tia"]
 purchasePrice = 19.0
 customerName = "David Joyner"
-vendor = "Freddy's"
+vendor = "Freddy"
 overdraftProtection = True
-
 #This nested conditional checks whether the balance is less than or
 #equal to the total price and overdraft protection is not available;
 #otherwise, whether the cardholder is not also the customer; and 

@@ -727,8 +727,8 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1
       sonner:
-        specifier: ^1.7.1
-        version: 1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^2.0.3
+        version: 2.0.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       use-action-status:
         specifier: ^0.0.1
         version: 0.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1905,7 +1905,7 @@ importers:
         version: 9.1.0(eslint@9.16.0(jiti@2.4.2))
       eslint-config-turbo:
         specifier: latest
-        version: 2.5.2(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3)
+        version: 2.5.3(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3)
       eslint-plugin-drizzle:
         specifier: ^0.2.3
         version: 0.2.3(eslint@9.16.0(jiti@2.4.2))
@@ -8914,8 +8914,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.5.2:
-    resolution: {integrity: sha512-aZdMUCJE5sC9UHZPOu6GiqCijw0HzlcxTbGZeESMFanYShhxrO6mAZy02zYOYK+y184HnxAngcfmtgDt8cIUxw==}
+  eslint-config-turbo@2.5.3:
+    resolution: {integrity: sha512-KuW20TUDfLooS38gSquL6Gi+ZjaMlno0N3hBe8c+F8+nRYUhbF2fNhuyzl9ScNHx6aJT2eVhLBfGELg7N5+sog==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -8946,8 +8946,8 @@ packages:
     peerDependencies:
       eslint: '>6.6.0'
 
-  eslint-plugin-turbo@2.5.2:
-    resolution: {integrity: sha512-B+vdgOtBuDbRI3sIRayV3HZK1XcwlNuksmJJIgggkXTsNehMEbreJBkIda4qvA/STHnGAl2bUGev0Jx8Rijiwg==}
+  eslint-plugin-turbo@2.5.3:
+    resolution: {integrity: sha512-DlXZd+LgpDlxH/6IsiAXLhy82x0jeJDm0XBEqP6Le08uy0HBQkjCUt7SmXNp8esAtX9RYe6oDClbNbmI1jtK5g==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -13351,6 +13351,12 @@ packages:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
+  sonner@2.0.3:
+    resolution: {integrity: sha512-njQ4Hht92m0sMqqHVDL32V2Oun9W1+PHO9NDv9FHfJjT3JT22IG4Jpo3FPQy+mouRKCXFWO+r67v6MrHX2zeIA==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+
   sort-array@5.0.0:
     resolution: {integrity: sha512-Sg9MzajSGprcSrMIxsXyNT0e0JB47RJRfJspC+7co4Z5BdNsNl8FmWI+lXEpyKq+vkMG6pHgAhqyCO+bkDTfFQ==}
     engines: {node: '>=12.17'}
@@ -15686,13 +15692,6 @@ snapshots:
       picocolors: 1.1.1
       sisteransi: 1.0.5
 
-  '@codemirror/autocomplete@6.18.3(@codemirror/language@6.10.6)(@codemirror/state@6.5.0)(@codemirror/view@6.36.7)(@lezer/common@1.2.3)':
-    dependencies:
-      '@codemirror/language': 6.10.6
-      '@codemirror/state': 6.5.0
-      '@codemirror/view': 6.36.7
-      '@lezer/common': 1.2.3
-
   '@codemirror/autocomplete@6.18.3(@codemirror/language@6.11.0)(@codemirror/state@6.5.0)(@codemirror/view@6.36.7)(@lezer/common@1.2.3)':
     dependencies:
       '@codemirror/language': 6.11.0
@@ -15758,7 +15757,7 @@ snapshots:
 
   '@codemirror/theme-one-dark@6.1.2':
     dependencies:
-      '@codemirror/language': 6.10.6
+      '@codemirror/language': 6.11.0
       '@codemirror/state': 6.5.0
       '@codemirror/view': 6.36.7
       '@lezer/highlight': 1.2.1
@@ -22386,9 +22385,9 @@ snapshots:
 
   codemirror@6.0.1(@lezer/common@1.2.3):
     dependencies:
-      '@codemirror/autocomplete': 6.18.3(@codemirror/language@6.10.6)(@codemirror/state@6.5.0)(@codemirror/view@6.36.7)(@lezer/common@1.2.3)
+      '@codemirror/autocomplete': 6.18.3(@codemirror/language@6.11.0)(@codemirror/state@6.5.0)(@codemirror/view@6.36.7)(@lezer/common@1.2.3)
       '@codemirror/commands': 6.7.1
-      '@codemirror/language': 6.10.6
+      '@codemirror/language': 6.11.0
       '@codemirror/lint': 6.8.4
       '@codemirror/search': 6.5.8
       '@codemirror/state': 6.5.0
@@ -23578,10 +23577,10 @@ snapshots:
     dependencies:
       eslint: 9.16.0(jiti@2.4.2)
 
-  eslint-config-turbo@2.5.2(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3):
+  eslint-config-turbo@2.5.3(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3):
     dependencies:
       eslint: 9.16.0(jiti@2.4.2)
-      eslint-plugin-turbo: 2.5.2(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3)
+      eslint-plugin-turbo: 2.5.3(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3)
       turbo: 2.3.3
 
   eslint-plugin-drizzle@0.2.3(eslint@9.16.0(jiti@2.4.2)):
@@ -23621,7 +23620,7 @@ snapshots:
       dotenv: 16.0.3
       eslint: 9.16.0(jiti@2.4.2)
 
-  eslint-plugin-turbo@2.5.2(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3):
+  eslint-plugin-turbo@2.5.3(eslint@9.16.0(jiti@2.4.2))(turbo@2.3.3):
     dependencies:
       dotenv: 16.0.3
       eslint: 9.16.0(jiti@2.4.2)
@@ -29105,6 +29104,11 @@ snapshots:
     dependencies:
       react: 19.0.0-rc-02c0e824-20241028
       react-dom: 19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028)
+
+  sonner@2.0.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   sort-array@5.0.0:
     dependencies:

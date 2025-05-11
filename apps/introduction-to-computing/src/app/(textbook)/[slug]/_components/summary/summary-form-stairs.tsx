@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Elements } from "@itell/constants";
 import {
@@ -18,7 +19,7 @@ import {
 } from "@itell/core/summary";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
-import { getChunkElement } from "@itell/utils";
+import { cn, getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import { type User } from "lucia";
 import { FileQuestionIcon, SendHorizontalIcon } from "lucide-react";
@@ -278,19 +279,19 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
       } else {
         const title = summaryResponseRef.current.is_passed
           ? "Good job summarizing 🎉"
-          : "You can now move on 👏";
-        toast(title, {
-          className: "toast",
-          description: "Move to the next page to continue reading",
-          duration: 5000,
-          action: page.next_slug
-            ? {
-                label: "➡️ Next",
-                onClick: () => {
-                  router.push(makePageHref(page.next_slug));
-                },
-              }
-            : undefined,
+          : "You can continue to the next page 👏";
+        toast.success(title, {
+          description: () =>
+            page.next_slug ? (
+              <Link
+                href={makePageHref(page.next_slug)}
+                className={cn(
+                  "flex items-center gap-1 font-semibold underline underline-offset-4"
+                )}
+              >
+                Next Page
+              </Link>
+            ) : undefined,
         });
       }
     }

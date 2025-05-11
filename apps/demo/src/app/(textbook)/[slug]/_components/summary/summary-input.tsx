@@ -94,6 +94,7 @@ export const SummaryInput = ({
         <span className="sr-only">your summary</span>
         <textarea
           spellCheck
+          required
           id={Elements.SUMMARY_INPUT}
           name="input"
           ref={ref as RefObject<HTMLTextAreaElement>}

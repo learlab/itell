@@ -118,14 +118,17 @@ export const createSummaryAction = authedProcedure
       );
 
       // update user summary streak
-      if (canProceed && input.summary.condition === Condition.STAIRS) {
+      if (canProceed) {
         shouldRevalidate = true;
-        const newPersonalization = updatePersonalizationStreak(ctx.user, {
-          summary: {
-            isExcellent,
-            isPassed: input.summary.isPassed,
-          },
-        });
+        let newPersonalization = ctx.user.personalization;
+        if (input.summary.condition === Condition.STAIRS) {
+          newPersonalization = updatePersonalizationStreak(ctx.user, {
+            summary: {
+              isExcellent,
+              isPassed: input.summary.isPassed,
+            },
+          });
+        }
 
         const page = getPageData(input.summary.pageSlug);
         if (page) {
