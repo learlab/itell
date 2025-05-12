@@ -252,7 +252,6 @@ Note first that in Figure 4.1.5, we’ve started to include a label in our print
 def addOne(anInteger):
 	anInteger = anInteger + 1
 	print("anInteger:", anInteger)
-
 #Create myInteger with the value 5
 myInteger = 5
 print("myInteger before addOne:", myInteger)
@@ -281,8 +280,6 @@ We noted above, though, that Java treats different data types differently. What 
 def addExc(aString):
 	aString = aString + "!"
 	print("aString:", aString)
-
-
 myString = "Hello, world"
 print("myString before addExc:", myString)
 addExc(myString)
@@ -299,7 +296,6 @@ When we described Java, though, we mentioned it was Java’s primitive types tha
 def addItem(aList):
 	aList.append("New Item!")
 	print("aList:", aList)
-
 myList = ["One", "Two", "Three"]
 print("myList before addItem:", myList)
 addItem(myList)
@@ -321,7 +317,6 @@ In Figure 4.1.8, we create myInt1 and give it the value 5 on line 1. Then we ass
 <i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 5
 myInt2 = myInt1
 myInt1 = 7
-
 print("myInt1:", myInt1)
 print("myInt2:", myInt2)'>
 </i-sandbox-py>
@@ -333,7 +328,6 @@ What happens when we try that with a list? The same thing happens in Figure 4.1.
 <i-sandbox-py  page-slug="__temp_slug__" code='myList1 = ["One", "Two", "Three"]
 myList2 = myList1
 myList1.append("Four")
-
 print("myList1:", myList1)
 print("myList2:", myList2)'>
 </i-sandbox-py>
@@ -364,7 +358,6 @@ The idea that integers and strings are immutable seems to be contradicted in the
 def addOne(anInteger):
 	anInteger = anInteger + 1
 	print("anInteger: ", anInteger)
-
 #Create myInteger with the value 5
 myInteger = 5
 print("myInteger before addOne:", myInteger)
@@ -408,7 +401,6 @@ As before, first we define the addOne() function on line 2. Then, in our main pr
 def addOne(anInteger):
 	anInteger = anInteger + 1
 	print("anInteger:", anInteger)
-
 #Creates myInteger with the value 5
 myInteger = 5
 print("myInteger before addOne:", myInteger)
@@ -446,7 +438,6 @@ print(id(myInt1))
 myInt1 = 6
 #Print the spot in memory to which myInt1 is pointing
 print(id(myInt1))
-
 myList = ["One", "Two", "Three"]
 #Print the spot in memory to which myInt1 is pointing
 print(id(myList))
@@ -467,7 +458,6 @@ print(id(myList))
 myList.append("Four")
 #Print the spot in memory to which myInt1 is pointing
 print(id(myList)) 
-
 myList = ["Five", "Six", "Seven"]
 #Print the spot in memory to which myInt1 is pointing
 print(id(myList))'>
@@ -491,11 +481,8 @@ Mutable variables will behave differently, as shown in Figure 4.1.17. Just like 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myList1 = ["One", "Two", "Three"]
 myList2 = ["One", "Two", "Three"]
-
 print(id(myList1) == id(myList2))
-
 myList2.append("Four")
-
 print(myList1)
 print(myList2)'>
 </i-sandbox-py>
@@ -526,7 +513,6 @@ The answer lies in the fact that isdigit() is contained _within_ the string data
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myNumericString = "12345"
 myNonNumericString = "ABCDE"
-
 #Prints True if myNumericString is digital
 print(myNumericString.isdigit())
 #Prints True if myNonNumericString is digital
@@ -543,7 +529,7 @@ That’s like a method. A method is a function defined within a data type that m
 
 If this is still confusing, don’t worry. Like I’ve said, you don’t really need to understand this too deeply until we get to Chapter 5.1. This is good exposure, but you’re safe to move forward without understanding this fully.
 
-If this is still confusing but functions made sense, then there’s a little equivalent syntax you can think of that will be true for the rest of this unit. A method is like a function that takes the variable referencing it as its first parameter. myString. isdigit() can be thought of largely as the same as isdigit(myString), where isdigit() is a function that checks if myString is all digits, as shown in Figure 4.1.19. This won’t work when we reach Chapter 5.1, but it’s sufficiently equivalent to let you proceed with Unit 4.
+If this is still confusing but functions made sense, then there’s a little equivalent syntax you can think of that will be true for the rest of this unit. A method is like a function that takes the variable referencing it as its first parameter. myString. isdigit() can be thought of largely as the same as isdigit(myString), where isdigit() is a function that checks if myString is all digits, as shown in Figure 4.1.19. This won’t work when we reach Chapter 5.1, but it’s sufficiently equivalent to let you proceed with Unit 4. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='import string
 #Return True if inString contains all digits
@@ -556,7 +542,6 @@ def isdigit(inString):
 			return False
 	#Return true if we reached here
 	return True
-
 myString = "52672"
 print(isdigit(myString))
 print(myString.isdigit())'>

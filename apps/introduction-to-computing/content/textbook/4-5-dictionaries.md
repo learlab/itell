@@ -157,7 +157,7 @@ One of the things that makes Python unique as a programming language is the acce
 
 ## Creating and Accessing Dictionaries {#Creating-and-Accessing-Dictionaries-3241} 
 
-For example, let’s imagine we’re creating an inventory program. In this case, our keys would be product names, and our values would be the current stock of that item. How would we declare a dictionary with product names as keys and inventories as values? Well, we used brackets for lists and parentheses for tuples, I bet you can guess what we’ll use for dictionaries.
+For example, let’s imagine we’re creating an inventory program. In this case, our keys would be product names, and our values would be the current stock of that item. How would we declare a dictionary with product names as keys and inventories as values? Well, we used brackets for lists and parentheses for tuples, I bet you can guess what we’ll use for dictionaries. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
 myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15}
@@ -179,7 +179,6 @@ Values, on the other hand, can change. In fact, if this program was to be used f
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
 myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15}
 print(myDictionary)
-
 myDictionary["sprockets"] += 1
 print(myDictionary)'>
 </i-sandbox-py>
@@ -195,7 +194,6 @@ So, we’ve created a dictionary in Figure 4.5.2. How do we add new items to it?
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates myDictionary with sprockets = 5, widgets = 11, cogs = 3, and gizmos = 15
 myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15}
 print(myDictionary)
-
 myDictionary["gadgets"] = 1
 print(myDictionary)
 del myDictionary["gadgets"]
@@ -212,7 +210,6 @@ Sometimes, though, we might want to check to see if a key exists before assignin
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"David" : "4045551234", "Lucy" : "4045555678", "Vrushali" : "4045559101"}
 print(myDictionary)
-
 if "David" in myDictionary:
 	print("David is already in myDictionary!")
 	myDictionary["David2"] = "4045551121"
@@ -238,7 +235,6 @@ Figure 4.5.5
 As noted, the main benefit of dictionaries is that they give us useful keys so we can jump straight to the value we want. However, there will still be lots of times we want to traverse every item in a dictionary. For example, in our inventory program, perhaps we want to make sure to order more of any item that drops below 5. There are a number of ways we could do this. First, if we don’t care what key gives us these values, we could iterate over the values() directly, as shown in lines 5 through 7 of Figure 4.5.6.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
-
 for value in myDictionary.values():
 	if value < 5:
 		print("A value less than 5 was found:", value)'>
@@ -249,7 +245,6 @@ for value in myDictionary.values():
 More commonly, though, we’ll want the key and the value. So, instead, we could iterate over the keys, and then grab the value from the dictionary based on the key, as shown in lines 5 through 8 of Figure 4.5.7. Notice that here we’re iterating over myDictionary.keys() in line 5, but this has the same effect as iterating over myDictionary itself; it assumes it should use keys if we don’t tell it otherwise.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
-
 for key in myDictionary.keys():
 	value = myDictionary[key]
 	if value < 5:
@@ -261,7 +256,6 @@ for key in myDictionary.keys():
 It’s also possible, however, to iterate over the keys and values simultaneously. This is a shortcut similar to the for-each loop itself where multiple parts of the sequence can be loaded into variables. Here, it’s assumed that the order is key, value, as shown in line 5 of Figure 4.5.8. So, we can iterate over the keys in the dictionary, the values in the dictionary, and the keys and values together.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myDictionary = {"sprockets" : 5, "widgets" : 11, "cogs" : 3, "gizmos" : 15, "gadgets" : 1}
-
 for (key, value) in myDictionary.items():
 	if value < 5:
 		print(key, "is  less than 5:", value)'>
@@ -337,21 +331,17 @@ Before moving on to these super-advanced types of dictionaries, let’s explore 
 First, let’s see some code that counts the words in a string using a dictionary. This is shown in Figure 4.5.12.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "This is the string whose words we would like to count. This string contains some repeated words, as well as some unique words. It contains punctuation, and it contains words that are capitalized in different ways. If the method we write runs correctly, it will count 4 instances of the word 'it', 3 instances of the word 'this', and 3 instances of the word 'count'."
-
 myString = myString.replace(".", "")
 myString = myString.replace(",","")
 myString = myString.replace("'","")
 myString = myString.lower()
 mySplitString = myString.split()
-
 wordDictionary = {}
 for word in mySplitString:
 	if word in wordDictionary:
 		wordDictionary[word] += 1
-
 	else:
 		wordDictionary[word] = 1
-
 print(wordDictionary)'>
 </i-sandbox-py>
 
@@ -365,7 +355,6 @@ For our classroom roster, we first define a dictionary of classes, as shown in l
 
 <i-sandbox-py  page-slug="__temp_slug__" code='classes = {"Math": ["David", "Lucy", "Dana"], "Physics": ["Addison", "Vrushali", "Bilbo"], "Chemistry": ["Sara", "Lugos", "Mireia", "Perle"],
 "Computing": ["Part", "Venijamin", "Terra", "Sofia"], "History": ["Tryphon", "Gevorg", "Raza", "Rein"]
-
 print("Students in Computing:", classes["Computing"])
 #Add Francis to History
 classes["History"].append("Francis")
@@ -379,7 +368,6 @@ Then, we look up all the students in Computing with classes\["Computing"\]. This
 For our address book, we sub out the lists for tuples, as shown in Figure 4.5.15. Here, we see on line 5 that we can print David’s complete information by printing his tuple, or we can print Dana’s phone number alone on line 6 by knowing that the phone number is at index 1. But that last note is exactly where we find some real power in dictionaries: why should we have to remember that the phone number is at index 1 when we can instead use a dictionary and store the phone number with key “phone number”?
 
 <i-sandbox-py  page-slug="__temp_slug__" code='addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
-
 print("David's Information:", addressBook["David"]
 print("Dana's Phone Number:", addressBook["Dana"][1])'>
 </i-sandbox-py>
@@ -391,7 +379,6 @@ print("Dana's Phone Number:", addressBook["Dana"][1])'>
 One of the most powerful parts of using dictionaries is the ability to have multiple dictionaries with the same keys, but different values. This data structure is a low-overhead version of object-oriented programming, which we’ll cover in the next chapter. To start, let’s convert that address book code to use these nested dictionaries in Figure 4.5.16.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
-
 print("David's information:", addressBook["David"])
 print("Dana's Phone Number:", addressBook["Dana"]["phone"])'>
 </i-sandbox-py>
@@ -405,7 +392,6 @@ Note that this merely implements something resembling object-oriented programmin
 To show this off, let’s take one more example. Imagine we’re teaching a class with five students, and we gave a multiple choice test with five questions. Now, we want to grade the test. We could do that with dictionaries, as shown in Figure 4.5.17.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='ANSWER_KEY = {"1" : "A", "2" : "B", "3" : "C", "4" : "D", "5" : "A"}
-
 students = {}
 students["David"] = {"1" : "A", "2" : "B", "3" : "A", "4" : "B", "5" : "C"}
 students["Terra"] = {"1" : "A", "2" : "B", "3" : "C", "4" : "D", "5" : "A"}

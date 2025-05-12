@@ -147,7 +147,7 @@ That’s effectively what a list is: a single variable that contains multiple va
 
 ## Properties of Lists {#Properties-of-Lists-3174} 
 
-We’re starting to get into the more advanced areas of computing, and so as we go forward, fewer and fewer things will be common across multiple languages. Lists are a good example of this. Nearly every programming language has some concept of a list, but the terminology and specific details differ significantly.
+We’re starting to get into the more advanced areas of computing, and so as we go forward, fewer and fewer things will be common across multiple languages. Lists are a good example of this. Nearly every programming language has some concept of a list, but the terminology and specific details differ significantly. 
 
 One major way different languages differ in their implementations of lists is mutability. Mutability for a list can involve two things: one, whether the values of the list can be changed, and two, whether the size of the list can be changed. Some list implementations will freely let you keep appending new items to the end, while others require you to state in advance how many items can fit in the list. Generally, the latter is more common for lower-level languages like C, where we manage memory more deliberately.
 
@@ -182,7 +182,6 @@ To declare a tuple, we set a variable equal to a comma-separated series of value
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates myTuple with the tuple (1, 2, 3)
 myTuple = (1, 2, 3)
-
 print(myTuple)'>
 </i-sandbox-py>
 
@@ -191,7 +190,6 @@ print(myTuple)'>
 <i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 1
 myInt2 = 2
 myInt3 = 3
-
 #Creates myTuple and assigns it the tuple #(myInt1, myInt2, myInt3)
 myTuple = (myInt1, myInt2, myInt3)
 print(myTuple)'>
@@ -206,7 +204,6 @@ Tuples can have multiple data types within them. For example, we could create a 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world!"
 myFloat = 5.1
 myInteger = 5
-
 #Creates myTuple as a tuple with the values of myString, myFloat, myInteger
 myTuple = (myString, myFloat, myInteger)
 print(myTuple)'>
@@ -221,10 +218,8 @@ To access the individual items of a tuple, we use the same syntax we used for ac
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world!"
 myFloat = 5.1
 myInteger = 5
-
 #Creates myTuple as a tuple with the values of myString, myFloat, myInteger
 myTuple = (myString, myFloat, myInteger)
-
 #Prints the first element of myTuple
 print(myTuple[0])
 #Prints the second element of myTuple
@@ -242,9 +237,7 @@ myFloat = 5.1
 myInt1 = 5
 myCharacter = "Q"
 myInt2 = -1
-
 myTuple = (myString, myFloat, myInt1, myCharacter, myInt2)
-
 #Prints myTuple's values from #4 to the end
 print(myTuple[3:])
 #Prints the first two values of myTuple
@@ -264,13 +257,10 @@ myFloat = 5.1
 myInt1 = 5
 myCharacter = "Q"
 myInt2 = -1
-
 #Packs these five variables into myTuple
 myTuple = (myString, myFloat, myInt1, myCharacter, myInt2)
-
 #Unpacks myTuple into these variables
 (myNewString, myNewFloat, myNewInt1, myNewCharacter, myNewInt2) = myTuple
-
 print(myNewString)
 print(myNewFloat)
 print(myNewInt1)
@@ -296,11 +286,9 @@ def quotientAndRemainder(dividend, divisor):
 	remainder = dividend % divisor
 	#Returns the tuple of the quotient and remainder
 	return (quotient, remainder)
-
 myDividend = 11
 myDivisor = 4
 tupleResults = quotientAndRemainder(myDividend, myDivisor)
-
 #Prints the first element of tupleResults
 print("Quotient:", tupleResults[0])
 #Prints the second element of tupleResults
@@ -317,12 +305,10 @@ We can actually make this code shorter and more readable respectively by perform
 def quotientAndRemainder(dividend, divisor):
 	#Returns the tuple of the quotient and remainder
 	return (dividend // divisor, dividend % divisor)
-
 myDividend = 11
 myDivisor = 4
 #Assigns the first value of the result to myQuotient and the second to myRemainder
 (myQUotient, myRemainder) = quotientAndRemainder(myDividend, myDivisor)
-
 print("Quotient:", myQuotient)
 print("Remainder:", myRemainder)'>
 </i-sandbox-py>
@@ -336,9 +322,7 @@ Finally, tuples can be nested. You can have a tuple of tuples. First, we could d
 <i-sandbox-py  page-slug="__temp_slug__" code='myTuple1 = (1, 2, 3)
 myTuple2 = (4, 5, 6)
 myTuple3 = (7, 8, 9)
-
 mySuperTuple = (myTuple1, myTuple2, myTuple3)
-
 print(mySuperTuple)'>
 </i-sandbox-py>
 
@@ -347,7 +331,6 @@ print(mySuperTuple)'>
 The nested sets of parentheses in the output of Figure 4.3.10 show that these are nested tuples: the outer set of parentheses defines the tuple as a whole, and the inner sets of parentheses define each smaller tuple. You might notice that it looks like this syntax could be used in-line as well, and you would be correct, as shown in Figure 4.3.11.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='mySuperTuple = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
-
 print(mySuperTuple)'>
 </i-sandbox-py>
 
@@ -358,9 +341,7 @@ How would you then access individual values of this nested tuple? The first inde
 <i-sandbox-py  page-slug="__temp_slug__" code='myTuple1 = (1, 2, 3)
 myTuple2 = (4, 5, 6)
 myTuple3 = (7, 8, 9)
-
 mySuperTuple = (myTuple1, myTuple2, myTuple3)
-
 #Prints the first item of the second tuple
 print(mySuperTuple[1][0])'>
 </i-sandbox-py>
@@ -383,7 +364,6 @@ Notice that the output of each block throughout this process matches the output 
 def quotientAndRemainder(dividend, divisor)
 	#Returns the tuple of the quotient and remainder
 	return [dividend // divisor, dividend % divisor]
-
 myDividend = 11
 myDivisor = 4
 #Assigns the first value of the result to myQuotient and the second to myRemainder
@@ -438,10 +418,8 @@ def average(inList):
 	for number in inList:
 		sum += number
 	return sum / len(inList)
-
 myList1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 myList2 = [97, 87, 91, 83, 85, 91, 95, 99, 81, 85]
-
 print("The average of myList1 is:", average(myList1))
 print("The average of myList2 is:", average(myList))'>
 </i-sandbox-py>
@@ -519,10 +497,8 @@ So, when dealing with lists and any other mutable data type, we have to be caref
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "Hello, world"
 myList = [4, 1, 2, 3]
-
 print("myString before upper():", myString)
 print("myList before sort():", myList, "\n")
-
 myString.upper()
 myList.sort()
 print("myString after upper():", myString)

@@ -219,15 +219,15 @@ Then, we run the same loop we ran previously starting on line 4, 10 times. Each 
 
 However, what if we didn’t want to just average 10 numbers? What if we wanted to let the user decide how many numbers to average? We can do that pretty easily, actually: we just have to get the number from the user, then run the loop to that number instead of to 11:
 
-In Figure 3.3.4, instead of just jumping straight to range(1, 11), we instead first prompt the user for the count of numbers to average. Then, we run the loop from 1 to numCount + 1—the plus 1 is so the loop _runs_ the number of times the user inputted instead of stopping one short. Remember, a loop from 1 to 11 runs 10 times, so if the user wants to run 5 times, we need a loop from 1 to 6.
+In Figure 3.3.4, instead of just jumping straight to range(1, 11), we instead first prompt the user for the count of numbers to average. Then, we run the loop from 1 to numCount + 1—the plus 1 is so the loop _runs_ the number of times the user inputted instead of stopping one short. Remember, a loop from 1 to 11 runs 10 times, so if the user wants to run 5 times, we need a loop from 1 to 6. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates sum with the value 0
 sum = 0
 #Get the number of numbers to average
-numCount = int(input("How many numbers will you average? "))
+numCount = int(input("How many numbers will you average?"))
 #Loop numCount times
 for i in range(1, numCount + 1):
-	#Gets the user's number
+	#Gets the number input by the user
 	nextNumber = int(input("Enter number #" + str(i) + ": "))
 	#Add the inputted number to the sum
 	sum += nextNumber
@@ -346,7 +346,7 @@ hiddenNumber = random.randint(1, 100)
 userGuess = 0
 #Repeat until the guess is correct
 while not userGuess == hiddenNumber:
-	#Get the user's next guess as an integer
+	#Get the next guess as an integer
 	userGuess = int(input("Guess a number: "))
 	#Check if the guess is too high
 	if userGuess > hiddenNumber:
@@ -356,7 +356,7 @@ while not userGuess == hiddenNumber:
 		print("Too low!")
 	#The guess must be right!
 	else:
-		print("That's right!")'>
+		print("That is right!")'>
 </i-sandbox-py>
 
 **Figure 3.3.9**
@@ -433,7 +433,7 @@ for i in range(0, numGames):
 	userGuess = 0
 	#Repeat until the guess is correct
 	while not userGuess == hiddenNumber:
-		#Get the user's next guess as an integer
+		#Get the next guess as an integer
 		userGuess = int(input("Guess a number: "))
 		#Check if the guess is too high
 		if userGuess > hiddenNumber:
@@ -443,7 +443,7 @@ for i in range(0, numGames):
 			print("Too low!")
 		#The guess must be right!
 		else:
-			print("That's right!")'>
+			print("That is right!")'>
 </i-sandbox-py>
 
 **Figure 3.312**
@@ -463,11 +463,11 @@ while KeepPlaying == "y"
 	print("Game start!")
 	#Get a random number from 1 to 100
 	hiddenNumber = random.randint(1, 100)
-	#Create userGuess and give it a value that can't be correct
+	#Create userGuess and give it a value that cannot be correct
 	userGuess = 0
 	#Repeat until the guess is correct
 	while not userGuess == hiddenNumber:
-		#Get the user's next guess as an integer
+		#Get the next guess as an integer
 		userGuess = int(input("guess a number: "))
 		#Checks if the guess is too high'>
 </i-sandbox-py>
@@ -545,7 +545,7 @@ print(sum / numCount)'>
 
 **Figure 3.3.16**
 
-However, if you’re going to reference the variable outside the loop, _usually_ it’s because you wanted that variable to persist across different iterations of the loop. If the variable was created inside the loop, then referencing it after the loop will just give you the value the variable received the last time the loop ran, which is rarely what we want. So, the same advice I had in conditionals applies here, too: generally, if you need to refer to a variable outside a loop, don’t create it inside a loop. Create it before the loop, as shown in Figure 3.3.17.
+However, if you’re going to reference the variable outside the loop, _usually_ it’s because you wanted that variable to persist across different iterations of the loop. If the variable was created inside the loop, then referencing it after the loop will just give you the value the variable received the last time the loop ran, which is rarely what we want. So, the same advice I had in conditionals applies here, too: generally, if you need to refer to a variable outside a loop, don’t create it inside a loop. Create it before the loop, as shown in Figure 3.3.17. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates sum with the value 0
 sum = 0
@@ -553,7 +553,7 @@ sum = 0
 numCount = int(input("How many numbers would you like to average? "))
 #Loop numCount times
 for i in range(1, numCount + 1):
-	#Gets the user's number
+	#Gets the number input by the user
 	nextNumber = int(input("Enter number #" + str(i) + ": "))
 	#Add the inputted number to sum 
 	sum += nextNumber

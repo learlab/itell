@@ -523,7 +523,6 @@ We can extend find() by using some of its optional parameters. Optionally, we ca
 Figure 4.2.28 shows five different find() calls on myString using “CDE”. On line 4, it finds the first index of “CDE” at 2. On line 6, it searches only after the index 5; the first occurrence of “CDE” after the index 5 is at 7. On line 8, it searches only after the index 13; “CDE” doesn’t occur after 8, though, so it returns −1 to say the string was not found. On line 10, it searches only between the indices 4 and 10; the first occurrence there is at 7. In this way, it skips both the first and last overall appearances and only gets the one in the middle. Then, on line 12, it searches between 3 and 6, but finds nothing and returns −1.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDEABCDE"
-
 #Prints the first index of "CDE" in myString
 print(myString.find("CDE"))
 #Prints the first index of "CDE" in myString after 5
@@ -545,7 +544,6 @@ We can use find() to build a list of all the appearances of a particular string 
 findString = "CDE"
 #Find findString in myString and assign its index to currentLocation
 currentLocation = myString.find(findString)
-
 #While currentLocation is positive; e.g. while findString is found
 while currentLocation >= 0:
 	#Print the index
@@ -566,7 +564,6 @@ Note that if findString is not found anywhere in myString, then the initial assi
 findString = "BOB"
 #Find findString in myString and assign its index to currentLocation
 currentLocation = myString.find(findString)
-
 #While currentLocation is positive; e.g. while findString is found
 while currentLocation >= 0:
 	#Print the index

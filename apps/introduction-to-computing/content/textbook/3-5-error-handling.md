@@ -424,7 +424,7 @@ print("Done!")'>
 
 **Figure 3.5.11**
 
-In Figure 3.5.12, we moved the divide-by-zero error back up to line 5. As a result, it’s encountered first. It’s not a TypeError or ValueError, so the except statement in line 11 ignores it, and the computer moves on and checks the except statement in line 14. This except block catches any other error, so this one is activated, and the computer prints that some other error occurred. Note that this line also shows you how to catch any kind of error and assign it to a variable: instead of specifying an error type like ValueError, just use the word Exception. The line except Exception: works the same as except: on its own because Exception is the “umbrella” over all the different kinds of errors. Using it, however, lets us add as error to the end.
+In Figure 3.5.12, we moved the divide-by-zero error back up to line 5. As a result, it’s encountered first. It’s not a TypeError or ValueError, so the except statement in line 11 ignores it, and the computer moves on and checks the except statement in line 14. This except block catches any other error, so this one is activated, and the computer prints that some other error occurred. Note that this line also shows you how to catch any kind of error and assign it to a variable: instead of specifying an error type like ValueError, just use the word Exception. The line except Exception: works the same as except: on its own because Exception is the “umbrella” over all the different kinds of errors. Using it, however, lets us add as error to the end. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "This string is not a number!"
 #Run the code below until an error occurs
@@ -434,7 +434,6 @@ try:
 	print("String #" + 1 + ": " + myString)
 	myInt = int(myString)
 	print(myInt)
-	
 #If an error occurs, check if it is a ValueError or TypeError
 except (ValueError, TypeError) as error:
 	print("A ValueError or TypeError occurred.")
