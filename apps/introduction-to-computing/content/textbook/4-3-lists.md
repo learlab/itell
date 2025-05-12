@@ -238,7 +238,7 @@ myInt1 = 5
 myCharacter = "Q"
 myInt2 = -1
 myTuple = (myString, myFloat, myInt1, myCharacter, myInt2)
-#Prints myTuple's values from #4 to the end
+#Prints myTuple values from #4 to the end
 print(myTuple[3:])
 #Prints the first two values of myTuple
 print(myTuple[:2])
@@ -438,12 +438,12 @@ Let’s take that a step further. We’ve mentioned that we can have **multi-dim
 
 <i-sandbox-py  page-slug="__temp_slug__" code='def TwoDAverage(in2DList):
 	result = []
-	#For each lsit in the list of lists
+	#For each list in the list of lists
 	for numList in in2DList:
 		sum = 0
 		for number in numList
 			sum += number
-		#Append this list's average to result
+		#Append this list average to result
 		result.append(sum / len(numList)
 	return result
 my2DList = [[91, 95, 89, 92, 85],

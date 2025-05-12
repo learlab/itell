@@ -161,7 +161,7 @@ print("Execution complete!")'>
 
 Here, the indented code on line 6 did not run because the conditional statement was false (because myNum1 is now 3, not 1). In effect, the conditional statement “controls” the indented line below it; that’s why we call it a control structure. However, the important thing to note here is that the non-indented line of code (line 8) _did_ run. It’s outside the indentation, so it executes regardless.
 
-This applies to multiple indented lines as well. None of the indented lines in Figure 3.1.3 executed. They are one code block that runs only if the conditional statement is true. This organizational method applies to every code structure we’ll talk about in this chapter: conditionals, loops, functions, and exception handling all group together code through indentation, and all mark their blocks of code with a colon at the end of the preceding line (here, if myNum1 < myNum2**:**).
+This applies to multiple indented lines as well. None of the indented lines in Figure 3.1.3 executed. They are one code block that runs only if the conditional statement is true. This organizational method applies to every code structure we’ll talk about in this chapter: conditionals, loops, functions, and exception handling all group together code through indentation, and all mark their blocks of code with a colon at the end of the preceding line (here, if myNum1 < myNum2:).
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myNum1 = 3
 myNum2 = 2

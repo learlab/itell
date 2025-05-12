@@ -424,7 +424,6 @@ if "BC" in myString:
 	print("BC was found!")
 else:
 	print("BC was not found!")
-
 if "GH" in myString:
 	print("GH was found!")
 else:
@@ -441,7 +440,6 @@ def checkInString(checkString, searchString):
 		print(searchString + " was found!")
 	else:
 		print(searchString + " was not found!")
-
 myString = "ABCDE"
 checkInString(myString, "BC")
 checkInString(myString, "GH")'>
@@ -457,7 +455,6 @@ def checkNotInString(checkString, searchString):
 		print(searchString + " was not found!")
 	else:
 		print(searchString + " was found!")
-
 myString = "ABCDE"
 checkNotInString(myString, "BC")
 checkNotInString(myString, "GH")'>
@@ -472,7 +469,6 @@ Sometimes, though, we’re not just interested in finding out _if_ a string is i
 In Figure 4.2.24, “CDE” starts at index 2 in myString (due to zero-indexing, “A” is 0, “B” is 1, and “C” is 2, so “CDE” starts at 2), so myString.find(“CDE”) on line 4 returns 2. “ACE” is not found in myString—while each individual character is in “ABCDE”, the continuous string “ACE” is not found. So, myString. find(“ACE”) on line 6 returns −1.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDE"
-
 #Prints the index of "CDE" in myString
 print(myString.find("CDE"))
 #Prints the index of "ACE" in myString
@@ -499,7 +495,6 @@ checkInString(myString, "GH")'>
 As shown on line 4 of Figure 4.2.26, find() only finds the first index; after all, it can only return one number. We’ll talk in a moment about how to use find() more flexibly.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDE"
-
 #Prints the index of "CDE" in myString
 print(myString.find("CDE"))'>
 </i-sandbox-py>
@@ -509,7 +504,6 @@ print(myString.find("CDE"))'>
 Before that, though, note also that the find() method is case-sensitive, as shown in Figure 4.2.27. Remember, the computer doesn’t see “c” and “C” as the same character; they’re as different as “b” and “Q”. So, searching for “cde” on line 4 won’t turn up anything in “ABCDEABCDE”.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myString = "ABCDEABCDE"
-
 #Prints the index of "CDE" in myString
 print(myString.find("cde"))'>
 </i-sandbox-py>

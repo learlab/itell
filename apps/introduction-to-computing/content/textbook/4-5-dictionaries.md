@@ -330,10 +330,9 @@ Before moving on to these super-advanced types of dictionaries, let’s explore 
 
 First, let’s see some code that counts the words in a string using a dictionary. This is shown in Figure 4.5.12.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myString = "This is the string whose words we would like to count. This string contains some repeated words, as well as some unique words. It contains punctuation, and it contains words that are capitalized in different ways. If the method we write runs correctly, it will count 4 instances of the word 'it', 3 instances of the word 'this', and 3 instances of the word 'count'."
+<i-sandbox-py  page-slug="__temp_slug__" code='myString = "This is the string whose words we would like to count. This string contains some repeated words, as well as some unique words. It contains punctuation, and it contains words that are capitalized in different ways. If the method we write runs correctly, it will count 4 instances of the word it, 3 instances of the word this, and 3 instances of the word count"
 myString = myString.replace(".", "")
 myString = myString.replace(",","")
-myString = myString.replace("'","")
 myString = myString.lower()
 mySplitString = myString.split()
 wordDictionary = {}
@@ -368,8 +367,8 @@ Then, we look up all the students in Computing with classes\["Computing"\]. This
 For our address book, we sub out the lists for tuples, as shown in Figure 4.5.15. Here, we see on line 5 that we can print David’s complete information by printing his tuple, or we can print Dana’s phone number alone on line 6 by knowing that the phone number is at index 1. But that last note is exactly where we find some real power in dictionaries: why should we have to remember that the phone number is at index 1 when we can instead use a dictionary and store the phone number with key “phone number”?
 
 <i-sandbox-py  page-slug="__temp_slug__" code='addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
-print("David's Information:", addressBook["David"]
-print("Dana's Phone Number:", addressBook["Dana"][1])'>
+print("Davids Information:", addressBook["David"]
+print("Danas Phone Number:", addressBook["Dana"][1])'>
 </i-sandbox-py>
 
 **Figure 4.5.15**
@@ -379,8 +378,8 @@ print("Dana's Phone Number:", addressBook["Dana"][1])'>
 One of the most powerful parts of using dictionaries is the ability to have multiple dictionaries with the same keys, but different values. This data structure is a low-overhead version of object-oriented programming, which we’ll cover in the next chapter. To start, let’s convert that address book code to use these nested dictionaries in Figure 4.5.16.
 
 <i-sandbox-py  page-slug="__temp_slug__" code='addressBook = {"David" : ("555 Home St", "4045551234", "david@david.com"), "Lucy" : ("555 Home St", "4045555678"), "Dana": ("123 There Rd", "4045559101", "dana@dana.net")}
-print("David's information:", addressBook["David"])
-print("Dana's Phone Number:", addressBook["Dana"]["phone"])'>
+print("Davids information:", addressBook["David"])
+print("Danas Phone Number:", addressBook["Dana"]["phone"])'>
 </i-sandbox-py>
 
 **Figure 4.5.16**
