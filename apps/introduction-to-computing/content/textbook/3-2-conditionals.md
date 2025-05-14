@@ -270,7 +270,7 @@ if todaysWeather == "raining":
 print("Done!")'>
 </i-sandbox-py>
 
-**Figure 3.2.2 **
+**Figure 3.2.2**
 
 In line 3, we’re creating the variable to store todaysWeather; if we were actually developing a program to do this, we would probably load this value from the Internet, but for testing we would give it a value manually to test the rest of our code. Then on line 6, we use the relational equality operator, ==, to check if todaysWeather is equal to “raining.” Here, it is, so “raincoat” and “rainboots” are printed from lines 8 and 10. What if todaysWeather didn’t equal “raining?”
 

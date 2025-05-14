@@ -186,11 +186,11 @@ So, these are the main parts of a function.
 Once we have that, we can call the function. Calling a function means that when our code reaches the line where we call the function, it jumps into and runs the function’s code. It runs the function’s code until it finds a return statement or the function otherwise ends, and then it returns and picks up where it left off in the regular code. So, in some ways, a function all is like saying, “Go to that other code over there, bring this input with you, and tell me what the output is!” The execution of the code then goes to the function, runs the function’s code, and returns to the main code with the output.
 
 <i-image
-  style="aspect-ratio:1194/428;"
-  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/3.4.1-a78b7612a17f3d0e2114f3e66ee0c893.png"
+  style="aspect-ratio:1097/373;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/3.4.1-df411d465ecfa734403d14c692082c56.png"
   alt="3.4.1"
-  width="1194"
-  height="428">
+  width="1097"
+  height="373">
 
 Figure 3.4.1
 

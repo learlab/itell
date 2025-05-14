@@ -162,7 +162,8 @@ Let’s start by writing files. The main reason to start here is that to have so
 
 To write to a file in Python, we open the file, write our data, then close the file. Python makes this relatively easy, as shown in Figure 4.4.1
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 12
+```python 
+myInt1 = 12
 myInt2 = 23
 myInt3 = 34
 #Opens file in write mode
@@ -173,8 +174,8 @@ outputFile.write(str(myInt1))
 outputFile.write(str(myInt2))
 #Write myInt3 to outputFile
 outputFile.write(str(myInt3))
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.1**
 
@@ -184,7 +185,8 @@ Right now we want to write, so we call outputFile.write() on lines 9 through 13.
 
 We probably want each number to appear on its own line, though. Otherwise, we would receive the same file from printing number sets like 12, 23, 34; 123, 3, 34; 12, 334, 2; and so on. Remember our escape sequence \\n? If we add that to the end of each line, we’ll accomplish our goal, as shown in Figure 4.4.2. Here, if we open the file, we’ll see the numbers 12, 23, and 34 each on a separate line. That would make it easier to load in our loading stage.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 12
+```python 
+myInt1 = 12
 myInt2 = 23
 myInt3 = 34
 #Opens file in write mode
@@ -195,8 +197,8 @@ outputFile.write(str(myInt1) + "\n")
 outputFile.write(str(myInt2) + "\n")
 #Write myInt3 to outputFile
 outputFile.write(str(myInt3) + "\n")
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.2**
 
@@ -206,12 +208,13 @@ That form of simple writing works just fine if we know exactly how many values w
 
 Most of the interesting applications we’ll write, though, don’t have a predictable number of variables. What if we want to write a list of items to a file? Let’s pretend we’re writing a list of names, for example. How would we do that? The most obvious way would be to iterate over the list, writing them to the file one by one, as shown in Figure 4.4.3. The for loop on line 8 repeats for each name in myList, calling outputFile.write(name + “\\n”) on each one to print the name and a line break.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
+```python 
+myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
 outputFile = open("OutputFile.txt", "w")
 for name in myList:
 	outputFile.write(name + "\n")
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
  **Figure 4.4.3**
 
@@ -219,19 +222,21 @@ This could be even easier, though. The reason we cover lists before file output 
 
 The writelines() method writes every item in the list to a file. Unfortunately, we’re back to our old problem: writelines() doesn’t append line breaks, so all the names are squished together! So what do we do? Well, we could put the newlines directly into the names, but that seems a little inelegant: what if we need to use these names for something else? Instead, we could merge the list into one string with the newlines built in, and then write _that_ to a file, as shown in line 8 of Figure 4.4.5.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
+```python 
+myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
 outputFile = open("OutputFile.txt", "w")
 outputFile.writelines(myList)
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.4**
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
+```python 
+myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
 outputFile = open("OutputFile.txt", "w")
 outputFile.write("\n".join(myList))
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.5**
 
@@ -241,7 +246,8 @@ Note that we can alternate between writing variables directly and writing via lo
 
 Figure 4.4.6 shows an example of printing variables directly followed by printing a list. This code will write 12, 23, and 34 to the first three lines of the output file, then the strings David through Jasmine on the next eight lines.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 12
+```python 
+myInt1 = 12
 myInt2 = 23
 myInt3 = 334
 myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
@@ -250,8 +256,8 @@ outputFile.write(str(myInt1) + "\n")
 outputFile.write(str(myInt2) + "\n")
 outputFile.write(str(myInt3) + "\n")
 outputFile.write("\n".join(myList))
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.6**
 
@@ -259,12 +265,13 @@ outputFile.close()'>
 
 Python also gives another way to output files that might be a little more intuitive. The print() function that we’ve been using for a long time has a keyword parameter file that, when defined, writes to the specified file instead of the console, as shown in Figure 4.4.7.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
+```python 
+myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
 outputFile = open("OutputFile.txt", "w")
 for name in myList:
 	print(name, file = outputFile)
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.7**
 
@@ -272,15 +279,16 @@ We still open the file the same way on line 5, but instead of writing using outp
 
 Personally, I usually see people using the first approach (the write() method), but I prefer using the second approach (including the file parameter with the print() function). Either will work, though.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myInt1 = 12
+```python 
+myInt1 = 12
 myInt2 = 23
 myInt3 = 34
 outputFile = open("OutputFile.txt", "w")
 outputFile.write(str(myInt1) + "\n")
 outputFile.write(str(myInt2) + "\n")
 outputFile.write(str(myInt3) + "\n")
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.8**
 
@@ -288,13 +296,14 @@ Figure 4.4.8 shows the results of running this code twice in append mode. If we 
 
 Does this work for the alternate method of writing we covered? Let’s again assume that OutputFile.txt is empty when we get started, and that we run the code twice, as shown in Figure 4.4.9. This works, too! So, if we want to add to the end of an existing file instead of writing it from scratch, we can open it in append mode. In practice, I haven’t found that many users for this: it’s most useful for logging across multiple runs of a program.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
+```python 
+myList = ["David", "Lucy", "Vrushali", "Ping", "Natalie", "Dana", "Addison", "Jasmine"
 #Open OutputFile.txt in append mode
 outputFile = open("OutputFile.txt", "a")
 for name in myList:
 	print(name, file = outputFile)
-outputFile.close()'>
-</i-sandbox-py>
+outputFile.close()
+```
 
 **Figure 4.4.9**
 
@@ -306,38 +315,41 @@ We’ve now written some data to a file. Our goal is now to complete the symmetr
 
 In our first example in Figure 4.4.2, we wrote three integers to a file, each on their own line. Now, let’s write a program to load these back into myInt1, myInt2, and myInt3. First, though, let’s just see how Python opens the file and what it sees when it does in Figure 4.4.10.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='inputFile = open("OutputFile.txt", "r")
+```python 
+inputFile = open("OutputFile.txt", "r")
 print(inputFile)
-inputFile.close()'>
-</i-sandbox-py>
+inputFile.close()
+```
 
 **Figure 4.4.10**
 
 Here’s how we open a file to read: we use the same function, open(), and supply the “r” argument to indicate we want to read it. What happens if we just print the file directly? Python prints a reference to what type of file is and what mode it’s in, not the contents. To print the contents, we have to actually read the file, as shown in 4.4.11.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='inputFile = open("OutputFile.txt", "r")
+```python 
+inputFile = open("OutputFile.txt", "r")
 #Prints the next line of inputFile
 print(inputFile.readline())
 #Prints the next line of inputFile
 print(inputFile.readline())
 #Prints the next line of inputFile
 print(inputFile.readline())
-inputFile.close()'>
-</i-sandbox-py>
+inputFile.close()
+```
 
 **Figure 4.4.11**
 
 To read files, we use the readline() method in the outputFile variable, as shown on lines 4, 6, and 8. readline() reads to the next line break, then returns the string that results. This moves the reader forward to the start of the next line, so when we call readline(), the next line is passed permanently; if we don’t save the results in a variable, we can’t go back and read it again without completely reopening the file from scratch. Reading the file reads through it once straight through; it doesn’t jump around or repeat. Note also that the line breaks are included in what is read from the file, as indicated by the extra blank line between numbers in the output. If we want to store or print the lines without the line breaks (as we often might), we need to strip the whitespace off of them, as shown in lines 4, 6, and 8 of Figure 4.4.12.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='inputFile = open("OutputFile.txt", "r")
+```python 
+inputFile = open("OutputFile.txt", "r")
 #Prints the next line of inputFile
 print(inputFile.readline().strip())
 #Prints the next line of inputFile
 print(inputFile.readline().strip())
 #Prints the next line of inputFile
 print(inputFile.readline().strip())
-inputFile.close()'>
-</i-sandbox-py>
+inputFile.close()
+```
 
 **Figure 4.4.12**
 
@@ -345,15 +357,16 @@ This is deceptively complicated actually. We’re calling a method on another me
 
 If that’s still confusing, let’s step through it bit by bit. We tell the computer to print inputFile.readline().strip(). When we chain calls together like this, they’re run left-to-right—after all, it doesn’t know what it’s calling strip() on until it calls readline(). So, it grabs inputFile() and calls readline(). The first time this happens, readline() returns “12\\n”. This effectively replaces inputFile.readline() with “12\\n”. So, this line effectively becomes "\\n". strip(). “12\\n” is a string, so it has access to the strip() method. strip() removes spaces and newlines, so it removes “\\n”, leaving only “12”.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='inputFile = open("OutputFile.txt", "r")
+```python 
+inputFile = open("OutputFile.txt", "r")
 myInt1 = int(inputFile.readline())
 myInt2 = int(inputFile.readline())
 myInt3 = int(inputFile.readline())
 print("myInt1:", myInt1)
 print("myInt2", myInt2)
 print("myInt3:", myInt3)
-inputFile.close()'>
-</i-sandbox-py>
+inputFile.close()
+```
 
 **Figure 4.4.13**
 
@@ -369,15 +382,16 @@ Writing lists was relatively easy: we just iterated over the list, writing each 
 
 Well, we could go back and change our output, telling it to first print the length of the list. That’s a little inelegant, though. Instead, it would be great if Python had a mechanism for reading all the lines in a file until the end. Fortunately, it does have a couple ways of doing this, as shown in Figure 4.4.14.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myList = []
+```python 
+myList = []
 inputFile = open("OutputFile.txt", "r")
 #For each line in the file
 for line in inputFile
 	#Add the line to myList, stripping out the whitespace
 	myList.append(line.strip())
 print(myList)
-inputFile.close()'>
-</i-sandbox-py>
+inputFile.close()
+```
 
 **Figure 4.4.14**
 
@@ -389,7 +403,8 @@ To do this, we do have to know which lines are going to be which kinds of data. 
 
 At the end of Figure 4.4.15, the status of all four variables—the three myInt variables and myList—is the same as it was when we saved in Figure 4.4.6. Note also that we don’t _have_ to read line-by-line: we can also use the read() method (rather than the readline() method) to read the entire remaining contents of the file into one string, newlines and all.
 
-<i-sandbox-py  page-slug="__temp_slug__" code='myList = []
+```python 
+myList = []
 inputFile = open("OutputFile.txt", "r")
 myInt1 = int(inputFile.readline())
 myInt2 = int(inputFile.readline())
@@ -402,8 +417,8 @@ print(myInt1)
 print(myInt2)
 print(myInt3)
 print(myList)
-inputFile.close()'>
-</i-sandbox-py>
+inputFile.close()
+```
 
 **Figure 4.4.15**
 
