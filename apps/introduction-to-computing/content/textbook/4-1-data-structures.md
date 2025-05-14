@@ -136,7 +136,7 @@ But for building programs at our level, do we really build them out of these con
 
 ## Lists and List-Like Structures {#Lists-and-List-Like-Structures-3109} 
 
-So far, everything we’ve covered has involved a one-to-one mapping between variables and values. Every variable could have one and only one value. What happens, then, if you need to keep track of the names of all the students in a class? Do you create a different variable for each student? What if you’re building a roster program where you don’t know in advance how many students to expect; do you just make sure to create more variables than you need?
+So far, everything we’ve covered has involved a one-to-one mapping between variables and values. Every variable could have one and only one value. What happens, then, if you need to keep track of the names of all the students in a class? Do you create a different variable for each student? What if you’re building a roster program where you don’t know in advance how many students to expect; do you just make sure to create more variables than you need? 
 
 This is where list-like structures come into play. **List-like structures**, also called sequences, give multiple values to a single variable name. The individual values are then accessed through some kind of index. For example, if we have a variable named roster, we could specifically ask for the first name on the roster, the seventh name, or the twelfth name. The variable roster has one name, but there are multiple values associated with it, accessed via numbers called **indices** (plural for index). Sometimes (specifically, with dictionaries, the topic of Chapter 4.5) it won’t be numbers that we use to access these values, though; it might be strings or other data variables.
 
@@ -190,10 +190,9 @@ What does passing “by reference” mean, then? To understand that, we need to 
   alt="4.1.1.png"
   width="660"
   height="150">
-
-Figure 4.1.1
-
 </i-image>
+
+**Figure 4.1.1**
 
 So, are they just labeled “File A” and “File B”? No; they’re labeled with some far more cryptic identifier like E1557. These identifiers are systematic and ordered; that’s why they’re relatively easy to navigate. We know that E1557 will come after E1556 and before E1558. These identifiers are tough to use, though. So, we create more accessible names, like “File A”, and somewhere we have a key indicating, “File A can be found at E1559.”
 
@@ -203,10 +202,9 @@ So, are they just labeled “File A” and “File B”? No; they’re labeled w
   alt="4.1.2.png"
   width="696"
   height="344">
-
-Figure 4.1.2
-
 </i-image>
+
+**Figure 4.1.2**
 
 That cryptic identifier is called a reference (or a memory address). It tells you where the variable itself can actually be found. When we pass by value, we grab the variable name (File A), find its reference (E1559), use the reference to find the value (5), and then tell the function the value (“Hey Addison, 5 and...”). The function never knows where the value came from.
 
@@ -216,10 +214,9 @@ That cryptic identifier is called a reference (or a memory address). It tells yo
   alt="4.1.3.png"
   width="688"
   height="342">
-
-Figure 4.1.3
-
 </i-image>
+
+**Figure 4.1.3**
 
 When we pass by reference, we grab the variable name (File A), find its reference (E1559), and pass that reference _directly_ to the function (“Hey Addison, the value stored at E1559 and...”). The function then looks up the value on its own, but because it knows the reference, it can change the value if it wants to. It doesn’t have to, but it can.
 
@@ -231,10 +228,9 @@ That’s why these two approaches are called pass by value and pass by reference
   alt="4.1.4.png"
   width="726"
   height="346">
-
-Figure 4.1.4
-
 </i-image>
+
+**Figure 4.1.4**
 
 ## 3. Passing by Value and Reference in Python {#3-Passing-by-Value-and-Reference-in-Python-1535} 
 

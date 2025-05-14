@@ -165,10 +165,9 @@ List-like structures go by various names: lists, arrays, tuples, vectors, tables
   alt="4.3.1"
   width="292"
   height="394">
-
-Figure 4.3.1
-
 </i-image>
+
+**Figure 4.3.1**
 
 As noted above, which specific implementation you’ll use depends on your language. The commonality among these list-like structures is that they contain an ordered series of values accessed via numeric indices.
 
@@ -178,7 +177,7 @@ Python has two major list-like structures: **tuples** and **lists.** Tuples are 
 
 ## Declaring Tuples {#Declaring-Tuples-3176} 
 
-To declare a tuple, we set a variable equal to a comma-separated series of values or variables, as shown on line 2 of Figure 4.3.2. Here, we’re creating a tuple (called a 3-tuple because it has three values) with the values 1, 2, and 3. We’ve done this here in terms of values, but if we use variables, it still pulls out the values and creates a tuple with these values, as shown on lines 7 and 8 in Figure 4.3.3.
+To declare a tuple, we set a variable equal to a comma-separated series of values or variables, as shown on line 2 of Figure 4.3.2. Here, we’re creating a tuple (called a 3-tuple because it has three values) with the values 1, 2, and 3. We’ve done this here in terms of values, but if we use variables, it still pulls out the values and creates a tuple with these values, as shown on lines 7 and 8 in Figure 4.3.3. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='#Creates myTuple with the tuple (1, 2, 3)
 myTuple = (1, 2, 3)
@@ -537,10 +536,9 @@ A **Stack** is a list-like structure that limits the ways in which you can add o
   alt="4.3.21"
   width="458"
   height="402">
-
-Figure 4.3.21
-
 </i-image>
+
+**Figure 4.3.21**
 
 This makes a lot of sense when we’re dealing with physical objects: typically putting a new item on top blocks access to the ones below, so that should be the one we grab first when we need one. What about when there is no physical need to do so, though?
 
@@ -552,10 +550,9 @@ Imagine you were programming a robot to search for your keys in your house or ap
   alt="4.3.22"
   width="322"
   height="426">
-
-Figure 4.3.22
-
 </i-image>
+
+**Figure 4.3.22**
 
 This is actually analogous to an advanced computing topic called depth-first search that comes from the advanced data structure trees. These are both outside the scope of this material, but you’ll get to them in a future computing class.
 
@@ -571,10 +568,9 @@ Your call is answered in the order it was received. With queues, we’re restric
   alt="4.3.23"
   width="748"
   height="316">
-
-Figure 4.3.23
-
 </i-image>
+
+**Figure 4.3.23**
 
 When designing programs, we might use queues to process tasks in the order they were launched. Interestingly, however, stacks end up being used more often in programming, for both theoretical and practical reasons. Theoretically, stacks lend themselves to the way in which programs are executed, as demonstrated by the analogy to a depth-first search above—you don’t need to understand the analogy right now, but rather just know that there exist concepts in computing that lend themselves nicely to stacks. For practical reasons, stacks tend to be a little more efficient as well: when using a queue, every time we dequeue an item, we have to update the indices of every other item in the list to decrease them by one. When using advanced computers that isn’t a big issue, but when you use computers of earlier generations, which are comparatively slower, that could present a major difficulty.
 
@@ -594,10 +590,9 @@ Higher-level languages abstract over this process. While they’re written to mi
   alt="4.3.24"
   width="670"
   height="420">
-
-Figure 4.3.24
-
 </i-image>
+
+**Figure 4.3.24**
 
 A linked list operates differently. Instead of one list of memory pointers, each item in the list would contain both its value _and_ a pointer to the next item in the list. So, if you wanted to get item #6, you would find its location from item #5. This makes certain operations significantly more efficient. Iterating, for example, wouldn’t require the computer to return to its list of memory locations each time it wanted to move to the next item: the next item’s location was stored with the current item. Inserting was a breeze as well: instead of having to update every item’s index, only the previous item had to be updated. If we wanted to insert a new item #6, we would just have to change item #5 to point to the new item #6; the new item #6 would then point to the old item #6, which is now #7.
 
@@ -609,10 +604,9 @@ Of course, other operations are significantly less efficient. In a linked list, 
   alt="4.3.25"
   width="674"
   height="408">
-
-Figure 4.3.25
-
 </i-image>
+
+**Figure 4.3.25**
 
 ## 6. Lists and Turtles {#6-Lists-and-Turtles-1560} 
 

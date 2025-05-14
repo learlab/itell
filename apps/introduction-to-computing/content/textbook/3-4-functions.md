@@ -191,10 +191,9 @@ Once we have that, we can call the function. Calling a function means that when 
   alt="3.4.1"
   width="1097"
   height="373">
-
-Figure 3.4.1
-
 </i-image>
+
+**Figure 3.4.1**
 
 To call a function, we would write the function’s name, and then give it the input to provide the function’s parameters. We call the input provided in the function call **“arguments.”** This is nearly identical to variables and values. Variables are names that are assigned values. Parameters are variables specifically for a function, and they are assigned values, called arguments, when the function is called. In our addition example, the “addition” function had two parameters: addend1 and addend2. When we say “Hey, add 5 and 2!”, 5 and 2 are arguments, which are loaded into the parameters. So, when the function has the code addend1 + addend2, these are variables that are loaded with the values 5 and 2.
 
@@ -204,10 +203,9 @@ To call a function, we would write the function’s name, and then give it the i
   alt="3.4.2"
   width="1116"
   height="406">
-
-Figure 3.4.2
-
 </i-image>
+
+**Figure 3.4.2**
 
 Then, the function would return the sum, 7. This would jump the execution back to our main code, where the function call asking the function add() to add 5 and 2 would be replaced by the value 7. These are the parts of the function call: calling the function by name and providing the arguments, and then being replaced by the output.
 

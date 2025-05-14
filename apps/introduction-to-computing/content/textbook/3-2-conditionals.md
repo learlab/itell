@@ -235,10 +235,9 @@ This might be easier to visualize using a flowchart. From here, we can see that 
   alt="Figure 3.2.1"
   width="654"
   height="296">
-
-Figure 3.2.1
-
 </i-image>
+
+**Figure 3.2.1**
 
 If we wanted to guarantee we check multiple things, we would just put multiple if-then structures one after the other. For example, imagine we said: _if_ it’s cold, _then_ wear a long-sleeved shirt; _if_ it’s raining, _then_ wear a raincoat. With this logic, we could end up wearing both a long-sleeved shirt and a raincoat if it’s cold and raining; the second statement doesn’t begin with else, so this reasoning checks if it’s raining whether it’s cold or not.
 
@@ -659,10 +658,9 @@ If that was confusing, don’t worry: this kind of branching reasoning is tough 
   alt="3.2.2.png"
   width="730"
   height="302">
-
-Figure 3.2.18
-
 </i-image>
+
+**Figure 3.2.18**
 
 Figure 3.2.18 was our original approach: one big decision with multiple conditions. If all are true, we go one way; if one is false, we go a different way.
 
@@ -672,10 +670,9 @@ Figure 3.2.18 was our original approach: one big decision with multiple conditio
   alt="3.2.19"
   width="572"
   height="316">
-
-Figure 3.2.19
-
 </i-image>
+
+**Figure 3.2.19**
 
 Figure 3.2.19 is our new approach. Each individual decision is separate. If one is True, we go on to the next decision; if one is False, we go to the dedicated output for _that_ decision. Each conditional governs whether we move on to the next conditional or just exit. In some ways, this is similar to the else-if; however, where an else-if only runs if the previous if was False, a nested if only runs if the previous if was True because it’s part of the code block that only runs if the if statement was True.
 

@@ -199,16 +199,15 @@ So, how can we include quotation marks in the string? Fortunately, Python gives 
   alt="4.2.4.png"
   width="984"
   height="456">
-
-Figure 4.2.4
-
 </i-image>
+
+**Figure 4.2.4**
 
 We can use quotation marks, apostrophes, or triple-apostrophes to declare strings. If we want our string to include quotation marks, we can instead declare it with apostrophes. If we want our string to include apostrophes, we can instead declare it with quotation marks. If we want our string to include both quotation marks and apostrophes, then we can declare it with triple-apostrophes (or triple quotation marks, even!). No matter what we use to start the string, the string does not end until we encounter that character or character sequence again.
 
 ## Special Characters {#Special-Characters-3144} 
 
-We mentioned previously that everything in text is technically a character, including things like tabs and line breaks. Can we then include these in our strings? Yes, though we have to know how. If we try to just put a newline character into the middle of a string, Python isn’t sure what to make of it, as shown in Figure 4.2.5.
+We mentioned previously that everything in text is technically a character, including things like tabs and line breaks. Can we then include these in our strings? Yes, though we have to know how. If we try to just put a newline character into the middle of a string, Python isn’t sure what to make of it, as shown in Figure 4.2.5. 
 
 <i-sandbox-py  page-slug="__temp_slug__" code='myStringWithNewline = "12345
 						67890"
@@ -252,10 +251,9 @@ Note also that our triple-apostrophe method would let us simply write the new li
   alt="4.2.8.png"
   width="1188"
   height="326">
-
-Figure 4.2.8
-
 </i-image>
+
+**Figure 4.2.8**
 
 ## 3. String Concatenation and Slicing in Python {#3-String-Concatenation-and-Slicing-in-Python-1545} 
 

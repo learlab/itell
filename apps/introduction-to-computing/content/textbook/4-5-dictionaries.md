@@ -124,7 +124,7 @@ A dictionary is a book where, if you have a word, you can look for its definitio
 
 ## Dictionaries vs. Variables {#Dictionaries-vs-Variables-3238} 
 
-Values are the same here as they have been everywhere else: a value is an actual data value, like “Hello, world” or 5 or 5.1. What is a **key**, then? A key is the name that brings up that value. Now you might be thinking: wait, isn’t that just a variable? A variable is a name that, when referenced, brings up a value. And you’d be exactly right. Just as there is a 1:1 connection between variables and values, so also there is a 1:1 connection between keys in a dictionary and **values**.
+Values are the same here as they have been everywhere else: a value is an actual data value, like “Hello, world” or 5 or 5.1. What is a **key**, then? A key is the name that brings up that value. Now you might be thinking: wait, isn’t that just a variable? A variable is a name that, when referenced, brings up a value. And you’d be exactly right. Just as there is a 1:1 connection between variables and values, so also there is a 1:1 connection between keys in a dictionary and **values**. 
 
 So what makes them different? A dictionary is like a compilation of multiple key-value pairs that you can pass around together. Recall that one challenge of functions is that you can generally only return one value. A dictionary would let us return multiple values from a function. We’ve been able to do that before with lists, tuples, arrays, or some other structure like that, but a dictionary would _preserve_ the ability to give names to those values by way of keys. So, in one way, we can think of a dictionary as a holding structure for several variables and their values.
 
@@ -277,19 +277,19 @@ With a single dictionary, there are a lot of things you can do. For example, ima
   alt="4.5.9"
   width="658"
   height="406">
+</i-image>
 
-Figure 4.5.9
+**FIgure 4.5.9**
 
-</i-image><i-image
+<i-image
   style="aspect-ratio:642/434;"
   src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/4.5.10-994e3d7068c2e4b8373bb971410cb440.png"
   alt="4.5.10"
   width="642"
   height="434">
-
-Figure 4.5.10
-
 </i-image>
+
+**Figure 4.5.10**
 
 After that, though, what would you do? You very likely might split the book by spaces, then start iterating over each individual word. When you find a word you haven’t seen before, you add it as a key to your dictionary with a value of 1. When you find a word you have seen before, you look for it in the dictionary and increment its value. In the end, your keys are all the words in the book, and your values are all the counts of each word.
 
@@ -301,10 +301,9 @@ Alternatively, imagine you were creating a seating chart for a wedding. How woul
   alt="4.5.11"
   width="654"
   height="302">
-
-Figure 4.5.11
-
 </i-image>
+
+**Figure 4.5.11**
 
 ## Dictionaries and Lists {#Dictionaries-and-Lists-3245} 
 
