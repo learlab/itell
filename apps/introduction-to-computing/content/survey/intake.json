@@ -56,6 +56,74 @@
       ]
     },
     {
+      "id": "grit-s",
+      "title": "Grit and Determination",
+      "questions": [
+        {
+          "id": "grit-s1",
+          "text": "Use the scale below to indicate your degree of agreement with each statement as it APPLIES TO YOU.",
+          "type": "grid",
+          "rows": [
+            {
+              "text": "I often set a goal but later choose to pursue a different one",
+              "value": "1"
+            },
+            {
+              "text": "I finish whatever I begin.",
+              "value": "2"
+            },
+            {
+              "text": "New ideas and new projects sometimes distract me from previous ones.",
+              "value": "3"
+            },
+            {
+              "text": "Setbacks don’t discourage me.",
+              "value": "4"
+            },
+            {
+              "text": "I have been obsessed with a certain idea or project for a short time but later lost interest.",
+              "value": "5"
+            },
+            {
+              "text": "I am a hard worker.",
+              "value": "6"
+            },
+            {
+              "text": "I have difficulty maintaining my focus on projects that take more than a few months to complete.",
+              "value": "7"
+            },
+            {
+              "text": "I am diligent.",
+              "value": "8"
+            }
+          ],
+          "columns": [
+            {
+              "text": "Strongly Disagree",
+              "value": "1"
+            },
+            {
+              "text": "Disagree",
+              "value": "2"
+            },
+            {
+              "text": "Neutral",
+              "value": "3"
+            },
+            {
+              "text": "Agree",
+              "value": "4"
+            },
+            {
+              "text": "Strongly Agree",
+              "value": "5"
+            }
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
       "id": "demographics",
       "title": "Demographics",
       "questions": [
