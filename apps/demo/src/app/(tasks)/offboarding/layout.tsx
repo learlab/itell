@@ -77,7 +77,7 @@ export default async function Layout({
               hover:underline-offset-2"
             href={routes.offboarding()}
           >
-            Offboarindg Tasks
+            Offboarding Tasks
           </Link>
         }
         footer={

@@ -98,9 +98,9 @@ function TaskLink({
         {done ? (
           <CircleCheckIcon className="size-5 stroke-green-600" />
         ) : ready ? (
-          <CircleIcon className="size-5 stroke-warning" />
+          <CircleIcon className="stroke-warning size-5" />
         ) : inProgress ? (
-          <LoaderCircleIcon className="size-5 stroke-warning" />
+          <LoaderCircleIcon className="stroke-warning size-5" />
         ) : (
           <BanIcon className="size-5" />
         )}
