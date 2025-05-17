@@ -349,7 +349,7 @@ importers:
         version: 15.1.0(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sentry/nextjs':
         specifier: ^8.48.0
-        version: 8.48.0(@opentelemetry/core@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(webpack@5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15))(esbuild@0.24.2))
+        version: 8.48.0(@opentelemetry/core@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(webpack@5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15))(esbuild@0.19.12))
       '@tanstack/react-table':
         specifier: ^8.20.6
         version: 8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -533,7 +533,7 @@ importers:
         version: 3.4.2
       react-scan:
         specifier: ^0.1.3
-        version: 0.1.4(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-router-dom@5.3.4(react@19.0.0))(react-router@5.3.4(react@19.0.0))(react@19.0.0)(rollup@4.30.1)
+        version: 0.1.4(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-router-dom@5.3.4(react@19.0.0))(react-router@5.3.4(react@19.0.0))(react@19.0.0)(rollup@3.29.5)
       rehype-format:
         specifier: ^5.0.1
         version: 5.0.1
@@ -617,7 +617,7 @@ importers:
         version: 15.1.0(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sentry/nextjs':
         specifier: ^8.48.0
-        version: 8.48.0(@opentelemetry/core@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(webpack@5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15))(esbuild@0.19.12))
+        version: 8.48.0(@opentelemetry/core@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(webpack@5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15))(esbuild@0.24.2))
       '@tanstack/react-table':
         specifier: ^8.20.6
         version: 8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -825,7 +825,7 @@ importers:
         version: 3.4.2
       react-scan:
         specifier: ^0.1.3
-        version: 0.1.4(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-router-dom@5.3.4(react@19.0.0))(react-router@5.3.4(react@19.0.0))(react@19.0.0)(rollup@3.29.5)
+        version: 0.1.4(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-router-dom@5.3.4(react@19.0.0))(react-router@5.3.4(react@19.0.0))(react@19.0.0)(rollup@4.30.1)
       rehype-format:
         specifier: ^5.0.1
         version: 5.0.1
@@ -857,7 +857,176 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
 
-  apps/middlesex:
+  apps/preview:
+    dependencies:
+      '@itell/content':
+        specifier: workspace:^
+        version: link:../../packages/content
+      '@itell/js-sandbox':
+        specifier: workspace:^
+        version: link:../../packages/js-sandbox
+      '@itell/rehype-wrap-heading-section':
+        specifier: workspace:^
+        version: link:../../packages/rehype-wrap-heading-section
+      '@itell/ui':
+        specifier: workspace:^
+        version: link:../../packages/ui
+      '@itell/utils':
+        specifier: workspace:^
+        version: link:../../packages/utils
+      '@radix-ui/react-context-menu':
+        specifier: ^2.2.1
+        version: 2.2.2(@types/react-dom@19.0.1)(@types/react@19.0.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      comlink:
+        specifier: ^4.4.1
+        version: 4.4.2
+      hastscript:
+        specifier: ^9.0.0
+        version: 9.0.0
+      htmr:
+        specifier: ^1.0.2
+        version: 1.0.2(patch_hash=v7i4blma6aws3ekrmuhlcogrwq)(react@19.0.0-rc-02c0e824-20241028)
+      lucide-react:
+        specifier: ^0.426.0
+        version: 0.426.0(react@19.0.0-rc-02c0e824-20241028)
+      mdast-util-from-markdown:
+        specifier: ^2.0.1
+        version: 2.0.2
+      next:
+        specifier: 15.0.2
+        version: 15.0.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      next-safe-navigation:
+        specifier: ^0.3.2
+        version: 0.3.3(next@15.0.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(typescript@5.6.0-beta)(zod@3.23.8)
+      next-themes:
+        specifier: ^0.2.1
+        version: 0.2.1(next@15.0.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      qs:
+        specifier: ^6.11.2
+        version: 6.13.1
+      react:
+        specifier: 19.0.0-rc-02c0e824-20241028
+        version: 19.0.0-rc-02c0e824-20241028
+      react-dom:
+        specifier: 19.0.0-rc-02c0e824-20241028
+        version: 19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028)
+      react-split:
+        specifier: ^2.0.14
+        version: 2.0.14(react@19.0.0-rc-02c0e824-20241028)
+      rehype-pretty-code:
+        specifier: ^0.13.2
+        version: 0.13.2(shiki@1.24.1)
+      rehype-raw:
+        specifier: ^7.0.0
+        version: 7.0.0
+      rehype-slug:
+        specifier: ^5.1.0
+        version: 5.1.0
+      rehype-stringify:
+        specifier: ^10.0.0
+        version: 10.0.1
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
+      remark-heading-attrs:
+        specifier: ^0.0.1
+        version: 0.0.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
+      remark-rehype:
+        specifier: ^11.1.0
+        version: 11.1.1
+      remark-unwrap-images:
+        specifier: ^4.0.0
+        version: 4.0.1
+      sonner:
+        specifier: ^1.2.0
+        version: 1.7.1(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
+      use-debounce:
+        specifier: ^10.0.2
+        version: 10.0.4(react@19.0.0-rc-02c0e824-20241028)
+      zod:
+        specifier: ^3.22.2
+        version: 3.23.8
+    devDependencies:
+      '@babel/cli':
+        specifier: ^7.24.8
+        version: 7.26.4(@babel/core@7.26.0)
+      '@babel/core':
+        specifier: ^7.25.2
+        version: 7.26.0
+      '@babel/plugin-proposal-class-properties':
+        specifier: ^7.18.6
+        version: 7.18.6(@babel/core@7.26.0)
+      '@babel/plugin-proposal-object-rest-spread':
+        specifier: ^7.20.7
+        version: 7.20.7(@babel/core@7.26.0)
+      '@babel/preset-env':
+        specifier: ^7.25.3
+        version: 7.26.0(@babel/core@7.26.0)
+      '@babel/preset-typescript':
+        specifier: ^7.24.7
+        version: 7.26.0(@babel/core@7.26.0)
+      '@strapi/strapi':
+        specifier: ^4.25.8
+        version: 4.25.17(@babel/runtime@7.26.0)(@codemirror/autocomplete@6.18.3(@codemirror/language@6.11.0)(@codemirror/state@6.5.0)(@codemirror/view@6.36.7)(@lezer/common@1.2.3))(@codemirror/language@6.11.0)(@codemirror/lint@6.8.4)(@codemirror/search@6.5.8)(@codemirror/state@6.5.0)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.36.7)(@swc/core@1.10.1(@swc/helpers@0.5.15))(@swc/helpers@0.5.15)(@types/hoist-non-react-statics@3.3.6)(@types/node@22.13.10)(@types/react-dom@19.0.1)(@types/react@19.0.1)(codemirror@6.0.1(@lezer/common@1.2.3))(lightningcss@1.29.2)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react-router-dom@5.3.4(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)(redux@4.2.1)(styled-components@5.3.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react-is@19.0.0)(react@19.0.0-rc-02c0e824-20241028))(terser@5.37.0)(type-fest@4.31.0)
+      '@strapi/types':
+        specifier: ^5.12.0
+        version: 5.12.0(@types/node@22.13.10)(typescript@5.6.0-beta)
+      '@tailwindcss/postcss':
+        specifier: ^4.0.17
+        version: 4.0.17
+      '@types/dom-view-transitions':
+        specifier: ^1.0.4
+        version: 1.0.5
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
+      '@types/qs':
+        specifier: ^6.9.10
+        version: 6.9.17
+      '@types/react':
+        specifier: 19.0.1
+        version: 19.0.1
+      '@types/react-dom':
+        specifier: 19.0.1
+        version: 19.0.1
+      autoprefixer:
+        specifier: ^10.4.15
+        version: 10.4.20(postcss@8.5.3)
+      jsdoc-babel:
+        specifier: ^0.5.0
+        version: 0.5.0(@babel/core@7.26.0)
+      jsdoc-to-markdown:
+        specifier: ^8.0.3
+        version: 8.0.3
+      rehype-katex:
+        specifier: ^6.0.3
+        version: 6.0.3
+      remark-math:
+        specifier: ^6.0.0
+        version: 6.0.0
+      tailwindcss:
+        specifier: ^4.0.17
+        version: 4.0.17
+      typescript:
+        specifier: 5.6.0-beta
+        version: 5.6.0-beta
+      velite:
+        specifier: ^0.1.1
+        version: 0.1.1(acorn@8.14.0)
+
+  apps/rmp:
     dependencies:
       '@floating-ui/dom':
         specifier: ^1.6.13
@@ -1039,7 +1208,7 @@ importers:
         version: 1.49.1
       '@tailwindcss/postcss':
         specifier: ^4.0.9
-        version: 4.0.14
+        version: 4.0.17
       '@total-typescript/ts-reset':
         specifier: ^0.4.2
         version: 0.4.2
@@ -1105,179 +1274,10 @@ importers:
         version: 7.4.0
       tailwindcss:
         specifier: ^4.0.9
-        version: 4.0.14
-      typescript:
-        specifier: 5.6.0-beta
-        version: 5.6.0-beta
-
-  apps/preview:
-    dependencies:
-      '@itell/content':
-        specifier: workspace:^
-        version: link:../../packages/content
-      '@itell/js-sandbox':
-        specifier: workspace:^
-        version: link:../../packages/js-sandbox
-      '@itell/rehype-wrap-heading-section':
-        specifier: workspace:^
-        version: link:../../packages/rehype-wrap-heading-section
-      '@itell/ui':
-        specifier: workspace:^
-        version: link:../../packages/ui
-      '@itell/utils':
-        specifier: workspace:^
-        version: link:../../packages/utils
-      '@radix-ui/react-context-menu':
-        specifier: ^2.2.1
-        version: 2.2.2(@types/react-dom@19.0.1)(@types/react@19.0.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
-      comlink:
-        specifier: ^4.4.1
-        version: 4.4.2
-      hastscript:
-        specifier: ^9.0.0
-        version: 9.0.0
-      htmr:
-        specifier: ^1.0.2
-        version: 1.0.2(patch_hash=v7i4blma6aws3ekrmuhlcogrwq)(react@19.0.0-rc-02c0e824-20241028)
-      lucide-react:
-        specifier: ^0.426.0
-        version: 0.426.0(react@19.0.0-rc-02c0e824-20241028)
-      mdast-util-from-markdown:
-        specifier: ^2.0.1
-        version: 2.0.2
-      next:
-        specifier: 15.0.2
-        version: 15.0.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
-      next-safe-navigation:
-        specifier: ^0.3.2
-        version: 0.3.3(next@15.0.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(typescript@5.6.0-beta)(zod@3.23.8)
-      next-themes:
-        specifier: ^0.2.1
-        version: 0.2.1(next@15.0.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
-      qs:
-        specifier: ^6.11.2
-        version: 6.13.1
-      react:
-        specifier: 19.0.0-rc-02c0e824-20241028
-        version: 19.0.0-rc-02c0e824-20241028
-      react-dom:
-        specifier: 19.0.0-rc-02c0e824-20241028
-        version: 19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028)
-      react-split:
-        specifier: ^2.0.14
-        version: 2.0.14(react@19.0.0-rc-02c0e824-20241028)
-      rehype-pretty-code:
-        specifier: ^0.13.2
-        version: 0.13.2(shiki@1.24.1)
-      rehype-raw:
-        specifier: ^7.0.0
-        version: 7.0.0
-      rehype-slug:
-        specifier: ^5.1.0
-        version: 5.1.0
-      rehype-stringify:
-        specifier: ^10.0.0
-        version: 10.0.1
-      remark-gfm:
-        specifier: ^4.0.0
-        version: 4.0.0
-      remark-heading-attrs:
-        specifier: ^0.0.1
-        version: 0.0.1
-      remark-parse:
-        specifier: ^11.0.0
-        version: 11.0.0
-      remark-rehype:
-        specifier: ^11.1.0
-        version: 11.1.1
-      remark-unwrap-images:
-        specifier: ^4.0.0
-        version: 4.0.1
-      sonner:
-        specifier: ^1.2.0
-        version: 1.7.1(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
-      unified:
-        specifier: ^11.0.5
-        version: 11.0.5
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
-      use-debounce:
-        specifier: ^10.0.2
-        version: 10.0.4(react@19.0.0-rc-02c0e824-20241028)
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
-    devDependencies:
-      '@babel/cli':
-        specifier: ^7.24.8
-        version: 7.26.4(@babel/core@7.26.0)
-      '@babel/core':
-        specifier: ^7.25.2
-        version: 7.26.0
-      '@babel/plugin-proposal-class-properties':
-        specifier: ^7.18.6
-        version: 7.18.6(@babel/core@7.26.0)
-      '@babel/plugin-proposal-object-rest-spread':
-        specifier: ^7.20.7
-        version: 7.20.7(@babel/core@7.26.0)
-      '@babel/preset-env':
-        specifier: ^7.25.3
-        version: 7.26.0(@babel/core@7.26.0)
-      '@babel/preset-typescript':
-        specifier: ^7.24.7
-        version: 7.26.0(@babel/core@7.26.0)
-      '@strapi/strapi':
-        specifier: ^4.25.8
-        version: 4.25.17(@babel/runtime@7.26.0)(@codemirror/autocomplete@6.18.3(@codemirror/language@6.11.0)(@codemirror/state@6.5.0)(@codemirror/view@6.36.7)(@lezer/common@1.2.3))(@codemirror/language@6.11.0)(@codemirror/lint@6.8.4)(@codemirror/search@6.5.8)(@codemirror/state@6.5.0)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.36.7)(@swc/core@1.10.1(@swc/helpers@0.5.15))(@swc/helpers@0.5.15)(@types/hoist-non-react-statics@3.3.6)(@types/node@22.13.10)(@types/react-dom@19.0.1)(@types/react@19.0.1)(codemirror@6.0.1(@lezer/common@1.2.3))(lightningcss@1.29.2)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react-router-dom@5.3.4(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)(redux@4.2.1)(styled-components@5.3.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react-is@19.0.0)(react@19.0.0-rc-02c0e824-20241028))(terser@5.37.0)(type-fest@4.31.0)
-      '@strapi/types':
-        specifier: ^5.12.0
-        version: 5.12.0(@types/node@22.13.10)(typescript@5.6.0-beta)
-      '@tailwindcss/postcss':
-        specifier: ^4.0.17
-        version: 4.0.17
-      '@types/dom-view-transitions':
-        specifier: ^1.0.4
-        version: 1.0.5
-      '@types/hast':
-        specifier: ^3.0.4
-        version: 3.0.4
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
-      '@types/qs':
-        specifier: ^6.9.10
-        version: 6.9.17
-      '@types/react':
-        specifier: 19.0.1
-        version: 19.0.1
-      '@types/react-dom':
-        specifier: 19.0.1
-        version: 19.0.1
-      autoprefixer:
-        specifier: ^10.4.15
-        version: 10.4.20(postcss@8.5.3)
-      jsdoc-babel:
-        specifier: ^0.5.0
-        version: 0.5.0(@babel/core@7.26.0)
-      jsdoc-to-markdown:
-        specifier: ^8.0.3
-        version: 8.0.3
-      rehype-katex:
-        specifier: ^6.0.3
-        version: 6.0.3
-      remark-math:
-        specifier: ^6.0.0
-        version: 6.0.0
-      tailwindcss:
-        specifier: ^4.0.17
         version: 4.0.17
       typescript:
         specifier: 5.6.0-beta
         version: 5.6.0-beta
-      velite:
-        specifier: ^0.1.1
-        version: 0.1.1(acorn@8.14.0)
 
   packages/api:
     dependencies:
@@ -1792,7 +1792,7 @@ importers:
         version: 11.13.5(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next:
         specifier: ^15
-        version: 15.1.0(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       postcss:
         specifier: ^8.4.29
         version: 8.4.49
@@ -26846,33 +26846,6 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.1.0(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
-    dependencies:
-      '@next/env': 15.1.0
-      '@swc/counter': 0.1.3
-      '@swc/helpers': 0.5.15
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001690
-      postcss: 8.4.31
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      styled-jsx: 5.1.6(@babel/core@7.26.0)(react@19.0.0)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 15.1.0
-      '@next/swc-darwin-x64': 15.1.0
-      '@next/swc-linux-arm64-gnu': 15.1.0
-      '@next/swc-linux-arm64-musl': 15.1.0
-      '@next/swc-linux-x64-gnu': 15.1.0
-      '@next/swc-linux-x64-musl': 15.1.0
-      '@next/swc-win32-arm64-msvc': 15.1.0
-      '@next/swc-win32-x64-msvc': 15.1.0
-      '@opentelemetry/api': 1.9.0
-      '@playwright/test': 1.49.1
-      sharp: 0.33.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
   next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-react-compiler@19.0.0-beta-6fc168f-20241025)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@next/env': 15.1.0
@@ -26883,7 +26856,7 @@ snapshots:
       postcss: 8.4.31
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      styled-jsx: 5.1.6(@babel/core@7.26.0)(react@19.0.0)
+      styled-jsx: 5.1.6(react@19.0.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.1.0
       '@next/swc-darwin-x64': 15.1.0
@@ -29385,19 +29358,17 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
 
-  styled-jsx@5.1.6(@babel/core@7.26.0)(react@19.0.0):
-    dependencies:
-      client-only: 0.0.1
-      react: 19.0.0
-    optionalDependencies:
-      '@babel/core': 7.26.0
-
   styled-jsx@5.1.6(@babel/core@7.26.0)(react@19.0.0-rc-02c0e824-20241028):
     dependencies:
       client-only: 0.0.1
       react: 19.0.0-rc-02c0e824-20241028
     optionalDependencies:
       '@babel/core': 7.26.0
+
+  styled-jsx@5.1.6(react@19.0.0):
+    dependencies:
+      client-only: 0.0.1
+      react: 19.0.0
 
   stylis@4.2.0: {}
 
