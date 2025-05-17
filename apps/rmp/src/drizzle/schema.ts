@@ -42,7 +42,7 @@ export const users = pgTable("users", {
   finished: boolean("finished").default(false).notNull(),
   preferences: jsonb("preferences").$type<UserPreferences>(),
   consentGiven: boolean("consent_given"),
-  onboardingFinished: boolean("onboarding_finished").notNull(),
+  onboardingFinished: boolean("onboarding_finished").notNull().default(false),
   offboardingFinished: boolean("offboarding_finished").notNull().default(false),
   personalization: jsonb("personalization_data").$type<PersonalizationData>(),
   conditionAssignments: jsonb("condition_assignments")

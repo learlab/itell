@@ -8,6 +8,13 @@
       "when": 1747488501753,
       "tag": "0000_brown_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1747492002032,
+      "tag": "0001_bumpy_deadpool",
+      "breakpoints": true
     }
   ]
 }
