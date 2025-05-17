@@ -60,7 +60,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
       )}
     >
       <p className="text-center text-sm leading-loose md:text-left">
-        A project by the Language and Educational Analytics Research (Lear)Lab
+        A project by the Language and Educational Analytics Research (LEAR)Lab
       </p>
       <a href="https://github.com/learlab/itell">
         <BrandIcon name="github/_/eee" />
