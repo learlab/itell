@@ -122,13 +122,13 @@ title: 4.5 Dictionaries
 
 A dictionary is a book where, if you have a word, you can look for its definition. But you probably weren’t wondering about a dictionary in the real world, you were probably wondering about a dictionary in computing. So, replace “book” with “data structure,” “word” with “key,” and “definition” with “value,” and you have the definition of a **dictionary** in terms of computing: a dictionary is a data structure where, if you have a key, you can look for its value.
 
-## Dictionaries vs. Variables {#Dictionaries-vs-Variables-3238} 
+### Dictionaries vs. Variables {#Dictionaries-vs-Variables-3238} 
 
 Values are the same here as they have been everywhere else: a value is an actual data value, like “Hello, world” or 5 or 5.1. What is a **key**, then? A key is the name that brings up that value. Now you might be thinking: wait, isn’t that just a variable? A variable is a name that, when referenced, brings up a value. And you’d be exactly right. Just as there is a 1:1 connection between variables and values, so also there is a 1:1 connection between keys in a dictionary and **values**. 
 
 So what makes them different? A dictionary is like a compilation of multiple key-value pairs that you can pass around together. Recall that one challenge of functions is that you can generally only return one value. A dictionary would let us return multiple values from a function. We’ve been able to do that before with lists, tuples, arrays, or some other structure like that, but a dictionary would _preserve_ the ability to give names to those values by way of keys. So, in one way, we can think of a dictionary as a holding structure for several variables and their values.
 
-## Dictionaries vs. Lists {#Dictionaries-vs-Lists-3239} 
+### Dictionaries vs. Lists {#Dictionaries-vs-Lists-3239} 
 
 Like lists, dictionaries can hold multiple values. Depending on the language, these values might have an order to them. They might be sortable, or they might arrive in random order whenever they’re accessed. Either way though, both lists and dictionaries store multiple values.
 
@@ -140,7 +140,7 @@ Dictionaries use keys instead of numeric indices. What that means is that you ac
 
 Imagine, for example, storing calendar items. The key for each list of calendar items could be the date itself, so if we wanted the calendar items for September 12th, we could use September 12th as the key instead of trying to calculate what numeric index corresponded to September 12th.
 
-## Dictionary Terminology {#Dictionary-Terminology-3240} 
+### Dictionary Terminology {#Dictionary-Terminology-3240} 
 
 I keep referring to this data structure as a dictionary because the original language of this material refers to it as a dictionary, but different languages have different names for structures like these. They can sometimes have subtle differences, but generally the concept is the same:
 
@@ -155,7 +155,7 @@ So, if you see any of these terms, know that they refer to effectively the same 
 
 One of the things that makes Python unique as a programming language is the accessibility of its dictionaries. In most languages, dictionaries are a little clunky to use; they can only be declared with special constructors (we’ll talk about that next unit), and they’re only usable through methods. Python, however, gives us an in-line method for defining dictionaries.
 
-## Creating and Accessing Dictionaries {#Creating-and-Accessing-Dictionaries-3241} 
+### Creating and Accessing Dictionaries {#Creating-and-Accessing-Dictionaries-3241} 
 
 For example, let’s imagine we’re creating an inventory program. In this case, our keys would be product names, and our values would be the current stock of that item. How would we declare a dictionary with product names as keys and inventories as values? Well, we used brackets for lists and parentheses for tuples, I bet you can guess what we’ll use for dictionaries. 
 
@@ -187,7 +187,7 @@ print(myDictionary)'>
 
 The print() statements on lines 3 and 5 show that the operation on line 4 _does_ change the value associated with the key “sprockets” in myDictionary. This also shows how we access individual items from a dictionary: using the same syntax as with lists, strings, and tuples, but with keys inside the brackets instead of indices.
 
-## Adding to and Removing from a Dictionary {#Adding-to-and-Removing-from-a-Dictionary-3242} 
+### Adding to and Removing from a Dictionary {#Adding-to-and-Removing-from-a-Dictionary-3242} 
 
 So, we’ve created a dictionary in Figure 4.5.2. How do we add new items to it? You might be tempted to try to call an append() method like we used with lists, but in dictionaries, we don’t need to. We create new key:value pairs in dictionaries the same way we create new variables: by assigning a value to a new key. Figure 4.5.3 shows this in action.
 
@@ -230,7 +230,7 @@ print(myDictionary["Dana"])'>
 
 Figure 4.5.5
 
-## Traversing Dictionaries {#Traversing-Dictionaries-3243} 
+### Traversing Dictionaries {#Traversing-Dictionaries-3243} 
 
 As noted, the main benefit of dictionaries is that they give us useful keys so we can jump straight to the value we want. However, there will still be lots of times we want to traverse every item in a dictionary. For example, in our inventory program, perhaps we want to make sure to order more of any item that drops below 5. There are a number of ways we could do this. First, if we don’t care what key gives us these values, we could iterate over the values() directly, as shown in lines 5 through 7 of Figure 4.5.6.
 
@@ -267,7 +267,7 @@ for (key, value) in myDictionary.items():
 
 Dictionaries are extremely powerful data structures, even when just used the way we’ve discussed them so far. However, some of the benefits of dictionaries are that they allow us to create a low-overhead version of object-oriented programming. Object-oriented programming is our next chapter, and it’s a big and important topic, so we’ll preview it here.
 
-## Simple Dictionary Applications {#Simple-Dictionary-Applications-3244} 
+### Simple Dictionary Applications {#Simple-Dictionary-Applications-3244} 
 
 With a single dictionary, there are a lot of things you can do. For example, imagine you want to count the most common words in a book. If you have the book in plaintext, how would you do that? First, you’d likely replace all the punctuation marks and other symbols with spaces, so that you don’t get stuck treating a word with a period after it as a different word from its other appearances. Then, you’d probably change the entire thing to lower or upper case so you don’t have to worry about capitals.
 
@@ -325,7 +325,7 @@ The unique twist here is that in this case, we would have lots of dictionaries, 
 
 Before moving on to these super-advanced types of dictionaries, let’s explore some of the more accessible applications a little bit more.
 
-## Simple Examples of Dictionaries {#Simple-Examples-of-Dictionaries-3247} 
+### Simple Examples of Dictionaries {#Simple-Examples-of-Dictionaries-3247} 
 
 First, let’s see some code that counts the words in a string using a dictionary. This is shown in Figure 4.5.12.
 
@@ -347,7 +347,7 @@ print(wordDictionary)'>
 
 We start by defining the string, myString, on line 1. We then modify it on lines 3 through 7 it so that it contains only the words: we remove punctuation (lines 3, 4, and 5), make it lower case (line 6), then split it by spaces so that we have a list of words (line 7). We then iterate over that list of words starting on line 10. For each word that isn’t yet in the dictionary, the conditional on line 11 is False, so we add it to the dictionary with a value of 1 on line 14 because 1 instance has been found. For each word that is already in the dictionary, the conditional on line 11 is True, so we just increment its counter on line 12. In the end, our dictionary contains all the words in the string as keys, and the count of these words as their corresponding values.
 
-## Dictionaries and Lists {#Dictionaries-and-Lists-3248} 
+### Dictionaries and Lists {#Dictionaries-and-Lists-3248} 
 
 For our classroom roster, we first define a dictionary of classes, as shown in lines 1 through 5 of Figure 4.5.14. Each class has a name as the key and a list of students (as defined by the brackets) as the value. Notice here how easily we can use lists as values instead of just simpler values on their own; we just put the same brackets and declaration as we usually would to define a list.
 
@@ -372,7 +372,7 @@ print("Danas Phone Number:", addressBook["Dana"][1])'>
 
 **Figure 4.5.15**
 
-## Dictionaries as Objects {#Dictionaries-as-Objects-3249} 
+### Dictionaries as Objects {#Dictionaries-as-Objects-3249} 
 
 One of the most powerful parts of using dictionaries is the ability to have multiple dictionaries with the same keys, but different values. This data structure is a low-overhead version of object-oriented programming, which we’ll cover in the next chapter. To start, let’s convert that address book code to use these nested dictionaries in Figure 4.5.16.
 
@@ -408,7 +408,7 @@ Over the past several lessons, our turtles code has gotten more and more complex
 
 In other ways, though, it’s a bad thing. Giant multi-layer if statements are often frowned upon because they’re difficult to read and navigate. We might also notice that our commands are, in some ways, like keys to a dictionary: it’s just that in this case, the values are the lines of code that run in response, not variables. Could we create dictionaries whose values are actually references to functions? Yes! Follow along in DictionariesandTurtles.py to see how.
 
-## Replacing Conditionals with Dictionaries {#Replacing-Conditionals-with-Dictionaries-3250} 
+### Replacing Conditionals with Dictionaries {#Replacing-Conditionals-with-Dictionaries-3250} 
 
 Let’s start by trying to replace the giant series of conditional statements that get the user’s input with something dictionary-based. Take a look at that conditional inside getCommandFromUser(): notice anything? Every branch follows the same pattern: get arguments, then create commandTuple with the command in the first spot. Instead of this complex branching series, we could instead create little func- tions for each, and then just call the function based on the command name as estab- lished by a map. Let’s try that out.
 
@@ -432,7 +432,7 @@ After all that work, the result is exactly the same. We could have made these ch
 
 As I’ve said repeatedly before, don’t worry if this is confusing. In fact, if this _isn’t_ confusing, please contact me so that I can hire you to teach this class. This is an incredibly complex example of Python reasoning and syntax. It’s taken me several hours to compile this to this point, and I’ve learned a lot in the process. The goal is not for you to understand exactly how this works. The goal is for you to see an example of a complex, authentic Python program as it is developed. Do try to understand it as best as you can, but don’t be discouraged by it.
 
-## Why Is This better? {#Why-Is-This-better?-3252} 
+### Why Is This better? {#Why-Is-This-better?-3252} 
 
 The big question you might have is: In what way is this actually better? “I understood the earlier way!” you might say. “You’re just making it more complex on purpose to show off these principles!”
 

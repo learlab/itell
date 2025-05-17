@@ -148,7 +148,7 @@ Early in our conversations, we covered the idea of errors. Errors were specific 
 
 So far, we’ve most often used errors for debugging: when an error arises, we know we need to go and figure out what caused it and prevent it from happening in the future. However, that’s not the only purpose of errors. Sometimes, instead of preventing errors, we want to use the fact that an error arises to direct or control our program. In other words: some errors might be expected and even purposeful, and when they arise our program should know how to deal with them.
 
-## "Catching" Errors {#Catching-Errors-3070} 
+### "Catching" Errors {#Catching-Errors-3070} 
 
 We call this “**catching**” an error. An **uncaught error** (also called an unhandled error) will crash our program. A caught error will let our program keep running, and we can add code that specifically runs if an error was caught. We can even add different blocks of code that react to different types of errors.
 
@@ -158,7 +158,7 @@ However, what happens when it reaches the end of the loop? It attempts to divide
 
 There’s nothing wrong with that method, but let’s talk about the other approach: catching the error. We can look at this code and know: the only possible way to encounter a divide-by-zero error is if the list was empty. So, if a divide by zero error arises, that must mean the list was empty. So, instead of checking if the list was empty first before trying to calculate the average, we can instead just tell the computer, “Hey, try to calculate the sum, but don’t crash if you can’t: instead, just tell the user they can’t average an empty list.” This is catching the error: telling the computer not to crash if the error is encountered, as well as giving it some step to take instead.
 
-## When to Catch Errors {#When-to-Catch-Errors-3071} 
+### When to Catch Errors {#When-to-Catch-Errors-3071} 
 
 In the example above, we had two pretty equivalent options: we could use a condi- tional to check if an error would occur in advance, or we could catch errors after they already occurred. What’s the usefulness of catching errors if they could be avoided with conditionals?
 
@@ -172,13 +172,13 @@ Third and perhaps most importantly, if you’re writing programs for people to a
 
 We’re covering error handling in the control structures unit of this course because the actual structure of error-handling is, itself, a control structure. There are three common structures for error-handling: the try, catch, and finally.
 
-## The Try Block {#The-Try-Block-3072} 
+### The Try Block {#The-Try-Block-3072} 
 
 The try block of the error-handling control structure is the simple one. It marks off the code in which an error is anticipated to arise. On its own, it doesn’t actually do very much; it’s more of a marker, so the computer knows what code might have its errors handled later on. The computer will run the code in the try block until an error arises; if an error arises, the code will skip the rest of the code in the try block and jump to the code in the next block, the catch block.
 
 Earlier we mentioned that error handling is like a conditional statement. We could handle errors with a conditional by saying, “If an error is going to arise, don’t run this code; else, do run it.” In that structure, we would put the code we actually want to run in the else portion of the structure. The try block is thus similar to the else block: it’s a block of code marked off to run if some other block didn’t run. However, the try block is different in that it will always _start_ to run, and only stop when an error is encountered.
 
-## The Catch Block {#The-Catch-Block-3073} 
+### The Catch Block {#The-Catch-Block-3073} 
 
 When the computer encounters a try block, it makes a “mental” note that if an error occurs during the block, it should jump forward to the catch block. The catch block contains the code the computer should run if an expected error was encountered in the try block.
 
@@ -186,7 +186,7 @@ The catch block has one additional detail declared with it: the type of error to
 
 The catch block is where the bulk of the interesting reasoning in error handling occurs. If the error was expected in some way, the catch block might tell the user why the error occurred and how it can be fixed. If the error was not specifically expected, the catch block could print the reason the error occurred to the console, or trigger an error report to be submitted to the developers. Any type of code can be placed into both a try and catch block, so we could do complex reasoning like determining if the user has opted in to reporting errors.
 
-## The Finally Block {#The-Finally-Block-3074} 
+### The Finally Block {#The-Finally-Block-3074} 
 
 Finally (pun intended), some languages have a finally **block**. The finally block contains code that should be executed after the code in the try block whether it succeeded or not. If the code in the try block ran without errors, then execution will jump to the finally block when the try block is done. If the code in the try block hit an error, execution will (in most languages) run what is in the catch block next, and then will always run the code in the finally block. For this reason, we generally want to be very confident in what we put in the finally block since, if it raises an error, too, we aren’t prepared to catch it.
 
@@ -196,7 +196,7 @@ The finally block is typically used for code that absolutely needs to run, even 
 
 So far, we’ve been avoiding errors in our code. Now, we get to add them intentionally, so that we can learn how to catch them. We’ll start just by using try blocks to prevent code from crashing if errors are encountered; then, we’ll catch these errors and react accordingly.
 
-## The Try Statement {#The-Try-Statement-3075} 
+### The Try Statement {#The-Try-Statement-3075} 
 
 To experiment with catching errors, we need an error to catch. Let’s start with something simple: trying to convert a non-numeric string to an integer. What happens if we do this without any error handling?
 
@@ -229,7 +229,7 @@ print("Done!")'>
 
 This is the essence of the try block. If an error occurs inside of it, the computer checks if that type of error is caught. If so, it jumps into the catch block and runs the code there, then continues as if no error occurred. If not, it crashes as usual.
 
-## Catching Any Error {#Catching-Any-Error-3076} 
+### Catching Any Error {#Catching-Any-Error-3076} 
 
 In Python, the catch block (which we’ll now call the except block) starts with the keyword except. In speech, we can think of this as saying, “try this, except if this error happens...” We had an except block in the previous code by necessity: Python won’t allow a try block without an except block. However, it didn’t do anything; we used the keyword pass to skip on to the next line of code. Let’s now make it actually do something.
 
@@ -249,7 +249,7 @@ print("Done!")'>
 
 **Figure 3.5.3**
 
-## Catching a Specific Error {#Catching-a-Specific-Error-3077} 
+### Catching a Specific Error {#Catching-a-Specific-Error-3077} 
 
 Note that the way we’ve written Figure 3.5.3, _any_ error will be caught by this except block. If we don’t specify a type of error to catch, the except block will catch any error. So, take a look at what happens if we add a different error earlier in the try block in Figure 3.5.4.
 
@@ -337,7 +337,7 @@ print("Done!")'>
 
 An error is a data type like integers or strings, and so when we catch it, we can actually grab it as a variable. Adding as error to the end of the except statement means that inside the except block (but not after it, its scope is only inside the except block), we can treat the error as a variable, named error (or whatever variable name we placed after as). We can save it to a file, print it to the console, or access other information about the error. Now instead of printing our prewritten statement, the except block prints whatever it would have printed to the console while crashing by printing error. We get the same information.
 
-## Catching Multiple Specific Errors {#Catching-Multiple-Specific-Errors-3078} 
+### Catching Multiple Specific Errors {#Catching-Multiple-Specific-Errors-3078} 
 
 This except block is a lot like saying, “if a ValueError was detected, then...” It’s similar to a conditional. Remember, with conditionals, we could also chain together multiple elif statements to check multiple conditions. We can do that here, too. Let’s bring back the line that triggered a TypeError, and catch both in Figure 3.5.8.
 
@@ -449,7 +449,7 @@ print("Done!")'>
 
 At this point, we’ve tried some code and caught any errors that arose while that code was running. In some languages, that’s all there is. In many languages, there’s an additional block called finally, which runs some code whether an error occurred or not. Python also adds an additional option: remember else from conditionals? We can use else here as well!
 
-## Else for Error Handling {#Else-for-Error-Handling-3079} 
+### Else for Error Handling {#Else-for-Error-Handling-3079} 
 
 To use an else with error handling, we add it after all the except blocks. Figure 3.5.13 shows an example of what this looks like.
 
@@ -477,7 +477,7 @@ Note that here, I’ve changed myString to actually hold a number, specifically 
 
 You might ask, as I did when I was first learning Python, why we need an else block—why not just include that code inside the try block itself? Much of the time, we can without making a practical difference in how our program runs. However, we can use this more stylistically. In many languages, it’s normal to have huge blocks of code in a try block, even though the expected errors are only in one or two places. The else block lets us restrict our try block to only the code that we expect to generate an error. The else block will _only_ run if no errors were encountered, so we can trust everything that was written in the try block ran successfully.
 
-## Else and File Input {#Else-and-File-Input-3080} 
+### Else and File Input {#Else-and-File-Input-3080} 
 
 A good example of this is file input. Whenever we load some data from a file, we want to enclose the attempt to load the file in a try block because file input commonly raises errors; some languages even require file input to happen inside a try block. Figure 3.5.14 shows what that looks like without an else statement; this code loads a file, then prints everything in the file.
 
@@ -539,7 +539,7 @@ else:
 
 As shown in Figure 3.5.16, the error is caught! We see the text in the output came from line 6 in the code. Because the error was caught, the else block doesn’t execute, so we _don’t_ see any attempt to read the non-existent file in the output. This could be read as, “If an IOError occurs, print ‘An input error has occurred!’; else, print the file using this loop.”
 
-## Finally {#Finally-3081} 
+### Finally {#Finally-3081} 
 
 Finally, we come to the finally block. As mentioned previously, the finally block is for code that needs to run regardless of whether an error was detected or not. With this block, we are now able to cover every possible situation:
 
@@ -593,7 +593,7 @@ inputFile.close()'>
 
 **3.5.18**
 
-## Finally and Uncaught Errors {#Finally-and-Uncaught-Errors-3082} 
+### Finally and Uncaught Errors {#Finally-and-Uncaught-Errors-3082} 
 
 After the computer tries the code in the try block (lines 4 through 7 in Figure 3.5.18 and runs the code in either the except block (line 10, if there was an error) or the else block (line 12, if there wasn’t an error), won’t it just proceed to run the inputFile.close() line? The answer is: kind of. The finally block has one special feature. If there were errors in the try block that were _not_ handled by the except blocks, then the finally block _still_ runs. Here, we’re catching a ValueError on line 9, but no other types of errors; if a TypeError were to occur inside the try block, it would not be caught, but the finally block would _still_ run.
 
@@ -619,7 +619,7 @@ print("Done!")'>
 
 **Figure 3.5.19**
 
-## Nested Try-Catch-Else-Finally {#Nested-Try-Catch-Else-Finally-3083} 
+### Nested Try-Catch-Else-Finally {#Nested-Try-Catch-Else-Finally-3083} 
 
 Earlier we said we would temporarily remove the check for IOError to show off finally. However, in practice we would still want to check that while opening the file, while also checking for a TypeError while reading and converting the file. If an IOError occurred, we don’t even want to try reading or closing the file; but, if a TypeError occurred, we still want to close the file. How do we do this?
 
@@ -706,7 +706,7 @@ Recall that early in our material, we covered some common types of errors such a
 
 As we close our conversation on control structures, let us look at how error handling integrates with the other control structures that we have seen.
 
-## Error Handling and For Loops {#Error-Handling-and-For-Loops-3084} 
+### Error Handling and For Loops {#Error-Handling-and-For-Loops-3084} 
 
 Recall as briefly mentioned earlier that because a for loop was itself enclosed in a try block, one single error on any iteration of the loop would cause the execution of the program to jump to the error handling statements. So, the code would read from the file until it found a non-integer line, and then it would quit, as shown in Figure 3.5.23. This file contains some lines with integers, then some without.
 
@@ -761,7 +761,7 @@ How will Figure 3.5.24’s execution differ? Recall that when our code runs, the
 
 However, in Figure 3.5.24, that try-except-else structure is in a loop. When we reach the end of an iteration of the loop, execution jumps back to the loop and asks, “Are the loop’s conditions fulfilled?” If so, the loop ends. If not, it does not. Whether an error was raised or not, the loop is not done. The try, except, and else blocks were all inside the loop, so when the code jumps to the except block, it’s still jumping inside the loop. Previously, when it jumped to the except block, it was jumping out of the loop. Now, it’s jumping within the loop, so an error does not interfere with the loop touching each line of the file. In Figure 3.5.24, we can tell this is happening because the code continues running after hitting an error: specifically, it encounters _two_ errors because the third and fourth lines _each_ have non-integer contents, so _each_ cause an error. Previously, encountering an error terminated the loop, so it would be impossible to encounter two errors.
 
-## Error Handling and Functions {#Error-Handling-and-Functions-3085} 
+### Error Handling and Functions {#Error-Handling-and-Functions-3085} 
 
 What happens if an error arises in a function that you write? There are two ways we might handle that: we could handle it inside the function body, or we could handle it in the code that makes the function call. Let’s look at both, using a silly function we’ll write specifically to create errors: divideByZero().
 
@@ -801,13 +801,13 @@ We’ve been developing code that allows a user using the command line to contro
 
 We now have the means to fix that. We’ll keep things relatively simple and say that if a user enters an invalid argument, they are kicked back out to the first menu.
 
-## Error Handling and Turtles {#Error-Handling-and-Turtles-3086} 
+### Error Handling and Turtles {#Error-Handling-and-Turtles-3086} 
 
 Our goal to start with is to rerun the loop from scratch if an error is encountered. We don’t want to quit the entire program if the user enters invalid input, but right now we’re not worried about just repeating the same questions until we get the right answer. So, in that case, we can wrap the entire series of conditionals in one giant try block, as shown in ErrorHandlingandTurtles.py on line 24.
 
 We added only a couple lines–line 24, 64, and 65, as well as indenting the lines after 24–but their impact is powerful. Now, if the user accidentally enters a letter instead of a number, the code doesn’t just quit and crash; it tells them that the input was invalid, but it lets them try again. That’s immensely powerful. Now, the only way to exit the program is to type end when prompted. It’s far less likely for someone to do _that_ by accident than accidentally enter a letter when they should enter a number.
 
-## Error Handling and Functions with Turtles {#Error-Handling-and-Functions-with-Turtles-3087} 
+### Error Handling and Functions with Turtles {#Error-Handling-and-Functions-with-Turtles-3087} 
 
 However, note that this still isn’t ideal. The ideal approach would be to instead keep repeating that one specific query until the user puts in some valid input. If a user selects the snowflake command and enters “5,” “100,” and then accidentally types “3p” instead of “30,” it should not send them all the way back to the beginning to enter “snowflake,” “5,” and “100” again. Instead, it should simply ask them to try again on that last prompt.
 
@@ -824,7 +824,7 @@ We also removed a couple type conversions that aren’t needed anymore, and our 
 
 The more profound thing we’ve done here, though, is how we’ve structured our getIntegerInput() function. We get the user’s input, try to convert it to an integer, and then _if it works_, we return it. So, if we return from here, we know it’s an integer, and the user’s input was valid.
 
-## Error Handling and Functions with Turtles II {#Error-Handling-and-Functions-with-Turtles-II-3088 .sr-only} 
+### Error Handling and Functions with Turtles II {#Error-Handling-and-Functions-with-Turtles-II-3088 .sr-only} 
 
 What happens if the user enters invalid input, like a letter? That generates an error on the second line of the try block. That means the program jumps down to the except block. It tells the user to enter an integer, and then it does something clever: it _runs_ getIntegerInput() _again_, with the same prompt. Don’t worry if this is confusing; we’re previewing the advanced topic of recursion from the last unit of our course.
 

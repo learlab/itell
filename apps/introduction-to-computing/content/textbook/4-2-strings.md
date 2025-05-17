@@ -139,7 +139,7 @@ At this point, we’ve already used strings a lot. It’s hard to even start wri
 
 However, **strings** are also pretty complex data structures; we’ve barely scratched the surface of how they’re used and why they’re valuable. At a fundamental level, strings are lists of individual characters; some languages actually represent them as such, while others represent individual characters as strings with length one. Either way, though, strings are often treated as lists of individual characters.
 
-## String and Alphabets {#String-and-Alphabets-3140} 
+### String and Alphabets {#String-and-Alphabets-3140} 
 
 What makes strings complex, then? It seems like a list of letters, numbers, and symbols would be a simple data structure. What makes strings complex is of us pesky humans. Strings represent human alphabets and human languages. The alphabet is surprisingly complex. Take, for example, something as simple as capital and lower-case letters. We pretty easily see ‘A’ and ‘a’ as two characters for the same letter, to be used in different contexts. We know that we would use ‘A’ if we’re starting a sentence, starting someone’s name, or writing a book title; in other situations, we know to use ‘a’.
 
@@ -147,13 +147,13 @@ To the computer, though, ‘a’ and ‘A’ are entirely different **characters
 
 This is where a lot of string complexity comes into play: we want to manipulate strings based on the way we actually represent human language, even though the computer has little knowledge of human language. For example, if we want to sort things alphabetically, we want to the computer to view ‘A’ and ‘a’ as equivalent characters On its own, it doesn’t do so, and this can lead to strings getting sorted with all uppercase letters before any lowercase letters. Things like converting letters to uppercase or removing trailing spaces in some text make perfect sense to us, but are arbitrary rules to the computer.
 
-## Unicode Characters {#Unicode-Characters-3141} 
+### Unicode Characters {#Unicode-Characters-3141} 
 
 The relationship with the human alphabet is only half the story, however. Ask yourself: what are characters? You might rightly say they’re the keys on your keyboard: letters, numbers, and some symbols. Those are certainly characters, but they aren’t all the characters. You might also rightly say that a symbol doesn’t have to be on the keyboard to be a character; ∞, ∆, →, •, and ÷ are all characters as well that you could include in your strings. Even emojis are technically characters.
 
 Characters are defined by **Unicode**, a computing industry standard for handling text. Unicode defines hundreds of different characters in terms of their codes in **hexadecimal**, which is close to ones and zeroes inside the computer. Think about it: if a file is distilled all the way down to ones and zeroes, then when you receive a file, how does your computer know to render an “A” where the original author wrote an “A”? The answer is that both computers use the Unicode standard: they know when they see a character with the hexadecimal code 0041, that should translate to an A. That A might be rendered in different fonts or with different style, but it’s still the character A. The same way, every computer knows that 263A should be a simple smiley emoticon. It might be displayed differently based on whether you’re on Facebook, Twitter, or Microsoft Word, but the underlying standard is for that character to be a smiley face.
 
-## Special Characters {#Special-Characters-3142} 
+### Special Characters {#Special-Characters-3142} 
 
 We’re not talking about this just so that we can start to use emojis in our code, of course (though feel free!). The reason this is complex is that _everything_ plaintext-related in computing is communicated through Unicode characters. By plaintext, we mean without formatting like font face, font size, bold and italics, color, and so on. We mean anything that can be expressed in a plaintext editor, like Notepad.
 
@@ -169,7 +169,7 @@ So, the conclusion is: strings are simply lists of characters. However, characte
 
 I know what you’re probably thinking: we’ve declared lots of strings, why do we need to cover this again? So far, we’ve declared strings in a natural way, but we haven’t really talked about what we’re actually doing, or about how to deal with some interesting edge cases. So, let’s look at string declaration in a little more detail.
 
-## Three Ways to Declare Strings {#Three-Ways-to-Declare-Strings-3143} 
+### Three Ways to Declare Strings {#Three-Ways-to-Declare-Strings-3143} 
 
 So far, we’ve always used one method to declare strings, as shown in Figure 4.2.2.
 
@@ -205,7 +205,7 @@ So, how can we include quotation marks in the string? Fortunately, Python gives 
 
 We can use quotation marks, apostrophes, or triple-apostrophes to declare strings. If we want our string to include quotation marks, we can instead declare it with apostrophes. If we want our string to include apostrophes, we can instead declare it with quotation marks. If we want our string to include both quotation marks and apostrophes, then we can declare it with triple-apostrophes (or triple quotation marks, even!). No matter what we use to start the string, the string does not end until we encounter that character or character sequence again.
 
-## Special Characters {#Special-Characters-3144} 
+### Special Characters {#Special-Characters-3144} 
 
 We mentioned previously that everything in text is technically a character, including things like tabs and line breaks. Can we then include these in our strings? Yes, though we have to know how. If we try to just put a newline character into the middle of a string, Python isn’t sure what to make of it, as shown in Figure 4.2.5. 
 
@@ -259,7 +259,7 @@ Note also that our triple-apostrophe method would let us simply write the new li
 
 We now have the ability to define lots of strings. What can we do with them? Here, we’ll talk about two common operations we want to do on strings: concatenation and slicing.
 
-## String Concatenation {#String-Concatenation-3145} 
+### String Concatenation {#String-Concatenation-3145} 
 
 **String concatenation** means putting multiple strings together. It comes from the word “concatenate,” which simply means to link things together in an ordered series or chain. We actually can just do this with the + operator, as shown in Figure 4.2.9.
 
@@ -287,7 +287,7 @@ print("In-Line Concatenation: " + myString1 + myString2)'>
 
 **Figure 4.2.10**
 
-## String Slicing: Individual Characters {#String-Slicing-Individual-Characters-3146} 
+### String Slicing: Individual Characters {#String-Slicing-Individual-Characters-3146} 
 
 **String slicing** is Python’s term for finding substrings within a broader string. Imagine you have a string: how do you get just the first 5 characters? The last 5? The middle 5? String slicing is the answer.
 
@@ -323,7 +323,7 @@ myString[4] = "F"'>
 
 Why **zero-indexing**? This goes all the way back to the early days of computing. Remember, a variable points to a place in memory where the value is stored. Early on, lists were technically just consecutive locations in memory. The index told the list how many places in memory to skip. To get the first item in a list, you wouldn’t skip any places in memory, so your index would be 0. Saying “skip 5 items” with a 5-item list would skip the entire list, triggering the IndexError.
 
-## String Slicing: Substrings {#String-Slicing-Substrings-3147} 
+### String Slicing: Substrings {#String-Slicing-Substrings-3147} 
 
 But what if you want to create a string made up of a part of another string? What if you wanted to grab the first three characters and create a new string? Remember, we can traverse a string with a for-each loop, as shown in Figure 4.2.14.
 
@@ -382,7 +382,7 @@ print("Characters from 3 to 10: " + myString[3:10])'>
 
 **Figure 4.2.18**
 
-## Negative Indices {#Negative-Indices-3148} 
+### Negative Indices {#Negative-Indices-3148} 
 
 Those methods all covered getting things like the “first five characters” or “characters three through eight.” How do we get the last several characters in a string, though? What if we wanted to get the last two letters of a string?
 
@@ -411,7 +411,7 @@ Back when we talked about logical operators, we talked about string equality. Sp
 
 Those rules generally take care of string comparisons, whether two strings are equal or if one is “greater” than another. However, there’s more we can do with strings, including checking to see if a substring is present in a string and, if so, where.
 
-## The In Operator {#The-In-Operator-3149} 
+### The In Operator {#The-In-Operator-3149} 
 
 When we covered operators, we talked about the in operator in Python. The in operator is unique; it seems to take on different meanings when used in a for loop (e.g., for i in range(0, 3):) and in a conditional (if “Bob” in myList:).
 
@@ -460,7 +460,7 @@ checkNotInString(myString, "GH")'>
 
 **Figure 4.2.23**
 
-## The Find Method {#The-Find-Method-3150} 
+### The Find Method {#The-Find-Method-3150} 
 
 Sometimes, though, we’re not just interested in finding out _if_ a string is in another string. Oftentimes, we want to know _where_ it was found. That’s where the powerful Find method comes in handy. The Find method, find(), is a member of the string type, and it takes as input the substring to find, then returns the index where it was found or −1 if it was not found.
 
@@ -508,7 +508,7 @@ print(myString.find("cde"))'>
 
 **Figure 4.2.27**
 
-## Parameters of the Find Method {#Parameters-of-the-Find-Method-3151} 
+### Parameters of the Find Method {#Parameters-of-the-Find-Method-3151} 
 
 We can extend find() by using some of its optional parameters. Optionally, we can supply two additional arguments to the find() method: start and end. start tells find() where to start looking, and end tells it where to stop looking. If it isn’t found after start and before end, it returns −1.
 
@@ -620,7 +620,7 @@ print(names.split(","))'>
 
 Note that we don’t necessarily know if the user will put spaces after commas or not. We don’t want to split based on “, “ (with a space) because then it will not split if they don’t, but we don’t want to include the spaces either if they do. The easiest way to do this will be to strip out the whitespace at the beginning and end of each string after calling split(), which we’ll cover next.
 
-## Useful String Methods {#Useful-String-Methods-3153} 
+### Useful String Methods {#Useful-String-Methods-3153} 
 
 The Python string class has a lot of utility methods for modifying our strings in predictable and useful ways. Here are a few of them:
 
@@ -651,7 +651,7 @@ In this chapter we’ve been talking all about strings, but it would seem that w
 
 That would be true, except for the turtle.write() method. The turtle. write() method takes as input a string (and, optionally, an alignment, a font, and a setting whether to move to the end of the written text), and in turn writes the given message to the screen. Now, suddenly, anything we’ve been doing with our strings can be written by our turtles! So, let’s create a simple function for this, one that will just write the user’s message at the current point. We’ll find, though, that it isn’t quite that simple if we want the user to put in multiple lines of text.
 
-## The Text Function {#The-Text-Function-3154} 
+### The Text Function {#The-Text-Function-3154} 
 
 After revising our code to allow a new “text entry” option, we get TheTextFunction.py. Run it, enter the “text” command, and type “Hello, world” to see this option in action.
 
@@ -659,13 +659,13 @@ First, let’s do a little cleanup. The print statement where we ask the user to
 
 This is a single method call, so we don’t really gain anything by wrapping it in a function. For now, we’ve forced certain options as well: we’ve set the font size to 16, the font face to Arial, and the style to normal to keep things simple.
 
-## Penup and Feedback {#Penup-and-Feedback-3155} 
+### Penup and Feedback {#Penup-and-Feedback-3155} 
 
 Running TheTextFunction.py, though, we quickly run into an issue: while it’s good for the turtle to move to the end of the text it drew (so we can write multiple messages in a row), that draws a line under the text, which could get a little ugly. So, in PenupAndFeedback.py, we’ve added two new commands here on lines 78 through 88: **penup and pendown**. These simply turn drawing off and on. If the turtle moves with the pen up, it won’t draw a line, so now our users can move the turtle around the canvas without necessarily drawing the entire trail!
 
 Notice, however, that the penup and pendown commands wouldn’t have any automatic feedback to the user; how do they know they’ve worked? Other commands draw lines or show rotation, but these cause no immediate visible change. So, to help the user know the command registered, we have added print statements here to confirm the action was executed. This is the valuable principle of feedback at work: the user should be able to immediately tell that their input was received and correctly recognized.
 
-## The Text Function and Newlines {#The-Text-Function-and-Newlines-3156} 
+### The Text Function and Newlines {#The-Text-Function-and-Newlines-3156} 
 
 Now let’s take a quick closer look at this. We mentioned earlier the escape sequence \\n. Could the user enter “\\n” to write text on multiple lines? Try it out and see: enter a string into the text command with “\\n” in the middle.
 

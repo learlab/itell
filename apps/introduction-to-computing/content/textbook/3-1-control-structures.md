@@ -83,7 +83,7 @@ title: 3.1 Control Structures
 
 At this point, we’ve covered the basic design of procedural computer programs. Every program we’ve seen, except for the glimpses forward we’ve taken, has run a linear series of lines of code in order from first to last, generating output. In doing so, we’ve been able to do some powerful things, but at the same time, what we can do is somewhat limited. For example, we can draw a hexagon in around twelve lines of code, but what if we want to draw an octagon? So far, that means writing new lines of code, lengthening the program. Wouldn’t it be great if we could just say, “I’d like a shape with 8 sides” and get an octagon instead of having to write the code?
 
-## What Do Control Structures Do? {#What-Do-Control-Structures-Do?-2860} 
+### What Do Control Structures Do? {#What-Do-Control-Structures-Do?-2860} 
 
 **Control structures** are where we start to have that capability. Control structures let us loop over certain lines of code multiple times, changing the data they act on each time. Control structures let us branch our code based on the result of some conditional statement, like returning one message if a customer has sufficient money to make a purchase and another if they don’t. Control structures let us repackage code that is commonly used into functions, like validating a customer’s information or making a series of turns in a vehicle. Control structures let us anticipate certain errors and react gracefully instead of crashing.
 
@@ -93,7 +93,7 @@ The content of these control structures will largely be the same kinds of code w
 
 We’ll generally break our conversation about control structures into four types of structures: conditionals, loops, functions, and exception handling.
 
-## Conditionals {#Conditionals-2861} 
+### Conditionals {#Conditionals-2861} 
 
 One of the first types of structures we’ll cover to add to our programming toolbox is **conditional statements**. Conditionals basically tell the computer to make a decision. Depending on that decision, it might execute some code or skip that code; or, it might choose between two different blocks of code to execute.
 
@@ -101,7 +101,7 @@ Conditionals build on our logical operators that we covered last unit. In fact, 
 
 Conditionals can be used to make very complex code structures. For example, you could nest several conditional statements one after the other to check the customer’s balance, the retailer’s authenticity, and the cardholder’s identity. You can also write single conditional structures that react to multiple conditions; for example, if a purchase is rejected, you might want your code to _then_ check for fraud if other suspicious purchases have been attempted. In this way, conditionals are powerful tools for creating complex code.
 
-## Loops {#Loops-2862} 
+### Loops {#Loops-2862} 
 
 A **loop** involves executing certain lines of code multiple times. Multiple times might be a certain number of times; it might be for every item in a list, like for every file in a folder; or it might be while some condition remains true, like reading from a file as long as you haven’t reached the end yet.
 
@@ -109,7 +109,7 @@ We can think of our example of programming a cash register in terms of loops. Fi
 
 Like conditionals, loops can be complex and nested. In fact, the example above would be a nested loop: we would run the loop over a single customer’s items for every customer in line. We can also use loops in other complicated ways as well. For example, if we wanted to write a program that would consistently listen for some interruption from a server, we could simply tell it to loop indefinitely until a message was received.
 
-## Function {#Function-2863} 
+### Function {#Function-2863} 
 
 A **function** is a way of packaging together multiple lines of code in a way that allows them to be easily used wherever needed. In effect, it removes the need to copy and paste lines of code around our program when needed because instead of copying them, we can just “call the function” that contains them. Practically speaking, this is like dynamically inserting the lines of code from the function into the rest of the code and running them right there.
 
@@ -117,7 +117,7 @@ You’ve already seen some examples of functions. This isn’t because we were t
 
 The real power of functions is their ability to take lots of different pieces of input and produce some output. You could have, for example, a single function called validatePurchase() that takes as input a customer’s name, credit card number, purchase amount, current balance, and retailer name, and returns either True or False to indicate whether the purchase is valid. This goes far beyond just adding or subtracting a couple of numbers; functions can handle complex operations.
 
-## Exception Handling {#Exception-Handling-2864} 
+### Exception Handling {#Exception-Handling-2864} 
 
 Earlier in our material, we covered the idea of errors. Errors occur when your code tries to do something it can’t do such as accessing files that don’t exist or dividing by zero. So far, we’ve usually talked about errors in the context of debugging. However, can we actually use errors in the design of our programs?
 
@@ -129,7 +129,7 @@ When would we want to anticipate and handle errors instead of just avoiding them
 
 The fundamental idea of control structures is that certain lines of code tell the computer how to interpret or when to execute other lines of code. With a conditional statement, for example, certain lines of code only run if the logical expression is true. However, that means the code needs some way of telling the computer which lines of code apply. In most languages, this is taken care of with reserved characters like brackets around the lines of code; Python, interestingly, uses **indentation**.
 
-## Indentation and Conditionals  {#Indentation-and-Conditionals-2870} 
+### Indentation and Conditionals  {#Indentation-and-Conditionals-2870} 
 
 Let’s look at this with a simple example of a conditional statement. We’ll talk more about conditionals in the next lesson, but for now, just know that the third line of Figure 3.1.1 says, “if myNum1 is less than myNum2, do the indented line of code below.”
 
@@ -177,7 +177,7 @@ print("Execution complete!")'>
 
 **Figure 3.1.3**
 
-## Nested Indentation {#Nested-Indentation-2871} 
+### Nested Indentation {#Nested-Indentation-2871} 
 
 Indentation can be nested as well; this is how we create nested conditionals or nested loops. Look at Figure 3.1.4, with three numbers.
 
@@ -223,7 +223,7 @@ print("Execution complete!")'>
 
 Nearly every programming language has some concept of scope. Scope most often describes what portions of a program can see a particular variable. It’s like your program’s short-term memory: what is it remembering at a given time? You can’t access something it’s no longer remembering. We can extend the idea of scope to functions, classes, and other advanced concepts that we’ll get to later, but most often for our material, **scope** refers to which parts of a program can see the variables that you’ve declared.
 
-## Simple Scope in Python {#Simple-Scope-in-Python-2872} 
+### Simple Scope in Python {#Simple-Scope-in-Python-2872} 
 
 Let’s start with a simple example. Figure 3.1.6 is a revised version of the conditional we saw in Figure 3.1.1. The revision makes one change: instead of printing inside the conditional (the if statement), it saves the result to a string called result. It then prints result after the conditional has executed. What happens?
 
@@ -244,7 +244,7 @@ Well, myNum1 _is_ less than myNum2, so the contents of the conditional on line 4
 
 In some ways, this makes programming in Python simpler. If we know that we’re going to create result at some point, we don’t have to worry about creating it at the wrong point. However, it isn’t all good news.
 
-## The Dangers of Scope in Python {#The-Dangers-of-Scope-in-Python-2873} 
+### The Dangers of Scope in Python {#The-Dangers-of-Scope-in-Python-2873} 
 
 Scope in Python also presents a danger. Take a look at the simple tweak in Figure 3.1.7 to the code from Figure 3.1.6. All we’ve done is change the values of myNum1 and myNum2 so that now the conditional statement on line 4 doesn’t trigger. That means line 6 never runs, which means result is never created. So, what happens when we run this code? 
 

@@ -128,13 +128,13 @@ title: 4.1 Data Structures
 
 So far, we’ve done some pretty interesting programming with a relatively limited number of data types. We’ve used numbers, some characters, and some strings. Is it really possible, though, that all the complex reasoning we see on computers can be built out of these simple types of data?
 
-## Advanced Data Types {#Advanced-Data-Types-3108} 
+### Advanced Data Types {#Advanced-Data-Types-3108} 
 
 In a sense, yes; in fact, everything on your computer is distilled down to 1s and 0s for your computer to process with a relatively small set of commands, at a rate of billions of commands per second. Our programs get translated down through the layers until the computer can execute them in terms it understands.
 
 But for building programs at our level, do we really build them out of these control structures and simple data types? No; we need some more complicated **data structures** to build the reasoning that we see in computers today. In this unit, we’ll cover a few of these data structures. Specifically, we’ll focus on the data structures that contain multiple pieces of other information, like lists and strings—remember, strings are like lists of individual characters
 
-## Lists and List-Like Structures {#Lists-and-List-Like-Structures-3109} 
+### Lists and List-Like Structures {#Lists-and-List-Like-Structures-3109} 
 
 So far, everything we’ve covered has involved a one-to-one mapping between variables and values. Every variable could have one and only one value. What happens, then, if you need to keep track of the names of all the students in a class? Do you create a different variable for each student? What if you’re building a roster program where you don’t know in advance how many students to expect; do you just make sure to create more variables than you need? 
 
@@ -142,7 +142,7 @@ This is where list-like structures come into play. **List-like structures**, als
 
 Lists can generally hold any kind of data, including other lists. Using that, you can make some pretty complex data structures. You could make a list of classes in a school, where each class is actually a list of students. That could go deeper: each student could be a list of grades, or you could have a list of schools where each school is a list of classes. That’s moving toward the more complex data structures that we’ll talk about in Unit 5.
 
-## Unit Outline {#Unit-Outline-3110} 
+### Unit Outline {#Unit-Outline-3110} 
 
 In this unit, we’ll cover four different general classifications of data structures. We’ll begin with **strings**. You’ve seen strings a lot before, but only because it’s difficult to do anything in programming without the ability to print text. We’ve only scratched the surface of what strings can do and how they can be used. Strings are actually relatively advanced data structures, both because they technically store a list of other items (in this case, a list of individual characters) and because they have complex reasoning built into them to deal with human language.
 
@@ -158,7 +158,7 @@ Before we get there, though, there are a couple concepts regarding advanced data
 
 The first concept we want to understand is the difference between **passing by value** and **passing by reference**. This distinction specifically applies to writing and using functions. This is one of the more complicated concepts we’ve covered so far, and the terminology is a bit unfamiliar. Let’s start by talking about the difference between the two, and then move on to talking about where the terms “by value” and “by reference” actually come from.
 
-## Passing By Value: An Analogy {#Passing-By-Value-An-Analogy-3111} 
+### Passing By Value: An Analogy {#Passing-By-Value-An-Analogy-3111} 
 
 Let’s return to the analogy we used when describing functions. You worked in an office, and you had a co-worker named Addison. Addison’s job was to add two numbers. Any employee in the office could give Addison two numbers, and Addison would return the result.
 
@@ -168,7 +168,7 @@ Previously, the way we described this is that you shouted across the office, “
 
 This is passing by value. You hollered to Addison the values themselves, 5 and 2. Addison didn’t know 5 and 2 were stored in File A and File B. Then, Addison shouted back the value corresponding to the result. He didn’t know what you’d do with that value. All he knew was he needed to shout the value back. The key here is that it is the values themselves being shouted back and forth: Addison never knows your variables, and you never know Addison’s variables.
 
-## Passing by Reference: An Analogy {#Passing-by-Reference-An-Analogy-3112} 
+### Passing by Reference: An Analogy {#Passing-by-Reference-An-Analogy-3112} 
 
 This interaction could have gone differently, though. Instead of shouting the values of File A and File B across the office, you could have instead walked by Addison’s desk and handed him the two files. Rather than simply telling you the value, now Addison himself erases the original value of File A and puts in the new value. He then brings the files back to you. The result is the same: File A holds 7, File B holds 2 as it did at the beginning. Or, maybe he brings the values back to you as they were, and tells you verbally that the answer is 7. Either way, he had access to your variables and could modify them.
 
@@ -178,7 +178,7 @@ Why does this matter? Imagine if Addison had a strange way of adding numbers. In
 
 The difference between passing by value and passing by reference comes down to whether or not you want the function to be able to change the values of the variables directly, or if you simply want it to receive the values themselves without being able to access the variables. If you shout “5 and 2!” to Addison, he can’t change what you have written down; if you hand the papers to him, he can.
 
-## Terminology: By Reference {#Terminology-By-Reference-3113} 
+### Terminology: By Reference {#Terminology-By-Reference-3113} 
 
 The term “passing by value” makes some sense. You’re passing some data into a function, and you’re doing it _by_ passing a variable’s _value_. You’re passing the data by passing its value.
 
@@ -240,7 +240,7 @@ In other languages, like Java, whether an argument will be passed by value or by
 
 How does Python work? We could just answer that, or we could actually take a look and see.
 
-## Integers: By Value or by Reference? {#Integers-By-Value-or-by-Reference?-3114} 
+### Integers: By Value or by Reference? {#Integers-By-Value-or-by-Reference?-3114} 
 
 Note first that in Figure 4.1.5, we’ve started to include a label in our print statements. We’ll do that going forward to make our output a little easier to follow, even though it will make our code a little tougher to read.
 
@@ -268,7 +268,7 @@ If myInteger was passed by reference, though, it would be 6 after the call to ad
 
 What is the result? When printed on line 11, myInteger retains the value 5, meaning that Python _seems_ to have passed this by value rather than by reference. Note that later, we’ll see that Python actually does something slightly different: however, the result is functionally the same as passing by value.
 
-## Other Data Types: By Value or by Reference? {#Other-Data-Types-By-Value-or-by-Reference?-3115} 
+### Other Data Types: By Value or by Reference? {#Other-Data-Types-By-Value-or-by-Reference?-3115} 
 
 We noted above, though, that Java treats different data types differently. What about Python? Let’s check how it handles strings in Figure 4.1.6.
 
@@ -304,7 +304,7 @@ Figure 4.1.7 shows the result of this same kind of code running on a list instea
 
 This means that Python seems to pass primitive data types such as integers and strings by value, and advanced data types such as lists by reference, right? Practically speaking, yes. Accurately speaking, no! The ultimate effect is that it’s _as if_ Python is passing these primitive data types by value, but in reality, something different is going on: Python has immutable data types. That gets tricky, though, so we’ll talk about that next lesson. For now, it’s sufficient to know: there are some data types that Python _effectively_ passes “by value”, but for the majority of data types, Python passes by reference.
 
-## Variable Assignments {#Variable-Assignments-3116} 
+### Variable Assignments {#Variable-Assignments-3116} 
 
 This is a good time to briefly look at a related dynamic in how variables are assigned in Python. There are some variable assignments that function similarly to how these function calls work
 
@@ -338,7 +338,7 @@ Or, to take an alternate analogy: you likely refer to your mother as “mom,” 
 
 **Mutability** is a simple idea with complicated implications. A variable is said to be **mutable** if its value can change after it has been assigned; all the variables we’ve used so far have _appeared_ to be mutable because we can always change their values by reassigning them. Inversely, a variable is said to be **immutable** if its value cannot change. You may create the variable and assign it a value, but once that value has been assigned, it cannot be changed again.
 
-## Mutability vs. Passing by Reference {#Mutability-vs-Passing-by-Reference-3117} 
+### Mutability vs. Passing by Reference {#Mutability-vs-Passing-by-Reference-3117} 
 
 Python passes all arguments by reference. We noted above that, for all practical purposes, Python seems to pass certain data types by value, and indeed, there’s really no functional difference between what it actually does and passing data types by value. However, our goal here is to learn computing, not just programming, so we should know what’s going on “under the hood.”
 
@@ -346,7 +346,7 @@ What’s going on in this case is that integers, floats, strings, and some other
 
 So, the values of myInteger and myString in Figures 4.1.5 and 4.1.6 didn’t change because myInteger and myString were immutable. Their values can’t change. Simple, right? Not exactly.
 
-## Reassigning Immutable Data Types {#Reassigning-Immutable-Data-Types-3118} 
+### Reassigning Immutable Data Types {#Reassigning-Immutable-Data-Types-3118} 
 
 The idea that integers and strings are immutable seems to be contradicted in the very same segment of code that is meant to demonstrate that they’re immutable. Let’s look at it again, shown here in Figure 4.1.10.
 
@@ -385,7 +385,7 @@ That’s exactly what Python is doing in Figure 4.1.11. When we call line 1, it 
 
 Let’s tie this back to Addison. We drop File A and File B on Addison’s desk. They have the numbers 5 and 2 written in permanent marker on them. Addison wants to change the value of File A to 7. So, what does he do? He pulls out a sheet of paper, writes the number 7, and says to himself, “This is now my File A.” However, he doesn’t get to change what file _we_ call File A. As far as we’re concerned, the original file with 5 written on it is still File A. That’s why the code in Figure 4.1.10 behaved the way it did: addOne() only changes what its variable anInteger points to, not what myInteger pointed to.
 
-## Immutable Data Types: Functions vs. Local Assignments {#Immutable-Data-Types-Functions-vs-Local-Assignments-3119} 
+### Immutable Data Types: Functions vs. Local Assignments {#Immutable-Data-Types-Functions-vs-Local-Assignments-3119} 
 
 Let’s alter the code a little bit to trace through this entire process. In Figure 4.1.12, we’ve added lines at the bottom to legitimately change the value of myInteger, and then print it again (lines 12 and 13).
 
@@ -415,7 +415,7 @@ However, myInteger and anInteger are both immutable. So, when line 3 runs inside
 
 However, telling anInteger to point at 6 instead of 5 doesn’t change where myInteger points. myInteger is still pointing at 5. So, when we exit the function, printing myInteger still prints 5. In line 12, though, we reassign myInteger to point at 6 as well. So, when we print myInteger in line 13, we now see it show the value 6.
 
-## Printing Memory Addresses {#Printing-Memory-Addresses-3120} 
+### Printing Memory Addresses {#Printing-Memory-Addresses-3120} 
 
 That all brings us to one last interesting thing we can do in Python. We mentioned above how every variable name actually points to a spot in memory, and when we change the value of an immutable variable (like an integer), we’re actually changing where the variable name is pointing. To make this a little easier, we _can_ print what spot of memory each variable is pointing at, as shown in Figure 4.1.13.
 
@@ -491,13 +491,13 @@ So far, we’ve glossed over a bit of syntax and promised to return to it later.
 
 Going forward into more advanced data structures, however, this syntax is going to become more common. We’ll talk about this more extensively when we discuss encapsulation in Chapter 5.1, but because we’ll see it more often in this unit, this is a good time to pause and comment a little more on what this is.
 
-## Functions vs. Methods {#Functions-vs-Methods-3121} 
+### Functions vs. Methods {#Functions-vs-Methods-3121} 
 
 Previously we noted that this dot syntax behaved essentially like a function, and that’s still true. Just like functions, they have names, parameters, some internal operations or code, and they may or may not return some value. The way we’ve used them so far, they’re pretty indistinguishable from functions.
 
 The difference is subtle. The functions we’ve defined have been defined at the top level of our programs. We’ve created them before actually writing the body of our programs, and that’s why they’re visible. **Methods**, on the other hand, are _contained within data types_. Instead of just calling them directly like functions, we have to first say which variable we’re referring to, and _then_ call the method inside them. So, a method is a function contained inside a data structure.
 
-## Methods in Practice {#Methods-in-Practice-3122} 
+### Methods in Practice {#Methods-in-Practice-3122} 
 
 What does this mean for us in practice? So far, we’ve mostly been manipulating our variables through operators. Operators work on simple data types. Going forward, we’re mostly going to be manipulating our variables using methods and functions. The reasoning necessary to manipulate advanced data types is too complex to be taken care of by simpler operators.
 
@@ -521,7 +521,7 @@ In the past, we’ve used the example of Addison, where Addison was a function. 
 
 That’s like a method. A method is a function defined within a data type that must be called from a particular variable. When it’s called, it knows to look at the variable from which it’s called. myNumericString.isdigit() knows to check myNumericString, not myNonNumericString, just as Dana knows to give her own name, not Vrushali’s name when asked.
 
-## Equivalent Syntax {#Equivalent-Syntax-3123} 
+### Equivalent Syntax {#Equivalent-Syntax-3123} 
 
 If this is still confusing, don’t worry. Like I’ve said, you don’t really need to understand this too deeply until we get to Chapter 5.1. This is good exposure, but you’re safe to move forward without understanding this fully.
 
