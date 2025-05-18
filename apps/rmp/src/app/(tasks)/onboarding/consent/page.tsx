@@ -65,7 +65,7 @@ function ConsentDocument() {
 
         <FormSection id="study-purpose" title="Purpose of the Study">
           <p>
-            The purpose of this study is to collect data from trainees using an
+            The purpose of this study is to collect data from students using an
             intelligent training text which focuses on read-to-write tasks.
             Read-to-write tasks like summaries and short answer-questions are a
             common approach for assessing learning. Activities within an
