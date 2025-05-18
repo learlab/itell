@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@itell/ui/dialog";
-import { LoginButton } from "@auth//auth-form";
+import { AuthForm } from "@auth//auth-form";
 import { type User } from "lucia";
 import { CommandIcon, LockIcon } from "lucide-react";
 
@@ -63,7 +63,7 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
       description="We collects anonymous data to improve learning experience."
     >
       <DialogFooter className="sm:justify-start">
-        <LoginButton />
+        <AuthForm />
       </DialogFooter>
     </Modal>
   );
