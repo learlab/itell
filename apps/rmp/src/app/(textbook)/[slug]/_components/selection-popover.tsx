@@ -150,8 +150,8 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
     createPortal(
       <div
         className={cn(
-          `absolute -ml-[75px] flex flex-row items-center justify-between gap-2 rounded-md
-          border-2 border-gray-100 bg-background px-2 py-1 shadow-sm`
+          `bg-background absolute -ml-[75px] flex flex-row items-center justify-between
+          gap-2 rounded-md border-2 border-gray-100 px-2 py-1 shadow-sm`
         )}
         style={{
           left: `calc(${state.left.toString()}px + 4.6rem)`,

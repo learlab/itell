@@ -2,12 +2,13 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { darkColors, lightColors } from "@itell/constants";
-import { useDebounce } from "@itell/core/hooks";
+import { usePortal } from "@itell/core/hooks";
 import {
   createNoteElements,
   deserializeRange,
   removeNotes,
 } from "@itell/core/note";
+import { PortalContainer } from "@itell/core/portal-container";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -30,7 +31,6 @@ import {
   TrashIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import Textarea from "react-textarea-autosize";
 import { toast } from "sonner";
 
 import {
@@ -38,7 +38,6 @@ import {
   deleteNoteAction,
   updateNoteAction,
 } from "@/actions/note";
-import { Spinner } from "@/components/spinner";
 import { noteStore } from "@/lib/store/note-store";
 import type { NoteData } from "@/lib/store/note-store";
 
@@ -78,21 +77,10 @@ export const NotePopover = memo(
     );
 
     // this state is only used for focusing the textarea and does not control the popover state
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [recordId, setRecordId] = useState<number | null>(local ? null : id);
     const [pending, setPending] = useState(false);
-    const pendingDebounced = useDebounce(pending, 500);
-
     const shouldUpdate = Boolean(recordId);
-    const triggerId = `note-${String(id)}-trigger`;
     const popoverId = `note-${String(id)}-popover`;
-    const anchorName = `note-${String(id)}-anchor`;
-
-    useEffect(() => {
-      if (isPopoverOpen) {
-        textareaRef.current?.focus();
-      }
-    }, [isPopoverOpen]);
 
     const handleDelete = async () => {
       setPending(true);
@@ -179,10 +167,11 @@ export const NotePopover = memo(
             color,
           });
           elements.current = els;
+
           setAnchor(els[els.length - 1]);
           setPositionFailed(false);
         } catch (err) {
-          console.error(err);
+          console.log("note creation error", err);
           if (!chunkSlug) {
             setPositionFailed(true);
           } else {
@@ -196,57 +185,12 @@ export const NotePopover = memo(
         }
       };
 
-      setup();
-    }, []);
+      const timeout = setTimeout(() => {
+        setup();
+      }, 100);
 
-    useEffect(() => {
-      if (anchor && triggerRef.current) {
-        const button = triggerRef.current;
-        computePosition(anchor, button, {
-          placement: "bottom-end",
-          strategy: "fixed",
-          middleware: [flip(), shift({ padding: 5 }), offset(3)],
-        }).then(({ x, y }) => {
-          if (triggerRef.current) {
-            button.style.left = `${String(x)}px`;
-            button.style.top = `${String(y)}px`;
-          }
-        });
-
-        if (popoverRef.current) {
-          if (local) {
-            popoverRef.current.showPopover();
-          }
-        }
-      }
-    }, [anchor, local]);
-
-    useEffect(() => {
-      if (anchor && triggerRef.current) {
-        const handlePopoverToggle = (event: Event) => {
-          if ((event as ToggleEvent).newState === "open") {
-            setIsPopoverOpen(true);
-          } else {
-            setIsPopoverOpen(false);
-            if (!pending && text !== getInput()) {
-              handleUpsert();
-            }
-          }
-        };
-        if (popoverRef.current) {
-          popoverRef.current.addEventListener("toggle", handlePopoverToggle);
-        }
-
-        return () => {
-          if (popoverRef.current) {
-            popoverRef.current.removeEventListener(
-              "toggle",
-              handlePopoverToggle
-            );
-          }
-        };
-      }
-    }, [anchor, recordId, pending, text]);
+      return () => clearTimeout(timeout);
+    }, [chunkSlug, color, id, range]);
 
     useEffect(() => {
       if (elements.current) {
@@ -262,32 +206,9 @@ export const NotePopover = memo(
 
     return (
       <div className="note-popover-container">
-        <button
-          id={triggerId}
-          className={cn("p-1", {
-            "absolute z-10": !positionFailed,
-          })}
-          style={{
-            // @ts-expect-error anchorName is not typed
-            anchorName,
-            border: positionFailed ? `2px solid ${noteColor}` : undefined,
-          }}
-          type="button"
-          aria-label="toggle note"
-          popovertarget={popoverId}
-          ref={triggerRef}
-        >
-          {pendingDebounced ? (
-            <Spinner className="size-4" />
-          ) : positionFailed ? (
-            <span>Note</span>
-          ) : (
-            <NotepadTextIcon
-              className="opacity-60 hover:opacity-100"
-              style={{ fill: noteColor }}
-            />
-          )}
-        </button>
+        {anchor && (
+          <NoteTrigger anchor={anchor} popoverTarget={popoverId} open={local} />
+        )}
         <div
           id={popoverId}
           ref={popoverRef}
@@ -388,6 +309,77 @@ export const NotePopover = memo(
     );
   }
 );
+function NoteTrigger({
+  anchor,
+  popoverTarget,
+  open,
+}: {
+  anchor: HTMLElement;
+  popoverTarget: string;
+  open: boolean;
+}) {
+  const { addPortal, portals, removePortals } = usePortal();
+
+  useEffect(() => {
+    addPortal(
+      <NoteTriggerInner open={open} popoverTarget={popoverTarget} />,
+      anchor
+    );
+
+    return () => removePortals();
+  }, [anchor, addPortal, removePortals, open, popoverTarget]);
+
+  return <PortalContainer portals={portals} />;
+}
+
+function NoteTriggerInner({
+  popoverTarget,
+  open,
+}: {
+  popoverTarget: string;
+  open: boolean;
+}) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const [popover] = useState(() => document.getElementById(popoverTarget));
+
+  useEffect(() => {
+    if (ref.current && popover) {
+      computePosition(ref.current, popover, {
+        placement: "bottom-end",
+        strategy: "fixed",
+        middleware: [flip(), shift({ padding: 5 }), offset(3)],
+      }).then(({ x, y }) => {
+        popover.style.left = `${String(x)}px`;
+        popover.style.top = `${String(y)}px`;
+      });
+    }
+  }, [popoverTarget]);
+
+  useEffect(() => {
+    if (open) {
+      popover?.showPopover();
+
+      const textarea = popover?.querySelector("textarea");
+      if (textarea) {
+        textarea.focus();
+      }
+    }
+  }, [open]);
+
+  return (
+    <button
+      ref={ref}
+      className="mx-1"
+      role="tooltip"
+      aria-label="Show note"
+      onMouseEnter={() => popover?.showPopover()}
+      // @ts-expect-error allow prop
+      popovertarget={popoverTarget}
+    >
+      <NotepadTextIcon className="size-5" />
+    </button>
+  );
+}
 
 type ColorPickerProps = {
   id: number;

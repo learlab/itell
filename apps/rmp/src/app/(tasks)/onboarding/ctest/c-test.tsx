@@ -44,7 +44,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
       formRef.current.querySelectorAll("fieldset[data-target-word]")
     ) as HTMLFieldSetElement[];
 
-    fields.forEach((field, index) => {
+    fields.forEach((field) => {
       const word = field.dataset.targetWord as string;
       const inputs = Array.from(
         field.querySelectorAll("input[type=text]")
@@ -274,8 +274,8 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
               className="w-48"
             >
               <span className="inline-flex items-center gap-2">
-                Continue to textbook
                 <ArrowRightIcon className="size-4" />
+                Continue to the textbook
               </span>
             </Button>
           )}
