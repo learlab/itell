@@ -60,7 +60,7 @@ title: 1. Methods of Knowing
 
 Take a minute to ponder some of what you know and how you acquired that knowledge. Perhaps you know that you should make your bed in the morning because your mother or father told you this is what you should do, perhaps you know that swans are white because all of the swans you have seen are white, or perhaps you know that your friend is lying to you because she is acting strange and won’t look you in the eye. But should we trust knowledge from these sources? The methods of acquiring knowledge can be broken down into five categories each with its own strengths and weaknesses.
 
-## Intuition and Authority {#Intuition-and-Authority-1436t .sr-only} 
+### Intuition and Authority {#Intuition-and-Authority-1436t .sr-only} 
 
 ### Intuition {#intuition}
 
@@ -70,7 +70,7 @@ The first method of knowing is intuition. When we use our intuition, we are rely
 
 Perhaps one of the most common methods of acquiring knowledge is through authority. This method involves accepting new ideas because some authority figure states that they are true. These authorities include parents, the media, doctors, Priests and other religious authorities, the government, and professors. While in an ideal world we should be able to trust authority figures, history has taught us otherwise and many instances of atrocities against humanity are a consequence of people unquestioningly following authority (e.g., Salem Witch Trials, Nazi War Crimes). On a more benign level, while your parents may have told you that you should make your bed in the morning, making your bed provides the warm damp environment in which mites thrive. Keeping the sheets open provides a less hospitable environment for mites. These examples illustrate that the problem with using authority to obtain knowledge is that they may be wrong, they may just be using their intuition to arrive at their conclusions, and they may have their own reasons to mislead you. Nevertheless, much of the information we acquire is through authority because we don’t have time to question and independently research every piece of knowledge we learn through authority. But we can learn to evaluate the credentials of authority figures, to evaluate the methods they used to arrive at their conclusions, and evaluate whether they have any reasons to mislead us.
 
-## Rationalism and Empiricism {#Rationalism-and-Empiricism-1437t .sr-only} 
+### Rationalism and Empiricism {#Rationalism-and-Empiricism-1437t .sr-only} 
 
 ### Rationalism {#rationalism}
 
