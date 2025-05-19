@@ -182,7 +182,7 @@ Scientific research in psychology is generally conducted by people with doctoral
 
 Of course, people also conduct research in psychology because they enjoy the intellectual and technical challenges involved and the satisfaction of contributing to scientific knowledge of human behavior. You might find that you enjoy the process too. If so, your college or university might offer opportunities to get involved in ongoing research as either a research assistant or a participant. Of course, you might find that you do not enjoy the process of conducting scientific research in psychology. But at least you will have a better understanding of where scientific knowledge in psychology comes from, an appreciation of its strengths and limitations, and an awareness of how it can be applied to solve practical problems in psychology and everyday life.
 
-## Scientific Psychology Blogs {#Scientific-Psychology-Blogs-312pt .sr-only} 
+### Scientific Psychology Blogs {#Scientific-Psychology-Blogs-312pt .sr-only} 
 
 <i-callout variant="info" title="Scientific Psychology Blogs">
 
@@ -202,13 +202,13 @@ You can also browse to [http://www.researchblogging.org](http://www.researchblog
 
 </i-callout>
 
-## Clinical Psychologists {#Clinical-Psychologists-1466t} 
+### Clinical Psychologists {#Clinical-Psychologists-1466t} 
 
 Psychology is the scientific study of behavior and mental processes. But it is also the application of scientific research to “help people, organizations, and communities function better” (American Psychological Association, 2011). By far the most common and widely known application is the clinical practice of psychology—the diagnosis and treatment of psychological disorders and related problems. Let us use the term clinical practice broadly to refer to the activities of clinical and counseling psychologists, school psychologists, marriage and family therapists, licensed clinical social workers, and others who work with people individually or in small groups to identify and help address their psychological problems. It is important to consider the relationship between scientific research and clinical practice because many students are especially interested in clinical practice, perhaps even as a career.  
 
 The main point is that psychological disorders and other behavioral problems are part of the natural world. This means that questions about their nature, causes, and consequences are empirically testable and therefore subject to scientific study. As with other questions about human behavior, we cannot rely on our intuition or common sense for detailed and accurate answers. Consider, for example, that dozens of popular books and thousands of websites claim that adult children of alcoholics have a distinct personality profile, including low self-esteem, feelings of powerlessness, and difficulties with intimacy. Although this sounds plausible, scientific research has demonstrated that adult children of alcoholics are no more likely to have these problems than anybody else (Lilienfeld et al., 2010). Similarly, questions about whether a particular psychotherapy is effective are empirically testable questions that can be answered by scientific research. If a new psychotherapy is an effective treatment for depression, then systematic observation should reveal that depressed people who receive this psychotherapy improve more than a similar group of depressed people who do not receive this psychotherapy (or who receive some alternative treatment). Treatments that have been shown to work in this way are called empirically supported treatments.
 
-## Empirically Supported Treatments {#Empirically-Supported-Treatments-313pt .sr-only} 
+### Empirically Supported Treatments {#Empirically-Supported-Treatments-313pt .sr-only} 
 
 <i-callout variant="info" title="Empirically Supported Treatments">
 
@@ -228,7 +228,7 @@ For a more complete list, see the following website, which is maintained by Divi
 
 </i-callout>
 
-## Clinical Psychologists II {#Clinical-Psychologists-II-1468t .sr-only} 
+### Clinical Psychologists II {#Clinical-Psychologists-II-1468t .sr-only} 
 
 Many in the clinical psychology community have argued that their field has not paid enough attention to scientific research—for example, by failing to use empirically supported treatments—and have suggested a variety of changes in the way clinicians are trained and treatments are evaluated and put into practice. Others believe that these claims are exaggerated and the suggested changes are unnecessary (Norcross, Beutler, & Levant, 2005). On both sides of the debate, however, there is agreement that a scientific approach to clinical psychology is essential if the goal is to diagnose and treat psychological problems based on detailed and accurate knowledge about those problems and the most effective treatments for them. So not only is it important for scientific research in clinical psychology to continue, but it is also important for clinicians who never conduct a scientific study themselves to be scientifically literate so that they can read and evaluate new research and make treatment decisions based on the best available evidence.
 
