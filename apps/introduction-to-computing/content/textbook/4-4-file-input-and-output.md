@@ -116,7 +116,7 @@ title: 4.4 File Input and Output
 
 So far, the major weakness of everything we’ve written is that every time we run our code, it’s like we’re running it for the very first time. Nothing persists, or is saved, across different runs of our code. If we want to change some data, we have to change it in the code itself. Needless to say, this isn’t how real programs operate. Nearly every program we use on a daily basis persists some information across multiple runs of the same program, whether it’s login information, the user preferences, or the files that we create. This is taken care of by the complementary processes of file input and file output.
 
-### Output Complements Input {#Output-Complements-Input-3210} 
+## Output Complements Input {#Output-Complements-Input-3210} 
 
 We usually refer to “**file input and output**,” but let’s start with output because it’s what we’ll need to do first in the programs we’ve been writing. File output is the process of taking what’s currently stored in memory and writing it to a persistent file on the hard drive. We might not want to write everything in memory to a file, but anything we would want the next time we run the program would need to be written. This is file output: outputting the current data in the program to a file.
 
@@ -138,13 +138,13 @@ There do exist plaintext file formats, like .txt, .csv, .html, .xml, and more. T
 
 With plaintext files, there are three general concepts we need to understand: reading from the files, writing to the files, and appending to the files. Regardless, though, it all starts with opening files and ends with closing files.
 
-### Getting Started: Opening and Closing Files {#Getting-Started-Opening-and-Closing-Files-3212} 
+## Getting Started: Opening and Closing Files {#Getting-Started-Opening-and-Closing-Files-3212} 
 
 File input can vary pretty dramatically from language to language. Generally, however, it follows a certain high-level workflow. First, the file is opened and assigned to a variable that represents the opened file. This is not always an easy step: if we try to open a file that doesn’t exist, our program will usually throw an error, and as a result, crash if the error was not handled. For that reason, many languages require that file input and output be enclosed within a try block. In many languages, when opening a file, we need to specify a mode: read-only, write, or append, which we’ll cover in the next section.
 
 Opening the file, in most languages and operating systems, locks the file down in the operating system. Other programs are not permitted to modify the file while our program has it opened. For that reason, we need to also close the file when we’re done. Closing the file indicates to the operating system that we’re done modifying it, and it can be modified by other programs again.
 
-### Reading, Writing, Appending {#Reading,-Writing,-Appending-3213} 
+## Reading, Writing, Appending {#Reading,-Writing,-Appending-3213} 
 
 Once we’ve opened a file, there are three general modes we’ll usually use for interacting with it: reading, writing, and appending. Reading simply means that we’re looking at the file’s contents and reading it into our program. We’re not changing the file’s contents at all, just reading it.
 
@@ -158,7 +158,7 @@ Beyond writing or appending, there are some pretty advanced ways of writing cont
 
 Let’s start by writing files. The main reason to start here is that to have something to load, we must have something saved! We’ll go through two examples: a simple one, where we just output a handful of variables, and a complex one, where we output a list using a loop.
 
-### Simple File Writing {#Simple-File-Writing-3214} 
+## Simple File Writing {#Simple-File-Writing-3214} 
 
 To write to a file in Python, we open the file, write our data, then close the file. Python makes this relatively easy, as shown in Figure 4.4.1
 
@@ -202,7 +202,7 @@ outputFile.close()
 
 **Figure 4.4.2**
 
-### Writing Lists {#Writing-Lists-3215} 
+## Writing Lists {#Writing-Lists-3215} 
 
 That form of simple writing works just fine if we know exactly how many values we want to store and exactly the order in which to store them. As we’ll see later, when loading from that file, we’ll assume the first line holds myInt1, the second holds myInt2, and the third holds myInt3.
 
@@ -261,7 +261,7 @@ outputFile.close()
 
 **Figure 4.4.6**
 
-### Another Way to Output {#Another-Way-to-Output-3216} 
+## Another Way to Output {#Another-Way-to-Output-3216} 
 
 Python also gives another way to output files that might be a little more intuitive. The print() function that we’ve been using for a long time has a keyword parameter file that, when defined, writes to the specified file instead of the console, as shown in Figure 4.4.7.
 
@@ -311,7 +311,7 @@ outputFile.close()
 
 We’ve now written some data to a file. Our goal is now to complete the symmetry between output and input: we want to load these files back into our program such that the values of the variables are the same after loading as they were before.
 
-### Simple File Reading {#Simple-File-Reading-3217} 
+## Simple File Reading {#Simple-File-Reading-3217} 
 
 In our first example in Figure 4.4.2, we wrote three integers to a file, each on their own line. Now, let’s write a program to load these back into myInt1, myInt2, and myInt3. First, though, let’s just see how Python opens the file and what it sees when it does in Figure 4.4.10.
 
@@ -376,7 +376,7 @@ Each time we call inputFile.readline(), it reads the next number from the file. 
 
 However, the most important thing is that at the end of this execution, myInt1, myInt2, and myInt3 hold the same values that they held before we saved and closed the program from Figure 4.4.2: 1, 2, and 3 respectively. We’ve thus completed the symmetry between output and input. Their values before saving and after loading are the same.
 
-### Loading into Lists {#Loading-into-Lists-3218} 
+## Loading into Lists {#Loading-into-Lists-3218} 
 
 Writing lists was relatively easy: we just iterated over the list, writing each line to a file just the same way we would print it. The reason this was easy was that we knew in advance how many items in the list there were. However, that presents a challenge for reading from a list. When we’re reading, we don’t know in advance how many lines there are to read. How do we get around this?
 
@@ -428,7 +428,7 @@ Now that we’ve covered our save and load functions, let’s make that the next
 
 We’re going to be making several revisions this time around; instead of sharing each intermediate state, let’s instead just look at the finished product, FilesandTurtles.py. We can talk through each individual change as we go.
 
-### Preparing to Save and Load {#Preparing-to-Save-and-Load-3219} 
+## Preparing to Save and Load {#Preparing-to-Save-and-Load-3219} 
 
 One way to do this would be to automatically save any command issued to a file. However, we don’t want to just automatically save every session. We want to specifically give the user the option to save when they want to. To save something, we need to have it stored in memory, and right now, we lose our commands once they’re run. So, the first thing we need to do is create a list of all the commands in order, to have available when we want to save.
 
@@ -438,7 +438,7 @@ However, this presents an issue. allCommandsList is declared in the main part of
 
 So, the way our program is structured right now, we would have to take care of saving and loading in that main while loop at the bottom as well. But this is getting messy: we want all our commands to be run through executeCommand(), not divided up between two places. We can do this, we just have to introduce a new principle: global variables.
 
-### Global Variables {#Global-Variables-3220} 
+## Global Variables {#Global-Variables-3220} 
 
 A **global variable** is a variable that can be seen across the entire program. We force it to have a large scope. It can be seen inside the functions even if it wasn’t passed to them as an argument. Functions can be global as well, actually, and we’ve seen some: why were we able to see functions like print() and open() even though we never declared them anywhere? They were declared globally. We can declare our own variables and functions globally, too. In fact, it isn’t hard to do in Python.
 
@@ -450,7 +450,7 @@ So, when the user enters “record,” recording is set to True here in executeC
 
 Now we’re prepared to actually create our save and load commands. Defining things globally will help us create our save command, but we’ll also soon see that restructuring the recording process to use global variables will allow it to be loaded more easily as well.
 
-### The Save Command {#The-Save-Command-3221} 
+## The Save Command {#The-Save-Command-3221} 
 
 With a global variable available, saving becomes actually a pretty easy process. We’ve already added reasoning to our program that saves every command as it comes in to allCommandsList. Now all we need to do is save allCommandsList to a file, and allow the user to execute that command.
 
@@ -462,7 +462,7 @@ So, we add three things:
 
 Because everything we’re saving is tuples, we’re just going to save the tuples directly. This means we won’t have to worry when reading these commands back in about how many parameters each has. So, when we save, we’ll find that every line of the file represents one of the tuples.
 
-### The Load Command {#The-Load-Command-3222} 
+## The Load Command {#The-Load-Command-3222} 
 
 Now for the slightly harder part: the load command. There are different ways we can do this. For now, let’s construct the load command to load the commands from a file into a list and return the list. Let’s also update our save command to ignore load commands, too, and let’s keep assuming the file entered will be valid.
 
@@ -480,7 +480,7 @@ The final result: it actually took relatively little work to create these save a
 
 Notice that the way we’ve structured this, if we load some commands from a file, then save our own commands, the commands we loaded are saved as well; so, we can add other commands to a new program, and save them without having to save the original file.
 
-### Looking Forward {#Looking-Forward-3223} 
+## Looking Forward {#Looking-Forward-3223} 
 
 Note that this has gotten extremely complex. The goal here is not necessarily for you to understand every part. The goal is for you to understand the general idea of complexity and program flow. Trace through some executions of this code and notice how execution passes back and forth from function to function, how loops run over saved commands or recorded commands, and how tuples are used to communicate commands around. Notice how I’ve referenced some methods and specifically told you not to worry how they work, like ast.literal_eval(): that’s part of programming, using methods you don’t understand because you know their result.
 

@@ -86,7 +86,7 @@ As an informal example, imagine that you have been dieting for a month. Your clo
 
 ## Reliability {#Reliability-1672t} 
 
-**Reliability** refers to the consistency of a measure. Psychologists consider three types of consistency: over time (test-retest reliability), across items (internal consistency), and across different researchers (inter-rater reliability). 
+**Reliability** refers to the consistency of a measure. Psychologists consider three types of consistency: over time (test-retest reliability), across items (internal consistency), and across different researchers (inter-rater reliability).  
 
 ### Test-Retest Reliability {#test-retest-reliability}
 

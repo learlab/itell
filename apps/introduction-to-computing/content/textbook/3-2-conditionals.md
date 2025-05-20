@@ -193,7 +193,7 @@ The term **“conditional”** comes from the idea that sometimes we want to run
 
 Modern programming couldn’t exist without conditionals like these. They’re a relatively simple principle (but don’t worry if you don’t get them at first), but they’re extremely powerful.
 
-### If-Then {#If-Then-2892} 
+## If-Then {#If-Then-2892} 
 
 The most fundamental form of conditional is the simple if-then statement. _If_ something is true, _then_ do something. We think in terms of conditionals every day. Consider:
 
@@ -204,7 +204,7 @@ The most fundamental form of conditional is the simple if-then statement. _If_ s
 
 Each of these is easily phrased in terms of an if-then statement. You check if some condition is true, and if so, you take some action. The “action” could actually be several actions. You could imagine, for example, that if it’s cold outside, then you wear warmer clothing, start the car early so it can warm up, and makeg some hot coffee.
 
-### If-Then-Else {#If-Then-Else-2893} 
+## If-Then-Else {#If-Then-Else-2893} 
 
 A slightly more complicated version of this includes a third part: an else. The else is a different series of actions to perform if the condition wasn’t true in the first place. With an if-then-else structure, you’ll always do one thing or the other.
 
@@ -217,13 +217,13 @@ We can rewrite our real-world examples above in terms of if-then-else:
 
 Just like the original then, there could be multiple actions that follow an else. The else following the conditional on whether it’s cold outside could be: wear a t-shirt, make some iced coffee, plan to go to the park after school or work, and pack a water bottle. The important thing here is that if-else structures create two alternatives, one of which will always be chosen.
 
-### If-Then-Else-If {#If-Then-Else-If-2894} 
+## If-Then-Else-If {#If-Then-Else-If-2894} 
 
 Sometimes, though, our reasoning might be more complex. We might need multiple pathways depending on different checks. In this case, we might employ an else-if statement. Like an else, an else-if only runs if the original if-then did not. Unlike an else, however, an else-if has its own conditions to check; if the conditions aren’t met, it doesn’t run either.
 
 Consider this more complex version of our weather example: _If_ it’s raining, then wear a raincoat; _else, if_ it’s cold, then wear a long-sleeved shirt; _else_, wear a t-shirt. Here, we check two things: whether it’s raining, and whether it’s cold. If it’s raining, we don’t need to bother checking if it’s cold: we wear a raincoat regardless. Otherwise, or _else_, we need to check if it’s cold, and if so, wear a long-sleeved shirt. That’s what makes this an else-if: it only runs if the original if wasn’t true, but it still has its own conditions.
 
-### Multiple Else-Ifs {#Multiple-Else-Ifs-2895} 
+## Multiple Else-Ifs {#Multiple-Else-Ifs-2895} 
 
 We can chain together multiple else-ifs as well. For example, we could say: _if_ it’s raining, then wear a raincoat; _else, if_ it’s cold, then wear a long-sleeved shirt; _else, if_ it’s hot, then wear a t-shirt; _else, if_ it’s windy, then wear a jacket; _else_, wear a collared shirt. We must start with if, and we can have at most one else, but we can have any number of else-ifs in between. With this kind of structure, each else-if and else will only execute if _no previous_ condition has executed. If it was cold, then this logic wouldn’t check if it was hot or windy. A collared shirt would only be the result if _every_ previous statement was false.
 
@@ -243,7 +243,7 @@ If we wanted to guarantee we check multiple things, we would just put multiple i
 
 Just as we didn’t have to end an if-then statement with an else, we also don’t have to end an if-then-else-if with an else. For example, consider this reasoning: _If_ you have a test tomorrow, then study; _else, if_ you have class early, then go to bed early. If neither of these conditions is true, then this block doesn’t need to prescribe what you do. We can have an if-then-else-if without having a final else.
 
-### Conditionals Recap {#Conditionals-Recap-2896} 
+## Conditionals Recap {#Conditionals-Recap-2896} 
 
 So, to recap: our basic conditional structure is the if-then structure; it checks if some condition is true, and runs some code if so. We can augment our if-then structure with else-if and else. else-if checks additional conditions _if_ the earlier ones were false. else always performs some actions if no previous if or else-if was true.
 
@@ -253,7 +253,7 @@ Right now, I would predict you feel like you kind-of get this and kind-of don’
 
 Now that we’ve covered the basic principles of conditional statements, let’s see them in action. To demonstrate these, let’s use the same running example. Imagine we’re writing some code that will make a recommendation for what someone will wear. Part of this reasoning will be receiving today’s weather as a string, stored in todaysWeather. Our code will print what the user should wear.
 
-### If-Then {#If-Then-2897} 
+## If-Then {#If-Then-2897} 
 
 Let’s start with the simple example: _if_ it’s raining, _then_ the user should wear a raincoat and rainboots. This reasoning is shown in Figure 3.2.2.
 
@@ -293,7 +293,7 @@ The following line is indented, meaning that it is “under” or “controlled 
 
 So, this is our fundamental if statement: the word if, some logical statement that resolves to True or False, a colon, and some indented code. Next, let’s make it more complex.
 
-### If-Then-Else {#If-Then-Else-2904} 
+## If-Then-Else {#If-Then-Else-2904} 
 
 Right now, the code just checks if it’s raining, and recommends a raincoat and rainboots if so. Let’s say that if it’s not raining, we want to recommend a t-shirt and shorts. How do we do that?
 
@@ -334,7 +334,7 @@ print("Done!")'>
 
 **Figure 3.2.5**
 
-### If-Then-Else-If-Else {#If-Then-Else-If-Else-2916} 
+## If-Then-Else-If-Else {#If-Then-Else-If-Else-2916} 
 
 Now let’s throw our else-if statements into the mix. We’ll start with just two checks: raining or cold.
 
@@ -413,7 +413,7 @@ In Figure 3.2.8, we’re trying to print “scarf” if it’s cold and “jacke
 
 In the second segment (lines 13 through 17), we resolve this. Instead of making it an elif, we just make it another if. It’s not indented under conditional beginning on line 13, so it runs either way. The second segment checks both conditionals because neither one is an else-if for the other. So, only use else-if if you want the conditional to be skipped if a previous part of the structure was true.
 
-### Common Errors {#Common-Ero-2917} 
+## Common Errors {#Common-Ero-2917} 
 
 Finally, note that a common error in programming conditionals is to “orphan” the else or the else-if conditionals, as shown in Figure 3.2.9.
 
@@ -443,19 +443,19 @@ We’ve already seen that conditional statements usually use logical expressions
 
 So far, we’ve only looked at the equality operator. However, conditionals are used in other ways as well.
 
-### Relational and Mathematical Operators {#Relational-and-Mathematical-Operators-2918} 
+## Relational and Mathematical Operators {#Relational-and-Mathematical-Operators-2918} 
 
 In addition to the equality operator (whether used mathematically or more generally with strings), it is common to use the other relational and mathematical operators with conditionals. We’ve covered one example several times: comparing bank balances. That is a relational expression that would generate True or False based on whether one number is greater than another.
 
 We can embed other mathematical operators within these statements as well. For example, if we wanted to compare a person’s bank balance to a purchase price plus its sales tax, we could perform that mathematical operation right there within the conditional rather than performing it separately and storing it for later comparison in a conditional.
 
-### Boolean Functions {#Boolean-Functions-2919} 
+## Boolean Functions {#Boolean-Functions-2919} 
 
 We’ve mentioned functions a few times now; we’ll get to them more later, but for now, we know that functions are like custom, more complex operators that take some input and return some output. For example, we’ve mentioned before that some languages (such as Python) have a len() function before, which takes as input something with a length (like a string or a list of items) and produces as output the length of that input (like 12 when the input is “Hello, world”).
 
 Functions can return booleans as well, which means we can use functions in conditionals. For example, we could have a function that takes a filename and checks if the file exists. So, our conditional would basically say, “if this file exists, then...” A lot of the complexity and power around conditionals comes when we start writing custom functions to return booleans.
 
-### Boolean Operators {#Boolean-Operators-2920} 
+## Boolean Operators {#Boolean-Operators-2920} 
 
 Finally, boolean operators allow us to take other operators and functions and combine them into far more complex conditionals. We can check multiple different conditions, or multiple combinations of conditions. We could have very complex statements, although in practice we generally want to break complex conditionals down into multiple, simpler, nested conditionals.
 
@@ -465,7 +465,7 @@ Returning to our weather and clothing example, we would likely have certain arti
 
 Let’s take a look at some of the ways we can use conditionals along with operators in Python. We’ll keep these examples simple: mostly if-then-else statements and few elif statements, but note that these can be combined with the advanced structures covered above.
 
-### Relational Operators {#Relational-Operators-2921} 
+## Relational Operators {#Relational-Operators-2921} 
 
 We’ve covered before the simple way we can use relational operators in conditionals, but let’s look again. What if we wanted to check to see if a buyer has enough funds on a card to make a purchase?
 
@@ -487,7 +487,7 @@ print("Done!")'>
 
 Here, we see that balance is greater than purchasePrice, so the operator returns True, and the code block under the if statement runs.
 
-### Relational and Mathematical Operators {#Relational-and-Mathematical-Operators-2922} 
+## Relational and Mathematical Operators {#Relational-and-Mathematical-Operators-2922} 
 
 On their own, mathematical operators return other numbers, so they can’t be used on their own in a conditional. The statement “if 3 + 5, then...” doesn’t make sense because 3 + 5 returns 8, not a True or False.
 
@@ -511,7 +511,7 @@ print("Done!")'>
 
 **Figure 3.2.11**
 
-### Set Membership Operators {#Set-Membership-Operators-2923} 
+## Set Membership Operators {#Set-Membership-Operators-2923} 
 
 You might remember that one of the things that makes Python unique is easy access to functions that check if something is a member of another set. So, where many languages would have this next example as an example of a boolean function, in Python it’s a unique kind of operator.
 
@@ -531,7 +531,7 @@ print("Done!")'>
 
 The conditional on line 7 checks to see if todaysWeather is one of the items in jacketWeather, and if so, prints jacket on line 8. If we wanted to add another weather condition to the list of conditions that dictate wearing a jacket, we just have to add it to the list jacketWeather. Similarly, we could have lists like this for jackets, scarves, t-shirts, etc., and easily check them. Note that if this is confusing, don’t worry: we haven’t gotten to lists yet. Python’s syntax is accessible enough that you might understand this just based on the natural meaning of the word “in,” but don’t worry if that’s not the case. We’ll talk more about this later.
 
-### Boolean Functions {#Boolean-Functions-2924} 
+## Boolean Functions {#Boolean-Functions-2924} 
 
 If a function returns a boolean, then we can use it in a conditional statement. For example, in Python, there is a function (well, technically a method, but don’t worry about the difference for now) called isdigit() that returns True if the string represents a number, False if it does not. Figure 3.2.13 shows this in action.
 
@@ -555,7 +555,7 @@ You might initially be confused about why isdigit() is after the variable name (
 
 So, within the conditional on line 5 of Figure 3.2.13, we have myNumericString.isdigit(). “12345” is all numbers, so the conditional on line 5 is True, and so it prints on line 6 that the string is numerical. The function (well, method) returns True, so the conditional is true, so the first code block runs. In lines 10 through 13, the opposite happens: “ABCDE” is not numeric, so the conditional is False, so the second code block (line 13, after the else) runs instead. If you’re curious, there are similar methods for checking if a string is all letters (.isalpha()), all letters or numbers (.isalnum()), all lowercase (.islower()), all uppercase (.isupper()), or all whitespace (.isspace()).
 
-### Boolean Operators {#Boolean-Operators-2925} 
+## Boolean Operators {#Boolean-Operators-2925} 
 
 Finally, our boolean operators—and, or, and not—can be used to combine any of these logical expressions together. Let’s look at this with two examples: a simple one from our weather example, and a complex one from our purchasing example.
 
@@ -581,7 +581,7 @@ print("Done!")'>
 
 **Figure 3.2.15**
 
-### Boolean Operators II {#Boolean-Operators-II-2926 .sr-only} 
+## Boolean Operators II {#Boolean-Operators-II-2926 .sr-only} 
 
 Now let’s try a more complex example. Previously, we’ve mentioned in the context of our purchasing code the idea of checking several conditions: Is the balance sufficient? Is the cardholder the person making the purchase? Is the vendor a trusted vendor?
 
@@ -648,7 +648,7 @@ A **nested conditional** isn’t a special type of control structure like else-i
 
 Our original reasoning was, “If the balance is sufficient and the customer is the cardholder and the vendor is trusted, approve the purchase; if not, reject it.” We can revise this reasoning a bit to allow us to make decisions based on those individual conditions. This is a bit difficult to explain in paragraph form, so if this is confusing, don’t worry; we’ll use a flowchart in a moment, then code. We might say instead: if the balance is sufficient, check the cardholder; else, reject because of insufficient balance. If the cardholder is the customer, check the vendor; else, reject because of invalid cardholder. If the vendor is trusted, then accept the purchase; else, reject because of untrusted vendor.
 
-### Nested Conditionals in a Flowchart {#Nested-Conditionals-in-a-Flowchart-2968} 
+## Nested Conditionals in a Flowchart {#Nested-Conditionals-in-a-Flowchart-2968} 
 
 If that was confusing, don’t worry: this kind of branching reasoning is tough to explain in linear text. Instead, let’s take a look at two flowchart views of this.
 
@@ -680,7 +680,7 @@ Figure 3.2.19 is our new approach. Each individual decision is separate. If one 
 
 Let’s take a look at what our previous purchase validation code would look like with nested conditionals.
 
-### Ifs Within Ifs {#Ifs-Within-Ifs-2989} 
+## Ifs Within Ifs {#Ifs-Within-Ifs-2989} 
 
 Note that while one major benefit of nested conditionals is that we can take care of more combinations of conditions, another benefit is that in many ways, this code is more readable. Take a look at Figure 3.2.20.
 
@@ -714,7 +714,7 @@ Remember how we had to break one line of code between two lines just for readabi
 
 However, with this structure, each individual conditional can have its own dedicated else block, meaning we can print exactly why the purchase failed. On line 8, I’ve changed the vendor to an untrusted vendor, and so the code runs until it checks the third conditional on line 16. This condition is False, so it jumps to _this_ conditional’s else block (line 19) and says the vendor was untrusted. This tells us a lot more than our earlier code: it tells us the vendor was untrusted, and the fact that it reached this line also tells us that both the balance was sufficient and the cardholder was valid because this conditional was controlled by those previous conditionals.
 
-### Ifs Within Elses {#Ifs-Within-Elses-2990} 
+## Ifs Within Elses {#Ifs-Within-Elses-2990} 
 
 This nesting applies on both sides of the structure as well. We can write code that is functionally equivalent to the above with a completely different structure by nesting our conditionals in the else blocks instead. Check it out in Figure 3.2.21.
 
@@ -751,7 +751,7 @@ print("Done!")'>
 
 We used conditionals as our example for scope in the previous chapter, so you’ve already seen a bit about how these interact. Now that you know what conditionals are, however, let’s revisit this. In Python, the scope of a variable starts when it is created, and ends when one of a number of terminations happen. For now, the only termination you need to know is the program ending: when the program ends and closes, the computer forgets the variables that were created while it was running. There are other times when the scope of a variable ends or is suspended, but for now, you only need to worry about the scope ending when the code ends.
 
-### Accessing Variables within Conditionals {#Accessing-Variables-within-Conditionals-2991} 
+## Accessing Variables within Conditionals {#Accessing-Variables-within-Conditionals-2991} 
 
 So, let’s return to our earlier example of scope in a conditional now that we know what conditionals are, shown here in Figure 3.2.22.
 
@@ -769,7 +769,7 @@ print("Execution complete!")'>
 
 **Figure 3.2.22**
 
-### Creating Variables within Conditionals {#Creating-Variables-within-Conditionals-2992} 
+## Creating Variables within Conditionals {#Creating-Variables-within-Conditionals-2992} 
 
 Note, however, that there is a risk. Imagine if you create a variable within an if statement’s code block, but then that code block doesn’t run. That means the variable was never created, and so if you try to access the variable outside the code block, your code will crash. You can see this happening in Figure 3.2.23.
 
@@ -806,7 +806,7 @@ print("Execution complete!")'>
 
 Now that we have conditionals at our disposal, we can really start to create a way for the user to control turtles with their input alone. Let’s create an interface with two possible commands the user can give: turn and forward. Let’s also assume the user is going to enter two such commands, so we’ll run the same code twice.
 
-### Turn and Forward {#Turn-and-Forward-2993} 
+## Turn and Forward {#Turn-and-Forward-2993} 
 
 So what does this look like in code? It’s actually surprisingly short, as seen in TurnandForward.py.
 
@@ -820,7 +820,7 @@ Notice a couple of things here. First, notice that this code reuses command in l
 
 You can extend this code in a lot of ways: you could add more commands, for example. You can find the list of commands available for the turtle graphics package at https://docs.python.org/3.5/library/turtle.html.
 
-### Turn, Forward, or Error {#Turn,-Forward,-or-Error-2994} 
+## Turn, Forward, or Error {#Turn,-Forward,-or-Error-2994} 
 
 However, with the current design of this code, what happens if the user enters invalid commands? Try running TurnandForward.py, but enter words like “up” and “down” instead of “turn” and “forward”.
 

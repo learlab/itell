@@ -145,7 +145,7 @@ title: 4.3 Lists
 
 That’s effectively what a list is: a single variable that contains multiple values. Actually, this definition is even a little too broad: this would encompass other data structures that we’ll talk about later. More specifically, lists are variables that contained ordered lists of values, accessed via numbers called indices (plural for index).
 
-### Properties of Lists {#Properties-of-Lists-3174} 
+## Properties of Lists {#Properties-of-Lists-3174} 
 
 We’re starting to get into the more advanced areas of computing, and so as we go forward, fewer and fewer things will be common across multiple languages. Lists are a good example of this. Nearly every programming language has some concept of a list, but the terminology and specific details differ significantly. 
 
@@ -155,7 +155,7 @@ Another major way list-like structures may differ is whether they accept multipl
 
 There are benefits to these different properties, so many languages will provide multiple ways to use list-like structures. What, then, defines a list? A list is a data structure that contains multiple values, accessed via an ordered numerical index; in other words, lists will have a first value, a seventh value, and so on. This is in contrast to Dictionaries, HashTables, and other data structures that also contain multiple values, but that access them via non-numeric keys.
 
-### List Synonyms {#List-Synonyms-3175} 
+## List Synonyms {#List-Synonyms-3175} 
 
 List-like structures go by various names: lists, arrays, tuples, vectors, tables, and more. The specific terms used depend on the language. Java, for example, uses “array” and “list” to refer to different things. “Tuple” is most commonly used in Python. Oftentimes, “array” is used to refer to a more primitive structure that only supports changing the existing values, whereas “list” refers to more complex data structures that support sorting, inserting, and other operations. “Tuples” are often immutable.
 
@@ -175,7 +175,7 @@ As noted above, which specific implementation you’ll use depends on your langu
 
 Python has two major list-like structures: **tuples** and **lists.** Tuples are immutable, lists are mutable. The immutable type tends to be simpler because it can’t be modi- fied after it’s declared, although for the same reason it tends to be less useful. So, let’s start with tuples, then move on to more advanced lists.
 
-### Declaring Tuples {#Declaring-Tuples-3176} 
+## Declaring Tuples {#Declaring-Tuples-3176} 
 
 To declare a tuple, we set a variable equal to a comma-separated series of values or variables, as shown on line 2 of Figure 4.3.2. Here, we’re creating a tuple (called a 3-tuple because it has three values) with the values 1, 2, and 3. We’ve done this here in terms of values, but if we use variables, it still pulls out the values and creates a tuple with these values, as shown on lines 7 and 8 in Figure 4.3.3. 
 
@@ -210,7 +210,7 @@ print(myTuple)'>
 
 **Figure 4.3.4**
 
-### Reading Tuples {#Reading-Tuples-3177} 
+## Reading Tuples {#Reading-Tuples-3177} 
 
 To access the individual items of a tuple, we use the same syntax we used for accessing individual characters in a string. As far as Python is concerned, strings, tuples, and lists are all pretty much the same.
 
@@ -269,7 +269,7 @@ print(myNewInt2)'>
 
 **Figure 4.3.7**
 
-### Usefulness of Tuples {#Usefulness-of-Tuples-3178} 
+## Usefulness of Tuples {#Usefulness-of-Tuples-3178} 
 
 Given that tuples are immutable, they lack some of the value of traditional lists. We would not use tuples to store a list of students on a class roster, for example, because students might enroll or drop, and a tuple could not add or remove those students. Similarly, we would not use tuples to store data that we want to sort because the element order cannot be changed.
 
@@ -314,7 +314,7 @@ print("Remainder:", myRemainder)'>
 
 **Figure 4.3.9**
 
-### Nesting Tuples {#Nesting-Tuples-3179} 
+## Nesting Tuples {#Nesting-Tuples-3179} 
 
 Finally, tuples can be nested. You can have a tuple of tuples. First, we could do this by creating tuples, and then creating a tuple that contains those tuples, as shown in lines 1 through 5 in Figure 4.3.10.
 
@@ -353,7 +353,7 @@ Remember, tuples are like strings and all other list-like structures in Python: 
 
 For the most part, anything you can do with a tuple, you can also do with a list. Most of the syntax is the same, even. Lists are created similarly, sliced the same way, accessed the same way, and nested the same way. The major difference is that lists are mutable, which means we can add items to them or remove items from them. So, let’s start by quickly demonstrating the extent to which lists are the same as tuples, then find out what makes them different.
 
-### Lists as Tuples {#Lists-as-Tuples-3180} 
+## Lists as Tuples {#Lists-as-Tuples-3180} 
 
 Nearly everything we did with tuples, we can also do with lists. Figure 4.3.13 runs through all the different creation, unpacing, and slicing methods we covered with tuples, showing they work with lists as well.
 
@@ -383,7 +383,7 @@ print(mySuperTuple)'>
 
 So, everything you learned about tuples still applies to lists. The declarations are the same (just with brackets instead of parentheses), accessing elements is the same, slicing is the same, unpacking is the same, nesting is the same. What’s different, then?
 
-### List Functions {#List-Functions-3181} 
+## List Functions {#List-Functions-3181} 
 
 What differentiates lists is that they’re mutable. That means there are a lot of interesting things we can do with lists that we haven’t been able to do with strings or tuples. Let’s run through a few of them:
 
@@ -405,7 +405,7 @@ In addition, there are a couple of other ways we can examine and modify lists. T
 
 A significant portion of the value of lists (and sometimes tuples as well) comes when we integrate them with loops. Additionally, lists are our first example of mutable data structures, so it’s useful to remind ourselves what happens when we pass a mutable data structure into a function. So, let’s briefly look over three things: iterat- ing over a list with a for loop, iterating over multi-dimensional lists, and using lists with functions.
 
-### Iterating Over a List {#Iterating-Over-a-List-3182} 
+## Iterating Over a List {#Iterating-Over-a-List-3182} 
 
 Remember, to iterate over a sequence means to execute some block of code for each item in the sequence. So, iterating over a list means executing a segment of code for each individual item in a list. The same can be done for a tuple as long as we’re not trying to modify it.
 
@@ -431,7 +431,7 @@ We can do this kind of iteration for any kind of list. Each time the loop iterat
 
 Generally, when dealing with lists, we use for loops. We can technically use while loops, but for loops just tend to be a little bit easier: we don’t have to worry about manually checking the length of the list or incrementing a loop control variable, and if we’re using a for-each loop, we need no loop control variable anyway. The constraint on for loops was that we needed to know the number of iterations in advance, but we do know that with a list, as long as we don’t make the mistake of modifying its length while the loop is running.
 
-### Iterating Over a 2-Dimensional List {#Iterating-Over-a-2-Dimensional-List-3183} 
+## Iterating Over a 2-Dimensional List {#Iterating-Over-a-2-Dimensional-List-3183} 
 
 Let’s take that a step further. We’ve mentioned that we can have **multi-dimensional lists,** or lists of lists. How do we iterate over those? Let’s imagine that instead of just averaging one set of numbers, we were interested in averaging several sets, each within themselves. Let’s call this a gradebook. In the gradebook, we have a list of lists of grades: each list of grades corresponds to one student, so we want to average each individual student’s grades. The result of this should be a separate list where each item in the list is the average of the corresponding item from the list of lists of grades. In other words, item #1 in the result should be the average of the numbers in list #1.
 
@@ -463,7 +463,7 @@ Now, we run the inner loop over numList. This portion is identical to our previ-
 
 This kind of nested loop structure is how we iterate over a two-dimensional list. We could take this further: we could have a list of lists of lists, where we would need three nested loops to iterate over everything.
 
-### Lists and Functions {#Lists-and-Functions-3184} 
+## Lists and Functions {#Lists-and-Functions-3184} 
 
 Lists are mutable. That means that if we pass a list to a function or method, the function or method _can_ change the values of the list, and those changes will persist out to the main program. Sometimes, this can be problematic. Imagine, for example, if the function from Figure 4.3.18 “popped” the grades in each list rather than iterating over them, as shown in Figure 4.3.19.
 
@@ -526,7 +526,7 @@ These are all just conventions, though. That means that while other programmers 
 
 Before we move on, let’s quickly cover three special kinds of list-like structures. These structures are like lists in that they contain multiple items in a certain order. However, they provide unique constraints on how the items in the list are actually accessed. In some ways, these are additional data types; many languages have dedicated types for these list-like structures. In other ways, these are simply ways of interacting with lists, and are constraints we could apply on ourselves depending on the type of program we’re writing.
 
-### Stacks {#Stacks-3186} 
+## Stacks {#Stacks-3186} 
 
 A **Stack** is a list-like structure that limits the ways in which you can add or remove information from the list. Rather than being able to insert or grab information from anywhere in the list, you can only add new information on top, and you can only access the information that is currently on the top. To add new data, we “push” it onto the top of the stack; to remove data, we “pop” it off the top of the stack. This is sometimes referred to as Last-In-First-Out, or LIFO. The last item added to the list is the first item removed from the list.
 
@@ -576,7 +576,7 @@ When designing programs, we might use queues to process tasks in the order they 
 
 Note that when we iterate over a list using a simple for loop, we’re processing things in the same order we would process them with a queue. That doesn’t make that a queue, though: queues and stacks are characterized by the requirement to _remove_ an item from the list in order to really access it.
 
-### Linked List {#Linked-List-3188} 
+## Linked List {#Linked-List-3188} 
 
 **Linked lists** are a special kind of implementation of a list-like structure. In order to understand linked lists, though, we have to briefly talk about how lists are usually stored.
 
@@ -614,7 +614,7 @@ We have a new tool in our toolbox now: lists. How can we use lists to improve or
 
 It’s worth noting that here, the complexity of our turtles applications is going to rise tremendously. Don’t worry at all if you get lost; we’re covering very advanced structures, syntax, and ideas. Try to step through the code one line at a time, following how the programs execute. Try to predict what will happen if you enter certain commands, and then follow through and see if you were right. Most importantly, don’t get discouraged. It’s taken me a long time to develop this example, and part of its purpose _is_ to show the complexity possible with the concepts we’ve learned. If you understand the rest of the course besides these turtle examples, you’re still doing very well.
 
-### Listing Commands {#Listing-Commands-3189} 
+## Listing Commands {#Listing-Commands-3189} 
 
 When we covered strings, we covered a join() method that could use the string to join together multiple items in a list into a longer string. Right now, we’re having to update the line that lists the commands for users manually each time we add a new command. This can be slightly easier if we maintain a list of all the valid commands at the top of the program, and simply join together the valid commands when they’re needed. This way, if we need to list the commands in multiple places, we don’t need to worry about adding to the list in multiple places.
 
@@ -622,7 +622,7 @@ We’ve only made two changes in ListingCommands.py. First, we’ve created a tu
 
 Then, later, we’ve replaced the line that lists the available commands with line 39, which calls “, “.join(VALID\_COMMANDS). This takes the individual strings in VALID\_COMMANDS and combines them into one string, with “, “ separating each pair. This way, when we add a new command, we need only remember to add it to the tuple at the beginning, not to any line that lists commands. So, let’s go ahead and change the “Invalid!” message to use VALID_COMMANDS, too, on line 96.
 
-### Preparing for the Record Function {#Preparing-for-the-Record-Function-3190} 
+## Preparing for the Record Function {#Preparing-for-the-Record-Function-3190} 
 
 Our next goal is to create a command that will allow the user to enter _multiple_ commands, as well as a number of times to repeat these commands, to then be executed repeatedly. In other words, instead of just entering one command at a time, we want the user to enter a _list_ of commands, followed by a number of times to repeat these commands.
 
@@ -638,7 +638,7 @@ Note one special feature here: for our commands without arguments (penup, pendow
 
 So, we’ve now separated the act of getting the command from the user and executing the command we received. Now we’re ready to start differentiating whether the command should be executed immediately or recorded for repetition.
 
-### The Record Function {#The-Record-Function-3191} 
+## The Record Function {#The-Record-Function-3191} 
 
 Now let’s make things complicated. All our new reasoning here is going to be inside our while loop. Why? The list of recorded moves (the list recordList) and the memory of whether we’re recording (the boolean recording) need to persist across multiple executions of the while loop. There are other ways we could handle this, of course, but for now let’s do it the way shown in TheRecordFunction.py.
 

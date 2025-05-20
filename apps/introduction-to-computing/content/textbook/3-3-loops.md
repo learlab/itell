@@ -132,7 +132,7 @@ For example, imagine if you were writing some code to change the names of all th
 
 Generally speaking, there are two common kinds of loops: for loops and while loops. They do have some variations within each type as well, but these are the most common categories of loops. As we’ll describe later, anything you can do with a for loop, you can also do with a while loop; however, each one is better suited to certain kinds of tasks.
 
-### For Loops {#For-Loops-3021} 
+## For Loops {#For-Loops-3021} 
 
 A for loop repeats some code a certain number of times: “for 7 times, do this.” For example, imagine you have an exercise routine that has you do ten push-ups, ten sit-ups, and five pull-ups. We could describe this in terms of three loops: the first would run ten times, and with each **iteration** of the loop, you run the function pushup(). Or, imagine you were shopping, and there were seven items on your shopping list. So, seven times, you (a) read the next item on the list, (b) walk to that item in the store, and (c) put the item in your basket. Those three tasks would run seven times; or, in other words, you’d “loop over” them seven times.
 
@@ -140,7 +140,7 @@ Sometimes, we’ll know exactly how many times a loop should run in advance. For
 
 Some languages, like Python, supply a special kind of for loop called a for-each loop. for-each loops come from the observation that a large number of times that we use for loops, we’re looping over items in a list, like blog posts in a blog or items on a shopping list. These loops generally always take the same form: (a) we find the total number of items in the list and run the loop that many times, and (b) at the beginning of each iteration, we grab the next item on the list and store it in some variable. A for-each loop just simplifies this. Instead of saying, “for seven times, read the next item, go get it, and put it in my basket”, it’s like saying, "for each item, go get it and put it in my basket.” Functionally these are the same, but just a little easier to write and more natural to think about.
 
-### While Loops {#While-Loops-3022} 
+## While Loops {#While-Loops-3022} 
 
 for loops run with some advanced knowledge about how many times the loop will run: “for 7 times, do this.” while loops, on the other hand, run _while_ something remains true. For example:
 
@@ -155,11 +155,11 @@ Some languages, like Java, also have a special kind of while loop called a do- w
 
 Notice also how while loops are heavily dependent on logical expressions, just like conditionals were. Just as we filled a conditional with a logical expression to decide whether to run its code block, so also we fill a while loop with a logical expression to decide whether to _keep_ repeating its code block. In many ways, you can think of a while loop as a repeated conditional: it repeats _while_ the condition is true, rather than running once _if_ the condition is true.
 
-### 3. Traditional For Loops in Python {#3-Traditional-For-Loops-in-Python-1501} 
+## 3. Traditional For Loops in Python {#3-Traditional-For-Loops-in-Python-1501} 
 
 Let’s start with the traditional for loop. In practice, the traditional for loop is actually used less in Python than the for-each loop; however, in computing as a whole, the traditional for loop is probably more fundamental. In fact, technically, Python does not even have a traditional for loop: even the for loops are technically for-each loops.
 
-### For Loops with Known Ranges {#For-Loops-with-Known-Ranges-3023} 
+## For Loops with Known Ranges {#For-Loops-with-Known-Ranges-3023} 
 
 Let’s start with a loop where we know how many times we want to run it. Imagine we want to write a loop that will print the numbers from 1 to 10. How do we do that? 
 
@@ -195,7 +195,7 @@ for i in range(1, 11):
 
 **Figure 3.3.2**
 
-### For Loops with Unknown Ranges {#For-Loops-with-Unknown-Ranges-3024} 
+## For Loops with Unknown Ranges {#For-Loops-with-Unknown-Ranges-3024} 
 
 One common use of the for loop is to average numbers. So, let’s try that out. Let’s write some code in Figure 3.3.3 that will have the user enter 10 numbers, and then print the average. We’ll start with a known range, but then we’ll look at an unknown range.
 
@@ -246,7 +246,7 @@ As I mentioned earlier, I see for-each loops more commonly than I see for loops 
 
 These are a little simpler to write than the for loops that we saw earlier. A for-each loop runs the same way as a for loop, but it streamlines the process of creating a variable, getting the length of the list, and grabbing the next item during each iteration.
 
-### For-Each and Lists {#For-Each-and-Lists-3025} 
+## For-Each and Lists {#For-Each-and-Lists-3025} 
 
 We haven’t covered lists, but you’ve seen them a couple times by now. We’ll cover them more in Unit 4. For now, though, let’s perform the same task as before, but instead of getting numbers one-by-one from the user, let’s have them provided in a list.
 
@@ -282,7 +282,7 @@ print(sum / len(listOfNumbers))'>
 
 **Figure 3.3.6**
 
-### For-Each and Other Types {#For-Each-and-Other-Types-3026} 
+## For-Each and Other Types {#For-Each-and-Other-Types-3026} 
 
 We’ll use for-each a lot in Unit 4 because many of the data types we’ll discover are different forms of lists. Lists, tuples, and dictionaries are all data types that in some way implement a list-like structure. Another one, however, you’ve already seen: strings. Strings are, effectively, ordered lists of individual characters. So, we can use a for-each loop with a string as well.
 
@@ -316,7 +316,7 @@ for loops run code blocks a certain number of times. This might be the number of
 
 Any of our for loops could have been rewritten as while loops. However, while loops are good for code where we don’t know how many times we’ll need to repeat in advance. For example, imagine we’re playing a number-guessing game with the user. We don’t know how many guesses it will take to get the correct number. So, we want to repeat while their guess is incorrect.
 
-### Simple While Loops {#Simple-While-Loops-3027} 
+## Simple While Loops {#Simple-While-Loops-3027} 
 
 Let’s take a simple example of this. You might notice what we’re about to write is similar to something we wrote previously with for loops. That’s exactly right: any for loop can be written as a while loop. Figure 3.3.8 shows some code to count up to a number with a while loop.
 
@@ -335,7 +335,7 @@ Inside the while loop, we print the current value of i, and then add 1 to it. So
 
 Notice how similar this is to our for loops. With our for loop, we noted that when the code jumps back to the top, it increments i or whatever variable we use to control the loop. Here, we increment i manually on line 5. We noted that whenever the code jumps to the top, it checks if i is still less than the second number in the range. Here, this check is what governs the while loop on line 3. So, anything a for loop can do, a while loop can do, too. A for loop—especially a for-each loop in Python—is just a little more efficient to write and often more natural to think about.
 
-### While Loops and Number Guessing {#While-Loops-and-Number-Guessing-3028} 
+## While Loops and Number Guessing {#While-Loops-and-Number-Guessing-3028} 
 
 Let’s try to create a small game using while loops. In this game, we’ll randomly generate a number from 1 to 100, and we’ll ask the user to guess the number. While their guess is wrong, we’ll give them feedback on which direction to guess and repeat until it’s correct. The code for this is shown in Figure 3.3.9.
 
@@ -371,7 +371,7 @@ Then, we get started on the while loop on line 7. The while loop repeats as long
 
 That’s the end of the while loop’s contents, so how does it know whether to repeat again? At the end of the loop’s contents, userGuess is whatever number the user entered. So, when the loop ends, it jumps back to the top, line 7. Then, it checks userGuess to see if it’s equal to hiddenNumber. If it _is_ equal, then this statement is False because of the not in front, and so if it _is_ equal, the loop will not repeat. If it’s not equal, the loop repeats again.
 
-### Infinite Loops {#Infinite-Loops-3029} 
+## Infinite Loops {#Infinite-Loops-3029} 
 
 You might notice in the previous example that something risky could happen. What if the user never enters the right answer? What if they just enter “1” over and over and over again? The program will never end! Now what if instead of waiting on user input in the loop, the loop could just run as fast as it wanted? This is called an **infinite loop**: a loop that, by its design, will never end.
 
@@ -390,7 +390,7 @@ Infinite loops are errors, but they’re interesting errors in that they general
 
 We discussed previously that we can nest conditionals within one another. We can do the same thing with loops. We can have for loops inside for loops and for loops inside while loops. We can have while loops inside while loops and while loops inside for loops. We can have for loops inside while loops inside conditionals and conditions inside while loops inside for loops. Before this book becomes too much like a Dr. Seuss poem, let’s take a look at some examples.
 
-### Nested For Loops {#Nested-For-Loops-3030} 
+## Nested For Loops {#Nested-For-Loops-3030} 
 
 Earlier, we used for-each loops to loop over lists of strings and characters in a string. Now, let’s try doing both at once. Imagine we have a list of strings of multiple words, and we want to count the words in the list. To do that, we need to iterate over each character in each string; there are two “each”es in that statement, which means two for-each loops.
 
@@ -418,7 +418,7 @@ Each time the outer loop iterates once, the inner loop on line 10 runs. This one
 
 After this code has iterated over every character in every string, it then creates numWords and sets it equal to numSpaces + len(listOfStrings) on line 15. Why does it do this? Recall that previously, we added 1 to numSpaces because one space meant two words. Here, that’s true for each string individually: each string’s first space suggests two words. So, we want to add one for each string in the list. Granted, there are other ways we could do this, too: we could run an additional for-each loop at the end to add 1 for each string, or we could simply add 1 to numSpaces each time the outer loop runs, assuming there is at least one word in the string.
 
-### Nesting Both Loops {#Nesting-Both-Loops-3031} 
+## Nesting Both Loops {#Nesting-Both-Loops-3031} 
 
 The previous example showed nesting for loops (and as an added bonus, nesting a conditional inside a for loop). What about nesting while loops inside for loops, or for loops inside while loops? Let’s try that out. Let’s take our previous while loop-enabled number-guessing game and extend it to allow the player to decide in advance how many games they’d like to play. Note that we’re about to get pretty complicated, so if you find yourself confused, don’t worry: try to trace through the code line-by-line to understand how it’s running.
 
@@ -482,7 +482,7 @@ Before we end our discussion of loops, there are two final things we should disc
 
 Second, we discussed scope earlier in our material. Scope is important for loops as well, so we’ll briefly discuss the scope of variables used in loops.
 
-### Advanced Loop Keywords {#Advanced-Loop-Keywords-3032} 
+## Advanced Loop Keywords {#Advanced-Loop-Keywords-3032} 
 
 There are three final keywords with loops that are worth covering, although to be honest, I find relatively few opportunities to use these. They’re covered here for the sake of completeness, but don’t be surprised if you rarely see these in the wild.
 
@@ -522,7 +522,7 @@ If we replace the continue statement with a break statement, then just like befo
 
 Finally, the third advanced loop keyword we might use is the word pass. The keyword pass exists by necessity. How do you have a loop with an empty code block? A blank line isn’t interpreted as a line by Python; something needs to be there and indented. The keyword pass is simply what you put if you want to run a loop that does nothing. It can also be used when you want to run a conditional, function, or exception handler with no code block underneath it as well. Why would you want to do either of these things? That mystery is left to you, dear reader. (Also, we’ll see why later in this unit.)
 
-### Scope and Loops {#Scope-and-Loops-3033} 
+## Scope and Loops {#Scope-and-Loops-3033} 
 
 Finally, we should briefly talk about scope in the context of loops. As we said with conditionals, the scope of a variable is the area of the program’s execution where the variable can be seen. In Python, a variable’s scope is effectively anything after the variable is created. It doesn’t matter if it’s declared inside a loop or outside a loop; anything after the variable is created is within the variable’s scope.
 
@@ -567,7 +567,7 @@ print(sum / numCount)'>
 
 Last time in our work with the turtles graphics module, we created a little segment of code that would allow the user to enter two commands (turn or forward) two times. That was rather limited, though: with only two iterations, we could draw at most one line in any direction. With loops, though, we’ve already seen how we can loop some code until the user is done. Let’s apply that to our turtles with a while loop, and then use a for loop to create an interesting portion of an image for the user to draw.
 
-### While Loops for Repeated Commands {#While-Loops-for-Repeated-Commands-3034} 
+## While Loops for Repeated Commands {#While-Loops-for-Repeated-Commands-3034} 
 
 We noted before that it only took a couple of extra lines to make some code repeat with a while loop. We’ll see the same thing in WhileLoopsforRepeatedCommands.py.
 
@@ -581,7 +581,7 @@ Interestingly, we could have also used break or continue where we use pass here.
 
 With this relatively simple change, we now have some code that will allow the user to keep entering commands until they type end. They could run 200 commands if they wanted to and draw pretty complex figures.
 
-### For Loops for Drawing Shapes {#For-Loops-for-Drawing-Shapes-3035} 
+## For Loops for Drawing Shapes {#For-Loops-for-Drawing-Shapes-3035} 
 
 We've seen how a while loop can be used to let the user keep entering multiple commands. Now let’s see how we could use a for loop to create some more complex commands. We’re going to implement a shape command. A shape command lets the user enter a number of sides and a side length, and it will draw the regular polygon that they entered. If they entered 4 and 100, for example, it would draw a square with side length 100, starting from the current direction it’s facing. What’s remarkable is this actually won’t take many lines of code!
 

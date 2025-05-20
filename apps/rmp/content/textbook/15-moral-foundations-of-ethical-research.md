@@ -70,6 +70,8 @@ title: 15. Moral Foundations of Ethical Research
 
 Table 3.1 presents a framework for thinking through the ethical issues involved in psychological research. The rows of Table 3.1 represent four general moral principles that apply to scientific research: weighing risks against benefits, acting responsibly and with integrity, seeking justice, and respecting people’s rights and dignity. (These principles are adapted from those in the American Psychological Association \[APA\] Ethics Code.) The columns of Table 3.1 represent three groups of people that are affected by scientific research: the research participants, the scientific community, and society more generally. The idea is that a thorough consideration of the ethics of any research project must take into account how each of the four moral principles applies to each of the three groups of people. 
 
+ 
+
 Table 3.1 A Framework for Thinking About Ethical Issues in Scientific Research
 
 |     | **Who is affected?** |     |     |
