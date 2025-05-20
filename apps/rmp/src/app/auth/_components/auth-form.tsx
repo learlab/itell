@@ -17,10 +17,13 @@ export function AuthForm({ joinClassCode }: Props) {
   return (
     <div className="grid gap-4 px-4">
       {joinClassCode ? (
-        <p className="text-center leading-relaxed font-light tracking-tight">
+        <p className="leading-relaxed font-light tracking-tight">
           After you log in, you will be automatically added to the class.
         </p>
       ) : null}
+      <p className="text-muted-foreground leading-relaxed tracking-tight">
+        Please log in using your school email ending with @mga.edu.
+      </p>
       <div className="flex flex-col gap-2">
         {/* <GoogleLoginButton /> */}
         <OutlookLoginButton />
