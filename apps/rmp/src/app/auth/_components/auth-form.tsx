@@ -22,7 +22,7 @@ export function AuthForm({ joinClassCode }: Props) {
         </p>
       ) : null}
       <div className="flex flex-col gap-2">
-        <GoogleLoginButton />
+        {/* <GoogleLoginButton /> */}
         <OutlookLoginButton />
       </div>
     </div>

@@ -113,6 +113,7 @@ export const createOAuthCallbackHandler = ({
         code,
         storedCodeVerifier,
       });
+
       let user = await findUserByProvider({
         provider_id: providerId,
         provider_user_id: oauthUser.id,
@@ -121,7 +122,6 @@ export const createOAuthCallbackHandler = ({
       const teacher = join_class_code
         ? await findTeacherByClass(join_class_code)
         : null;
-      console.log("teacher found", teacher);
       let class_code_valid: boolean | undefined = undefined;
 
       if (!user) {
