@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iTELL SCORM Wrapper</title>
+    <script src="scormdriver.js"></script>
+    <script>
+        // Initialize SCORM API on page load
+
+        var itellUrl = "https://rmp.itell.ai";
+        var scorm = pipwerks.SCORM;
+        scorm.version = "1.2"; // or "2004" based on your LMS configuration
+        var scormUserId = null;
+        var hasSentId = false;
+
+        // Initialize SCORM and get user ID
+        function initScorm() {
+            if (scorm.init()) {
+                // Set the initial lesson status to "incomplete"
+                scorm.set("cmi.core.lesson_status", "incomplete");
+                
+                // Get the student/learner ID based on SCORM version
+                if (scorm.version === "1.2") {
+                    scormUserId = scorm.get("cmi.core.student_id");
+                } else if (scorm.version === "2004") {
+                    scormUserId = scorm.get("cmi.learner_id");
+                }
+                
+                // For testing, if no ID is found, create a test ID
+                if (!scormUserId) {
+                    scormUserId = "test-user-" + Math.floor(Math.random() * 10000);
+                }
+                
+                
+                return true;
+            } else {
+                console.error("SCORM API initialization failed.");
+                
+                // For testing outside of SCORM
+                scormUserId = "test-user-" + Math.floor(Math.random() * 10000);
+               
+                return false;
+            }
+        }
+
+        // Load the ITELL content into the iframe
+        function loadItell() {
+            // Initialize SCORM first
+            initScorm();
+            
+            // Define the URL of your existing ITELL website
+            var iframe = document.getElementById("itellFrame");
+            iframe.src = itellUrl;
+
+            // Send the user ID to the iTELL iframe after it loads
+            iframe.onload = function() {
+                sendScormId();
+            };
+        }
+        
+        // Function to send the SCORM ID to the iframe
+        function sendScormId() {
+            if (!scormUserId) {
+                console.error("No SCORM user ID available");
+                return;
+            }
+            
+            var iframe = document.getElementById("itellFrame");
+            try {
+                
+                iframe.contentWindow.postMessage({
+                    type: "scormInit",
+                    scormUserId: scormUserId
+                }, "*");  // Using * for development, restrict in production
+                
+                hasSentId = true;
+                
+            } catch (e) {
+                console.error("Error sending SCORM ID to iframe:", e);
+            }
+        }
+
+        // Listen for messages from ITELL
+        window.addEventListener("message", function(event) {
+            
+            
+            // Accept messages from the iframe source
+            if (event.source === document.getElementById("itellFrame").contentWindow) {
+                var data = event.data;
+                
+                // Send the SCORM ID when the iframe signals it's ready
+                if (data.type === "scormReady" && !hasSentId) {
+                    
+                    sendScormId();
+                    return;
+                }
+                
+                // Handle SCORM data updates
+                if (data.type === "scormUpdate" || data.type === "scoreUpdate" || 
+                    data.type === "progressUpdate" || data.type === "lessonStatusUpdate" ||
+                    data.type === "completionUpdate") {
+                    
+                    
+                    // Update score if provided
+                    if (data.score !== undefined) {
+                        scorm.set("cmi.core.score.raw", data.score);
+                    }
+                    
+                    // Update lesson status if provided
+                    if (data.lessonStatus) {
+                        scorm.set("cmi.core.lesson_status", data.lessonStatus);
+                    }
+                    
+                    // Update progress/lesson location if provided (SCORM 1.2 uses lesson_location)
+                    if (data.progress !== undefined) {
+                        scorm.set("cmi.core.lesson_location", data.progress);
+                    }
+                    
+                    // If a completion flag is sent, mark the lesson as completed
+                    if (data.completion === true) {
+                        scorm.set("cmi.core.lesson_status", "completed");
+                    }
+                    
+                    // Save/commit the changes to the LMS
+                    scorm.save();
+                }
+            } else {
+                console.log("Message received from unknown source");
+            }
+        });
+
+        // Start everything when the page loads
+        window.onload = loadItell;
+
+        // End the SCORM session when the page is closed
+        window.onbeforeunload = function() {
+            scorm.quit();
+        };
+    </script>
+</head>
+<body style="margin: 0; padding: 0; overflow: hidden;">
+    <!-- Embed your ITELL website using an iframe -->
+    <iframe id="itellFrame" width="100%" height="100%" style="border:none; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></iframe>
+</body>
+</html>

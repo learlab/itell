@@ -42,6 +42,7 @@ import {
 } from "./summary-input";
 import useDriver from "./use-driver";
 import type { SummaryResponse } from "@itell/core/summary";
+import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 
 type Props = {
   user: User;
@@ -139,7 +140,8 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
       if (err) {
         throw new Error("create summary action", { cause: err });
       }
-
+      
+      advanceScormProgress(page);
       clearKeystroke();
       finishStage("Saving");
       prevInput.current = input;
