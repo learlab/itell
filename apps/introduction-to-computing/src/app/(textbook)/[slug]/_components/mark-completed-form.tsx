@@ -22,6 +22,7 @@ import { DelayMessage } from "@/components/delay-message";
 import { InternalError } from "@/components/internal-error";
 import { isLastPage } from "@/lib/pages";
 import { makePageHref, reportSentry } from "@/lib/utils";
+import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 
 export function MarkCompletedForm({ page }: { page: Page; user: User }) {
   const router = useRouter();
@@ -42,6 +43,7 @@ export function MarkCompletedForm({ page }: { page: Page; user: User }) {
         throw new Error("increment user page slug action", { cause: err });
       }
 
+      advanceScormProgress(page);
       if (isLastPage(page)) {
         toast.info("You have finished the entire textbook!", {
           duration: 100000,

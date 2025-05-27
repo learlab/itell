@@ -19,6 +19,7 @@ import { isLastPage, PageData } from "@/lib/pages";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { FormEvent } from "react";
+import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 
 type Props = {
   pageStatus: PageStatus;
@@ -48,11 +49,14 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
         throw new Error("increment user page slug action", { cause: err });
       }
 
+      advanceScormProgress(page);
+      
       if (page.next_slug) {
         router.push(page.next_slug);
         return;
       }
 
+      
       if (isLastPage(page)) {
         return toast.info("You have finished the entire textbook!", {
           duration: 100000,

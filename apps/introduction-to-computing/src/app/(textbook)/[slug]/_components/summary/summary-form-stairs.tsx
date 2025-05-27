@@ -59,6 +59,7 @@ import {
 import useDriver from "./use-driver";
 import type { StairsQuestion } from "@/lib/store/summary-store";
 import type { SummaryResponse } from "@itell/core/summary";
+import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 
 interface Props {
   user: User;
@@ -244,6 +245,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           throw new Error("create summary action", { cause: err });
         }
 
+        advanceScormProgress(page);
         clearKeystroke();
         finishStage("Saving");
 

@@ -1,0 +1,25 @@
+/next.config.mjs: remove X-frame-Options header
+
+app/(textbook)/[slug]/_components/
+                            |-mark-completed-form.tsx:  add scorm logic
+
+                            |-summary/
+                                add scorm logic to summary component
+                                make this a component to streamline changes
+    
+    |- auth/
+        oauth.ts:  add scorm as a provider
+        |- scorm/
+            route.ts: add scorm logic
+
+    |- layout.tsx: add scorm-base and scorm-provider to the root layout
+
+
+components/
+    |- providers/
+        |- scorm-provider.tsx: add scorm provider
+    scorm-base.tsx: add scorm base component
+
+lib/
+    |- scorm/
+        |-scorm-communication.ts
