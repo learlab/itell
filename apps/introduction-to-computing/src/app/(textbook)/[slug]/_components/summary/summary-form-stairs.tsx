@@ -21,6 +21,7 @@ import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import { cn, getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
+import { Page } from "#content";
 import { type User } from "lucia";
 import { FileQuestionIcon, SendHorizontalIcon } from "lucide-react";
 import Confetti from "react-dom-confetti";
@@ -40,7 +41,8 @@ import { apiClient } from "@/lib/api-client";
 import { Condition } from "@/lib/constants";
 import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
-import { isLastPage, PageData } from "@/lib/pages";
+import { isLastPage } from "@/lib/pages";
+import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 import { getHistory, SelectStairsAnswered } from "@/lib/store/chat-store";
 import { getExcludedChunks, SelectSummaryReady } from "@/lib/store/cri-store";
 import {
@@ -59,11 +61,10 @@ import {
 import useDriver from "./use-driver";
 import type { StairsQuestion } from "@/lib/store/summary-store";
 import type { SummaryResponse } from "@itell/core/summary";
-import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 
 interface Props {
   user: User;
-  page: PageData;
+  page: Page;
   pageStatus: PageStatus;
   afterSubmit?: React.ReactNode;
 }

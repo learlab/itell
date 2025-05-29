@@ -7,6 +7,7 @@ import { ErrorFeedback, ErrorType } from "@itell/core/summary";
 import { Warning } from "@itell/ui/callout";
 import { StatusButton } from "@itell/ui/status-button";
 import { useSelector } from "@xstate/store/react";
+import { Page } from "#content";
 import { ArrowBigRightIcon, FlameIcon, StepForward } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
@@ -18,15 +19,14 @@ import { useCRIStore } from "@/components/provider/page-provider";
 import { EventType } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
+import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
-import type { PageData } from "@/lib/pages";
 import type { FormEvent } from "react";
-import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 
 type Props = {
   pageStatus: PageStatus;
-  page: PageData;
+  page: Page;
   streak: number;
   available_summary_skips: number;
 };

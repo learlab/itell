@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "@itell/core/hooks";
 import { ErrorFeedback, ErrorType } from "@itell/core/summary";
 import { Warning } from "@itell/ui/callout";
 import { StatusButton } from "@itell/ui/status-button";
 import { useSelector } from "@xstate/store/react";
+import { Page } from "#content";
 import { CheckIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
@@ -15,15 +16,15 @@ import { incrementUserPageSlugAction } from "@/actions/user";
 import { DelayMessage } from "@/components/delay-message";
 import { useCRIStore } from "@/components/provider/page-provider";
 import { type PageStatus } from "@/lib/page-status";
-import { isLastPage, PageData } from "@/lib/pages";
+import { isLastPage } from "@/lib/pages";
+import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 import { SelectSummaryReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { FormEvent } from "react";
-import { advanceScormProgress } from "@/lib/scorm/scorm-communication";
 
 type Props = {
   pageStatus: PageStatus;
-  page: PageData;
+  page: Page;
 };
 
 export function SummaryFormSimple({ pageStatus, page }: Props) {
@@ -50,13 +51,12 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
       }
 
       advanceScormProgress(page);
-      
+
       if (page.next_slug) {
         router.push(page.next_slug);
         return;
       }
 
-      
       if (isLastPage(page)) {
         return toast.info("You have finished the entire textbook!", {
           duration: 100000,
