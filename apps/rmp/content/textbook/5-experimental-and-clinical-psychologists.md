@@ -127,7 +127,7 @@ quiz:
   - answer: "c.\t“We could never know what would help with depression because everyone is unique and responds differently.”"
     correct: false
   - answer: "d.\t“Why is it that crystals are supposed to relieve depression? Is there any scientific evidence that this is true?”"
-    correct: false
+    correct: true
 - question: "9.\tYour book describes that clinical practice often involves “empirically supported treatments” like cognitive behavioral therapy. What does it mean to say these treatments are empirically supported? "
   answers:
   - answer: "a.\tThe treatments have been shown through systematic observation to be more effective than a control"
@@ -153,7 +153,7 @@ quiz:
   - answer: "a.\tTo describe"
     correct: false
   - answer: "b.\tTo predict"
-    correct: false
+    correct: true
   - answer: "c.\tTo explain"
     correct: false
   - answer: "d.\tTo control"

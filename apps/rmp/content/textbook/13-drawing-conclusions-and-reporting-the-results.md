@@ -60,7 +60,7 @@ quiz:
   - answer: "a.\tChoose a research design"
     correct: false
   - answer: "b.\tDevelop a research question"
-    correct: false
+    correct: true
   - answer: "c.\tForm operational definitions"
     correct: false
   - answer: "d.\tAnalyze your data"
