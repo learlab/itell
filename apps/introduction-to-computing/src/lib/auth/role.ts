@@ -1,1 +1,4 @@
-export const isAdmin = (role: string) => role === "admin";
+import { env } from "@/env.mjs";
+
+export const isAdmin = (email: string | null) =>
+  email ? env.ADMINS?.includes(email) : false;

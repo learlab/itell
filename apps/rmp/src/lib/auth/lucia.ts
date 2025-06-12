@@ -31,7 +31,7 @@ export const lucia = new Lucia(adapter, {
       image: attributes.image,
       email: attributes.email,
       role: attributes.role,
-      isAdmin: isAdmin(attributes.role),
+      isAdmin: isAdmin(attributes.email),
       /**
        * A <pageSlug, condition> map indicating user's testing condition for each page
        */
