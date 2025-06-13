@@ -1,4 +1,9 @@
-import { BarChartIcon, FileEditIcon, MessageCircleQuestion, SettingsIcon } from "lucide-react";
+import {
+  BarChartIcon,
+  FileEditIcon,
+  MessageCircleQuestion,
+  SettingsIcon,
+} from "lucide-react";
 
 import { type MobileNavItem } from "@/components/mobile-nav";
 import { routes } from "@/lib/navigation";
@@ -75,6 +80,11 @@ export const dashboardConfig = {
       {
         title: "Questions",
         href: routes.dashboardCRI(),
+        icon: MessageCircleQuestion,
+      },
+      {
+        title: "Quizzes",
+        href: routes.dashboardQuiz(),
         icon: MessageCircleQuestion,
       },
       {

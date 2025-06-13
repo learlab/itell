@@ -38,6 +38,7 @@ export default async function Page(props: Props) {
           <UserProgress pageSlug={user.pageSlug} finished={user.finished} />
           <UserStatistics
             userId={user.id}
+            userName={user.name || user.email || "Anonymous User"}
             classId={user.classId}
             pageSlug={user.pageSlug}
             readingTimeLevel={readingTimeLevel}

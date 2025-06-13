@@ -20,7 +20,7 @@ export function ColumnWithSorting<TData>({
       }}
       className={cn("px-1", className)}
     >
-      <span className="flex items-center gap-2">
+      <span className="inline-flex items-center gap-2 text-wrap">
         <ArrowUp
           className={cn(
             "size-4 shrink-0 transition duration-100",

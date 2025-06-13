@@ -271,11 +271,10 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
               type="submit"
               disabled={isPending || uiState === "showingAnswers"}
               pending={isPending}
-              className="w-48"
             >
               <span className="inline-flex items-center gap-2">
-                <ArrowRightIcon className="size-4" />
                 Continue to the textbook
+                <ArrowRightIcon className="size-4" />
               </span>
             </Button>
           )}

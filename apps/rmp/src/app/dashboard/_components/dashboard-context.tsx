@@ -12,6 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { ClassRole, DASHBOARD_ROLE_COOKIE } from "@/lib/constants";
 import { setCookie } from "@/lib/cookie";
+import { routes } from "@/lib/navigation";
 
 export type Role = (typeof ClassRole)[keyof typeof ClassRole];
 type DashboardContextType = {
@@ -62,6 +63,12 @@ export function DashboardProvider({
             router.push(nextRoute);
           });
         }
+      } else {
+        router.push(
+          role === ClassRole.TEACHER
+            ? routes.dashboardTeacher()
+            : routes.dashboard()
+        );
       }
     },
     [pathname, router]

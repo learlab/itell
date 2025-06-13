@@ -30,10 +30,10 @@ export async function ClassBadges({ userId, otherIds }: Props) {
           {classStats.contentScore ? classStats.contentScore.toFixed(2) : "NA"}
         </div>
       </DashboardBadge>
-      <DashboardBadge title="Answers" icon={<PencilIcon />}>
+      <DashboardBadge title="CRI Answers" icon={<PencilIcon />}>
         <div className="text-2xl font-bold">{classStats.totalAnswers}</div>
       </DashboardBadge>
-      <DashboardBadge title="Correct Answers" icon={<FlagIcon />}>
+      <DashboardBadge title="Correct CRI Answers" icon={<FlagIcon />}>
         <div className="text-2xl font-bold">
           {classStats.totalPassedAnswers}
         </div>

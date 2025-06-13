@@ -108,24 +108,26 @@ export async function ClassInfo({
     <Card>
       <CardHeader>
         <CardTitle>Your Class</CardTitle>
-        <CardDescription>
-          {`You have ${String(students.length)} ${
-            students.length > 1 ? "students" : "student"
-          } under class code `}
-          <span className="font-semibold">{classId}</span>
+        <CardDescription className="flex items-center justify-between">
+          <p>
+            {`You have ${String(students.length)} ${
+              students.length > 1 ? "students" : "student"
+            } under class code `}
+            <span className="font-semibold">{classId}</span>
+          </p>
+
+          <a
+            rel="noreferrer"
+            href={`
+            https://ocular.cc.gatech.edu/itell?volume=${volume.slug}&uuid=${userId}`}
+            className={buttonVariants({ variant: "secondary", size: "lg" })}
+            target="_blank"
+          >
+            Detailed dashboard
+          </a>
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-8">
-        <a
-          rel="noreferrer"
-          href={`
-            https://ocular.cc.gatech.edu/itell?volume=${volume.slug}&uuid=${userId}`}
-          className={buttonVariants({ variant: "secondary", size: "lg" })}
-          target="_blank"
-        >
-          Detailed dashboard
-        </a>
-
         <div className="space-y-4">
           <h3 className="text-lg font-medium">Median Class Statistics</h3>
           <Suspense fallback={<ClassBadges.Skeleton />}>

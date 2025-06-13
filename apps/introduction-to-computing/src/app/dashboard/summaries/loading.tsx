@@ -5,7 +5,7 @@ import { SummaryItemSkeleton } from "@summaries/summary-list";
 
 import { Meta } from "@/config/metadata";
 
-export default function () {
+export default function Loading() {
   return (
     <DashboardShell>
       <DashboardHeader

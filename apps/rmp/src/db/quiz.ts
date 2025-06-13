@@ -55,6 +55,35 @@ const getCorrectCount = (
   return correctCount;
 };
 
+export const getUserQuizStats = async (userId: string) => {
+  const records = await db
+    .select({
+      userId: quiz_answers.userId,
+      name: users.name,
+      pageSlug: quiz_answers.pageSlug,
+      data: quiz_answers.data,
+      createdAt: quiz_answers.createdAt,
+    })
+    .from(quiz_answers)
+    .leftJoin(users, eq(quiz_answers.userId, users.id))
+    .where(eq(quiz_answers.userId, userId))
+    .orderBy(
+      quiz_answers.userId,
+      quiz_answers.pageSlug,
+      desc(quiz_answers.createdAt)
+    );
+
+  return records.map((result) => {
+    const pageCorrectAnswers = correctAnswers[result.pageSlug];
+    const correct = getCorrectCount(result.data, pageCorrectAnswers);
+    return {
+      ...result,
+      total: result.data.length,
+      correct,
+    };
+  });
+};
+
 export const analyzeClassQuiz = memoize(
   async (studentIds: string[], classId: string) => {
     const records = await db
@@ -90,7 +119,7 @@ export const analyzeClassQuiz = memoize(
   {
     persist: true,
     duration: 60 * 5,
-    revalidateTags: (_, classId) => ["analyze-class-quiz", classId],
+    revalidateTags: (_studentIds, classId) => ["analyze-class-quiz", classId],
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "Analyze class quiz",
   }

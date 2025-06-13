@@ -102,6 +102,8 @@ export const { routes, useSafeParams, useSafeSearchParams } =
     dashboardTeacher: defineRoute("/dashboard/teacher"),
     dashboardCRI: defineRoute("/dashboard/cri"),
     dashboardCRITeacher: defineRoute("/dashboard/teacher/cri"),
+    dashboardQuizTeacher: defineRoute("/dashboard/teacher/quiz"),
+    dashboardQuiz: defineRoute("/dashboard/quiz"),
     dashboardForms: defineRoute("/dashboard/forms"),
     dashboardSummaries: defineRoute("/dashboard/summaries", {
       search: z

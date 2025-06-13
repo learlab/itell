@@ -45,7 +45,7 @@ export function QuizTableClient({
         <ColumnWithSorting
           column={column}
           text={page.title}
-          className="h-fit w-full text-wrap"
+          className="h-fit"
         />
       ),
       cell: ({ row }: { row: any }) => {
@@ -73,7 +73,7 @@ export function QuizTableClient({
               </DialogHeader>
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
-                  <div className="size-4 rounded-full bg-warning" />
+                  <div className="bg-warning size-4 rounded-full" />
                   Student&apos;s choice
                 </div>
                 <div className="flex items-center gap-1">

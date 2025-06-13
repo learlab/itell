@@ -12,6 +12,7 @@ import { type User } from "@/drizzle/schema";
 import { Errors } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { firstPage, getPageData } from "@/lib/pages/pages.server";
+import { StudentQuizReport } from "../../quiz/quiz-report";
 import { checkTeacher } from "../../teacher/check-teacher";
 
 interface PageProps {
@@ -64,12 +65,12 @@ function StudentProfile({
         <CardTitle>
           <div className="flex items-center justify-between">
             <p>{student.name}</p>
-            <p className="text-sm font-semibold text-muted-foreground">
+            <p className="text-muted-foreground text-sm font-semibold">
               {page?.title || firstPage?.title}
             </p>
           </div>
         </CardTitle>
-        <div className="space-y-4 text-muted-foreground">
+        <div className="text-muted-foreground space-y-4">
           <div className="flex items-center justify-between">
             <p>{student.email}</p>
             <p>joined at {student.createdAt.toLocaleString("en-us")}</p>
@@ -82,18 +83,19 @@ function StudentProfile({
           </div>
 
           <div className="flex justify-between">
-            <p className="text-sm font-semibold text-muted-foreground">
+            <p className="text-muted-foreground text-sm font-semibold">
               You are viewing a student in your class
             </p>
-            <Link className={buttonVariants()} href="/dashboard/teacher">
+            <Link className={buttonVariants()} href={routes.dashboardTeacher()}>
               Back to all students
             </Link>
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-4">
         <UserStatistics
           userId={student.id}
+          userName={student.name || student.email || "Anonymous User"}
           classId={student.classId}
           pageSlug={student.pageSlug}
           readingTimeLevel={readingTimeLevel}

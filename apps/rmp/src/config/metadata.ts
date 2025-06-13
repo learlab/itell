@@ -38,6 +38,16 @@ export const Meta = {
     description: "Class question statistics",
     slug: "constructed-response-teacher",
   },
+  quiz: {
+    title: "Quiz Report",
+    description: "Check your quiz scores",
+    slug: "quiz",
+  },
+  quizTeacher: {
+    title: "Class Quiz Report",
+    description: "Check class quiz results",
+    slug: "quiz-teacher",
+  },
   settings: {
     title: "Settings",
     description: "Manage account settings",
