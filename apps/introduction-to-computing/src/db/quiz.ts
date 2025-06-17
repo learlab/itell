@@ -62,6 +62,7 @@ export const getUserQuizCount = async (userId: string) => {
       .from(quiz_answers)
       .orderBy(quiz_answers.pageSlug)
       .where(eq(quiz_answers.userId, userId))
+      .as("derived")
   );
 };
 
