@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, count, desc, eq, inArray } from "drizzle-orm";
 import { memoize } from "nextjs-better-unstable-cache";
 
 import { quiz_answers, users } from "@/drizzle/schema";
@@ -53,6 +53,16 @@ const getCorrectCount = (
     (answer, index) => answer === correctAnswers[index]
   ).length;
   return correctCount;
+};
+
+export const getUserQuizCount = async (userId: string) => {
+  return await db.$count(
+    db
+      .selectDistinctOn([quiz_answers.pageSlug])
+      .from(quiz_answers)
+      .orderBy(quiz_answers.pageSlug)
+      .where(eq(quiz_answers.userId, userId))
+  );
 };
 
 export const getUserQuizStats = async (userId: string) => {
