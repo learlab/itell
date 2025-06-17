@@ -1,63 +1,63 @@
 ---
 assignments:
-- summary
+  - summary
 chunks:
-- title: Learning Objectives
-  slug: Learning-Objectives-458pt
-  type: plain
-- title: Reliability
-  slug: Reliability-1672t
-  type: regular
-  headings:
-  - level: 3
-    slug: test-retest-reliability
-    title: Test-Retest Reliability
-- title: Reliability 2
-  slug: Reliability-2-1673t
-  type: regular
-  headings:
-  - level: 3
-    slug: internal-consistency
-    title: Internal Consistency 
-  - level: 3
-    slug: interrater-reliability
-    title: Interrater Reliability
-- title: Validity
-  slug: Validity-1674t
-  type: regular
-  headings:
-  - level: 3
-    slug: face-validity
-    title: Face Validity
-  - level: 3
-    slug: content-validity
-    title: Content Validity
-- title: Validity 2
-  slug: Validity-2-1675t
-  type: regular
-  headings:
-  - level: 3
-    slug: criterion-validity
-    title: Criterion Validity 
-  - level: 3
-    slug: discriminant-validity
-    title: Discriminant Validity
-- title: References
-  slug: References-459pt
-  type: plain
+  - title: Learning Objectives
+    slug: Learning-Objectives-458pt
+    type: plain
+  - title: Reliability
+    slug: Reliability-1672t
+    type: regular
+    headings:
+      - level: 3
+        slug: test-retest-reliability
+        title: Test-Retest Reliability
+  - title: Reliability 2
+    slug: Reliability-2-1673t
+    type: regular
+    headings:
+      - level: 3
+        slug: internal-consistency
+        title: Internal Consistency
+      - level: 3
+        slug: interrater-reliability
+        title: Interrater Reliability
+  - title: Validity
+    slug: Validity-1674t
+    type: regular
+    headings:
+      - level: 3
+        slug: face-validity
+        title: Face Validity
+      - level: 3
+        slug: content-validity
+        title: Content Validity
+  - title: Validity 2
+    slug: Validity-2-1675t
+    type: regular
+    headings:
+      - level: 3
+        slug: criterion-validity
+        title: Criterion Validity
+      - level: 3
+        slug: discriminant-validity
+        title: Discriminant Validity
+  - title: References
+    slug: References-459pt
+    type: plain
 cri:
-- question: What does test-retest reliability measure?
-  answer: Test-retest reliability measures the consistency of scores obtained from the same group of individuals at two different points in time.
-  slug: Reliability-1672t
-- question: What is internal consistency in research measures?
-  answer: Internal consistency is the consistency of people’s responses across the items on a multiple-item measure, indicating that all items are measuring the same underlying construct.
-  slug: Reliability-2-1673t
-- question: What is face validity?
-  answer: Face validity is the extent to which a measurement method appears 'on its face' to measure the construct of interest.
-  slug: Validity-1674t
-- question: What is criterion validity and how is it assessed?
-  answer: Criterion validity is the extent to which people's scores on a measure are correlated with other variables, and it is assessed by determining if scores on the measure are correlated with variables that one would expect them to be correlated with.
-  slug: Validity-2-1675t
+  - question: What does test-retest reliability measure?
+    answer: Test-retest reliability measures the consistency of scores obtained from the same group of individuals at two different points in time.
+    slug: Reliability-1672t
+  - question: What is internal consistency in research measures?
+    answer: Internal consistency is the consistency of people’s responses across the items on a multiple-item measure, indicating that all items are measuring the same underlying construct.
+    slug: Reliability-2-1673t
+  - question: What is face validity?
+    answer: Face validity is the extent to which a measurement method appears 'on its face' to measure the construct of interest.
+    slug: Validity-1674t
+  - question: What is criterion validity and how is it assessed?
+    answer: Criterion validity is the extent to which people's scores on a measure are correlated with other variables, and it is assessed by determining if scores on the measure are correlated with variables that one would expect them to be correlated with.
+    slug: Validity-2-1675t
 next_slug: 21-practical-strategies-for-psychological-measurement
 order: 20
 parent:
@@ -68,7 +68,7 @@ slug: 20-reliability-and-validity-of-measurement
 title: 20. Reliability and Validity of Measurement
 ---
 
-## Learning Objectives {#Learning-Objectives-458pt .sr-only} 
+## Learning Objectives {#Learning-Objectives-458pt .sr-only}
 
 <i-callout variant="info" title="Learning Objectives">
 
@@ -80,11 +80,11 @@ title: 20. Reliability and Validity of Measurement
 
 </i-callout>
 
-Again, measurement involves assigning scores to individuals so that they represent some characteristic of the individuals. But how do researchers know that the scores actually represent the characteristic, especially when it is a construct like intelligence, self-esteem, depression, or working memory capacity? The answer is that they conduct research using the measure to confirm that the scores make sense based on their understanding of the construct being measured. This is an extremely important point. Psychologists do not simply _assume_ that their measures work. Instead, they collect data to _demonstrate_ that they work. If their research does not demonstrate that a measure works, they stop using it. 
+Again, measurement involves assigning scores to individuals so that they represent some characteristic of the individuals. But how do researchers know that the scores actually represent the characteristic, especially when it is a construct like intelligence, self-esteem, depression, or working memory capacity? The answer is that they conduct research using the measure to confirm that the scores make sense based on their understanding of the construct being measured. This is an extremely important point. Psychologists do not simply *assume* that their measures work. Instead, they collect data to *demonstrate* that they work. If their research does not demonstrate that a measure works, they stop using it. 
 
 As an informal example, imagine that you have been dieting for a month. Your clothes seem to be fitting more loosely, and several friends have asked if you have lost weight. If at this point your bathroom scale indicated that you had lost 10 pounds, this would make sense and you would continue to use the scale. But if it indicated that you had gained 10 pounds, you would rightly conclude that it was broken and either fix it or get rid of it. In evaluating a measurement method, psychologists consider two general dimensions: reliability and validity.
 
-## Reliability {#Reliability-1672t} 
+## Reliability {#Reliability-1672t}
 
 **Reliability** refers to the consistency of a measure. Psychologists consider three types of consistency: over time (test-retest reliability), across items (internal consistency), and across different researchers (inter-rater reliability). 
 
@@ -92,13 +92,13 @@ As an informal example, imagine that you have been dieting for a month. Your clo
 
 When researchers measure a construct that they assume to be consistent across time, then the scores they obtain should also be consistent across time. **Test-retest reliability** is the extent to which this is actually the case. For example, intelligence is generally thought to be consistent across time. A person who is highly intelligent today will be highly intelligent next week. This means that any good measure of intelligence should produce roughly the same scores for this individual next week as it does today. Clearly, a measure that produces highly inconsistent scores over time cannot be a very good measure of a construct that is supposed to be consistent.
 
-Assessing test-retest reliability requires using the measure on a group of people at one time, using it again on the _same_ group of people at a later time, and then looking at the test-retest correlation between the two sets of scores. This is typically done by graphing the data in a scatterplot and computing the correlation coefficient. Figure 4.2 shows the correlation between two sets of scores of several university students on the Rosenberg Self-Esteem Scale, administered two times, a week apart. The correlation coefficient for these data is +.95. In general, a test-retest correlation of +.80 or greater is considered to indicate good reliability.
+Assessing test-retest reliability requires using the measure on a group of people at one time, using it again on the *same* group of people at a later time, and then looking at the test-retest correlation between the two sets of scores. This is typically done by graphing the data in a scatterplot and computing the correlation coefficient. Figure 4.2 shows the correlation between two sets of scores of several university students on the Rosenberg Self-Esteem Scale, administered two times, a week apart. The correlation coefficient for these data is +.95. In general, a test-retest correlation of +.80 or greater is considered to indicate good reliability.
 
 ![20.4.2.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/20.4.2.png-7a58a93ccab1647791b625a12e6ff801.png)
 
 Again, high test-retest correlations make sense when the construct being measured is assumed to be consistent over time, which is the case for intelligence, self-esteem, and the Big Five personality dimensions. But other constructs are not assumed to be stable over time. The very nature of mood, for example, is that it changes. So a measure of mood that produced a low test-retest correlation over a period of a month would not be a cause for concern.
 
-## Reliability 2 {#Reliability-2-1673t .sr-only} 
+## Reliability 2 {#Reliability-2-1673t .sr-only}
 
 ### Internal Consistency  {#internal-consistency}
 
@@ -114,7 +114,7 @@ Perhaps the most common measure of internal consistency used by researchers in p
 
 Many behavioral measures involve significant judgment on the part of an observer or a rater. **Inter-rater reliability** is the extent to which different observers are consistent in their judgments. For example, if you were interested in measuring university students’ social skills, you could make video recordings of them as they interacted with another student whom they are meeting for the first time. Then you could have two or more observers watch the videos and rate each student’s level of social skills. To the extent that each participant does, in fact, have some level of social skills that can be detected by an attentive observer, different observers’ ratings should be highly correlated with each other. Inter-rater reliability would also have been measured in Bandura’s Bobo doll study. In this case, the observers’ ratings of how many acts of aggression a particular child committed while playing with the Bobo doll should have been highly positively correlated. Interrater reliability is often assessed using Cronbach’s α when the judgments are quantitative or an analogous statistic called Cohen’s κ (the Greek letter kappa) when they are categorical.
 
-## Validity {#Validity-1674t} 
+## Validity {#Validity-1674t}
 
 **Validity** is the extent to which the scores from a measure represent the variable they are intended to. But how do researchers make this judgment? We have already considered one factor that they take into account—reliability. When a measure has good test-retest reliability and internal consistency, researchers should be more confident that the scores represent what they are supposed to. There has to be more to it, however, because a measure can be extremely reliable but have no validity whatsoever. As an absurd example, imagine someone who believes that people’s index finger length reflects their self-esteem and therefore tries to measure self-esteem by holding a ruler up to people’s index fingers. Although this measure would have extremely good test-retest reliability, it would have absolutely no validity. The fact that one person’s index finger is a centimeter longer than another’s would indicate nothing about which one had higher self-esteem. 
 
@@ -130,7 +130,7 @@ Face validity is at best a very weak kind of evidence that a measurement method 
 
 **Content validity** is the extent to which a measure “covers” the construct of interest. For example, if a researcher conceptually defines test anxiety as involving both sympathetic nervous system activation (leading to nervous feelings) and negative thoughts, then his measure of test anxiety should include items about both nervous feelings and negative thoughts. Or consider that attitudes are usually defined as involving thoughts, feelings, and actions toward something. By this conceptual definition, a person has a positive attitude toward exercise to the extent that they think positive thoughts about exercising, feels good about exercising, and actually exercises. So to have good content validity, a measure of people’s attitudes toward exercise would have to reflect all three of these aspects. Like face validity, content validity is not usually assessed quantitatively. Instead, it is assessed by carefully checking the measurement method against the conceptual definition of the construct.
 
-## Validity 2 {#Validity-2-1675t .sr-only} 
+## Validity 2 {#Validity-2-1675t .sr-only}
 
 ### Criterion Validity  {#criterion-validity}
 
@@ -148,8 +148,7 @@ Assessing convergent validity requires collecting data using the measure. Resear
 
 When they created the Need for Cognition Scale, Cacioppo and Petty also provided evidence of discriminant validity by showing that people’s scores were not correlated with certain other variables. For example, they found only a weak correlation between people’s need for cognition and a measure of their cognitive style—the extent to which they tend to think analytically by breaking ideas into smaller parts or holistically in terms of “the big picture.” They also found no correlation between people’s need for cognition and measures of their test anxiety and their tendency to respond in socially desirable ways. All these low correlations provide evidence that the measure is reflecting a conceptually distinct construct.
 
-## References {#References-459pt} 
+## References {#References-459pt}
 
 1.  Cacioppo, J. T., & Petty, R. E. (1982). The need for cognition. _Journal of Personality and Social Psychology, 42_, 116–131.
 2.  Petty, R. E, Briñol, P., Loersch, C., & McCaslin, M. J. (2009). The need for cognition. In M. R. Leary & R. H. Hoyle (Eds.), _Handbook of individual differences in social behavior_ (pp. 318–329). New York, NY: Guilford Press.
-

@@ -74,7 +74,7 @@ export function PageHeader({
             setShouldAutoHide(!shouldAutoHide);
           }}
         />
-        <h2 className="text-balance text-lg font-medium tracking-tight">
+        <h2 className="text-lg font-medium tracking-tight text-balance">
           {page.title}
         </h2>
       </div>
