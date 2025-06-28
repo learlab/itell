@@ -61,7 +61,7 @@ cri:
 - question: What is a good rule of thumb when choosing between a between-subjects and within-subjects experiment design?
   answer: If it is possible to conduct a within-subjects experiment in the time available per participant and there are no serious concerns about carryover effects that can't be handled with counterbalancing, then that design is likely the best option; otherwise, a between-subjects design should be considered.
   slug: Between-Subjects-or-Within-Subjects?-4609
-next_slug: null
+next_slug: non-experimental-methods
 order: 25
 parent:
   title: V. Experimental Methods

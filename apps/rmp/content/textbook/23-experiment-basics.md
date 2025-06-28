@@ -40,7 +40,7 @@ parent:
   slug: experimental-methods
 quiz: null
 slug: 23-experiment-basics
-title: 23. Experiment Basics 1
+title: 23a. Experiment Basics 1
 ---
 
 ## Learning Objectives {#Learning-Objectives-2001 .sr-only} 

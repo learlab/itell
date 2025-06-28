@@ -49,7 +49,7 @@ parent:
   slug: experimental-methods
 quiz: null
 slug: experiment-basics-2
-title: Experiment Basics 2
+title: 23b. Experiment Basics 2
 ---
 
 ## Learning Objectives {#Learning-Objectives-2029 .sr-only} 
