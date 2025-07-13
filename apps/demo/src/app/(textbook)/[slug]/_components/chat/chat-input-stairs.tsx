@@ -21,7 +21,6 @@ import {
   SelectStairsAnswered,
   SelectStairsMessages,
   SelectStairsQuestion,
-  SelectStairsReady,
   SelectStairsTimestamp,
   userMessage,
 } from "@/lib/store/chat-store";
