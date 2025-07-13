@@ -2,6 +2,7 @@
 "use client";
 
 import { Spinner } from "@itell/ui/spinner";
+
 import { useScorm } from "./provider/scorm-provider";
 
 interface ScormBaseProps {
@@ -17,6 +18,11 @@ interface ScormBaseProps {
 export function ScormBase({ children, fallback }: ScormBaseProps) {
   const { isScorm, scormUserId, isLoading } = useScorm();
 
+  // If we're not in SCORM mode, show the fallback or children
+  if (!isScorm) {
+    return fallback ? <>{fallback}</> : <>{children}</>;
+  }
+
   // Show loading state while determining SCORM status
   if (isLoading) {
     return (
@@ -29,11 +35,6 @@ export function ScormBase({ children, fallback }: ScormBaseProps) {
     );
   }
 
-  // If we're not in SCORM mode, show the fallback or children
-  if (!isScorm) {
-    return fallback ? <>{fallback}</> : <>{children}</>;
-  }
-
   // If we're in SCORM mode but don't have a user ID, show error
   if (!scormUserId) {
     return (
@@ -41,7 +42,8 @@ export function ScormBase({ children, fallback }: ScormBaseProps) {
         <div className="text-center">
           <p className="text-red-500">Error: No SCORM user ID provided</p>
           <p className="mt-2 text-sm text-gray-600">
-            Please make sure you're accessing this content through your learning management system.
+            Please make sure you're accessing this content through your learning
+            management system.
           </p>
         </div>
       </div>
