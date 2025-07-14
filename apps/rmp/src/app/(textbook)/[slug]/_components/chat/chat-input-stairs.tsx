@@ -13,7 +13,10 @@ import { useServerAction } from "zsa-react";
 
 import { createChatsAction } from "@/actions/chat";
 import { InternalError } from "@/components/internal-error";
-import { useChatStore } from "@/components/provider/page-provider";
+import {
+  useChatStore,
+  useSummaryStore,
+} from "@/components/provider/page-provider";
 import { apiClient } from "@/lib/api-client";
 import { isProduction } from "@/lib/constants";
 import {
@@ -24,6 +27,7 @@ import {
   SelectStairsTimestamp,
   userMessage,
 } from "@/lib/store/chat-store";
+import { SelectInput } from "@/lib/store/summary-store";
 import { reportSentry } from "@/lib/utils";
 import type { ChatHistory } from "@itell/core/chat";
 
@@ -32,13 +36,16 @@ interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
-  const store = useChatStore();
+  const summaryStore = useSummaryStore();
+  const summary = useSelector(summaryStore, SelectInput);
+
+  const chatStore = useChatStore();
   const { addMessage, updateMessage, setActive, setStairsAnswered } =
-    store.trigger;
-  const messages = useSelector(store, SelectStairsMessages);
-  const stairsQuestion = useSelector(store, SelectStairsQuestion);
-  const stairsAnswered = useSelector(store, SelectStairsAnswered);
-  const stairsTimestamp = useSelector(store, SelectStairsTimestamp);
+    chatStore.trigger;
+  const messages = useSelector(chatStore, SelectStairsMessages);
+  const stairsQuestion = useSelector(chatStore, SelectStairsQuestion);
+  const stairsAnswered = useSelector(chatStore, SelectStairsAnswered);
+  const stairsTimestamp = useSelector(chatStore, SelectStairsTimestamp);
 
   const [pending, setPending] = useState(false);
 
@@ -103,6 +110,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
           message: text,
           history: history.current,
           current_chunk: stairsQuestion?.chunk ?? "",
+          summary,
         },
       });
       setActive({ id: null });

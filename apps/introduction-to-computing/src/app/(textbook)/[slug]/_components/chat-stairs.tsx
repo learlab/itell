@@ -22,7 +22,7 @@ export function ChatStairs({ pageSlug, footer, id }: Props) {
   return (
     <div
       id={id}
-      className="z-30 space-y-3 bg-background text-foreground"
+      className="bg-background text-foreground z-30 space-y-3"
       role="alert"
       tabIndex={-1}
       aria-relevant="additions"
@@ -43,7 +43,7 @@ export function ChatStairs({ pageSlug, footer, id }: Props) {
       </ScrollArea>
       {stairsReady && <ChatInputStairs pageSlug={pageSlug} />}
       {footer}
-      <footer className="px-4 py-2 text-xs text-muted-foreground">
+      <footer className="text-muted-foreground px-4 py-2 text-xs">
         This content has been AI-generated and may contain errors.{" "}
       </footer>
     </div>
