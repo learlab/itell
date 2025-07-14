@@ -6,18 +6,18 @@ import { Children } from "react";
 import { Spinner } from "./spinner";
 
 const BaseSandbox = dynamic(
-	() => import("@itell/js-sandbox/sandbox").then((mod) => mod.Sandbox),
-	{
-		ssr: false,
-		loading: () => (
-			<div className="flex items-center justify-center">
-				<p className="flex items-center gap-2">
-					<Spinner />
-					preparing code editor
-				</p>
-			</div>
-		),
-	},
+  () => import("@itell/js-sandbox/sandbox").then((mod) => mod.Sandbox),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center">
+        <p className="flex items-center gap-2">
+          <Spinner />
+          preparing code editor
+        </p>
+      </div>
+    ),
+  }
 );
 
 /**
@@ -32,12 +32,12 @@ const BaseSandbox = dynamic(
  * />
  */
 export const Sandbox = ({
-	children,
-	code,
-	...props
+  children,
+  code,
+  ...props
 }: { children: React.ReactNode } & _Sandbox.Props) => {
-	const { theme } = useTheme();
-	const c = code || Children.toArray(children).join("\n").trim();
+  const { theme } = useTheme();
+  const c = code || Children.toArray(children).join("\n").trim();
 
-	return <BaseSandbox {...props} code={c} theme={theme} />;
+  return <BaseSandbox {...props} code={c} theme={theme} />;
 };

@@ -43,7 +43,8 @@
     "@itell/utils": "workspace:^",
     "@monaco-editor/react": "^4.6.0",
     "@xstate/store": "^2.0.0",
-    "immer": "^9.0.21"
+    "immer": "^9.0.21",
+    "prettier": "^3.6.2"
   },
   "peerDependencies": {
     "lucide-react": "^0.424.0",

@@ -5,13 +5,15 @@ import { Sandbox } from "@/components/ui/sandbox";
 import { StepsWrapper } from "@/components/ui/steps";
 import Image from "next/image";
 import { Question } from "./question";
+import { CodeBlockPython } from "./code-block";
 export const components = {
-	"i-sandbox-js": Sandbox,
-	"i-image": Image,
-	"i-blockquote": BlockquoteWrapper,
-	"i-callout": Callout,
-	"i-accordion": Accordion,
-	"i-accordion-item": AccordionItem,
-	"i-question": Question,
-	"i-steps": StepsWrapper,
+  "i-sandbox-js": Sandbox,
+  "i-image": Image,
+  "i-blockquote": BlockquoteWrapper,
+  "i-callout": Callout,
+  "i-accordion": Accordion,
+  "i-accordion-item": AccordionItem,
+  "i-question": Question,
+  "i-steps": StepsWrapper,
+  "i-sandbox-py": CodeBlockPython,
 };

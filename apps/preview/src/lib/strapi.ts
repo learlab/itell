@@ -133,7 +133,7 @@ const getChunkContent = (chunk: any, pageSlug: string) => {
   const answer = chunk.ConstructedResponse;
   const cri =
     question && answer
-      ? `\n<i-question question='${question}' answer='${answer}' page-slug='${pageSlug}' chunk-slug='${chunk.Slug}' >\n</i-question>`
+      ? `\n\n<i-question question="${question}" answer="${answer}" page-slug="${pageSlug}" chunk-slug="${chunk.Slug}">\n</i-question>\n\n`
       : "";
 
   const heading = `## ${chunk.Header} {#${chunk.Slug}${
