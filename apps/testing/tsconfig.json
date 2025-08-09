@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "types": ["react-dom/experimental"],
+    "types": ["react-dom/experimental", "google.accounts"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -47,7 +47,7 @@
     "src/env.mjs",
     "tailwind.config.ts",
     ".eslintrc.js",
-    "next.config.mjs"
+    "next.config.mjs",
   ],
   "exclude": ["node_modules", "scripts"]
 }

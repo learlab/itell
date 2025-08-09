@@ -8,6 +8,7 @@ import { Inter, Roboto_Slab } from "next/font/google";
 import { volume } from "#content";
 
 import type { Metadata } from "next";
+import GoogleOneTap from "@/components/google-one-tap";
 
 export function generateMetadata(): Metadata {
   return {
@@ -60,6 +61,7 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontSerif.variable} flex min-h-screen flex-col font-sans
           antialiased`}
       >
+
         <RootProvider>
           <TailwindIndicator />
           {children}

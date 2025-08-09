@@ -33,6 +33,7 @@ import { firstPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
+import GoogleOneTap from "@/components/google-one-tap";
 
 const ResourceLoader = dynamic(() =>
   import("./resource-loader").then((mod) => mod.ResourceLoader)
@@ -81,7 +82,9 @@ export default async function Page(props: {
       page={page}
       pageStatus={pageStatus}
     >
+      <GoogleOneTap />
       <ScreenIssuePopup />
+
       <ResourceLoader condition={userCondition} />
       <TextbookWrapper>
         <div id={Elements.TEXTBOOK_NAV}>
