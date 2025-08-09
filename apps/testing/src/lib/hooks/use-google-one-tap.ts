@@ -1,86 +1,71 @@
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import * as Sentry from "@sentry/nextjs";
 
-import { useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-
-import * as Sentry from '@sentry/nextjs'
+import { useSession } from "@/components/provider/page-provider";
 import {
-  GoogleLoginService,
-  GoogleOneTapInitializer,
-  GoogleOneTapFallbackHandler,
   GoogleApiService,
   GoogleLoginResponse,
-} from '@/lib/google-one-tap'
-
-import { useSession } from '@/components/provider/page-provider'
+  GoogleLoginService,
+  GoogleOneTapFallbackHandler,
+  GoogleOneTapInitializer,
+} from "@/lib/google-one-tap";
 
 interface UseGoogleOneTapReturn {
-  /** 脚本是否已加载 */
-  scriptLoaded: boolean
-  /** 是否正在处理登录 */
-  isProcessing: boolean
-  /** 脚本加载成功回调 */
-  onScriptLoad: () => void
-  /** 脚本加载失败回调 */
-  onScriptError: (e: any) => void
+  scriptLoaded: boolean;
+  isProcessing: boolean;
+  onScriptLoad: () => void;
+  onScriptError: (e: any) => void;
 }
 
-/**
- * Google One Tap 自定义 hook
- * 管理 Google One Tap 登录的完整生命周期
- */
 export function useGoogleOneTap(): UseGoogleOneTapReturn {
-  const router = useRouter()
-  const { user } = useSession()
-  const [scriptLoaded, setScriptLoaded] = useState(false)
-  const [isProcessing, setIsProcessing] = useState(false)
-  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+  const router = useRouter();
+  const { user } = useSession();
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
   /**
    * 处理 Google 登录成功后的重定向
    */
   const handleLoginSuccess = useCallback(
     (data: GoogleLoginResponse) => {
-      const { accessToken, refreshToken, expiresIn, firstLogin } = data
-      const redirectUrl =
-      `/auth/google/callback?accessToken=${accessToken}&refreshToken=${refreshToken}&expiresIn=${expiresIn}&firstLogin=${Number(firstLogin)}`
-      router.push(redirectUrl)
+      const { accessToken, refreshToken, expiresIn, firstLogin } = data;
+      console.log("handle login success data", data);
+      return;
+      const redirectUrl = `/auth/google/callback?accessToken=${accessToken}&refreshToken=${refreshToken}&expiresIn=${expiresIn}&firstLogin=${Number(firstLogin)}`;
+      router.push(redirectUrl);
     },
-    [router],
-  )
+    [router]
+  );
 
-  /**
-   * Google One Tap 回调处理函数
-   */
   const handleGoogleCallback = useCallback(
     async (response: google.accounts.id.CredentialResponse) => {
       if (isProcessing || !response.credential) {
-        return
+        return;
       }
 
-      setIsProcessing(true)
+      setIsProcessing(true);
 
       try {
-        const loginService = new GoogleLoginService(handleLoginSuccess)
-        await loginService.processLogin(response.credential)
+        const loginService = new GoogleLoginService(handleLoginSuccess);
+        await loginService.processLogin(response.credential);
       } catch (error: any) {
-        Sentry.captureException(error)
-        console.error('Google One Tap processing error:', error)
+        Sentry.captureException(error);
+        console.error("Google One Tap processing error:", error);
       } finally {
-        setIsProcessing(false)
+        setIsProcessing(false);
       }
     },
-    [isProcessing, handleLoginSuccess],
-  )
+    [isProcessing, handleLoginSuccess]
+  );
 
-  /**
-   * 初始化 Google One Tap
-   */
   const initializeGoogleOneTap = useCallback(() => {
     if (!googleClientId) {
       console.warn(
-        'Google One Tap: NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured.',
-      )
-      return
+        "Google One Tap: NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured."
+      );
+      return;
     }
 
     const config: google.accounts.id.IdConfiguration = {
@@ -88,71 +73,59 @@ export function useGoogleOneTap(): UseGoogleOneTapReturn {
       callback: handleGoogleCallback,
       auto_select: true,
       cancel_on_tap_outside: false,
-      context: 'use',
-      ux_mode: 'popup',
-    }
+      context: "use",
+      ux_mode: "popup",
+    };
 
     const fallbackHandler = (
-      fallbackConfig: google.accounts.id.IdConfiguration,
+      fallbackConfig: google.accounts.id.IdConfiguration
     ) => {
-      GoogleOneTapFallbackHandler.handle(fallbackConfig)
-    }
+      GoogleOneTapFallbackHandler.handle(fallbackConfig);
+    };
 
-    const initializer = new GoogleOneTapInitializer(fallbackHandler)
-    initializer.initialize(config)
-  }, [googleClientId, handleGoogleCallback])
+    const initializer = new GoogleOneTapInitializer(fallbackHandler);
+    initializer.initialize(config);
+  }, [googleClientId, handleGoogleCallback]);
 
-  /**
-   * 主要的 useEffect 逻辑
-   */
   useEffect(() => {
     if (!scriptLoaded || !googleClientId) {
-      return
+      return;
     }
 
     if (user || isProcessing) {
       // 如果用户已登录，取消 One Tap UI
-      GoogleApiService.cleanup()
-      return
+      GoogleApiService.cleanup();
+      return;
     }
 
-    // 检查 Google API 可用性
-    const cleanup = GoogleApiService.checkAvailability()
+    const cleanup = GoogleApiService.checkAvailability();
     if (cleanup) {
-      return cleanup
+      return cleanup;
     }
 
-    // 初始化 Google One Tap
-    initializeGoogleOneTap()
+    initializeGoogleOneTap();
 
-    // 清理函数
-    return () => GoogleApiService.cleanup()
-  }, [scriptLoaded])
+    return () => GoogleApiService.cleanup();
+  }, [scriptLoaded]);
 
-  /**
-   * Script 加载成功回调
-   */
   const onScriptLoad = useCallback(() => {
-    setScriptLoaded(true)
-  }, [])
+    setScriptLoaded(true);
+  }, []);
 
-  /**
-   * Script 加载失败回调
-   */
   const onScriptError = useCallback((e: any) => {
     // 使用警告级别日志而不是异常捕获，避免过度使用 Sentry 资源
-    Sentry.logger.warn('Google One Tap script load failed', {
-      error: e?.message || 'Unknown script error',
-      code: 'SCRIPT_LOAD_FAILED',
-    })
+    Sentry.logger.warn("Google One Tap script load failed", {
+      error: e?.message || "Unknown script error",
+      code: "SCRIPT_LOAD_FAILED",
+    });
 
-    console.error('Google One Tap: Failed to load GSI script:', e)
-  }, [])
+    console.error("Google One Tap: Failed to load GSI script:", e);
+  }, []);
 
   return {
     scriptLoaded,
     isProcessing,
     onScriptLoad,
     onScriptError,
-  }
+  };
 }

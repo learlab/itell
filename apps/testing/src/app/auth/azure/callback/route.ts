@@ -2,14 +2,8 @@ import { decodeIdToken } from "arctic";
 import { z } from "zod";
 
 import { azureProvider, readAzureOAuthState } from "@/lib/auth/provider";
+import { AzureUserSchema } from "@/lib/auth/schema";
 import { createOAuthCallbackHandler } from "../../oauth";
-
-const AzureUserSchema = z.object({
-  oid: z.string(),
-  preferred_username: z.string(),
-  name: z.string().optional(),
-  email: z.string().optional(),
-});
 
 export const GET = createOAuthCallbackHandler({
   providerId: "azure",

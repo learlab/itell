@@ -247,14 +247,11 @@ export class GoogleOneTapFallbackHandler {
 }
 
 /**
- * Google 登录处理服务
+ * Service to process google login response
  */
 export class GoogleLoginService {
   constructor(private handleLoginSuccess: (data: any) => void) {}
 
-  /**
-   * 处理 Google 登录 API 调用
-   */
   async processLogin(idToken: string): Promise<void> {
     return Sentry.startSpan(
       {
@@ -265,17 +262,11 @@ export class GoogleLoginService {
         span.setAttribute("hasIdToken", !!idToken);
 
         try {
-          console.log("idToken is", decodeIdToken(idToken));
-          const res = { code: 0, data: null };
-          return;
-
-          if (res?.code === 0 && res.data) {
-            span.setAttribute("loginSuccess", true);
-            this.handleLoginSuccess(res.data);
-          } else {
-            this.handleLoginError(res, span);
-          }
+          const data = decodeIdToken(idToken);
+          this.handleLoginSuccess(data);
+          span.setAttribute("loginSuccess", true);
         } catch (error) {
+          this.handleLoginError(error, span);
           span.setAttribute("loginSuccess", false);
           Sentry.captureException(error);
           throw error;
@@ -284,28 +275,24 @@ export class GoogleLoginService {
     );
   }
 
-  private handleLoginError(res: any, span: any): void {
+  private handleLoginError(error: unknown, span: any): void {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
     span.setAttribute("loginSuccess", false);
-    span.setAttribute("errorMessage", res?.message || "Unknown error");
+    span.setAttribute("errorMessage", errorMessage);
 
-    const errorMessage = res?.message || "Google 登录失败，请稍后重试。";
     const apiError: GoogleApiError = new Error(
       `Google Login API Error: ${errorMessage}`
     );
-    apiError.code = res?.code?.toString();
-    apiError.details = res?.message;
 
     Sentry.captureException(apiError);
   }
 }
 
 /**
- * Google API 可用性检查服务
+ * Service to check Google API availability
  */
 export class GoogleApiService {
-  /**
-   * 检查 Google API 是否可用
-   */
   static checkAvailability(): (() => void) | undefined {
     return Sentry.startSpan(
       {
@@ -333,9 +320,6 @@ export class GoogleApiService {
     );
   }
 
-  /**
-   * 清理 Google One Tap
-   */
   static cleanup(): void {
     Sentry.startSpan(
       {
