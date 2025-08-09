@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import { decodeIdToken } from "arctic";
 
 export type GoogleLoginResponse = {
   accessToken: string;
@@ -264,7 +265,7 @@ export class GoogleLoginService {
         span.setAttribute("hasIdToken", !!idToken);
 
         try {
-          console.log("idToken is", idToken);
+          console.log("idToken is", decodeIdToken(idToken));
           const res = { code: 0, data: null };
           return;
 
