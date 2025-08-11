@@ -32,21 +32,21 @@ export const upsertSurveyAction = authedProcedure
       );
 
       if (!session) {
-        await tx.insert(survey_sessions).values({
+        return await tx.insert(survey_sessions).values({
           userId: ctx.user.id,
           surveyId: input.surveyId,
           data: { [input.sectionId]: input.data },
           finishedAt: input.isFinished ? new Date() : null,
         });
-      } else {
-        await tx
-          .update(survey_sessions)
-          .set({
-            data: { ...session.data, [input.sectionId]: input.data },
-            finishedAt: input.isFinished ? new Date() : undefined,
-          })
-          .where(eq(survey_sessions.id, session.id));
       }
+
+      await tx
+        .update(survey_sessions)
+        .set({
+          data: { ...session.data, [input.sectionId]: input.data },
+          finishedAt: input.isFinished ? new Date() : undefined,
+        })
+        .where(eq(survey_sessions.id, session.id));
     });
   });
 
