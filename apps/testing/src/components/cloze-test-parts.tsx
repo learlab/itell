@@ -64,6 +64,7 @@ export function RenderParts({
         return (
           <span key={`gap-${index}`} className="relative inline-block">
             <input
+              // @ts-expect-error
               ref={(el) => (inputRefs.current[index] = el as HTMLInputElement)}
               type="text"
               value={answers[index] || ""}
