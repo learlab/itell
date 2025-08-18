@@ -15,9 +15,11 @@ import { Page } from "#content";
 import { type User } from "lucia";
 import { InfoIcon } from "lucide-react";
 
+import { ClozeTest } from "@/components/cloze-test";
 import { isQuizAnswered } from "@/db/quiz";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
+import { PageCloze } from "./cloze/page-cloze";
 import { MarkCompletedForm } from "./mark-completed-form";
 import { PageAssignmentsStatusOverlay } from "./page-assignments-status-overlay";
 import { PageQuiz } from "./quiz/page-quiz";
@@ -73,6 +75,15 @@ export async function PageAssignments({
     return (
       <AssignmentsShell>
         <PageQuiz page={page} user={user} />
+      </AssignmentsShell>
+    );
+  }
+
+  if (page.assignments.includes("cloze")) {
+    return (
+      <AssignmentsShell key={"cloze"}>
+        <PageStatusInfo page={page} pageStatus={pageStatus} />
+        <PageCloze user={user} page={page} />
       </AssignmentsShell>
     );
   }

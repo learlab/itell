@@ -12,7 +12,17 @@ export const GET = createOAuthCallbackHandler({
       code,
       storedCodeVerifier
     );
-    const googleUser = decodeIdToken(tokens.idToken());
+    const accessToken = tokens.accessToken();
+    const googleUserResponse = await fetch(
+      "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const googleUser = await googleUserResponse.json();
     const data = GoogleUserSchema.parse(googleUser);
     return {
       id: data.id,

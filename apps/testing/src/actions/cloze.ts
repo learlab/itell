@@ -4,14 +4,14 @@ import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/db";
-import { cloze_answers, ClozeDataSchema } from "@/drizzle/schema";
+import { cloze_answers } from "@/drizzle/schema";
 import { authedProcedure } from "./utils";
 
 export const createClozeAction = authedProcedure
   .input(
     z.object({
       pageSlug: z.string(),
-      data: ClozeDataSchema,
+      data: z.array(z.any()),
       totalWords: z.number(),
       correctWords: z.number(),
     })
