@@ -125,9 +125,9 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
           pageSlug,
           condition: Condition.RANDOM_REREAD,
           isPassed: response.is_passed ?? false,
-          containmentScore: response.metrics.containment?.score ?? -1,
-          similarityScore: response.metrics.similarity?.score ?? -1,
-          contentScore: response.metrics.content?.score,
+          containmentScore: Number(response.metrics.containment?.score) ?? -1,
+          similarityScore: Number(response.metrics.similarity?.score) ?? -1,
+          contentScore: Number(response.metrics.content?.score),
           contentThreshold: response.metrics.content?.threshold,
         },
         keystroke: {

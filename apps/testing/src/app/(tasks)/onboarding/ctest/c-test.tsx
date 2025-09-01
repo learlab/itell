@@ -13,7 +13,7 @@ import { useActionStatus } from "use-action-status";
 import { createClozeAction } from "@/actions/cloze";
 import { updateUserAction } from "@/actions/user";
 import { AdminButton } from "@/components/admin-button";
-import { ClozeData } from "@/drizzle/schema";
+import { CTestData } from "@/drizzle/schema";
 import { routes } from "@/lib/navigation";
 import { WordItem } from "./word-item";
 
@@ -106,7 +106,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
     ) as HTMLFieldSetElement[];
 
     let correctWords = 0;
-    const clozeData: ClozeData = [];
+    const clozeData: CTestData = [];
     const answers: Array<{ word: string; isCorrect: boolean }> = [];
 
     fields.forEach((field) => {
