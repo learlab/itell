@@ -1,14 +1,8 @@
-import { z } from "zod";
+import { decodeIdToken } from "arctic";
 
 import { googleProvider, readGoogleOAuthState } from "@/lib/auth/provider";
+import { GoogleUserSchema } from "@/lib/auth/schema";
 import { createOAuthCallbackHandler } from "../../oauth";
-
-const GoogleUserSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  email: z.string(),
-  picture: z.string().optional(),
-});
 
 export const GET = createOAuthCallbackHandler({
   providerId: "google",
@@ -28,8 +22,8 @@ export const GET = createOAuthCallbackHandler({
         },
       }
     );
-    const json = await googleUserResponse.json();
-    const data = GoogleUserSchema.parse(json);
+    const googleUser = await googleUserResponse.json();
+    const data = GoogleUserSchema.parse(googleUser);
     return {
       id: data.id,
       name: data.name,

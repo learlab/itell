@@ -86,12 +86,12 @@ function Modal({
     <Dialog
       open={open}
       onOpenChange={() => {
-        if (!isProduction) {
-          setOpen(false);
-        }
+        // if (!isProduction) {
+        setOpen(false);
+        // }
       }}
     >
-      <DialogContent canClose={!isProduction}>
+      <DialogContent canClose={true}>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             {icon}

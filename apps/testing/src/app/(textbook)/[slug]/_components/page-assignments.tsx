@@ -15,7 +15,6 @@ import { Page } from "#content";
 import { type User } from "lucia";
 import { InfoIcon } from "lucide-react";
 
-import { ClozeTest } from "@/components/cloze-test";
 import { isQuizAnswered } from "@/db/quiz";
 import { Condition, SUMMARY_DESCRIPTION_ID } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";

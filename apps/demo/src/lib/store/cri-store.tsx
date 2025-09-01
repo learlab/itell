@@ -13,7 +13,7 @@ export type SelectedQuestions = Record<string, Question>;
 export type CRISnapshot = {
   currentChunk: string;
   chunkStatus: ChunkStatus;
-  isSummaryReady: boolean;
+  isAssignmentReady: boolean;
   shouldBlur: boolean;
 };
 
@@ -51,7 +51,7 @@ export const createCRIStore = (
           },
         ])
       ),
-    isSummaryReady: snapshot?.isSummaryReady ?? pageStatus.unlocked,
+    isAssignmentReady: snapshot?.isAssignmentReady ?? pageStatus.unlocked,
     shouldBlur: snapshot?.shouldBlur ?? !pageStatus.unlocked,
   };
 
@@ -92,12 +92,12 @@ export const createCRIStore = (
         }
       },
       finishPage: (context) => {
-        context.isSummaryReady = true;
+        context.isAssignmentReady = true;
         context.shouldBlur = false;
         context.currentChunk = slugs[lastIndex];
       },
       resetPage: (context) => {
-        context.isSummaryReady = false;
+        context.isAssignmentReady = false;
         context.shouldBlur = true;
         context.currentChunk = slugs[0];
         context.chunkStatus = Object.fromEntries(
@@ -138,5 +138,5 @@ export const SelectShouldBlur: Selector<boolean> = (state) =>
   state.context.shouldBlur;
 export const SelectCurrentChunk: Selector<string> = (state) =>
   state.context.currentChunk;
-export const SelectSummaryReady: Selector<boolean> = (state) =>
-  state.context.isSummaryReady;
+export const SelectAssignmentReady: Selector<boolean> = (state) =>
+  state.context.isAssignmentReady;

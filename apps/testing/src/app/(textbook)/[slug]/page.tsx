@@ -16,6 +16,7 @@ import { Pager } from "@textbook/pager";
 import { SelectionPopover } from "@textbook/selection-popover";
 import { TextbookToc } from "@textbook/textbook-toc";
 
+import GoogleOneTap from "@/components/google-one-tap";
 import { PageProvider } from "@/components/provider/page-provider";
 import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 import { isOuttakeReady } from "@/db/offboarding";
@@ -23,6 +24,7 @@ import { getSession } from "@/lib/auth";
 import { getUserCondition } from "@/lib/auth/conditions";
 import {
   Condition,
+  hasGoogleLogin,
   isProduction,
   PAGE_HEADER_PIN_COOKIE,
 } from "@/lib/constants";
@@ -33,7 +35,6 @@ import { firstPage, getPage } from "@/lib/pages/pages.server";
 import { PageContentWrapper } from "./page-content-wrapper";
 import { PageHeader } from "./page-header";
 import { TextbookWrapper } from "./textbook-wrapper";
-import GoogleOneTap from "@/components/google-one-tap";
 
 const ResourceLoader = dynamic(() =>
   import("./resource-loader").then((mod) => mod.ResourceLoader)
@@ -82,7 +83,7 @@ export default async function Page(props: {
       page={page}
       pageStatus={pageStatus}
     >
-      <GoogleOneTap />
+      {hasGoogleLogin && <GoogleOneTap />}
       <ScreenIssuePopup />
 
       <ResourceLoader condition={userCondition} />

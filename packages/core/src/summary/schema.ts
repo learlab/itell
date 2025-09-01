@@ -3,8 +3,7 @@ import { z } from "zod";
 const MetricSchema = z.object({
   name: z.string(),
   is_passed: z.boolean().nullable(),
-  score: z.number().nullable(),
-  threshold: z.number().nullable(),
+  // score: z.union([z.number().nullable(), z.boolean()]),
   feedback: z.string().nullable(),
 });
 

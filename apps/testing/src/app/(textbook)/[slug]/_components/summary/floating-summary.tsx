@@ -17,7 +17,7 @@ import {
   useSummaryStore,
 } from "@/components/provider/page-provider";
 import { isProduction } from "@/lib/constants";
-import { SelectSummaryReady } from "@/lib/store/cri-store";
+import { SelectAssignmentReady } from "@/lib/store/cri-store";
 import {
   SelectInput,
   SelectResponse,
@@ -120,7 +120,7 @@ export function ToggleShowFloatingSummary() {
 export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
   const summaryStore = useSummaryStore();
   const criStore = useCRIStore();
-  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
+  const isAssignmentReady = useSelector(criStore, SelectAssignmentReady);
   const input = useSelector(summaryStore, SelectInput);
   const userShow = useSelector(summaryStore, SelectShowFloatingSummary);
   const summaryResponse = useSelector(summaryStore, SelectResponse);
@@ -130,7 +130,7 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
   const dimensions = useElementDimensions();
 
   const floatingReady =
-    isSummaryReady && !assignmentsVisible && assignmentsSeen;
+    isAssignmentReady && !assignmentsVisible && assignmentsSeen;
   const show = floatingReady && userShow !== false;
 
   if (!show) return null;
@@ -141,7 +141,7 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed bottom-4 z-30 rounded-lg border-2 bg-accent shadow-md"
+          className="bg-accent fixed bottom-4 z-30 rounded-lg border-2 shadow-md"
           id="floating-summary"
           style={{
             left: dimensions.left,
@@ -163,8 +163,8 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
                     summaryStore.trigger.toggleShowFloatingSummary()
                   }
                   type="button"
-                  className="flex -translate-y-1/2 items-center justify-center rounded-full border
-                    border-accent-foreground bg-background p-1"
+                  className="border-accent-foreground bg-background flex -translate-y-1/2 items-center
+                    justify-center rounded-full border p-1"
                 >
                   <XIcon className="size-4" />
                 </button>
@@ -172,8 +172,8 @@ export function FloatingSummary({ isAdmin }: { isAdmin: boolean }) {
                   aria-label="Jump to summary submission"
                   onClick={() => scrollToElement(Elements.PAGE_ASSIGNMENTS)}
                   type="button"
-                  className="flex -translate-y-1/2 items-center justify-center rounded-full border
-                    border-accent-foreground bg-background p-1"
+                  className="border-accent-foreground bg-background flex -translate-y-1/2 items-center
+                    justify-center rounded-full border p-1"
                 >
                   <ArrowDownIcon className="size-4" />
                 </button>

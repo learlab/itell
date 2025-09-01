@@ -65,6 +65,7 @@
     "recharts": "^2.15.0",
     "server-only": "^0.0.1",
     "sonner": "^1.7.1",
+    "ts-pattern": "^5.8.0",
     "use-action-status": "^0.0.1",
     "use-immer": "^0.9.0",
     "velite": "^0.2.2",

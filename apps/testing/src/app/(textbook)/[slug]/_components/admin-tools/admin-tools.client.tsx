@@ -305,7 +305,7 @@ function UnblurPage() {
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        Unblur all chunks from the current page and unlock summary submission
+        Unblur all chunks from the current page and unlock assignment submission
       </TooltipContent>
     </Tooltip>
   );

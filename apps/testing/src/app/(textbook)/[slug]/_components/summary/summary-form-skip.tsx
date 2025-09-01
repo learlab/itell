@@ -18,7 +18,7 @@ import { useCRIStore } from "@/components/provider/page-provider";
 import { EventType } from "@/lib/constants";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/cri-store";
+import { SelectAssignmentReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { PageData } from "@/lib/pages";
 import type { FormEvent } from "react";
@@ -34,7 +34,7 @@ type Props = {
 export const SummaryFormSkip = memo(
   ({ pageStatus, page, streak, available_summary_skips }: Props) => {
     const criStore = useCRIStore();
-    const isSummaryReady = useSelector(criStore, SelectSummaryReady);
+    const isAssignmentReady = useSelector(criStore, SelectAssignmentReady);
     const router = useRouter();
 
     const {
@@ -80,7 +80,7 @@ export const SummaryFormSkip = memo(
       }
     }, [error, page]);
 
-    if (!isSummaryReady) {
+    if (!isAssignmentReady) {
       return (
         <div className="flex flex-col gap-2">
           <h3 className="text-2xl font-extrabold">

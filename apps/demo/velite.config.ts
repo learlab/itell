@@ -69,6 +69,19 @@ const pages = defineCollection({
             .optional(),
         })
       ),
+      cloze_test: s
+        .object({
+          original_text: s.string(),
+          gaps: s.array(
+            s.object({
+              start: s.number(),
+              end: s.number(),
+              gapped_text: s.string(),
+            })
+          ),
+        })
+        .optional()
+        .nullable(),
       quiz: s
         .array(
           s.object({
@@ -143,6 +156,7 @@ const volume = defineCollection({
     title: s.string(),
     description: s.string(),
     slug: s.string(),
+    login_methods: s.array(s.string()).default(["outlook"]),
     free_pages: s.array(s.string()),
     latex: s.boolean().default(false),
     summary: s.string().nullable(),

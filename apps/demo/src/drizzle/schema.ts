@@ -412,14 +412,23 @@ export const cloze_answers = pgTable(
   (table) => [index("cloze_answers_page_slug_idx").on(table.pageSlug)]
 );
 
-export const ClozeDataSchema = z.array(
-  z.object({
-    word: z.string(),
-    placeholders: z.array(z.string()),
-    answers: z.array(z.string()),
-  })
-);
-export type ClozeData = z.infer<typeof ClozeDataSchema>;
+const createClozeAnswerInputSchema = createInsertSchema(cloze_answers);
+export type CreateClzoeAnswerInput = z.infer<
+  typeof createClozeAnswerInputSchema
+>;
+
+export type CTestData = Array<{
+  word: string;
+  placeholders: string[];
+  answers: string[];
+}>;
+
+export type ClozeTestData = Array<{
+  word: string;
+  answer: string;
+}>;
+
+export type ClozeData = CTestData | ClozeTestData;
 
 export const quiz_answers = pgTable(
   "quiz_answers",

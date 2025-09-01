@@ -33,7 +33,7 @@ import { Condition } from "@/lib/constants";
 import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/cri-store";
+import { SelectAssignmentReady } from "@/lib/store/cri-store";
 import { makePageHref, reportSentry } from "@/lib/utils";
 import {
   getSummaryLocal,
@@ -54,7 +54,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
   const prevInput = useRef<string | undefined>(undefined);
   const { ref, data: keystrokes, clear: clearKeystroke } = useKeystroke();
   const criStore = useCRIStore();
-  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
+  const isAssignmentReady = useSelector(criStore, SelectAssignmentReady);
   const screenIssue = useScreenIssue();
 
   const randomChunkSlug = useMemo(() => {
@@ -207,7 +207,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
           {isError && <Errorbox>{ErrorFeedback[ErrorType.INTERNAL]}</Errorbox>}
           {isDelayed ? <DelayMessage /> : null}
           <Button
-            disabled={!isSummaryReady || isPending}
+            disabled={!isAssignmentReady || isPending}
             pending={isPending}
             type="submit"
             className="w-40"

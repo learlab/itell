@@ -6,9 +6,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import {
   constructed_responses,
-  createCRIFeedbackSchema,
   createCRISchema,
-  feedbacks,
   users,
 } from "@/drizzle/schema";
 import { updatePersonalizationStreak } from "@/lib/personalization";

@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@itell/utils";
 import { User } from "lucia";
 
-import { firstPage } from "@/lib/pages/pages.server";
+import { allPagesSorted, firstPage } from "@/lib/pages/pages.server";
 import { makePageHref } from "@/lib/utils";
 import { NavigationButton } from "./navigation-button";
 import type { Button } from "@itell/ui/button";

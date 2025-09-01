@@ -42,7 +42,10 @@ import { useSummaryStage } from "@/lib/hooks/use-summary-stage";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
 import { getHistory, SelectStairsAnswered } from "@/lib/store/chat-store";
-import { getExcludedChunks, SelectSummaryReady } from "@/lib/store/cri-store";
+import {
+  getExcludedChunks,
+  SelectAssignmentReady,
+} from "@/lib/store/cri-store";
 import {
   SelectError,
   SelectPrevInput,
@@ -92,7 +95,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
   const pageStatus = usePageStatus();
 
   // states
-  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
+  const isAssignmentReady = useSelector(criStore, SelectAssignmentReady);
   const response = useSelector(summaryStore, SelectResponse);
   const prevInput = useSelector(summaryStore, SelectPrevInput);
   const stairsQuestion = useSelector(summaryStore, SelectStairs);
@@ -176,6 +179,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
                 {
                   body: requestBody,
                   chunk: data,
+                  error: parsed.error,
                 }
               );
               return;
@@ -376,7 +380,7 @@ export function SummaryFormStairs({ user, page, afterSubmit }: Props) {
           <div className="flex items-center justify-between">
             <Button
               type="submit"
-              disabled={isPending || !isSummaryReady}
+              disabled={isPending || !isAssignmentReady}
               pending={isPending}
               className="w-40"
             >

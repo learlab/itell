@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "@itell/core/hooks";
 import { ErrorFeedback, ErrorType } from "@itell/core/summary";
@@ -16,7 +16,7 @@ import { DelayMessage } from "@/components/delay-message";
 import { useCRIStore } from "@/components/provider/page-provider";
 import { type PageStatus } from "@/lib/page-status";
 import { isLastPage, PageData } from "@/lib/pages";
-import { SelectSummaryReady } from "@/lib/store/cri-store";
+import { SelectAssignmentReady } from "@/lib/store/cri-store";
 import { reportSentry } from "@/lib/utils";
 import type { FormEvent } from "react";
 
@@ -27,7 +27,7 @@ type Props = {
 
 export function SummaryFormSimple({ pageStatus, page }: Props) {
   const criStore = useCRIStore();
-  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
+  const isAssignmentReady = useSelector(criStore, SelectAssignmentReady);
   const router = useRouter();
 
   const {
@@ -72,7 +72,7 @@ export function SummaryFormSimple({ pageStatus, page }: Props) {
     }
   }, [error, page]);
 
-  if (!isSummaryReady) {
+  if (!isAssignmentReady) {
     return (
       <div className="mx-auto max-w-2xl">
         <p>Finish the entire page to move on.</p>

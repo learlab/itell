@@ -6,7 +6,10 @@ import { useSelector } from "@xstate/store/react";
 import { createEventAction } from "@/actions/event";
 import { useChunks, useCRIStore } from "@/components/provider/page-provider";
 import { Condition, EventType } from "@/lib/constants";
-import { SelectCurrentChunk, SelectSummaryReady } from "@/lib/store/cri-store";
+import {
+  SelectAssignmentReady,
+  SelectCurrentChunk,
+} from "@/lib/store/cri-store";
 import { CRIContent, CRIShell } from "./cri-shell";
 
 type Props = {
@@ -19,8 +22,8 @@ type Props = {
 export function CRISimple({ question, answer, pageSlug, chunkSlug }: Props) {
   const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
-  const isSummaryReady = useSelector(store, SelectSummaryReady);
-  const disabled = isSummaryReady || currentChunk !== chunkSlug;
+  const isAssignmentReady = useSelector(store, SelectAssignmentReady);
+  const disabled = isAssignmentReady || currentChunk !== chunkSlug;
   const chunks = useChunks();
   const isLastQuestion = chunkSlug === chunks[chunks.length - 1];
 

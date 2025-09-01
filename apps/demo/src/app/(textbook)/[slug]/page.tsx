@@ -16,6 +16,7 @@ import { Pager } from "@textbook/pager";
 import { SelectionPopover } from "@textbook/selection-popover";
 import { TextbookToc } from "@textbook/textbook-toc";
 
+import GoogleOneTap from "@/components/google-one-tap";
 import { PageProvider } from "@/components/provider/page-provider";
 import { ScreenIssuePopup } from "@/components/screen-issue-popup";
 import { isOuttakeReady } from "@/db/offboarding";
@@ -23,6 +24,7 @@ import { getSession } from "@/lib/auth";
 import { getUserCondition } from "@/lib/auth/conditions";
 import {
   Condition,
+  hasGoogleLogin,
   isProduction,
   PAGE_HEADER_PIN_COOKIE,
 } from "@/lib/constants";
@@ -81,7 +83,9 @@ export default async function Page(props: {
       page={page}
       pageStatus={pageStatus}
     >
+      {hasGoogleLogin && <GoogleOneTap />}
       <ScreenIssuePopup />
+
       <ResourceLoader condition={userCondition} />
       <TextbookWrapper>
         <div id={Elements.TEXTBOOK_NAV}>

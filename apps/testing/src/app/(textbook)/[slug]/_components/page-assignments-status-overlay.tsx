@@ -5,13 +5,13 @@ import { useSelector } from "@xstate/store/react";
 import { InfoIcon } from "lucide-react";
 
 import { useCRIStore } from "@/components/provider/page-provider";
-import { SelectSummaryReady } from "@/lib/store/cri-store";
+import { SelectAssignmentReady } from "@/lib/store/cri-store";
 
 export function PageAssignmentsStatusOverlay() {
   const criStore = useCRIStore();
-  const isSummaryReady = useSelector(criStore, SelectSummaryReady);
+  const isAssignmentReady = useSelector(criStore, SelectAssignmentReady);
   return (
-    !isSummaryReady && (
+    !isAssignmentReady && (
       <div
         className="bg-background/80 animate-in animate-out absolute top-0 right-0 bottom-0 left-0
           z-10 mt-4 mb-0 flex cursor-not-allowed justify-center gap-2 backdrop-blur-sm

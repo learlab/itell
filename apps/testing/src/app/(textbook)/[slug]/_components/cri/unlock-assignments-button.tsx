@@ -8,7 +8,7 @@ import { KeyIcon } from "lucide-react";
 import { createEventAction } from "@/actions/event";
 import { useCRIStore } from "@/components/provider/page-provider";
 import { EventType } from "@/lib/constants";
-import { SelectSummaryReady } from "@/lib/store/cri-store";
+import { SelectAssignmentReady } from "@/lib/store/cri-store";
 
 export function UnlockAssignmentsButton({
   pageSlug,
@@ -20,13 +20,13 @@ export function UnlockAssignmentsButton({
   condition: string;
 }) {
   const store = useCRIStore();
-  const isSummaryReady = useSelector(store, SelectSummaryReady);
+  const isAssignmentReady = useSelector(store, SelectAssignmentReady);
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          disabled={isSummaryReady}
+          disabled={isAssignmentReady}
           size={"lg"}
           onClick={() => {
             store.trigger.finishPage();

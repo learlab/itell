@@ -10,11 +10,15 @@ type Props = {
   needRevision: boolean;
 };
 
-export function SummaryResponseFeedback({ response, needRevision, className }: Props) {
+export function SummaryResponseFeedback({
+  response,
+  needRevision,
+  className,
+}: Props) {
   return (
     <div
       className={cn(
-        "my-4 flex flex-col gap-4 font-light leading-relaxed animate-in fade-in",
+        "animate-in fade-in my-4 flex flex-col gap-4 leading-relaxed font-light",
         className
       )}
       role="alert"
@@ -27,8 +31,9 @@ export function SummaryResponseFeedback({ response, needRevision, className }: P
         </p>
         {response.is_passed ? (
           <p>
-            When revising your summary, please make substantial changes to the entire summary. If
-            only small changes are made, you will be asked to make additional revisions.
+            When revising your summary, please make substantial changes to the
+            entire summary. If only small changes are made, you will be asked to
+            make additional revisions.
           </p>
         ) : null}
       </header>
@@ -63,7 +68,10 @@ export function SummaryFeedbackDetails({
           </strong>{" "}
           <ul className="m-0 space-y-1 p-0">
             {terms.map((term) => (
-              <li className="flex items-center gap-2 text-accent-foreground" key={term}>
+              <li
+                className="text-accent-foreground flex items-center gap-2"
+                key={term}
+              >
                 <Lightbulb className="size-4" aria-hidden="true" />
                 {term}
               </li>

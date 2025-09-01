@@ -1,3 +1,5 @@
+import { volume } from "#content";
+
 export const FOCUS_TIME_SAVE_INTERVAL = 60000;
 export const EXCELLENT_SUMMARY_THRESHOLD = 0.2;
 export const SKIP_SUMMARY_STREAK_THRESHOLD = 2;
@@ -9,6 +11,9 @@ export const SUMMARY_DESCRIPTION_ID = "summary-description";
 export const SIDEBAR_STATE_COOKIE = "sidebar:state";
 export const DASHBOARD_ROLE_COOKIE = "dashboard:role";
 export const PAGE_HEADER_PIN_COOKIE = "page-header:pin";
+
+export const hasGoogleLogin = volume.login_methods.includes("google");
+export const hasOutlookLogin = volume.login_methods.includes("outlook");
 
 export const isProduction = process.env.NODE_ENV === "production";
 export const ClassRole = {
@@ -66,4 +71,3 @@ export const Survey = {
 
 export const STAIRS_TEXT_ANIMATION_WPM = 300;
 export const STAIRS_TEXT_ANIMATION_DELAY = 1; // seconds
-

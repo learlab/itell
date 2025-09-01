@@ -8,6 +8,7 @@ import { LogInIcon, LogOutIcon } from "lucide-react";
 
 import { BrandIcon } from "@/components/brand-icon";
 import { logout } from "@/lib/auth/actions";
+import { hasGoogleLogin } from "@/lib/constants";
 
 type Props = {
   joinClassCode?: string;
@@ -22,7 +23,7 @@ export function AuthForm({ joinClassCode }: Props) {
         </p>
       ) : null}
       <div className="flex flex-col gap-2">
-        <GoogleLoginButton />
+        {hasGoogleLogin && <GoogleLoginButton />}
         <OutlookLoginButton />
       </div>
     </div>
