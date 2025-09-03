@@ -128,7 +128,7 @@ export function SummaryFormReread({ user, page, pageStatus }: Props) {
           containmentScore: Number(response.metrics.containment?.score) ?? -1,
           similarityScore: Number(response.metrics.similarity?.score) ?? -1,
           contentScore: Number(response.metrics.content?.score),
-          contentThreshold: response.metrics.content?.threshold,
+          contentThreshold: response.metrics.content?.threshold as number,
         },
         keystroke: {
           start: prevInput.current ?? getSummaryLocal(pageSlug) ?? "",
