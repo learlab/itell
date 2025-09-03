@@ -28,7 +28,7 @@ const nextConfig = {
   },
   experimental: {
     reactCompiler: true,
-    testProxy: true,
+    // testProxy: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

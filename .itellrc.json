@@ -1,6 +1,6 @@
 {
-  "mainProject": "apps/testing",
-  "targetProjects": ["apps/demo"],
+  "mainProject": "apps/demo",
+  "targetProjects": ["apps/testing"],
   "protectedFiles": [
     "src/drizzle/",
     "src/lib/auth/conditions.ts",
