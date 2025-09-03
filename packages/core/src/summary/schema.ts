@@ -4,7 +4,7 @@ const MetricSchema = z.object({
   name: z.string(),
   is_passed: z.boolean().nullable(),
   score: z.union([z.number().nullable(), z.boolean()]),
-  threshold: z.number().nullable(),
+  threshold: z.union([z.number().nullable(), z.boolean()]),
   feedback: z.string().nullable(),
 });
 
