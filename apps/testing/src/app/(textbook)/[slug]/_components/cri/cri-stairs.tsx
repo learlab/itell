@@ -244,7 +244,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             <Alert>
               {state.status ? (
                 StatusStairs.PASSED ? (
-                  <CheckIcon className="size-4" />
+                  <CheckIcon className="size-4 bg-green-500" />
                 ) : (
                   <ShieldQuestionIcon className="size-4" />
                 )
