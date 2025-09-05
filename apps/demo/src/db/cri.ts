@@ -10,7 +10,7 @@ export const getClassCRIStats = async (classId: string) => {
   const byScore = await db
     .select({
       count: count(),
-      score: constructed_responses.score,
+      isPassed: constructed_responses.is_passed,
     })
     .from(constructed_responses)
     .leftJoin(users, eq(users.id, constructed_responses.userId))
@@ -36,7 +36,7 @@ export const getCRIStats = async (userId: string) => {
     const byScore = await tx
       .select({
         count: count(),
-        score: constructed_responses.score,
+        isPassed: constructed_responses.is_passed,
       })
       .from(constructed_responses)
       .where(eq(constructed_responses.userId, userId))

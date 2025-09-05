@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@itell/core/hooks";
+import { Alert, AlertTitle } from "@itell/ui/alert";
 import { Button } from "@itell/ui/button";
 import { Errorbox } from "@itell/ui/callout";
 import {
@@ -17,7 +18,15 @@ import { TextArea } from "@itell/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
-import { Flame, KeyRoundIcon, PencilIcon } from "lucide-react";
+import {
+  AlertCircleIcon,
+  CheckIcon,
+  FileQuestionIcon,
+  Flame,
+  KeyRoundIcon,
+  PencilIcon,
+  ShieldQuestionIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 import { useServerAction } from "zsa-react";
@@ -111,6 +120,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     const response = await res.json();
     createCRIAnswerAction({
       text: input,
+      is_passed: response.is_passing,
       chunkSlug,
       pageSlug,
       score: response.score.toString(),
@@ -216,12 +226,6 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
         />
 
         <CRIContent>
-          {state.feedback && (
-            <div role="status" className="tracing-tight font-light">
-              <p>{state.feedback}</p>
-            </div>
-          )}
-
           <h3 id="form-question-heading" className="sr-only">
             Answer the question
           </h3>
@@ -234,24 +238,22 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 input={state.input}
               />
             )}
-            {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" type="button" className="gap-2">
-                    <KeyRoundIcon className="size-4" />
-                    Reveal Answer
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="no-select w-80 leading-relaxed"
-                  side="right"
-                  sideOffset={12}
-                >
-                  {answer}
-                </PopoverContent>
-              </Popover>
-            )}
           </div>
+
+          {state.feedback && (
+            <Alert>
+              {state.status ? (
+                StatusStairs.PASSED ? (
+                  <CheckIcon className="size-4" />
+                ) : (
+                  <ShieldQuestionIcon className="size-4" />
+                )
+              ) : null}
+              <AlertTitle className="!mt-0 text-sm lg:text-base">
+                {state.feedback}
+              </AlertTitle>
+            </Alert>
+          )}
 
           <form
             ref={form}
@@ -327,6 +329,24 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                     />
                   ) : null}
                 </>
+              )}
+
+              {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" type="button" className="gap-2">
+                      <KeyRoundIcon className="size-4" />
+                      Reveal Answer
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="no-select w-80 leading-relaxed"
+                    side="right"
+                    sideOffset={12}
+                  >
+                    {answer}
+                  </PopoverContent>
+                </Popover>
               )}
             </div>
             {state.error && <Errorbox>{state.error}</Errorbox>}

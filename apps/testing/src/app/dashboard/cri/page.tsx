@@ -47,7 +47,7 @@ export default async function Page() {
   pages.sort((a, b) => a.order - b.order);
 
   const chartData = byScore.map((s) => {
-    const { label, description } = getScoreMeta(s.score);
+    const { label, description } = getScoreMeta(s.isPassed);
     return {
       name: label,
       value: s.count,
@@ -70,14 +70,16 @@ export default async function Page() {
             <CRIChart data={chartData} />
             <div className="grid gap-2">
               <h2 className="text-xl font-semibold">All Records</h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Due to randomness in question placement, you may not receive the
                 same question set for a chapter
               </p>
               <div className="grid gap-4">
                 {pages.map((page) => {
                   const answers = byPage[page.slug];
-                  const excellentAnswers = answers.filter((a) => a.score === 2);
+                  const excellentAnswers = answers.filter(
+                    (a) => Number.parseFloat(a.score) > 2
+                  );
                   return (
                     <Card key={page.slug} className="grid gap-4">
                       <CardHeader>
@@ -87,7 +89,7 @@ export default async function Page() {
                           {excellentAnswers.length} excellent
                         </CardDescription>
                       </CardHeader>
-                      <CardContent className="space-y-2 divide-y divide-border border">
+                      <CardContent className="divide-border space-y-2 divide-y border">
                         {questions[page.slug].map(
                           ({ slug, question, answer }) => {
                             const records = answers.filter(
@@ -144,12 +146,12 @@ function AnswerItem({
 
       <div className="space-y-1">
         <p className="font-semibold">User Answers</p>
-        <ul className="space-y-1 font-light leading-snug">
+        <ul className="space-y-1 leading-snug font-light">
           {answers.map((answer) => (
             <li key={answer.id} className="ml-4 flex justify-between">
               <p>{answer.text}</p>
-              <div className="flex gap-2 text-sm text-muted-foreground">
-                <p>{getScoreMeta(answer.score).label}</p>
+              <div className="text-muted-foreground flex gap-2 text-sm">
+                <p>{getScoreMeta(answer.is_passed).label}</p>
                 <time>{answer.createdAt.toLocaleDateString()}</time>
               </div>
             </li>

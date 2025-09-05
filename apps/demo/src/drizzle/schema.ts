@@ -261,6 +261,7 @@ export const constructed_responses = pgTable(
     id: serial("id").primaryKey().notNull(),
     text: text("text").notNull(),
     score: numeric("score").notNull(),
+    is_passed: boolean("is_passed").notNull(),
     condition: text("condition").notNull(),
     userId: text("user_id")
       .notNull()

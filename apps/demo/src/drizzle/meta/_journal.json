@@ -15,6 +15,13 @@
       "when": 1757090621485,
       "tag": "0001_futuristic_mercury",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757093219059,
+      "tag": "0002_smiling_jocasta",
+      "breakpoints": true
     }
   ]
 }

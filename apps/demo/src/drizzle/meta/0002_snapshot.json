@@ -1,6 +1,6 @@
 {
-  "id": "d47519d9-574a-4ee6-b4ab-977a6c6b97f6",
-  "prevId": "1ac002e1-e5ca-4db6-a554-bb71b96f7925",
+  "id": "d9d5f3c9-6811-4b0a-844e-eedfb4e5ea50",
+  "prevId": "e9e124b9-3f20-4561-bd2a-00403ef0aeb3",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -175,7 +175,13 @@
         },
         "score": {
           "name": "score",
-          "type": "integer",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_passed": {
+          "name": "is_passed",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": true
         },
@@ -1102,8 +1108,21 @@
           "name": "consent_given",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": false
+        },
+        "onboarding_finished": {
+          "name": "onboarding_finished",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
           "default": true
+        },
+        "offboarding_finished": {
+          "name": "offboarding_finished",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "personalization_data": {
           "name": "personalization_data",

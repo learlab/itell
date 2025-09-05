@@ -75,7 +75,6 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
     }
 
     const data = await response.json();
-    const score = data.score as QuestionScore;
 
     store.trigger.finishChunk({ chunkSlug, passed: false });
 
@@ -87,10 +86,11 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
 
     createCRIAnswerAction({
       text: input,
+      is_passed: data.is_passing,
       condition: Condition.RANDOM_REREAD,
       chunkSlug,
       pageSlug,
-      score: score.toString(),
+      score: data.score.toString(),
     });
   });
   const isPending = useDebounce(_isPending, 100);

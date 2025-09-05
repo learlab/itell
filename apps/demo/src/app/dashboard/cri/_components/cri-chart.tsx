@@ -17,10 +17,6 @@ const chartConfig = {
     label: "Poor",
     color: "var(--chart-2)",
   },
-  good: {
-    label: "Good",
-    color: "var(--chart-3)",
-  },
   excellent: {
     label: "Excellent",
     color: "var(--chart-4)",
@@ -37,7 +33,6 @@ export function CRIChart({ data }: Props) {
       <p className="sr-only" id="question-chart-title">
         A bar chart of user&apos;s answers,{" "}
         {data.find((d) => d.name === "poor")?.value ?? 0} poor,{" "}
-        {data.find((d) => d.name === "good")?.value ?? 0} good,{" "}
         {data.find((d) => d.name === "excellent")?.value ?? 0} excellent
       </p>
       <ChartContainer

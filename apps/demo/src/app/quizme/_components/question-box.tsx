@@ -74,27 +74,19 @@ export default function QuizMeBox({
   const [qatext, setQatext] = useState("");
 
   // Function to update the state and select a new question based on the score
-  const handleScore = (score: number, input: string) => {
+  const handleScore = (isPassed: boolean, input: string) => {
     // Handle status change based on score
-    if (score === 2) {
+    if (isPassed) {
       setState({
-        status: StatusStairs.BOTH_CORRECT,
+        status: StatusStairs.PASSED,
         error: null,
         input,
       });
       setCorrectlyAnswered((prev) => [...prev, currentQuestionIndex]);
       setStreak((prev) => prev + 1);
-    } else if (score === 1) {
+    } else {
       setState({
-        status: StatusStairs.SEMI_CORRECT,
-        error: null,
-        input,
-      });
-      setSemiCorrectlyAnswered((prev) => [...prev, currentQuestionIndex]);
-      setStreak((prev) => prev + 1);
-    } else if (score === 0) {
-      setState({
-        status: StatusStairs.BOTH_INCORRECT,
+        status: StatusStairs.NOT_PASSED,
         error: null,
         input,
       });
@@ -192,9 +184,8 @@ export default function QuizMeBox({
       throw new Error(error, { cause: details });
     }
     const response = await res.json();
-    const score = response.score as QuestionScore;
 
-    handleScore(score, input);
+    handleScore(response.is_passing, input);
   });
 
   const isPending = useDebounce(_isPending, 100);
@@ -225,21 +216,23 @@ export default function QuizMeBox({
   return (
     <>
       <Card
-        className={cn("mx-auto mt-4 h-1/2 w-2/3 max-w-6xl ", borderColor, {
-          shake: state.status === StatusStairs.BOTH_INCORRECT,
+        className={cn("mx-auto mt-4 h-1/2 w-2/3 max-w-6xl", borderColor, {
+          shake: state.status === StatusStairs.NOT_PASSED,
         })}
       >
-        <CardContent
-          className={cn("relative flex flex-col gap-6")}
-        >
-          {streak > 0 && status !== StatusStairs.BOTH_INCORRECT ? (
+        <CardContent className={cn("relative flex flex-col gap-6")}>
+          {streak > 0 && status !== StatusStairs.NOT_PASSED ? (
             <div className="flex justify-end p-2">
-              <Image src="/images/flame.gif" alt="Flame" width={16} height={16} />
-              <span className="font-semibold text-warning"> {streak}</span>
+              <Image
+                src="/images/flame.gif"
+                alt="Flame"
+                width={16}
+                height={16}
+              />
+              <span className="text-warning font-semibold"> {streak}</span>
             </div>
           ) : null}
-          {status === StatusStairs.BOTH_CORRECT ||
-          status === StatusStairs.SEMI_CORRECT ? (
+          {status === StatusStairs.PASSED ? (
             <>
               <div className="success-checkmark">
                 <div className="check-icon">
@@ -264,7 +257,7 @@ export default function QuizMeBox({
                 </StatusButton>
               </div>
             </>
-          ) : status === StatusStairs.BOTH_INCORRECT ? (
+          ) : (
             <>
               <div className="error-xmark">
                 <div className="x-icon mb-5 p-2">
@@ -273,7 +266,7 @@ export default function QuizMeBox({
                   <div className="icon-circle"></div>
                 </div>
               </div>
-              <div className="mb-3 mt-3 pb-2 pt-2">
+              <div className="mt-3 mb-3 pt-2 pb-2">
                 <p></p>
               </div>
               <div className="mt-3 flex items-center justify-center space-x-8 pt-4">
@@ -307,62 +300,6 @@ export default function QuizMeBox({
                 </Button>
               </div>
             </>
-          ) : (
-            <div className="default-content">
-              <div className="my-4">
-                <p className="text-lg font-semibold">Question:</p>
-                <p>{qatext}</p>
-              </div>
-
-              <form
-                ref={form}
-                aria-labelledby="form-question-heading"
-                onSubmit={onSubmit}
-                className="flex flex-col gap-4"
-              >
-                <Label className="font-normal">
-                  <span className="sr-only">your answer</span>
-                  <TextArea
-                    name="input"
-                    rows={3}
-                    className="rounded-md p-4 shadow-md xl:text-lg"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && e.shiftKey) {
-                        e.preventDefault();
-                        return;
-                      }
-
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        form.current?.requestSubmit();
-                      }
-                    }}
-                    onPaste={(e) => {
-                      e.preventDefault();
-                      toast.warning(
-                        "Copy & Paste is disallowed, please answer with your own words."
-                      );
-                    }}
-                  />
-                </Label>
-
-                {state.error && <Errorbox title={state.error} />}
-                <div className="flex flex-col items-center gap-2 sm:flex-row">
-                  <StatusButton
-                    pending={isPending}
-                    type="submit"
-                    disabled={_isPending}
-                    variant="outline"
-                    className="min-w-40"
-                  >
-                    <span className="flex items-center gap-2">
-                      <PencilIcon className="size-4" />
-                      Answer
-                    </span>
-                  </StatusButton>
-                </div>
-              </form>
-            </div>
           )}
 
           <style jsx>
