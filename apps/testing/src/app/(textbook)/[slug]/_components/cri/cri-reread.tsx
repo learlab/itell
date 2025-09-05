@@ -90,7 +90,7 @@ export function CRIReread({ question, chunkSlug, pageSlug }: Props) {
       condition: Condition.RANDOM_REREAD,
       chunkSlug,
       pageSlug,
-      score,
+      score: score.toString(),
     });
   });
   const isPending = useDebounce(_isPending, 100);

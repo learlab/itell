@@ -5,6 +5,7 @@ import { z } from "zod";
 const ScoreSchema = z.object({
   score: z.number(),
   is_passing: z.boolean(),
+  feedback: z.string().optional(),
 });
 
 export const createCriRouter = ({

@@ -82,7 +82,7 @@ export async function PageAssignments({
     return (
       <AssignmentsShell key={"cloze"}>
         <PageStatusInfo page={page} pageStatus={pageStatus} />
-        <PageCloze user={user} page={page} />
+        <PageCloze user={user} page={page} pageStatus={pageStatus} />
       </AssignmentsShell>
     );
   }

@@ -4,6 +4,7 @@ import {
   index,
   integer,
   jsonb,
+  numeric,
   pgEnum,
   pgTable,
   primaryKey,
@@ -259,7 +260,7 @@ export const constructed_responses = pgTable(
   {
     id: serial("id").primaryKey().notNull(),
     text: text("text").notNull(),
-    score: integer("score").notNull(),
+    score: numeric("score").notNull(),
     condition: text("condition").notNull(),
     userId: text("user_id")
       .notNull()
@@ -279,7 +280,6 @@ export const constructed_responses = pgTable(
 
 export type CRI = InferSelectModel<typeof constructed_responses>;
 export const createCRISchema = createInsertSchema(constructed_responses);
-
 export const feedbacks = pgTable("feedbacks", {
   id: serial("id").primaryKey().notNull(),
   type: text("type").notNull(),

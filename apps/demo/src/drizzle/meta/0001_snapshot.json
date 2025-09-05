@@ -1,6 +1,6 @@
 {
-  "id": "1ac002e1-e5ca-4db6-a554-bb71b96f7925",
-  "prevId": "32db68ad-9a90-4d37-96d7-f97c46e153e8",
+  "id": "8cc55d8a-0c79-4174-859f-fe6d14fdfea2",
+  "prevId": "e9e124b9-3f20-4561-bd2a-00403ef0aeb3",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -175,7 +175,7 @@
         },
         "score": {
           "name": "score",
-          "type": "integer",
+          "type": "numeric",
           "primaryKey": false,
           "notNull": true
         },
@@ -247,82 +247,6 @@
         "constructed_responses_user_id_users_id_fk": {
           "name": "constructed_responses_user_id_users_id_fk",
           "tableFrom": "constructed_responses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.constructed_responses_feedback": {
-      "name": "constructed_responses_feedback",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "page_slug": {
-          "name": "page_slug",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "chunk_slug": {
-          "name": "chunk_slug",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "is_positive": {
-          "name": "is_positive",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "text": {
-          "name": "text",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "tags": {
-          "name": "tags",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "constructed_responses_feedback_user_id_users_id_fk": {
-          "name": "constructed_responses_feedback_user_id_users_id_fk",
-          "tableFrom": "constructed_responses_feedback",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -418,6 +342,76 @@
         "events_user_id_users_id_fk": {
           "name": "events_user_id_users_id_fk",
           "tableFrom": "events",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.feedbacks": {
+      "name": "feedbacks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_positive": {
+          "name": "is_positive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "feedbacks_user_id_users_id_fk": {
+          "name": "feedbacks_user_id_users_id_fk",
+          "tableFrom": "feedbacks",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -1108,8 +1102,21 @@
           "name": "consent_given",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": false
+        },
+        "onboarding_finished": {
+          "name": "onboarding_finished",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
           "default": true
+        },
+        "offboarding_finished": {
+          "name": "offboarding_finished",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "personalization_data": {
           "name": "personalization_data",

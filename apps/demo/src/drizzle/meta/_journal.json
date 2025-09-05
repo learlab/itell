@@ -8,6 +8,13 @@
       "when": 1752524645569,
       "tag": "0000_awesome_stepford_cuckoos",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757090621485,
+      "tag": "0001_futuristic_mercury",
+      "breakpoints": true
     }
   ]
 }

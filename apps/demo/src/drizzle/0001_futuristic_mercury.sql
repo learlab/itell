@@ -1,0 +1,1 @@
+ALTER TABLE "constructed_responses" ALTER COLUMN "score" SET DATA TYPE numeric;

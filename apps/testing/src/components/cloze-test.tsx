@@ -4,12 +4,27 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Badge } from "@itell/ui/badge";
 import { Button } from "@itell/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@itell/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@itell/ui/card";
 import { cn } from "@itell/utils";
 import { Page } from "#content";
-import { CheckCircle, Eye, EyeOff, RotateCcw, XCircle } from "lucide-react";
+import {
+  CheckCircle,
+  CircleCheckBigIcon,
+  Eye,
+  EyeOff,
+  RotateCcw,
+  XCircle,
+} from "lucide-react";
 import { toast } from "sonner";
 
+import { PageStatus } from "@/lib/page-status";
 import { makePageHref } from "@/lib/utils";
 import { Part, RenderParts } from "./cloze-test-parts";
 import type React from "react";
@@ -18,6 +33,7 @@ interface ClozeTestProps {
   data: NonNullable<Page["cloze_test"]>;
   nextPageSlug: string | null;
   onSubmit?: (data: ClozeSubmission) => void;
+  pageStatus: PageStatus;
 }
 
 export type ClozeSubmission = {
@@ -26,7 +42,12 @@ export type ClozeSubmission = {
   isCorrect: boolean;
 }[];
 
-export function ClozeTest({ onSubmit, data, nextPageSlug }: ClozeTestProps) {
+export function ClozeTest({
+  onSubmit,
+  data,
+  nextPageSlug,
+  pageStatus,
+}: ClozeTestProps) {
   const [results, setResults] = useState<ClozeSubmission | null>(null);
   const [answers, setAnswers] = useState<string[]>(() =>
     new Array(data.gaps?.length || 0).fill("")
@@ -140,11 +161,11 @@ export function ClozeTest({ onSubmit, data, nextPageSlug }: ClozeTestProps) {
   return (
     <Card className="border-0 bg-white/80 shadow-lg backdrop-blur-sm">
       <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl text-gray-800">
-            Complete the Passage
+        <div className="flex flex-col gap-2">
+          <CardTitle className="text-xl text-pretty text-gray-800">
+            Complete the passage by filling in the blanks with the correct word.
           </CardTitle>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-1 items-center gap-2">
             <Button
               variant="ghost"
               size="sm"
@@ -152,9 +173,9 @@ export function ClozeTest({ onSubmit, data, nextPageSlug }: ClozeTestProps) {
               className="text-gray-600 hover:text-gray-800"
             >
               {showHints ? (
-                <Eye className="h-4 w-4" />
+                <Eye className="mr-2 size-4" />
               ) : (
-                <EyeOff className="h-4 w-4" />
+                <EyeOff className="mr-2 size-4" />
               )}
               {showHints ? "Hide" : "Show"} Hints
             </Button>
@@ -163,6 +184,10 @@ export function ClozeTest({ onSubmit, data, nextPageSlug }: ClozeTestProps) {
             </Badge>
           </div>
         </div>
+        <CardDescription>
+          After you finish this assignment , click the "Submit Answers" button
+          to unlock the next page.
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-6">
@@ -178,7 +203,7 @@ export function ClozeTest({ onSubmit, data, nextPageSlug }: ClozeTestProps) {
                   correctCount === data.gaps.length ? "default" : "secondary"
                 }
                 className={
-                  correctCount === data.gaps.length ? "bg-green-501" : ""
+                  correctCount === data.gaps.length ? "bg-green-500" : ""
                 }
               >
                 {correctCount}/{data.gaps.length} correct
@@ -238,10 +263,10 @@ export function ClozeTest({ onSubmit, data, nextPageSlug }: ClozeTestProps) {
             />
           </div>
 
-          <div className="mt-6 flex justify-center gap-3">
+          <div className="mt-6 flex gap-3">
             {!showResults ? (
               <Button type="submit" variant={"default"} size={"lg"}>
-                ✓ Check Answers
+                <CircleCheckBigIcon className="mr-2 size-4" /> Submit Answers
               </Button>
             ) : (
               <Button
@@ -256,69 +281,11 @@ export function ClozeTest({ onSubmit, data, nextPageSlug }: ClozeTestProps) {
             )}
           </div>
         </form>
+        <p className="text-muted-foreground text-sm">
+          Each correct word will be given one point. Provided words will need to
+          match exactly for accurate scoring
+        </p>
       </CardContent>
     </Card>
   );
 }
-
-const defaultData = {
-  text: "The sky's blue appearance is a result of Earth's atmosphere, which plays a crucial role in sustaining life. The discussion shifts to mental and physical __________, exemplified by George Hood's record-breaking _____, highlighting the role of mental toughness and _____-derived neurotrophic factor (BDNF). BDNF, a protein fostering brain health and __________, increases with exercise, especially those _________ mental effort, like planking. The narrative includes patients battling severe __________, underlining the potential of planking and its mental demands to elevate BDNF and improve ____ quality. Despite ongoing research, the link between grit, BDNF, and physical _________ remains compelling, advocating further study to harness these ________.",
-  original_text:
-    "The sky's blue appearance is a result of Earth's atmosphere, which plays a crucial role in sustaining life. The discussion shifts to mental and physical resilience, exemplified by George Hood's record-breaking plank, highlighting the role of mental toughness and Brain-derived neurotrophic factor (BDNF). BDNF, a protein fostering brain health and resilience, increases with exercise, especially those requiring mental effort, like planking. The narrative includes patients battling severe conditions, underlining the potential of planking and its mental demands to elevate BDNF and improve life quality. Despite ongoing research, the link between grit, BDNF, and physical exercises remains compelling, advocating further study to harness these benefits.",
-  gaps: [
-    {
-      start: 153,
-      end: 163,
-      gapped_text: "resilience",
-      original_word: null,
-    },
-    {
-      start: 210,
-      end: 215,
-      gapped_text: "plank",
-      original_word: null,
-    },
-    {
-      start: 263,
-      end: 268,
-      gapped_text: "Brain",
-      original_word: null,
-    },
-    {
-      start: 348,
-      end: 358,
-      gapped_text: "resilience",
-      original_word: null,
-    },
-    {
-      start: 402,
-      end: 411,
-      gapped_text: "requiring",
-      original_word: null,
-    },
-    {
-      start: 490,
-      end: 500,
-      gapped_text: "conditions",
-      original_word: null,
-    },
-    {
-      start: 591,
-      end: 595,
-      gapped_text: "life",
-      original_word: null,
-    },
-    {
-      start: 673,
-      end: 682,
-      gapped_text: "exercises",
-      original_word: null,
-    },
-    {
-      start: 745,
-      end: 753,
-      gapped_text: "benefits",
-      original_word: null,
-    },
-  ],
-};

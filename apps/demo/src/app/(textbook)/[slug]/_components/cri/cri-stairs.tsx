@@ -37,7 +37,7 @@ import { ExplainCRIButton } from "./cri-explain-button";
 import { CRIFeedback } from "./cri-feedback";
 import { CRIContent, CRIHeader, CRIShell } from "./cri-shell";
 import { FinishCRIButton } from "./finish-cri-button";
-import { borderColors, QuestionScore, StatusStairs } from "./types";
+import { borderColors, StatusStairs } from "./types";
 
 type Props = {
   question: string;
@@ -48,6 +48,7 @@ type Props = {
 
 type State = {
   status: StatusStairs;
+  feedback: string | null;
   error: string | null;
   input: string;
 };
@@ -69,6 +70,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
   const [collapsed, setCollapsed] = useState(!shouldBlur);
   const [state, setState] = useState<State>({
     status: StatusStairs.UNANSWERED,
+    feedback: null,
     error: null,
     input: "",
   });
@@ -107,46 +109,37 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
       throw new Error(error, { cause: details });
     }
     const response = await res.json();
-    const score = response.score as QuestionScore;
     createCRIAnswerAction({
       text: input,
       chunkSlug,
       pageSlug,
-      score,
+      score: response.score.toString(),
       condition: Condition.STAIRS,
     });
 
-    // if answer is correct, mark chunk as finished
-    // this will add the chunk to the list of finished chunks that gets excluded from stairs question
-    if (score === 2) {
+    if (response.is_passing) {
       store.trigger.finishChunk({ chunkSlug, passed: true });
 
       setState({
-        status: StatusStairs.BOTH_CORRECT,
+        status: StatusStairs.PASSED,
+        feedback: response.feedback ?? null,
         error: null,
         input,
       });
       setStreak((streak) => (streak ? streak + 1 : 1));
       updateStreak({ isCorrect: true });
+      return;
     }
 
-    if (score === 1) {
-      setState({
-        status: StatusStairs.SEMI_CORRECT,
-        error: null,
-        input,
-      });
-    }
-
-    if (score === 0) {
-      setState({
-        status: StatusStairs.BOTH_INCORRECT,
-        error: null,
-        input,
-      });
-      setStreak(0);
-      updateStreak({ isCorrect: false });
-    }
+    // cri not passing
+    setState({
+      status: StatusStairs.NOT_PASSED,
+      feedback: response.feedback ?? null,
+      error: null,
+      input,
+    });
+    setStreak(0);
+    updateStreak({ isCorrect: false });
   });
 
   const isPending = useDebounce(_isPending, 100);
@@ -162,7 +155,8 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
       setState((state) => ({
         ...state,
         status: StatusStairs.PASSED,
-        error: "Failed to evaluate answer, please try again later",
+        error:
+          "The evaluation failed due to a problem on our end, you are free to move on",
       }));
       reportSentry("evaluate constructed response", { error: error?.cause });
     }
@@ -192,11 +186,11 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
 
   return (
     <>
-      <Confetti active={status === StatusStairs.BOTH_CORRECT} />
+      <Confetti active={status === StatusStairs.PASSED && !state.error} />
 
       <CRIShell
         className={cn(borderColor, {
-          shake: state.status === StatusStairs.BOTH_INCORRECT,
+          shake: state.status === StatusStairs.NOT_PASSED,
         })}
       >
         <CRIHeader
@@ -222,35 +216,18 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
         />
 
         <CRIContent>
-          <div role="status">
-            {status === StatusStairs.BOTH_INCORRECT && (
-              <p className="text-destructive-foreground text-sm">
-                <b>iTELL AI says:</b> You likely got a part of the answer wrong.
-                Please try again.
-              </p>
-            )}
-
-            {status === StatusStairs.SEMI_CORRECT && (
-              <p className="text-warning text-sm">
-                <b>iTELL AI says:</b> You may have missed something, but you
-                were generally close.
-              </p>
-            )}
-
-            {status === StatusStairs.BOTH_CORRECT ? (
-              <p className="text-center text-xl text-emerald-600">
-                Your answer is correct!
-              </p>
-            ) : null}
-          </div>
+          {state.feedback && (
+            <div role="status" className="tracing-tight font-light">
+              <p>{state.feedback}</p>
+            </div>
+          )}
 
           <h3 id="form-question-heading" className="sr-only">
             Answer the question
           </h3>
 
           <div className="flex flex-wrap items-center gap-2">
-            {(status === StatusStairs.SEMI_CORRECT ||
-              status === StatusStairs.BOTH_INCORRECT) && (
+            {status === StatusStairs.NOT_PASSED && (
               <ExplainCRIButton
                 chunkSlug={chunkSlug}
                 pageSlug={pageSlug}
@@ -312,17 +289,17 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             </Label>
 
             <div className="flex flex-col items-center gap-2 sm:flex-row">
-              {status === StatusStairs.BOTH_CORRECT && isNextButtonDisplayed ? (
-                // when answer is both correct and next button should be displayed
+              {status === StatusStairs.PASSED && isNextButtonDisplayed ? (
+                // when answer is correct and next button should be displayed
                 <FinishCRIButton
                   chunkSlug={chunkSlug}
                   pageSlug={pageSlug}
                   condition={Condition.STAIRS}
                 />
               ) : (
-                // when answer is not both correct
+                // when answer is not correct
                 <>
-                  {status !== StatusStairs.BOTH_CORRECT && (
+                  {status !== StatusStairs.PASSED && (
                     <StatusButton
                       pending={isPending}
                       type="submit"

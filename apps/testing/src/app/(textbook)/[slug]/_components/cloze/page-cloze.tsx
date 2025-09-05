@@ -4,8 +4,17 @@ import { User } from "lucia";
 import { createClozeAction } from "@/actions/cloze";
 import { incrementUserPageSlugAction } from "@/actions/user";
 import { ClozeSubmission, ClozeTest } from "@/components/cloze-test";
+import { PageStatus } from "@/lib/page-status";
 
-export function PageCloze({ user, page }: { user: User; page: Page }) {
+export function PageCloze({
+  user,
+  page,
+  pageStatus,
+}: {
+  user: User;
+  page: Page;
+  pageStatus: PageStatus;
+}) {
   if (!page.cloze_test) {
     return null;
   }
@@ -26,10 +35,13 @@ export function PageCloze({ user, page }: { user: User; page: Page }) {
     await incrementUserPageSlugAction({ currentPageSlug: page.slug });
   };
   return (
-    <ClozeTest
-      data={page.cloze_test}
-      nextPageSlug={page.next_slug}
-      onSubmit={action}
-    />
+    <div className="flex flex-col gap-2">
+      <ClozeTest
+        data={page.cloze_test}
+        pageStatus={pageStatus}
+        nextPageSlug={page.next_slug}
+        onSubmit={action}
+      />
+    </div>
   );
 }
