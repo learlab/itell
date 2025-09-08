@@ -205,6 +205,10 @@
         "./toggle": {
             "types": "./src/toggle.tsx",
             "default": "./dist/toggle.js"
+        },
+        "./sources": {
+            "types": "./src/sources.tsx",
+            "default": "./dist/sources.js"
         }
     },
     "files": [

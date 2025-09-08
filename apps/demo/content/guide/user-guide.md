@@ -2,12 +2,11 @@
 condition: stairs
 ---
 
-## Overview
+## Overview {#Overview-362pt}
+iTELL (Intelligent Texts for Enhanced Lifelong Learning) is a web application designed to transform your learning experience. This guide will help you navigate and utilize its key features, including interactive text, integrated videos, engaging learning activities, an AI assistant, and automated feedback. iTELL empowers you to learn actively and effectively by presenting text-based learning materials alongside these dynamic resources.
 
-This document provides guidelines for using Intelligent Texts for Enhanced Lifelong Learning (iTELL). iTELL is a webapp that presents text-based learning materials alongside videos and learning activities. It includes an AI assistant as well as automated feedback.
-
-## Getting Started
-
+Note: iTELL is best experienced using Chrome as your browser
+## Getting Started {#Getting-Started-363pt}
 ### Sign in
 
 1\. Click on the _sign in_ button **1** on the top right of your screen.
@@ -23,12 +22,10 @@ This document provides guidelines for using Intelligent Texts for Enhanced Lifel
   width="1832"
   height="772">
 
-Sign in to iTELL
+ Sign in to iTELL
 
 </i-image>
-
-## Making Progress in iTELL
-
+## Making Progress in iTELL {#Making-Progress-in-iTELL-364pt}
 ### Pages
 
 The textbook's contents are divided into Pages. You can access different Pages using the left-side navigation bar.
@@ -105,9 +102,15 @@ If you submit an incorrect answer, iTELL AI will provide support to help you rev
 
 After submitting an incorrect answer, you can try to revise your answer and resubmit by clicking on the "Resubmit" button. You can also click on the "Reveal Answer" button to reveal the correct answer, or click on the "How can I improve my answer?" button to receive a more detailed feedback. You can also choose to skip the question by clicking on "Continue reading".
 
+#### Complete the Passage
+
+A Fill-in-the-Blank activity is located at the bottom of some pages. After you answer all short answer questions on the current page, you will be asked to solve each sentence about the passage. In order to see the number of letters in each answer, hover over the corresponding blank. Toggle "Hide Hints" to turn this feature off. When you finish filling each blank, press "Check Answers" to see your results. If you'd like to try again, please press "Try Again" and repeat this process. 
+
+![Full Cloze Test](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/Full%20Cloze%20Test-a75278dbe538dd0dcfabd3e32c7fcaa6.png)
+
 #### Write a Summary
 
-A summary writing activity is located at the bottom of each page. After you answer all short answer questions on the current page, you will be asked to summarize the contents of the page before you can move on to the next page. Write a summary and submit it to receive feedback.
+A summary writing activity is located at the bottom of some pages. After you answer all short answer questions on the current page, you will be asked to summarize the contents of the page before you can move on to the next page. Write a summary and submit it to receive feedback.
 
 ![summ.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/summ.png-4c29282ba7012795160e650188da5001.png)
 
@@ -123,20 +126,48 @@ Your summary will be evaluated according to four metrics:
 
 ### Feedback
 
-If your summary fails to pass the evaluation, you will be given additional attempts to revise and resubmit your summary. Click on the \_Details\_ tab to access more detailed feedback to help you write a better summary.
+If your summary fails to pass the evaluation, you will be given additional attempts to revise and resubmit your summary. Click on the \_Details\_ tab to access more detailed feedback to help you write a better summary. Your new summary must be significantly distinct from your previous summary. The \_Uniqueness\_ bar will visualize the difference between your previous summary and your current summary.
 
-![summ2.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/summ2.png-f85f695f4afdf3cc84aae08ca13b34e8.png)
+<i-image
+  style="aspect-ratio:1887/1016;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/summfeedback.png-d0305f7fe592b742bcf2c921618b3fb8.png"
+  alt="summfeedback.png"
+  width="1887"
+  height="1016">
+
+iTELL will evaluate your summary and provide a revision
+
+</i-image>
 
 ### Re-reading
 
 If your summary fails to pass the evaluation, iTELL's conversational agent (iTELL AI) will analyze your summary and redirect you to a section of the page. You will then re-read this section, discuss it with iTELL AI, and finally return to revise your summary.
 
+### Rewards
+
+With consistent performance, you can earn opportunities to advance more quickly through the text.
+
+**Streaks**: When you write multiple passing summaries or answer several questions correctly in a row, you build an achievement streak. Maintaining these streaks can earn you the option to skip certain writing summaries or answering questions.
+
+<i-image
+  style="aspect-ratio:1887/987;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/streakdis.png-6d5fb605475671ae6b21f6e5ea52fb49.png"
+  alt="streakdis.png"
+  width="1887"
+  height="987">
+
+Visual cues like the flame icon on the question box will show that you are currently on a streak
+
+</i-image>
+
+**Exceptional Work**: If you write a particularly thorough and insightful summary that exceeds the evaluation criteria, you may be given the opportunity to skip writing a summary.
+
+These advancement opportunities help ensure you're spending time on material that challenges you while allowing you to progress more quickly through concepts you've already mastered.
+
 ### Notes
 
 Your past summaries will be accessible from your dashboard.
-
-## iTELL AI
-
+## iTELL AI {#iTELL-AI-371pt}
 ### Starting a Conversation
 
 iTELL provides a conversational agent that will answer any questions related to the textbook. Click on the module located at the bottom right of the screen to start
@@ -173,15 +204,31 @@ iTELL AI will ask you a question about the highlighted passage.
 
 Answer the question and engage in a conversation with iTELL AI to gain a better understanding of the passage. Once you feel that you have a better understanding of the text, click on the \`Return to summary\` button to go back to the summary module and rewrite your summary. After responding to iTELL AI's question, you can continue to engage with iTELL AI, or go back to the summary module
 
-iTELL AI will only automatically redirect you for re-reading once per page.
+iTELL AI will only automatically redirect you for re-reading once per page. 
 
 ### Ask iTELL AI
 
 Another way to engage with iTELL AI is to ask them to clarify certain parts of the text. After highlighting a part of the text, you can click on the "Ask AI" button to ask iTELL AI to elaborate on the highlighted text.
 
-![itai2.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/itai2.png-93a355353c12c2407edc2b03dff0c134.png)
+<i-image
+  style="aspect-ratio:1887/1034;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/itai2.png-93a355353c12c2407edc2b03dff0c134.png"
+  alt="itai2.png"
+  width="1887"
+  height="1034">
 
-![itai3.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/itai3.png-9b8cda0beeb8edae8aed206e7cf67a76.png)
+Highlight a part of the text and click on Ask AI to initiate a conversation with iTELL AI
+
+</i-image><i-image
+  style="aspect-ratio:1887/1034;"
+  src="https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/itai3.png-9b8cda0beeb8edae8aed206e7cf67a76.png"
+  alt="itai3.png"
+  width="1887"
+  height="1034">
+
+iTELL AI will start by providing a more detailed explanation of the phrase
+
+</i-image>
 
 #### Notes
 
@@ -190,9 +237,7 @@ Like any other conversational agents, iTELL AI can make mistakes. Make sure to d
 _Built with Meta Llama 3_: iTELL AI was built from Meta's Llama 3, a state-of-the-art generative large language model. We use a diverse set of prompts and retrieval augmented generation to provide relevant and accurate responses.
 
 Meta Llama 3 is licensed under the [Meta Llama 3 Community License](https://llama.meta.com/llama3/license/), Copyright © Meta Platforms, Inc. All Rights Reserved.
-
-## Dashboard
-
+## Dashboard {#Dashboard-372pt}
 ### Statistics
 
 Access your dashboard's statistics page by clicking on your profile icon at the top right and clicking on the _Dashboard_ button.
@@ -232,10 +277,8 @@ An overview of the summaries tab.
 
 ### Questions
 
-In the \`Questions\` tab, you will have access to all the short answer questions that you have responded to while reading the text. Each row will contain your answer to a question. Clicking on the row will take you to the relevant subsection. The emojis to the right side denotes your score (incorrect, partially correct, correct).
-
-## Notes and Highlights
-
+In the 'Questions' tab, you will have access to all the short answer questions that you have responded to while reading the text. Each row will contain your answer to a question. Clicking on the row will take you to the relevant subsection. The emojis to the right side denotes your score (incorrect, partially correct, correct).
+## Notes and Highlights {#Notes-and-Highlights-373pt}
 You can leave notes and highlight parts of the page for future reference. Click and drag through the text to activate the notes and highlights function.
 
 <i-image
@@ -308,16 +351,13 @@ Note color can also be changed when initially creating the note.
   width="1600"
   height="471">
 
-Clicking on (1) prompts a color palette. Note color has been changed to orange. You can also enter a hex color code to use your own custom color scheme.
+Clicking on (1) prompts a color palette. Note color has been changed to orange. You can also enter a hex color code to use your own custom color scheme.
 
 </i-image>
 
-\- The note feature might not function properly when there are multiple notes on the same line.
-
-\- The highlighting feature might not function properly when highlighting texts across different subsections.
-
-## Other Features
-
+* The note feature might not function properly when there are multiple notes on the same line.
+* The highlighting feature might not function properly when highlighting texts across different subsections.
+## Other Features {#Other-Features-374pt}
 ### Search Bar
 
 iTELL has a search bar function that helps you find sections within the text that are most relevant to your designated search word.
@@ -331,7 +371,7 @@ Access the search function by clicking on the search bar on the top right corner
   width="1600"
   height="249">
 
-Find your target keywords inside the textbook.
+ Find your target keywords inside the textbook.
 
 </i-image>
 
@@ -349,12 +389,8 @@ Clicking on the button will prompt a pop-up search bar where you can enter your 
 
 Transition to dark mode by clicking on the sun icon on the top right corner (**1**) then on the Dark button (**2**). Switch back to Light mode by clicking on the Light button. You can also use your system setting by clicking on the System button.
 
-![userguide22.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide22.png-9318cb8134bb88f18a3aea4358264f6f.png)
-
-![userguide23.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide23.png-f441c430e112e75cad1f240321b49d24.png)
-
-## Data Use
-
+![userguide22.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide22.png-9318cb8134bb88f18a3aea4358264f6f.png)![userguide23.png](https://pxeblicvfnzlnounkznu.supabase.co/storage/v1/object/public/strapi/files/userguide23.png-f441c430e112e75cad1f240321b49d24.png)
+## Data Use {#Data-Use-375pt}
 iTELL collects usage data that is used internally to provide feedback and for systems improvement. Your data may be used for research purposes if you are part of a study and consented for your data to be used for the specific purposes of the study. We never share data with 3rd party companies.
 
 #### Login information
@@ -363,7 +399,7 @@ If you have logged in to iTELL using the single sign on services (e.g., Google o
 
 #### Usage data
 
-iTELL collects clickstream data including clicks, scrolls, and interaction with different elements within iTELL (e.g., clicking chunk reveal buttons or changing view settings in the dashboard). Individual key presses in the summary activity textbox are recorded.
+iTELL collects clickstream data including clicks, scrolls, and interaction with different elements within iTELL (e.g., clicking chunk reveal buttons or changing view settings in the dashboard). Individual key presses in the summary activity textbox are recorded. 
 
 #### Evaluation data
 
@@ -372,8 +408,5 @@ iTELL stores all evaluations of user responses to constructed response items and
 #### iTELL AI interaction data
 
 All conversations with iTELL AI are recorded. Our AI is powered by an open-source model that runs on our own servers. Your conversations are not sent to any third parties.
-
-## Contact Us
-
-For technical issues or any other inquiries, contact us via email at lear.lab.vu@gmail.com
-
+## Contact Us {#Contact-Us-376pt}
+For technical issues or any other inquiries, please contact us via email at lear.lab.vu@gmail.com

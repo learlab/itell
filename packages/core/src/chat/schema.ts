@@ -8,7 +8,7 @@ export type Message = {
   isUser: boolean;
   text: string;
   transform?: boolean;
-  context?: string;
+  context?: string[];
   node?: React.ReactNode;
 };
 export type UserMessage = Message & { isUser: true };

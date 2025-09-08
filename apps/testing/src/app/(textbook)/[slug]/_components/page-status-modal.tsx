@@ -40,9 +40,9 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
     return (
       <Modal title="Page locked" icon={<LockIcon className="size-4" />}>
         <p>
-          Gain access by submitting a passing summary for
+          Get access by submitting a passing summary for{" "}
           <Link href={href} className="mx-1 font-semibold underline">
-            <span> this page </span>
+            <span>this page</span>
           </Link>
           .
         </p>

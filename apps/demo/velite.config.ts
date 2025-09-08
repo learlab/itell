@@ -129,7 +129,15 @@ const guides = defineCollection({
   pattern: "guide/**/*.md",
   schema: s.object({
     condition: s.string(),
-    html: s.markdown(),
+    html: s.markdown({
+      remarkPlugins: [remarkHeadingAttrs, remarkMath],
+      rehypePlugins: [
+        rehypeWrapHeadingSection,
+        // @ts-expect-error plugin has wrong type
+        rehypeKatex,
+        rehypeFormat,
+      ],
+    }),
   }),
 });
 

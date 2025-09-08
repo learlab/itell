@@ -44,7 +44,7 @@ export const createChatStore = () => {
             isUser: boolean;
             transform?: boolean;
             node?: React.ReactNode;
-            context?: string;
+            context?: string[];
           };
           setActive?: boolean;
         }
@@ -68,7 +68,7 @@ export const createChatStore = () => {
           id: string;
           text: string;
           isStairs: boolean;
-          context?: string;
+          context?: string[];
         }
       ) => {
         const data = event.isStairs ? context.stairsMessages : context.messages;
@@ -127,7 +127,7 @@ export type CreateBotMessageInput = {
   isStairs: boolean;
   transform?: boolean;
   node?: React.ReactNode;
-  context?: string;
+  context?: string[];
 };
 export const botMessage = ({
   id,

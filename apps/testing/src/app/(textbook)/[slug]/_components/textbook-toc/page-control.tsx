@@ -8,6 +8,7 @@ import { PencilIcon } from "lucide-react";
 import { getSession } from "@/lib/auth";
 import { Condition } from "@/lib/constants";
 import { AdminTools } from "../admin-tools";
+import { GetHelp } from "./get-help";
 import { ResetPage } from "./reset-page";
 
 interface LinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
@@ -60,6 +61,7 @@ export async function PageControl({
         />
       ) : null}
       <ResetPage pageSlug={pageSlug} />
+      <GetHelp />
     </div>
   );
 }

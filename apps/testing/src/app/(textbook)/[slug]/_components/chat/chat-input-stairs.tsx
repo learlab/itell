@@ -132,7 +132,7 @@ export function ChatInputStairs({ className, pageSlug }: ChatInputProps) {
           }
         });
 
-        const context = data.context?.at(0);
+        const context = data.context;
         updateMessage({
           id: botMessageId,
           isStairs: true,

@@ -8,6 +8,18 @@ import { Question } from "./ui/question";
 import { YoutubeVideo } from "./youtube-video";
 
 export const TextbookComponents = {
+  a: (props: { href?: string; children: React.ReactNode }) => {
+    return (
+      <a
+        href={props.href}
+        target="_blank"
+        rel="noreferrer"
+        className="text-primary hover:text-primary/80 underline"
+      >
+        {props.children}
+      </a>
+    );
+  },
   "i-image": Image,
   "i-question": Question,
   "i-blockquote": Blockquote,

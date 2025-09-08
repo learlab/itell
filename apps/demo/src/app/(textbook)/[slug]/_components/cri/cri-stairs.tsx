@@ -20,6 +20,7 @@ import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import {
   AlertCircleIcon,
+  CheckCircle,
   CheckIcon,
   FileQuestionIcon,
   Flame,
@@ -244,7 +245,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             <Alert>
               {state.status ? (
                 StatusStairs.PASSED ? (
-                  <CheckIcon className="size-4 bg-green-500" />
+                  <CheckCircle className="size-4 stroke-green-500" />
                 ) : (
                   <ShieldQuestionIcon className="size-4" />
                 )
@@ -333,7 +334,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
 
               {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
                 <Popover>
-                  <PopoverTrigger asChild>
+                  <PopoverTrigger asChild className="ml-auto">
                     <Button variant="outline" type="button" className="gap-2">
                       <KeyRoundIcon className="size-4" />
                       Reveal Answer

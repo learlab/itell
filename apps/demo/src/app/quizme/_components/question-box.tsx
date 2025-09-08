@@ -4,21 +4,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useDebounce } from "@itell/core/hooks";
 import { Button, buttonVariants } from "@itell/ui/button";
-import { Errorbox } from "@itell/ui/callout";
 import { Card, CardContent } from "@itell/ui/card";
 import { Image } from "@itell/ui/image";
-import { Label } from "@itell/ui/label";
 import { StatusButton } from "@itell/ui/status-button";
-import { TextArea } from "@itell/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
-import { borderColors, QuestionScore, StatusStairs } from "@textbook/cri/types";
-import {
-  ChevronLast,
-  KeyRoundIcon,
-  ListRestart,
-  PencilIcon,
-} from "lucide-react";
+import { borderColors, StatusStairs } from "@textbook/cri/types";
+import { ChevronLast, KeyRoundIcon, ListRestart } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 

@@ -370,7 +370,7 @@ export const ChatMessageDataSchema = z.object({
       question_type: z.string(),
     })
     .optional(),
-  context: z.string().optional(),
+  context: z.union([z.string().optional(), z.null(), z.array(z.string())]),
   transform: z.boolean().optional(),
 });
 

@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import Link from "next/link";
 import { Progress } from "@itell/ui/progress";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { User } from "lucia";
@@ -6,6 +7,7 @@ import { CheckCircle } from "lucide-react";
 
 import { getUserQuizCount } from "@/db/quiz";
 import { allPagesSorted, quizPages } from "@/lib/pages/pages.server";
+import { makePageHref } from "@/lib/utils";
 
 export async function UserProgressIndicator({ user }: { user: User }) {
   let progress = 0;
@@ -44,7 +46,10 @@ export async function UserProgressIndicator({ user }: { user: User }) {
         ) : (
           <Tooltip>
             <TooltipTrigger>
-              <div className="flex items-center gap-3">
+              <Link
+                className="flex items-center gap-3"
+                href={makePageHref(user.pageSlug)}
+              >
                 <div className="hidden items-center gap-2 text-sm sm:flex sm:text-lg">
                   <span>Progress:</span>
                   <span className="font-medium">{progress.toFixed(0)}%</span>
@@ -55,7 +60,7 @@ export async function UserProgressIndicator({ user }: { user: User }) {
                     {progress.toFixed(0)}%
                   </span>
                 </div>
-              </div>
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
               {unlockedPages} / {allPagesSorted.length} pages completed,{" "}

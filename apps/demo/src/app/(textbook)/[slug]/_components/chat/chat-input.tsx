@@ -25,6 +25,11 @@ export function ChatInput({
 }: ChatInputProps) {
   const { action, pending, isError } = useAddChat();
 
+  function createMessage(input: string) {
+    if (input === "") return toast.warning("Please enter a message");
+    action({ text: input, pageSlug });
+  }
+
   return (
     <motion.div
       layout
@@ -42,13 +47,13 @@ export function ChatInput({
         onSubmit={(e) => {
           e.preventDefault();
           const input = e.currentTarget.input.value.trim();
-          if (input === "") return;
-          action({ text: input, pageSlug });
+          createMessage(input);
           e.currentTarget.input.value = "";
         }}
       >
         <TextArea
           name="input"
+          required
           autoFocus
           disabled={pending}
           placeholder="Enter a message"
@@ -58,7 +63,7 @@ export function ChatInput({
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               const input = e.currentTarget.value.trim();
-              action({ text: input, pageSlug });
+              createMessage(input);
               e.currentTarget.value = "";
             }
           }}

@@ -94,8 +94,11 @@ function ChunksCarousel() {
                     });
                   }}
                 >
-                  <Card className="text-accent-foreground group-hover:bg-accent flex h-full items-center transition">
-                    <CardHeader className="p-3">
+                  <Card
+                    className="text-accent-foreground group-hover:bg-accent flex h-full w-full items-center
+                      justify-center transition"
+                  >
+                    <CardHeader className="w-full p-3">
                       <CardTitle className="lg:text-normal line-clamp-2 text-sm font-semibold">
                         {c.title}
                       </CardTitle>

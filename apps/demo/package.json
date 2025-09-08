@@ -39,7 +39,7 @@
     "babel-plugin-react-compiler": "19.0.0-beta-6fc168f-20241025",
     "client-only": "^0.0.1",
     "cmdk": "^1.0.4",
-    "drizzle-orm": "^0.44.4",
+    "drizzle-orm": "^0.44.5",
     "drizzle-zod": "^0.5.1",
     "emoji-blast": "^0.10.2",
     "es-toolkit": "^1.39.8",

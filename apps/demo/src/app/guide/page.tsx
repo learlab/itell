@@ -11,10 +11,13 @@ import { Condition } from "@/lib/constants";
 export default async function GuidePage() {
   const { user } = await getSession();
   const userCondition = Condition.STAIRS;
-  const guide = guides.find((g) => g.condition === userCondition);
+  let guide = guides.find((g) => g.condition === userCondition);
 
   if (!guide) {
-    return notFound();
+    guide = guides.find((g) => g.condition === Condition.STAIRS);
+    if (!guide) {
+      return notFound();
+    }
   }
 
   // allow unauthenticated access
@@ -27,7 +30,10 @@ export default async function GuidePage() {
 
   return (
     <>
-      <h2 className="mb-4 text-balance text-center text-2xl font-extrabold tracking-tight md:text-3xl 2xl:text-4xl">
+      <h2
+        className="mb-4 text-center text-2xl font-extrabold tracking-tight text-balance md:text-3xl
+          2xl:text-4xl"
+      >
         iTELL User Guide
       </h2>
       <HtmlRenderer components={TextbookComponents} html={guide.html} />

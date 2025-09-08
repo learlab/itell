@@ -15,10 +15,17 @@ import {
 } from "@itell/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@itell/ui/avatar";
 import { Button } from "@itell/ui/button";
+import { Separator } from "@itell/ui/separator";
+import {
+  Source,
+  Sources,
+  SourcesContent,
+  SourcesTrigger,
+} from "@itell/ui/sources";
 import { cn, getChunkElement } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import htmr from "htmr";
-import { CopyIcon } from "lucide-react";
+import { ChevronDownIcon, CopyIcon, LightbulbIcon } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import { toast } from "sonner";
 
@@ -201,7 +208,7 @@ function MessageItem({
       <AnimatePresence>
         {!message.isUser && (
           <footer
-            className="bg-accent absolute bottom-0 right-0 z-10 mt-2 translate-y-1/2 rounded-lg border
+            className="bg-accent absolute right-0 bottom-0 z-10 mt-2 translate-y-1/2 rounded-lg border
               px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
           >
             <ChatAction message={message} />
@@ -216,12 +223,89 @@ function MessageItem({
 type DisplayMessage = Pick<Message, "text" | "context" | "node" | "transform">;
 
 function MessageRenderer({ text, context, node, transform }: DisplayMessage) {
-  const router = useRouter();
-
   if (node) {
     return node;
   }
 
+  if (context && typeof context === "string") {
+    return <LegacyMessage text={text} context={context} />;
+  }
+
+  if (context && Array.isArray(context) && context.length > 0) {
+    return (
+      <div className="flex flex-col gap-2">
+        <p>{text}</p>
+        <Separator className="h-8" />
+        <Sources className="lg:text-sm">
+          <SourcesTrigger count={context.length}>
+            <>
+              <LightbulbIcon className="size-4 fill-yellow-500" />
+              <p className="font-medium">Used {context.length} sources</p>
+              <ChevronDownIcon className="h-4 w-4" />
+            </>
+          </SourcesTrigger>
+          {context.map((c, i) => {
+            const isGuide = c === "[User Guide]";
+
+            if (isGuide) {
+              return (
+                <SourcesContent key={i}>
+                  <Source href={routes.guide()} title={"User Guide"} />
+                </SourcesContent>
+              );
+            }
+
+            const label = c.split("-").slice(0, -1).join(" ");
+
+            return (
+              <SourcesContent key={i}>
+                <Source
+                  href={""}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // find the context element
+                    const element = getChunkElement(c, "data-chunk-slug");
+                    if (element) {
+                      scrollToElement(element, { offset: -120 });
+                      return;
+                    }
+
+                    toast.warning("Source not found");
+                  }}
+                  title={label}
+                />
+              </SourcesContent>
+            );
+          })}
+        </Sources>
+      </div>
+    );
+  }
+
+  return transform ? htmr(text, { transform: components }) : <p>{text}</p>;
+}
+
+function ChatAction({ message }: { message: Message }) {
+  return (
+    <div className="flex items-center gap-1">
+      <button
+        className="group/item px-1"
+        aria-label="Copy message"
+        onClick={async () => {
+          await navigator.clipboard.writeText(message.text);
+          toast.success("Message copied");
+        }}
+      >
+        <CopyIcon className={"group-hover/item:stroke-info size-3"} />
+      </button>
+      <ChatFeedback isPositive message={message} />
+      <ChatFeedback isPositive={false} message={message} />
+    </div>
+  );
+}
+
+function LegacyMessage({ text, context }: { text: string; context: string }) {
+  const router = useRouter();
   if (context !== undefined) {
     const formattedSlug =
       context === "[User Guide]"
@@ -258,25 +342,4 @@ function MessageRenderer({ text, context, node, transform }: DisplayMessage) {
       </>
     );
   }
-
-  return transform ? htmr(text, { transform: components }) : <p>{text}</p>;
-}
-
-function ChatAction({ message }: { message: Message }) {
-  return (
-    <div className="flex items-center gap-1">
-      <button
-        className="group/item px-1"
-        aria-label="Copy message"
-        onClick={async () => {
-          await navigator.clipboard.writeText(message.text);
-          toast.success("Message copied");
-        }}
-      >
-        <CopyIcon className={"group-hover/item:stroke-info size-3"} />
-      </button>
-      <ChatFeedback isPositive message={message} />
-      <ChatFeedback isPositive={false} message={message} />
-    </div>
-  );
 }

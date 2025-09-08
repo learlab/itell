@@ -82,10 +82,12 @@ export const useAddChat = () => {
           id: botMessageId,
           isStairs: false,
           text: data.text,
-          context: data.context?.at(0),
+          context: data.context,
         });
 
         const botTimestamp = Date.now();
+
+        console.log("data is", data);
         execute({
           pageSlug,
           messages: [
@@ -101,7 +103,7 @@ export const useAddChat = () => {
               is_user: false,
               timestamp: botTimestamp,
               is_stairs: false,
-              context: data.context?.at(0),
+              context: data.context,
               transform,
             },
           ],

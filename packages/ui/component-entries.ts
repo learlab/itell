@@ -45,6 +45,7 @@ export function getComponentEntries(): Record<string, string> {
 		"sheet": comp("sheet"),
 		"sidebar": comp("sidebar"),
 		"skeleton": comp("skeleton"),
+		"sources": comp("sources"),
 		"spinner": comp("spinner"),
 		"status-button": comp("status-button"),
 		"steps": comp("steps"),
