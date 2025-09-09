@@ -38,6 +38,44 @@ type State = {
 };
 const PageContext = createContext<State>({} as State);
 
+// Validates localStorage snapshot to prevent corruption
+const validateSnapshot = (
+  snapshot: CRISnapshot | undefined,
+  chunks: string[]
+): CRISnapshot | undefined => {
+  if (!snapshot) return undefined;
+
+  try {
+    // Check if snapshot structure is valid
+    if (
+      !snapshot.currentChunk ||
+      !snapshot.chunkStatus ||
+      typeof snapshot.shouldBlur !== "boolean"
+    ) {
+      return undefined;
+    }
+
+    // Check if currentChunk exists in current chunks
+    if (!chunks.includes(snapshot.currentChunk)) {
+      return undefined;
+    }
+
+    // Check if all expected chunks exist in chunkStatus
+    const snapshotChunks = Object.keys(snapshot.chunkStatus);
+    const hasAllChunks = chunks.every((chunk) =>
+      snapshotChunks.includes(chunk)
+    );
+
+    if (!hasAllChunks) {
+      return undefined;
+    }
+
+    return snapshot;
+  } catch (error) {
+    return undefined;
+  }
+};
+
 export function PageProvider({
   children,
   session,
@@ -46,10 +84,13 @@ export function PageProvider({
   pageStatus,
 }: Props) {
   const slugs = page.chunks.map(({ slug }) => slug);
-  const [snapshot, setSnapshot] = useLocalStorage<CRISnapshot | undefined>(
+  const [rawSnapshot, setSnapshot] = useLocalStorage<CRISnapshot | undefined>(
     `question-store-${page.slug}`,
     undefined
   );
+
+  // Validate the snapshot before using it
+  const snapshot = validateSnapshot(rawSnapshot, slugs);
 
   const [showFloatingSummary, setShowFloatingSummary] = useLocalStorage<
     boolean | undefined
@@ -64,14 +105,30 @@ export function PageProvider({
 
   const criStoreRef = useRef<CRIStore>(undefined);
   if (!criStoreRef.current) {
-    criStoreRef.current = createCRIStore(
-      {
-        chunks: page.chunks,
-        pageStatus,
-        status: pageCRIStatus,
-      },
-      snapshot
-    );
+    try {
+      criStoreRef.current = createCRIStore(
+        {
+          chunks: page.chunks,
+          pageStatus,
+          status: pageCRIStatus,
+        },
+        snapshot
+      );
+    } catch (error) {
+      console.error(
+        "[CRI] Error creating store, falling back to clean state:",
+        error
+      );
+      // Fallback to clean state if store creation fails
+      criStoreRef.current = createCRIStore(
+        {
+          chunks: page.chunks,
+          pageStatus,
+          status: pageCRIStatus,
+        },
+        undefined // No snapshot, start fresh
+      );
+    }
   }
 
   const chatStoreRef = useRef<ChatStore>(undefined);
@@ -93,7 +150,12 @@ export function PageProvider({
     let summarySubscription: Subscription | undefined;
     if (criStoreRef.current) {
       criSubscription = criStoreRef.current.subscribe((state) => {
-        setSnapshot(state.context);
+        try {
+          setSnapshot(state.context);
+        } catch (error) {
+          console.error("[CRI] Error saving snapshot to localStorage:", error);
+          // Continue without localStorage persistence if it fails
+        }
       });
     }
 

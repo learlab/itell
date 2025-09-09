@@ -33,20 +33,24 @@ export function FinishCRIButton({ chunkSlug, pageSlug, condition }: Props) {
   return (
     <Button
       disabled={disabled}
+      type="button"
       onClick={() => {
-        if (isLastQuestion) {
-          finishPage();
-        } else {
-          advanceChunk({ chunkSlug });
-        }
-        createEventAction({
-          pageSlug,
-          type: EventType.CHUNK_REVEAL_QUESTION,
-          data: {
-            chunkSlug,
-            condition,
-          },
-        });
+        // Use setTimeout to prevent race conditions with state updates
+        setTimeout(() => {
+          if (isLastQuestion) {
+            finishPage();
+          } else {
+            advanceChunk({ chunkSlug });
+          }
+          createEventAction({
+            pageSlug,
+            type: EventType.CHUNK_REVEAL_QUESTION,
+            data: {
+              chunkSlug,
+              condition,
+            },
+          });
+        }, 0);
       }}
     >
       <ChevronRightIcon className="mr-2" />

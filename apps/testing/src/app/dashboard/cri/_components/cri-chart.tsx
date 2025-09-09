@@ -13,13 +13,21 @@ const chartConfig = {
   value: {
     label: "Count",
   },
-  poor: {
-    label: "Poor",
+  one: {
+    label: "Level 1",
     color: "var(--chart-2)",
   },
-  excellent: {
-    label: "Excellent",
-    color: "var(--chart-4)",
+  two: {
+    label: "Level 2",
+    color: "var(--chart-2)",
+  },
+  three: {
+    label: "Level 3",
+    color: "var(--chart-3)",
+  },
+  four: {
+    label: "Level 4",
+    color: "var(--chart-3)",
   },
 } satisfies ChartConfig;
 
@@ -32,8 +40,10 @@ export function CRIChart({ data }: Props) {
     <>
       <p className="sr-only" id="question-chart-title">
         A bar chart of user&apos;s answers,{" "}
-        {data.find((d) => d.name === "poor")?.value ?? 0} poor,{" "}
-        {data.find((d) => d.name === "excellent")?.value ?? 0} excellent
+        {data.find((d) => d.name === "one")?.value ?? 0} level 1,{" "}
+        {data.find((d) => d.name === "two")?.value ?? 0} level 2,{" "}
+        {data.find((d) => d.name === "one")?.value ?? 0} level 3,{" "}
+        {data.find((d) => d.name === "one")?.value ?? 0} level 4,{" "}
       </p>
       <ChartContainer
         config={chartConfig}
@@ -72,7 +82,7 @@ export function CRIChart({ data }: Props) {
               className="fill-[--color-label] text-base font-light xl:text-lg"
               fontSize={12}
               formatter={(value: string) => {
-                return chartConfig[value as keyof typeof chartConfig].label;
+                return value;
               }}
             />
             <LabelList

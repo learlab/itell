@@ -15,6 +15,7 @@ import { getCRIStats } from "@/db/cri";
 import { incrementView } from "@/db/dashboard";
 import { type CRI } from "@/drizzle/schema";
 import { getSession } from "@/lib/auth";
+import { StatusStairs } from "@/lib/cri";
 import { allPagesSorted, getPageData } from "@/lib/pages/pages.server";
 import { redirectWithSearchParams } from "@/lib/utils";
 import { getScoreMeta } from "./get-label";
@@ -47,11 +48,12 @@ export default async function Page() {
   pages.sort((a, b) => a.order - b.order);
 
   const chartData = byScore.map((s) => {
-    const { label, description } = getScoreMeta(s.isPassed);
+    const { label, description, color } = getScoreMeta(s.score);
+
     return {
       name: label,
       value: s.count,
-      fill: `var(--color-${label})`,
+      fill: `var(--color-${color})`,
       description,
     };
   });
@@ -77,8 +79,18 @@ export default async function Page() {
               <div className="grid gap-4">
                 {pages.map((page) => {
                   const answers = byPage[page.slug];
-                  const excellentAnswers = answers.filter(
-                    (a) => Number.parseFloat(a.score) > 2
+                  const oneAnswers = answers.filter(
+                    (a) => a.score === StatusStairs.ONE
+                  );
+                  const twoAnswers = answers.filter(
+                    (a) => a.score === StatusStairs.TWO
+                  );
+
+                  const threeAnswers = answers.filter(
+                    (a) => a.score === StatusStairs.THREE
+                  );
+                  const fourAnswers = answers.filter(
+                    (a) => a.score === StatusStairs.FOUR
                   );
                   return (
                     <Card key={page.slug} className="grid gap-4">
@@ -86,7 +98,9 @@ export default async function Page() {
                         <CardTitle>{page.title}</CardTitle>
                         <CardDescription className="text-muted-foreground">
                           {pluralize("answer", answers.length, true)},{" "}
-                          {excellentAnswers.length} excellent
+                          {oneAnswers.length} level 1, {twoAnswers.length} level
+                          2, {threeAnswers.length} level 3, {fourAnswers.length}{" "}
+                          level 4
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="divide-border space-y-2 divide-y border">
@@ -127,7 +141,13 @@ function AnswerItem({
   question,
   refAnswer,
 }: {
-  answers: CRI[];
+  answers: {
+    score: number;
+    text: string;
+    id: number;
+    createdAt: Date;
+    chunkSlug: string;
+  }[];
   question: string;
   refAnswer: string;
 }) {
@@ -151,7 +171,7 @@ function AnswerItem({
             <li key={answer.id} className="ml-4 flex justify-between">
               <p>{answer.text}</p>
               <div className="text-muted-foreground flex gap-2 text-sm">
-                <p>{getScoreMeta(answer.is_passed).label}</p>
+                <p>{getScoreMeta(answer.score).label}</p>
                 <time>{answer.createdAt.toLocaleDateString()}</time>
               </div>
             </li>

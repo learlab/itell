@@ -52,8 +52,8 @@ export function ContinueChunkButton({ chunkSlug, pageSlug, condition }: Props) {
       disabled={disabled}
     >
       <span
-        className="relative flex h-full w-full items-center justify-center gap-2 uppercase
-          tracking-wide"
+        className="relative flex h-full w-full items-center justify-center gap-2 tracking-wide
+          uppercase"
         style={{
           maskImage:
             "linear-gradient(-75deg,hsl(var(--primary)) calc(var(--x) + 20%),transparent calc(var(--x) + 30%),hsl(var(--primary)) calc(var(--x) + 100%))",

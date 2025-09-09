@@ -16,7 +16,7 @@ export const dashboardConfig = {
         href: routes.dashboardSummariesTeacher(),
       },
       {
-        title: "Questions",
+        title: "Contructed Responses",
         href: routes.dashboardCRITeacher(),
       },
       {
@@ -31,7 +31,7 @@ export const dashboardConfig = {
       },
       {
         title: "Questions",
-        href: routes.dashboard(),
+        href: routes.dashboardCRI(),
       },
       {
         title: "Settings",

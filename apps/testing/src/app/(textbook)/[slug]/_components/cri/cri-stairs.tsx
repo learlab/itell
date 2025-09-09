@@ -19,12 +19,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
 import { useSelector } from "@xstate/store/react";
 import {
-  AlertCircleIcon,
   CheckCircle,
-  CheckIcon,
-  FileQuestionIcon,
   Flame,
   KeyRoundIcon,
+  LightbulbIcon,
   PencilIcon,
   ShieldQuestionIcon,
 } from "lucide-react";
@@ -41,13 +39,13 @@ import {
 import { Confetti } from "@/components/ui/confetti";
 import { apiClient } from "@/lib/api-client";
 import { Condition, isProduction } from "@/lib/constants";
+import { borderColors, getCRIStatus, StatusStairs } from "@/lib/cri";
 import { SelectShouldBlur } from "@/lib/store/cri-store";
 import { insertNewline, reportSentry } from "@/lib/utils";
 import { ExplainCRIButton } from "./cri-explain-button";
 import { CRIFeedback } from "./cri-feedback";
 import { CRIContent, CRIHeader, CRIShell } from "./cri-shell";
 import { FinishCRIButton } from "./finish-cri-button";
-import { borderColors, StatusStairs } from "./types";
 
 type Props = {
   question: string;
@@ -99,7 +97,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
       return;
     }
 
-    if (input === state.input) {
+    if (input === state.input && state.input !== "") {
       setState((state) => ({
         ...state,
         error: "Please submit a different answer",
@@ -119,6 +117,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
       throw new Error(error, { cause: details });
     }
     const response = await res.json();
+
     createCRIAnswerAction({
       text: input,
       is_passed: response.is_passing,
@@ -128,29 +127,28 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
       condition: Condition.STAIRS,
     });
 
-    if (response.is_passing) {
-      store.trigger.finishChunk({ chunkSlug, passed: true });
-
-      setState({
-        status: StatusStairs.PASSED,
-        feedback: response.feedback ?? null,
-        error: null,
-        input,
-      });
-      setStreak((streak) => (streak ? streak + 1 : 1));
-      updateStreak({ isCorrect: true });
-      return;
-    }
-
-    // cri not passing
+    const status = getCRIStatus(response.score);
     setState({
-      status: StatusStairs.NOT_PASSED,
+      status,
       feedback: response.feedback ?? null,
       error: null,
       input,
     });
-    setStreak(0);
-    updateStreak({ isCorrect: false });
+
+    if (status === StatusStairs.THREE || status === StatusStairs.FOUR) {
+      setTimeout(() => {
+        store.trigger.finishChunk({ chunkSlug, passed: true });
+      }, 0);
+
+      setStreak((streak) => (streak ? streak + 1 : 1));
+      updateStreak({ isCorrect: true });
+    } else {
+      setTimeout(() => {
+        store.trigger.finishChunk({ chunkSlug, passed: false });
+      }, 0);
+      setStreak(0);
+      updateStreak({ isCorrect: false });
+    }
   });
 
   const isPending = useDebounce(_isPending, 100);
@@ -165,7 +163,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     if (error) {
       setState((state) => ({
         ...state,
-        status: StatusStairs.PASSED,
+        status: StatusStairs.PASSTHROUGH,
         error:
           "The evaluation failed due to a problem on our end, you are free to move on",
       }));
@@ -195,13 +193,16 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     );
   }
 
+  const notPassed = status === StatusStairs.ONE || status === StatusStairs.TWO;
+  const passed = status === StatusStairs.THREE || status === StatusStairs.FOUR;
+
   return (
     <>
-      <Confetti active={status === StatusStairs.PASSED && !state.error} />
+      <Confetti active={passed} />
 
       <CRIShell
         className={cn(borderColor, {
-          shake: state.status === StatusStairs.NOT_PASSED,
+          shake: notPassed,
         })}
       >
         <CRIHeader
@@ -232,7 +233,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           </h3>
 
           <div className="flex flex-wrap items-center gap-2">
-            {status === StatusStairs.NOT_PASSED && (
+            {(notPassed || status === StatusStairs.THREE) && (
               <ExplainCRIButton
                 chunkSlug={chunkSlug}
                 pageSlug={pageSlug}
@@ -244,10 +245,10 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           {state.feedback && (
             <Alert>
               {state.status ? (
-                StatusStairs.PASSED ? (
+                passed ? (
                   <CheckCircle className="size-4 stroke-green-500" />
                 ) : (
-                  <ShieldQuestionIcon className="size-4" />
+                  <LightbulbIcon className="size-4 stroke-yellow-500" />
                 )
               ) : null}
               <AlertTitle className="!mt-0 text-sm lg:text-base">
@@ -292,45 +293,28 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
             </Label>
 
             <div className="flex flex-col items-center gap-2 sm:flex-row">
-              {status === StatusStairs.PASSED && isNextButtonDisplayed ? (
-                // when answer is correct and next button should be displayed
+              <StatusButton
+                pending={isPending}
+                type="submit"
+                disabled={_isPending}
+                className="min-w-40"
+                variant={
+                  status === StatusStairs.UNANSWERED ? "default" : "secondary"
+                }
+              >
+                <span className="flex items-center gap-2">
+                  <PencilIcon className="size-4" />
+                  Answer
+                </span>
+              </StatusButton>
+
+              {isNextButtonDisplayed ? (
                 <FinishCRIButton
                   chunkSlug={chunkSlug}
                   pageSlug={pageSlug}
                   condition={Condition.STAIRS}
                 />
-              ) : (
-                // when answer is not correct
-                <>
-                  {status !== StatusStairs.PASSED && (
-                    <StatusButton
-                      pending={isPending}
-                      type="submit"
-                      disabled={_isPending}
-                      className="min-w-40"
-                      variant={
-                        status === StatusStairs.UNANSWERED
-                          ? "default"
-                          : "secondary"
-                      }
-                    >
-                      <span className="flex items-center gap-2">
-                        <PencilIcon className="size-4" />
-                        Answer
-                      </span>
-                    </StatusButton>
-                  )}
-
-                  {status !== StatusStairs.UNANSWERED &&
-                  isNextButtonDisplayed ? (
-                    <FinishCRIButton
-                      chunkSlug={chunkSlug}
-                      pageSlug={pageSlug}
-                      condition={Condition.STAIRS}
-                    />
-                  ) : null}
-                </>
-              )}
+              ) : null}
 
               {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
                 <Popover>

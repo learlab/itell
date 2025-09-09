@@ -20,11 +20,11 @@ export default async function Page() {
   const count = byScore.reduce((acc, s) => acc + s.count, 0);
 
   const chartData = byScore.map((s) => {
-    const { label, description } = getScoreMeta(s.isPassed);
+    const { label, color, description } = getScoreMeta(s.score);
     return {
       name: label,
       value: s.count,
-      fill: `var(--color-${label})`,
+      fill: `var(--color-${color})`,
       description,
     };
   });

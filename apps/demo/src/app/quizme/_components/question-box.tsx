@@ -9,14 +9,15 @@ import { Image } from "@itell/ui/image";
 import { StatusButton } from "@itell/ui/status-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@itell/ui/tooltip";
 import { cn } from "@itell/utils";
-import { borderColors, StatusStairs } from "@textbook/cri/types";
 import { ChevronLast, KeyRoundIcon, ListRestart } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
 
 import { createEventAction } from "@/actions/event";
+import { getCRIStats } from "@/db/cri";
 import { apiClient } from "@/lib/api-client";
 import { EventType } from "@/lib/constants";
+import { borderColors, getCRIStatus, StatusStairs } from "@/lib/cri";
 import { routes } from "@/lib/navigation";
 
 type State = {
@@ -66,22 +67,20 @@ export default function QuizMeBox({
   const [qatext, setQatext] = useState("");
 
   // Function to update the state and select a new question based on the score
-  const handleScore = (isPassed: boolean, input: string) => {
+  const handleScore = (score: number, input: string) => {
+    const status = getCRIStatus(score);
+    setState({
+      status: StatusStairs.FOUR,
+      error: null,
+      input,
+    });
+    const passed =
+      status === StatusStairs.THREE || status === StatusStairs.FOUR;
     // Handle status change based on score
-    if (isPassed) {
-      setState({
-        status: StatusStairs.PASSED,
-        error: null,
-        input,
-      });
+    if (passed) {
       setCorrectlyAnswered((prev) => [...prev, currentQuestionIndex]);
       setStreak((prev) => prev + 1);
     } else {
-      setState({
-        status: StatusStairs.NOT_PASSED,
-        error: null,
-        input,
-      });
       if (streak > 0) {
         toast.info("You have ended with a streak of " + streak + "🔥");
       }
@@ -177,7 +176,7 @@ export default function QuizMeBox({
     }
     const response = await res.json();
 
-    handleScore(response.is_passing, input);
+    handleScore(response.score, input);
   });
 
   const isPending = useDebounce(_isPending, 100);
@@ -205,15 +204,18 @@ export default function QuizMeBox({
     return <div>No questions available.</div>;
   }
 
+  const notPassed =
+    state.status === StatusStairs.ONE || state.status === StatusStairs.TWO;
+
   return (
     <>
       <Card
         className={cn("mx-auto mt-4 h-1/2 w-2/3 max-w-6xl", borderColor, {
-          shake: state.status === StatusStairs.NOT_PASSED,
+          shake: notPassed,
         })}
       >
         <CardContent className={cn("relative flex flex-col gap-6")}>
-          {streak > 0 && status !== StatusStairs.NOT_PASSED ? (
+          {streak > 0 && !notPassed ? (
             <div className="flex justify-end p-2">
               <Image
                 src="/images/flame.gif"
@@ -224,7 +226,7 @@ export default function QuizMeBox({
               <span className="text-warning font-semibold"> {streak}</span>
             </div>
           ) : null}
-          {status === StatusStairs.PASSED ? (
+          {status === StatusStairs.THREE || status === StatusStairs.FOUR ? (
             <>
               <div className="success-checkmark">
                 <div className="check-icon">

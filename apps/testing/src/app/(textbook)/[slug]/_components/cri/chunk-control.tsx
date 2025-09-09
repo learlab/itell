@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePortal } from "@itell/core/hooks";
 import { PortalContainer } from "@itell/core/portal-container";
 import { getChunkElement } from "@itell/utils";
@@ -22,6 +22,7 @@ type Props = {
   condition: string;
   hasAssignments: boolean;
   hasQuiz: boolean;
+  pageStatus: { unlocked: boolean };
 };
 
 // TODO: unify hasAssignments and hasQuiz
@@ -31,6 +32,7 @@ export function ChunkControl({
   condition,
   hasAssignments,
   hasQuiz,
+  pageStatus,
 }: Props) {
   const store = useCRIStore();
   const currentChunk = useSelector(store, SelectCurrentChunk);
@@ -38,14 +40,49 @@ export function ChunkControl({
   const status = useSelector(store, SelectChunkStatus);
   const shouldBlur = useSelector(store, SelectShouldBlur);
   const prevChunkIdx = useRef(0);
+  const isInitialized = useRef(false);
 
   const { portals, addPortal, removePortal, removePortals } = usePortal();
 
   const portalIds = useRef<PortalIds>({} as PortalIds);
 
+  // Clean up all continue buttons from DOM and portals
+  const cleanupAllContinueButtons = () => {
+    // Remove all continue button containers from DOM
+    const allButtonContainers = document.querySelectorAll(
+      ".continue-reading-button-container"
+    );
+    allButtonContainers.forEach((container) => container.remove());
+
+    // Clear portal reference
+    if (portalIds.current.continueReading) {
+      removePortal(portalIds.current.continueReading);
+      portalIds.current.continueReading = "";
+    }
+  };
+
+  // Calculate which chunks should be blurred
+  const calculateBlurState = () => {
+    const blurStates: Record<string, boolean> = {};
+    // If page is unlocked, no chunks should be blurred
+    if (shouldBlur && !pageStatus.unlocked) {
+      const currentIndex = chunks.indexOf(currentChunk);
+      chunks.forEach((chunkSlug, chunkIndex) => {
+        const isChunkUnvisited =
+          currentIndex === -1 || chunkIndex > currentIndex;
+        blurStates[chunkSlug] = chunkIndex !== 0 && isChunkUnvisited;
+      });
+    }
+    return blurStates;
+  };
+
   const insertContinueButton = (el: HTMLElement, chunkSlug: string) => {
+    // Always clean up ALL continue buttons first
+    cleanupAllContinueButtons();
+
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "continue-reading-button-container";
+
     if (!userId) {
       addPortal(<LoginButton />, buttonContainer);
       el.prepend(buttonContainer);
@@ -80,38 +117,29 @@ export function ChunkControl({
     el.appendChild(buttonContainer);
   };
 
-  // initial blur
-  useEffect(() => {
-    chunks.forEach((chunkSlug, chunkIndex) => {
+  // Synchronous initial blur setup using useLayoutEffect to prevent flash
+  useLayoutEffect(() => {
+    const blurStates = calculateBlurState();
+
+    chunks.forEach((chunkSlug) => {
       const el = getChunkElement(chunkSlug, "data-chunk-slug");
-      if (!el) {
-        return;
-      }
+      if (!el) return;
 
-      // blur chunks
-      if (shouldBlur) {
-        const currentIndex = chunks.indexOf(currentChunk);
-        const isChunkUnvisited =
-          currentIndex === -1 || chunkIndex > currentIndex;
+      // Remove any existing blur classes first to ensure clean state
+      el.classList.remove("blurred");
 
-        if (chunkIndex !== 0 && isChunkUnvisited) {
-          el.classList.add("blurred");
-        }
+      // Apply blur if needed
+      if (blurStates[chunkSlug]) {
+        el.classList.add("blurred");
       }
     });
 
-    // if (shouldBlur) {
-    //   const lastChunk = chunks[chunks.length - 1];
-    //   const lastChunkElement = getChunkElement(lastChunk, "data-chunk-slug");
-    //   if (lastChunkElement) {
-    //     insertScrollBackButton(lastChunkElement);
-    //   }
-    // }
+    isInitialized.current = true;
 
     return () => {
       removePortals();
     };
-  }, [chunks]);
+  }, [chunks, shouldBlur, currentChunk]);
 
   useEffect(() => {
     const currentChunkElement = getChunkElement(
@@ -123,10 +151,9 @@ export function ChunkControl({
     }
     const isLastChunk = currentChunk === chunks[chunks.length - 1];
 
-    const hasQuestion = status[currentChunk].hasQuestion;
+    const hasQuestion = status[currentChunk]?.hasQuestion;
 
     if (isLastChunk) {
-      // removePortal(portalIds.current.scrollBack);
       if ((hasAssignments || hasQuiz) && !hasQuestion) {
         insertUnlockAssignmentsButton(currentChunkElement, currentChunk);
       }
@@ -136,6 +163,7 @@ export function ChunkControl({
       const idx = chunks.indexOf(currentChunk);
       if (idx === -1) return;
 
+      // Unblur chunks up to current
       for (let i = prevChunkIdx.current; i < idx + 1; i++) {
         const chunk = chunks[i];
         const el = getChunkElement(chunk, "data-chunk-slug");
@@ -146,22 +174,27 @@ export function ChunkControl({
 
       prevChunkIdx.current = idx;
 
-      if (!hasQuestion) {
+      // Simple logic: if current chunk has no CRI and there's a next chunk, add continue button
+      if (!hasQuestion && idx + 1 < chunks.length) {
         const nextChunkSlug = chunks[idx + 1];
         const nextChunkElement = getChunkElement(
           nextChunkSlug,
           "data-chunk-slug"
         );
+
         if (nextChunkElement) {
           insertContinueButton(nextChunkElement, currentChunk);
         }
+      } else {
+        // Current chunk has CRI or is last chunk - remove any continue buttons
+        cleanupAllContinueButtons();
       }
     }
 
     return () => {
       removePortal(portalIds.current.continueReading);
     };
-  }, [currentChunk]);
+  }, [currentChunk, status]);
 
   return <PortalContainer portals={portals} />;
 }

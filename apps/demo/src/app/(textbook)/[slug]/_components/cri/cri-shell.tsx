@@ -31,7 +31,7 @@ export function CRIHeader({
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <CardHeader className={cn("flex gap-1 py-1", className)} {...rest}>
-      <CardTitle className="flex items-baseline justify-between font-normal">
+      <CardTitle className="flex w-full items-baseline justify-between font-normal">
         <div>
           <p>
             <span className="font-bold">Question </span>

@@ -159,7 +159,7 @@ export function ClozeTest({
   }
 
   return (
-    <Card className="border-0 bg-white/80 shadow-lg backdrop-blur-sm">
+    <Card className="shadow-lg backdrop-blur-sm">
       <CardHeader className="pb-4">
         <div className="flex flex-col gap-2">
           <CardTitle className="text-xl text-pretty text-gray-800">

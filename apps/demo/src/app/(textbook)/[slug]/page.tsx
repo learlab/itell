@@ -145,14 +145,13 @@ export default async function Page(props: {
         pageStatus={pageStatus}
         fallbackPageSlug={firstPage?.slug ?? null}
       />
-
-      {isProduction ? null : null}
       <ChunkControl
         userId={userId}
         pageSlug={pageSlug}
         hasAssignments={page.assignments.length > 0}
         hasQuiz={page.quiz !== null}
         condition={userCondition}
+        pageStatus={pageStatus}
       />
       {user ? <EventTracker pageSlug={pageSlug} /> : null}
     </PageProvider>

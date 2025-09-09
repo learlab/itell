@@ -1,4 +1,6 @@
 .vercel
 .env*
 
+*.local
+
 tests/playwright/.auth

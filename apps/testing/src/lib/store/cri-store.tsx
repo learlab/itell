@@ -27,6 +27,71 @@ type Props = {
   status: PageCRIStatus;
 };
 
+// Validates and fixes CRI state to ensure consistency
+const validateAndFixState = (
+  state: CRISnapshot,
+  chunks: Page["chunks"],
+  status: PageCRIStatus,
+  pageStatus: PageStatus
+): CRISnapshot => {
+  const slugs = chunks.map(({ slug }) => slug);
+  const currentIndex = slugs.indexOf(state.currentChunk);
+
+  // If currentChunk is invalid, reset to first chunk
+  if (currentIndex === -1) {
+    console.warn(
+      "[CRI] Invalid currentChunk detected, resetting to first chunk"
+    );
+    return {
+      ...state,
+      currentChunk: slugs[0],
+      chunkStatus: Object.fromEntries(
+        chunks.map(({ slug, type }) => [
+          slug,
+          {
+            hasQuestion: Boolean(status[slug]),
+            status: type === "regular" ? undefined : "completed",
+          },
+        ])
+      ),
+    };
+  }
+
+  // Validate that all chunks before currentChunk are completed (except first)
+  const fixedChunkStatus = { ...state.chunkStatus };
+  let needsFix = false;
+
+  for (let i = 0; i < currentIndex; i++) {
+    const chunkSlug = slugs[i];
+    const chunkData = chunks[i];
+
+    // Skip first chunk (always visible)
+    if (i === 0) continue;
+
+    // All previous chunks should be completed unless they're non-regular
+    if (
+      chunkData.type === "regular" &&
+      (!fixedChunkStatus[chunkSlug] || !fixedChunkStatus[chunkSlug].status)
+    ) {
+      console.warn(
+        `[CRI] Chunk ${chunkSlug} before current should be completed, fixing...`
+      );
+      fixedChunkStatus[chunkSlug] = {
+        hasQuestion: Boolean(status[chunkSlug]),
+        status: "completed",
+      };
+      needsFix = true;
+    }
+  }
+
+  return needsFix
+    ? {
+        ...state,
+        chunkStatus: fixedChunkStatus,
+      }
+    : state;
+};
+
 export const createCRIStore = (
   { pageStatus, chunks, status }: Props,
   snapshot?: CRISnapshot
@@ -38,7 +103,7 @@ export const createCRIStore = (
     chunks.find(({ type }) => type === "regular")?.slug ??
     chunks[chunks.length - 1].slug;
 
-  const initialState: CRISnapshot = {
+  const baseInitialState: CRISnapshot = {
     currentChunk: snapshot?.currentChunk ?? initialChunk,
     chunkStatus:
       snapshot?.chunkStatus ??
@@ -51,9 +116,14 @@ export const createCRIStore = (
           },
         ])
       ),
-    isAssignmentReady: snapshot?.isAssignmentReady ?? pageStatus.unlocked,
-    shouldBlur: snapshot?.shouldBlur ?? !pageStatus.unlocked,
+    isAssignmentReady: pageStatus.unlocked ?? snapshot?.isAssignmentReady,
+    shouldBlur: pageStatus.unlocked ? false : (snapshot?.shouldBlur ?? true),
   };
+
+  // Validate and fix the state if it came from localStorage
+  const initialState = snapshot
+    ? validateAndFixState(baseInitialState, chunks, status, pageStatus)
+    : baseInitialState;
 
   return createStoreWithProducer(produce, {
     context: initialState,
