@@ -1,27 +1,16 @@
 "use client";
 
-import { CheckCircle, XCircle } from "lucide-react";
+import { cn } from "@itell/utils";
 
 import type React from "react";
+import type { ClozeSubmission } from "./cloze-test";
 
-export type Part =
-  | string
-  | {
-      type: "gap";
-      index: number;
-      answer: string;
-    };
-
-interface Result {
-  userAnswer: string;
-  correctAnswer: string;
-  isCorrect: boolean;
-}
+export type Part = string | { type: "gap"; index: number; answer: string };
 
 interface RenderPartsProps {
   parts: Part[];
   answers: string[];
-  results: Result[] | null;
+  results: ClozeSubmission | null;
   showResults: boolean;
   showHints: boolean;
   hoveredGap: number | null;
@@ -57,53 +46,96 @@ export function RenderParts({
         }
 
         const { index, answer } = part;
+        const userAnswer = answers[index] || "";
         const result = results?.[index];
-        const isCorrect = result?.isCorrect;
-        const isIncorrect = showResults && !isCorrect && answers[index]?.trim();
+        const isHovered = hoveredGap === index;
 
+        if (showResults && results && result) {
+          if (result.isCorrect) {
+            // Correct answer - show in green
+            return (
+              <span
+                key={partIndex}
+                className="inline-flex items-center gap-1 rounded-sm bg-green-100 px-1 py-0.5 font-medium
+                  text-green-800"
+              >
+                {result.userAnswer || result.correctAnswer}
+              </span>
+            );
+          } else {
+            // Incorrect answer - show diff style with strikethrough user answer and correct answer
+            return (
+              <span key={partIndex} className="inline-flex items-center gap-1">
+                {result.userAnswer ? (
+                  <>
+                    <span
+                      className="inline-flex items-center gap-1 rounded-sm bg-red-100 px-1 py-0.5 text-red-700
+                        line-through"
+                    >
+                      {result.userAnswer}
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1 rounded-sm bg-green-100 px-1 py-0.5 font-medium
+                        text-green-800"
+                    >
+                      {result.correctAnswer}
+                    </span>
+                  </>
+                ) : (
+                  // Empty answer case
+                  <>
+                    <span
+                      className="inline-flex items-center gap-1 rounded-sm bg-red-100 px-1 py-0.5 text-red-700
+                        italic"
+                    >
+                      (empty)
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1 rounded-sm bg-green-100 px-1 py-0.5 font-medium
+                        text-green-800"
+                    >
+                      {result.correctAnswer}
+                    </span>
+                  </>
+                )}
+              </span>
+            );
+          }
+        }
+
+        // Show input field during test or after reset
         return (
-          <span key={`gap-${index}`} className="relative inline-block">
+          <span key={partIndex} className="relative inline-block">
             <input
               // @ts-expect-error
-              ref={(el) => (inputRefs.current[index] = el as HTMLInputElement)}
+              ref={(el) => (inputRefs.current[index] = el)}
               type="text"
-              value={answers[index] || ""}
+              required
+              value={userAnswer}
               onChange={(e) => onInputChange(index, e.target.value)}
               onKeyDown={(e) => onKeyDown(e, index)}
               onMouseEnter={() => onMouseEnter(index)}
               onMouseLeave={onMouseLeave}
-              className={`mx-1 inline-block min-w-[80px] border-b-2 bg-transparent px-2 py-1 text-center
-              font-medium transition-colors duration-200 focus:outline-none ${
-              isCorrect
-                  ? "border-green-500 bg-green-50 text-green-700"
-                  : isIncorrect
-                    ? "border-red-500 bg-red-50 text-red-700"
-                    : "border-blue-300 hover:border-blue-500 focus:border-blue-600"
-              } `}
+              className={cn(
+                `inline-block min-w-[80px] border-b-2 border-dashed border-gray-400
+                bg-transparent px-1 py-0.5 text-center text-gray-800 transition-colors
+                outline-none`,
+                "focus:border-blue-500 focus:bg-blue-50",
+                isHovered && "bg-gray-100",
+                userAnswer && "border-solid border-blue-400 bg-blue-50"
+              )}
+              placeholder=""
               style={{
-                width: `${Math.max(80, Math.min(200, answer.length * 12))}px`,
+                width: `${Math.max(userAnswer.length * 12 + 20, 80)}px`,
               }}
-              required
-              disabled={showResults}
             />
-
-            {showHints && hoveredGap === index && !showResults && (
+            {showHints && isHovered && (
               <div
-                className="absolute -top-8 left-1/2 z-10 -translate-x-1/2 transform rounded bg-gray-800
-                  px-2 py-1 text-xs whitespace-nowrap text-white"
+                className="absolute -top-8 left-1/2 z-10 -translate-x-1/2 rounded bg-gray-800 px-2 py-1
+                  text-xs text-white shadow-lg"
               >
-                {answer.length} letters
+                {answer}
               </div>
-            )}
-
-            {showResults && (
-              <span className="bg-background absolute top-full right-1/2 z-1 translate-x-1/2 -translate-y-1/2">
-                {isCorrect ? (
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                ) : isIncorrect ? (
-                  <XCircle className="h-4 w-4 text-red-500" />
-                ) : null}
-              </span>
             )}
           </span>
         );

@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import {
+  MouseEventHandler,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Link from "next/link";
 import { Badge } from "@itell/ui/badge";
 import { Button } from "@itell/ui/button";
@@ -53,7 +59,7 @@ export function ClozeTest({
     new Array(data.gaps?.length || 0).fill("")
   );
   const [showResults, setShowResults] = useState(false);
-  const [showHints, setShowHints] = useState(true);
+  const [showHints, setShowHints] = useState(false);
   const [hoveredGap, setHoveredGap] = useState<number | null>(null);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -134,10 +140,16 @@ export function ClozeTest({
     });
   };
 
-  const handleReset = () => {
+  const handleReset: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setAnswers(new Array(data.gaps.length).fill(""));
+    setResults(null);
     setShowResults(false);
-    inputRefs.current[0]?.focus();
+    // Focus first input after state update
+    setTimeout(() => {
+      inputRefs.current[0]?.focus();
+    }, 0);
   };
 
   const handleMouseEnter = useCallback((index: number) => {
@@ -163,7 +175,8 @@ export function ClozeTest({
       <CardHeader className="pb-4">
         <div className="flex flex-col gap-2">
           <CardTitle className="text-xl text-pretty text-gray-800">
-            Complete the passage by filling in the blanks with the correct word.
+            Fill in the blanks using your best guesses. If multiple words could
+            work, choose your first choice and keep going.
           </CardTitle>
           <div className="flex flex-1 items-center gap-2">
             <Button
@@ -182,70 +195,29 @@ export function ClozeTest({
             <Badge variant="secondary" className="bg-blue-100 text-blue-800">
               {filledCount}/{data.gaps.length} filled
             </Badge>
-          </div>
-        </div>
-        <CardDescription>
-          After you finish this assignment , click the "Submit Answers" button
-          to unlock the next page.
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="space-y-6">
-        {results && (
-          <div
-            className="mt-6 rounded-lg border border-blue-200 bg-gradient-to-r from-blue-50
-              to-indigo-50 p-4"
-          >
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-gray-800">📊 Results</h3>
+            {results && (
               <Badge
                 variant={
                   correctCount === data.gaps.length ? "default" : "secondary"
                 }
-                className={
-                  correctCount === data.gaps.length ? "bg-green-500" : ""
-                }
+                className={cn(
+                  correctCount === data.gaps.length
+                    ? "bg-green-500 text-white"
+                    : "bg-orange-100 text-orange-800"
+                )}
               >
                 {correctCount}/{data.gaps.length} correct
               </Badge>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 text-sm md:grid-cols-2">
-              {results?.map((result, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-2 rounded border bg-white p-2"
-                >
-                  {result.isCorrect ? (
-                    <CheckCircle className="h-4 w-4 flex-shrink-0 text-green-500" />
-                  ) : (
-                    <XCircle className="h-4 w-4 flex-shrink-0 text-red-500" />
-                  )}
-                  <span className="font-semibold text-gray-600">
-                    {index + 1}.
-                  </span>
-                  <span
-                    className={
-                      result.isCorrect
-                        ? "font-medium text-green-700"
-                        : "text-red-700"
-                    }
-                  >
-                    {result.userAnswer || "(empty)"}
-                  </span>
-                  {!result.isCorrect && (
-                    <>
-                      <span className="text-gray-400">→</span>
-                      <span className="font-medium text-green-700">
-                        {result.correctAnswer}
-                      </span>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
+            )}
           </div>
-        )}
+        </div>
+        <CardDescription>
+          After you finish this assignment, click the "Submit Answers" button to
+          unlock the next page.
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent className="space-y-6">
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="rounded-lg border bg-gray-50 p-6 text-lg leading-relaxed">
             <RenderParts
