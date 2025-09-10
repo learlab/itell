@@ -52,7 +52,7 @@ import {
   SelectResponse,
   SelectStairs,
 } from "@/lib/store/summary-store";
-import { makePageHref, reportSentry } from "@/lib/utils";
+import { makePageHref, reportSentry, scrollToElement } from "@/lib/utils";
 import { SummaryResponseFeedback } from "./summary-feedback";
 import {
   getSummaryLocal,
@@ -412,6 +412,9 @@ function FinishReadingButton({ onClick }: { onClick: (_: number) => void }) {
         onClick={() => {
           onClick(time);
           clearTimer();
+          scrollToElement(
+            document.getElementById(Elements.PAGE_ASSIGNMENTS) as HTMLElement
+          );
         }}
       >
         Return to summary

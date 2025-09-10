@@ -48,7 +48,9 @@ export const SelectionPopover = ({ user, pageSlug }: Props) => {
         }
         store.trigger.setOpen({ value: true });
 
-        const text = `Please explain the following:\n\n <blockquote>${content}</blockquote> `;
+        const text = `Please explain this part of the text to me:
+
+"${content}"`;
         addChat({ text, pageSlug, transform: true, currentChunk: chunkSlug });
 
         setTimeout(() => {
