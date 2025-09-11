@@ -35,8 +35,11 @@ export function ChatStairs({ pageSlug, footer, id }: Props) {
         <div className="h-full">
           <p className="text-sm leading-relaxed">
             Before continuing, you will be presented a question for the section
-            that is highlighted on the left side. When you are ready for the
-            question, click the button below.
+            that is highlighted on the left side.{" "}
+            <span className="font-semibold">
+              Reread the section on the left side
+            </span>{" "}
+            and when you are ready for the question, click the button below
           </p>
           <ChatMessagesStairs />
         </div>
