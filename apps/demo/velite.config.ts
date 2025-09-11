@@ -129,6 +129,7 @@ const guides = defineCollection({
   pattern: "guide/**/*.md",
   schema: s.object({
     condition: s.string(),
+    toc: s.toc(),
     html: s.markdown({
       remarkPlugins: [remarkHeadingAttrs, remarkMath],
       rehypePlugins: [
