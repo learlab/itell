@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useScreenIssue } from "@itell/core/hooks";
 import {
   AlertDialog,
@@ -16,45 +17,48 @@ import { isProduction } from "@/lib/constants";
 
 // ScreenIssuePopup is a component that displays a popup when the screen size is too small
 // or the device is a mobile device.
-export function ScreenIssuePopup() {
+export function ScreenIssuePopup({ shouldOpen }: { shouldOpen: boolean }) {
   const screenIssue = useScreenIssue();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  console.log("shouldOpen", shouldOpen);
   useEffect(() => {
-    if (screenIssue && isProduction) {
+    if (screenIssue && isProduction && shouldOpen) {
       setOpen(true);
     }
-  }, [screenIssue]);
+  }, [screenIssue, shouldOpen]);
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {screenIssue == "mobile"
-              ? "Mobile Device Detected"
-              : "Resize Window"}
-          </AlertDialogTitle>
+          <AlertDialogTitle>Using iTELL on a smaller screen</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <div className="grid gap-2">
-              <div className="text-sm text-muted-foreground">
-                {screenIssue == "mobile" ? (
-                  <>
-                    This textbook is not optimized for mobile devices. Please
-                    use a desktop or laptop to access the full functionality of
-                    the textbook.
-                  </>
-                ) : (
-                  <>
-                    This textbook is not optimized for small screens. Please
-                    resize your window to access the full functionality of the
-                    textbook.
-                  </>
-                )}
+              <div className="text-muted-foreground text-sm">
+                We are working to imporve iTELL's experience on smaller screens
+                and mobile devices and welcome feedback at
+                lear.lab.vu@gmail.com. If you found any issues for now, we
+                suggest switch to a desktop or laptop computer for the best
+                experience.
               </div>
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="mt-0">Cancel</AlertDialogCancel>
+          <AlertDialogCancel
+            className="mt-0"
+            onClick={() => {
+              setOpen(false);
+
+              document.cookie = `open_small_screen_popup=false; path=/; expires=${new Date(2147483647 * 1000).toUTCString()}`;
+
+              startTransition(() => {
+                router.refresh();
+              });
+            }}
+          >
+            Continue
+          </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

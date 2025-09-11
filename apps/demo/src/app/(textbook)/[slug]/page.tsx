@@ -84,7 +84,11 @@ export default async function Page(props: {
       pageStatus={pageStatus}
     >
       {hasGoogleLogin && <GoogleOneTap />}
-      <ScreenIssuePopup />
+      <ScreenIssuePopup
+        shouldOpen={
+          (await cookies()).get("open_small_screen_popup")?.value !== "false"
+        }
+      />
 
       <ResourceLoader condition={userCondition} />
       <TextbookWrapper>
