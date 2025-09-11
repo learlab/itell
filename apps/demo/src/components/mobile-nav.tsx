@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useClickOutside, useDebounce } from "@itell/core/hooks";
 import { cn } from "@itell/utils";
+import { volume } from "#content";
 import { MenuIcon, XIcon } from "lucide-react";
 
 import { Spinner } from "./spinner";
@@ -37,22 +38,28 @@ export function MobileNav({ items }: MobileNavProps) {
     <div className="block md:hidden">
       <button
         type="button"
-        className="flex items-center space-x-2"
+        className="line-clamp-2 flex items-center space-x-2 font-bold"
         onClick={() => {
           setShowMobileMenu(!showMobileMenu);
         }}
       >
-        {showMobileMenu ? <XIcon /> : <MenuIcon />}
-        <span className="font-bold">Menu</span>
+        {showMobileMenu ? (
+          <XIcon className="shrink-0" />
+        ) : (
+          <MenuIcon className="shrink-0" />
+        )}
+        <span className="hidden sm:inline">{volume.title}</span>
+        <span className="sm:hidden">Menu</span>
       </button>
       {showMobileMenu ? (
         <div
           ref={ref}
           className={cn(
-            "fixed inset-0 top-16 z-50 grid h-fit grid-flow-row auto-rows-max overflow-auto bg-background shadow-md animate-in slide-in-from-bottom-80 md:hidden"
+            `bg-background animate-in slide-in-from-bottom-80 fixed inset-0 top-16 z-50 grid
+              h-fit grid-flow-row auto-rows-max overflow-auto shadow-md md:hidden`
           )}
         >
-          <div className="relative grid gap-6 rounded-md bg-popover p-4 text-popover-foreground">
+          <div className="bg-popover text-popover-foreground relative grid gap-6 rounded-md p-4">
             <div className="border-b-2">
               <TopLink href="/" text="Home" active={pathname === "/"} />
               <TopLink
@@ -75,7 +82,8 @@ export function MobileNav({ items }: MobileNavProps) {
                     });
                   }}
                   className={cn(
-                    "flex w-full items-center justify-between rounded-md p-2 text-sm font-medium hover:underline",
+                    `flex w-full items-center justify-between rounded-md p-2 text-sm font-medium
+                      hover:underline`,
                     item.disabled && "cursor-not-allowed opacity-60",
                     item.href === activeRoute && "bg-accent"
                   )}

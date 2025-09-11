@@ -31,7 +31,7 @@ export async function MainNav({ scrollProgress, read }: Props) {
           justify-between gap-4 px-6 sm:space-x-0"
       >
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-6">
+          <Link href="/" className="flex shrink-0 items-center gap-6">
             <Image
               src="/images/itell.svg"
               alt="itell logo"
@@ -49,7 +49,7 @@ export async function MainNav({ scrollProgress, read }: Props) {
           {read ? (
             <ContinueReading
               user={user}
-              className="hidden md:flex"
+              className="hidden xl:flex"
               text="Read"
               variant="outline"
               size="default"

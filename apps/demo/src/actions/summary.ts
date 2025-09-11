@@ -82,7 +82,8 @@ export const createSummaryAction = authedProcedure
       );
 
       const isExcellent = input.summary.contentScore
-        ? input.summary.contentScore > (excellentThreshold?.score ?? Infinity)
+        ? input.summary.isPassed &&
+          input.summary.contentScore > (excellentThreshold?.score ?? Infinity)
         : false;
 
       // create summary record
