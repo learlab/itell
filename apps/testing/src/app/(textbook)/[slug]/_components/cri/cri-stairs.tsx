@@ -24,7 +24,6 @@ import {
   KeyRoundIcon,
   LightbulbIcon,
   PencilIcon,
-  ShieldQuestionIcon,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useActionStatus } from "use-action-status";
@@ -55,7 +54,7 @@ type Props = {
 };
 
 type State = {
-  status: StatusStairs;
+  isPassed: boolean | null;
   feedback: string | null;
   error: string | null;
   input: string;
@@ -77,7 +76,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
 
   const [collapsed, setCollapsed] = useState(!shouldBlur);
   const [state, setState] = useState<State>({
-    status: StatusStairs.UNANSWERED,
+    isPassed: null,
     feedback: null,
     error: null,
     input: "",
@@ -127,15 +126,14 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
       condition: Condition.STAIRS,
     });
 
-    const status = getCRIStatus(response.score);
     setState({
-      status,
+      isPassed: response.is_passing,
       feedback: response.feedback ?? null,
       error: null,
       input,
     });
 
-    if (status === StatusStairs.THREE || status === StatusStairs.FOUR) {
+    if (response.is_passing) {
       setTimeout(() => {
         store.trigger.finishChunk({ chunkSlug, passed: true });
       }, 0);
@@ -153,11 +151,17 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
 
   const isPending = useDebounce(_isPending, 100);
 
-  const status = state.status;
-  const isNextButtonDisplayed =
-    shouldBlur && status !== StatusStairs.UNANSWERED;
+  const isAnswered = state.isPassed !== null;
+  const isNextButtonDisplayed = shouldBlur && isAnswered;
 
-  const borderColor = borderColors[state.status];
+  const borderColor =
+    borderColors[
+      state.isPassed
+        ? StatusStairs.FOUR
+        : isAnswered
+          ? StatusStairs.ONE
+          : StatusStairs.UNANSWERED
+    ];
 
   useEffect(() => {
     if (error) {
@@ -193,16 +197,13 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
     );
   }
 
-  const notPassed = status === StatusStairs.ONE || status === StatusStairs.TWO;
-  const passed = status === StatusStairs.THREE || status === StatusStairs.FOUR;
-
   return (
     <>
-      <Confetti active={passed} />
+      <Confetti active={state.isPassed === true} />
 
       <CRIShell
         className={cn(borderColor, {
-          shake: notPassed,
+          shake: state.isPassed === false,
         })}
       >
         <CRIHeader
@@ -233,7 +234,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
           </h3>
 
           <div className="flex flex-wrap items-center gap-2">
-            {(notPassed || status === StatusStairs.THREE) && (
+            {!state.isPassed && (
               <ExplainCRIButton
                 chunkSlug={chunkSlug}
                 pageSlug={pageSlug}
@@ -244,8 +245,8 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
 
           {state.feedback && (
             <Alert>
-              {state.status ? (
-                passed ? (
+              {isAnswered ? (
+                state.isPassed ? (
                   <CheckCircle className="size-4 stroke-green-500" />
                 ) : (
                   <LightbulbIcon className="size-4 stroke-yellow-500" />
@@ -298,9 +299,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 type="submit"
                 disabled={_isPending}
                 className="min-w-40"
-                variant={
-                  status === StatusStairs.UNANSWERED ? "default" : "secondary"
-                }
+                variant={!isAnswered ? "default" : "secondary"}
               >
                 <span className="flex items-center gap-2">
                   <PencilIcon className="size-4" />
@@ -316,7 +315,7 @@ export function CRIStairs({ question, answer, chunkSlug, pageSlug }: Props) {
                 />
               ) : null}
 
-              {(status !== StatusStairs.UNANSWERED || pageStatus.unlocked) && (
+              {(isAnswered || pageStatus.unlocked) && (
                 <Popover>
                   <PopoverTrigger asChild className="ml-auto">
                     <Button variant="outline" type="button" className="gap-2">

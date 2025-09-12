@@ -84,7 +84,7 @@ export const SummaryFormSkip = memo(
       return (
         <div className="flex flex-col gap-2">
           <h3 className="text-2xl font-extrabold">
-            You have earned the write to skip writing a summary!
+            You have earned the right to skip writing a summary!
           </h3>
           <p>Finish the page first to unlock the summary section.</p>
           <p>
@@ -102,7 +102,7 @@ export const SummaryFormSkip = memo(
           {pageStatus.unlocked ? (
             <>
               <p>
-                You have earned the write to skip writing a summary by writing
+                You have earned the right to skip writing a summary by writing
                 good summaries consistently or by writing an excellent summary.
               </p>
               <p>

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { Elements } from "@itell/constants";
 import { cn } from "@itell/utils";
 import { home } from "#content";
@@ -31,7 +32,11 @@ export default async function Page({
       >
         <HtmlRenderer html={home.html} className="underline-offset-2" />
 
-        <ScreenIssuePopup />
+        <ScreenIssuePopup
+          shouldOpen={
+            (await cookies()).get("open_small_screen_popup")?.value !== "false"
+          }
+        />
         <div className="flex items-center justify-center">
           <ActionButton />
         </div>

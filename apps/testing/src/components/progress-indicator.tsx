@@ -24,7 +24,7 @@ export async function UserProgressIndicator({ user }: { user: User }) {
   }
 
   return (
-    <div className="hidden items-center gap-4 sm:flex">
+    <div className="hidden items-center gap-4 lg:flex">
       <div className="flex items-center gap-3">
         {user?.finished ? (
           <Tooltip>
