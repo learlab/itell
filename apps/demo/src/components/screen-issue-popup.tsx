@@ -21,7 +21,6 @@ export function ScreenIssuePopup({ shouldOpen }: { shouldOpen: boolean }) {
   const screenIssue = useScreenIssue();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  console.log("shouldOpen", shouldOpen);
   useEffect(() => {
     if (screenIssue && isProduction && shouldOpen) {
       setOpen(true);

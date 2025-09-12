@@ -3,12 +3,14 @@ import { notFound } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
 import { allPagesSorted } from "tests/utils";
 
-import { findTeacherByClass } from "@/db/teacher";
+import { createTeacher, findTeacherByClass } from "@/db/teacher";
 import { createUser, findUserByProvider, updateUser } from "@/db/user";
+import { teachers } from "@/drizzle/schema";
 import { env } from "@/env.mjs";
 import { lucia } from "@/lib/auth";
 import { getPageConditions } from "@/lib/auth/conditions";
 import { readAuthData, setAuthData } from "@/lib/auth/provider";
+import { demoClassEmail, demoClassId } from "@/lib/constants";
 import { routes } from "@/lib/navigation";
 import { reportSentry } from "@/lib/utils";
 
@@ -143,6 +145,11 @@ export const createOAuthCallbackHandler = ({
         });
 
         user = newUser;
+
+        // create demo class for lab account
+        if (oauthUser.email === demoClassEmail) {
+          await createTeacher(user.id, demoClassId);
+        }
       } else {
         // for existing users without a class id, update their record
         if (!user.classId) {

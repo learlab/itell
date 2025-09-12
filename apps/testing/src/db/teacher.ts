@@ -7,6 +7,20 @@ import { isProduction } from "@/lib/constants";
 import { db, first } from ".";
 import * as schema from "../drizzle/schema";
 
+export const createTeacher = async (userId: string, classId: string) => {
+  return first(
+    await db
+      .insert(schema.teachers)
+      .values({
+        id: userId,
+        classId,
+        isPrimary: true,
+        isApproved: true,
+      })
+      .returning()
+  );
+};
+
 /*
  * Find teacher by userId, returns teacher model
  */
