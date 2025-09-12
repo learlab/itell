@@ -76,7 +76,7 @@ export const getStudents = memoize(
   },
   {
     persist: true,
-    duration: 60 * 5,
+    duration: 60,
     revalidateTags: (classId) => ["get-students", classId],
     log: isProduction ? undefined : ["dedupe", "datacache", "verbose"],
     logid: "Get students for class",
