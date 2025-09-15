@@ -14,20 +14,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@itell/ui/card";
 import { cn } from "@itell/utils";
 import { Page } from "#content";
-import {
-  CheckCircle,
-  CircleCheckBigIcon,
-  Eye,
-  EyeOff,
-  RotateCcw,
-  XCircle,
-} from "lucide-react";
+import { CircleCheckBigIcon, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 
 import { PageStatus } from "@/lib/page-status";
