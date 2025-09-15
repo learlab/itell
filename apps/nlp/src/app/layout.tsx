@@ -7,6 +7,8 @@ import "@itell/ui/globals.css";
 import { Inter, Roboto_Slab } from "next/font/google";
 import { volume } from "#content";
 
+import { ScormProvider } from "@/components/provider/scorm-provider";
+import { ScormBase } from "@/components/scorm-base";
 import type { Metadata } from "next";
 
 export function generateMetadata(): Metadata {
@@ -61,8 +63,12 @@ export default function RootLayout({
           antialiased`}
       >
         <RootProvider>
-          <TailwindIndicator />
-          {children}
+          <ScormProvider>
+            <ScormBase>
+              <TailwindIndicator />
+              {children}
+            </ScormBase>
+          </ScormProvider>
         </RootProvider>
       </body>
     </html>

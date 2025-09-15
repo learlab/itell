@@ -25,7 +25,6 @@ import { getUserCondition } from "@/lib/auth/conditions";
 import {
   Condition,
   hasGoogleLogin,
-  isProduction,
   PAGE_HEADER_PIN_COOKIE,
 } from "@/lib/constants";
 import { routes } from "@/lib/navigation";

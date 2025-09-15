@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "scorm_user_id" text;

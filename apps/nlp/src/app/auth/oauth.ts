@@ -34,7 +34,7 @@ type OAuthUser = {
   image?: string;
 };
 
-export type OAuthProviderId = "google" | "azure";
+export type OAuthProviderId = "google" | "azure" | "scorm";
 
 /**
  * Factory function for creating oauth redirect handlers
