@@ -59,7 +59,6 @@ export function ClozeTest({
     new Array(data.gaps?.length || 0).fill("")
   );
   const [showResults, setShowResults] = useState(false);
-  const [showHints, setShowHints] = useState(false);
   const [hoveredGap, setHoveredGap] = useState<number | null>(null);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -173,25 +172,17 @@ export function ClozeTest({
   return (
     <Card className="shadow-lg backdrop-blur-sm">
       <CardHeader className="pb-4">
-        <div className="flex flex-col gap-2">
-          <CardTitle className="text-xl text-pretty text-gray-800">
-            Fill in the blanks using your best guesses. If multiple words could
-            work, choose your first choice and keep going.
-          </CardTitle>
+        <CardTitle className="text-xl text-pretty text-gray-800">
+          Fill in the blanks using your best guesses. If multiple words could
+          work, choose your first choice and keep going.
+        </CardTitle>
+        <CardDescription className="flex flex-col gap-2">
+          <p>
+            After you finish this assignment, click the "Submit Answers" button
+            to unlock the next page.
+          </p>
+
           <div className="flex flex-1 items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowHints(!showHints)}
-              className="text-gray-600 hover:text-gray-800"
-            >
-              {showHints ? (
-                <Eye className="mr-2 size-4" />
-              ) : (
-                <EyeOff className="mr-2 size-4" />
-              )}
-              {showHints ? "Hide" : "Show"} Hints
-            </Button>
             <Badge variant="secondary" className="bg-blue-100 text-blue-800">
               {filledCount}/{data.gaps.length} filled
             </Badge>
@@ -210,10 +201,6 @@ export function ClozeTest({
               </Badge>
             )}
           </div>
-        </div>
-        <CardDescription>
-          After you finish this assignment, click the "Submit Answers" button to
-          unlock the next page.
         </CardDescription>
       </CardHeader>
 
@@ -225,7 +212,6 @@ export function ClozeTest({
               answers={answers}
               results={results}
               showResults={showResults}
-              showHints={showHints}
               hoveredGap={hoveredGap}
               inputRefs={inputRefs}
               onInputChange={handleInputChange}
