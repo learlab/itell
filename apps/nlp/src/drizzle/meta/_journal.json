@@ -15,6 +15,13 @@
       "when": 1757969573978,
       "tag": "0001_quick_demogoblin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757971053846,
+      "tag": "0002_abnormal_morgan_stark",
+      "breakpoints": true
     }
   ]
 }

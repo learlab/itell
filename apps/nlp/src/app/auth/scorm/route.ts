@@ -42,7 +42,6 @@ export async function GET(request: NextRequest) {
           image: null,
           conditionAssignments: pageConditions,
           classId: null,
-          scormUserId,
         },
         provider_id: "scorm",
         provider_user_id: scormUserId,

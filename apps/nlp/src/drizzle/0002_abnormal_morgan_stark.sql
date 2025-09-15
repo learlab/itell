@@ -1,0 +1,1 @@
+ALTER TABLE "users" DROP COLUMN IF EXISTS "scorm_user_id";

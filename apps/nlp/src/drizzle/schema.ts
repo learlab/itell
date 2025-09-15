@@ -97,7 +97,6 @@ export const users = pgTable("users", {
   classId: text("class_id"),
   finished: boolean("finished").default(false).notNull(),
   preferences: jsonb("preferences").$type<UserPreferences>(),
-  scormUserId: text("scorm_user_id"),
   consentGiven: boolean("consent_given"),
   onboardingFinished: boolean("onboarding_finished").notNull().default(false),
   offboardingFinished: boolean("offboarding_finished").notNull().default(false),
