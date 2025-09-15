@@ -51,6 +51,10 @@ const securityHeaders = [
     value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
   },
   {
+    key: "Content-Security-Policy",
+    value: "frame-ancestors *;",
+  },
+  {
     key: "Access-Control-Allow-Headers",
     value:
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
@@ -59,11 +63,6 @@ const securityHeaders = [
   {
     key: "Referrer-Policy",
     value: "origin-when-cross-origin",
-  },
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
-  {
-    key: "X-Frame-Options",
-    value: "DENY",
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
   {

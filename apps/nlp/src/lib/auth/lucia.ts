@@ -19,6 +19,7 @@ export const lucia = new Lucia(adapter, {
     expires: false,
     attributes: {
       secure: isProduction,
+      sameSite: "none",
     },
   },
   getUserAttributes: (attributes) => {
