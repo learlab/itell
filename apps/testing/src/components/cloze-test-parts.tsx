@@ -12,7 +12,6 @@ interface RenderPartsProps {
   answers: string[];
   results: ClozeSubmission | null;
   showResults: boolean;
-  showHints: boolean;
   hoveredGap: number | null;
   inputRefs: React.MutableRefObject<(HTMLInputElement | null)[]>;
   onInputChange: (index: number, value: string) => void;
@@ -26,7 +25,6 @@ export function RenderParts({
   answers,
   results,
   showResults,
-  showHints,
   hoveredGap,
   inputRefs,
   onInputChange,
@@ -129,14 +127,6 @@ export function RenderParts({
                 width: `${Math.max(userAnswer.length * 12 + 20, 80)}px`,
               }}
             />
-            {showHints && isHovered && (
-              <div
-                className="absolute -top-8 left-1/2 z-10 -translate-x-1/2 rounded bg-gray-800 px-2 py-1
-                  text-xs text-white shadow-lg"
-              >
-                {answer}
-              </div>
-            )}
           </span>
         );
       })}
