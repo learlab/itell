@@ -64,7 +64,7 @@ cri:
 - question: What are some duties of the Chief Justice of the United States?
   answer: Leading the other Supreme Court justices in choosing which cases to hear, managing the courtroom when the Supreme Court is hearing a case, and leading discussions with other Supreme Court justices about deciding a case.
   slug: Supreme-Court-Justices-4769
-next_slug: chapter-5-rights-and-responsibilities
+next_slug: null
 order: 3
 parent: null
 quiz: null
