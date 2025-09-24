@@ -106,7 +106,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
     ) as HTMLFieldSetElement[];
 
     let correctWords = 0;
-    const clozeData: CTestData = [];
+    const testData: CTestData = [];
     const answers: Array<{ word: string; isCorrect: boolean }> = [];
 
     fields.forEach((field) => {
@@ -130,7 +130,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
         }
       });
 
-      clozeData.push(result);
+      testData.push(result);
       const joined = result.placeholders.join("") + result.answers.join("");
       const isCorrect = joined === word;
 
@@ -141,7 +141,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
     });
 
     return {
-      clozeData,
+      clozeData: testData,
       answers,
       correctWords,
       totalWords: fields.length,
@@ -260,7 +260,7 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
         </div>
         <div className="flex gap-4">
           {uiState === "initial" ? (
-            <Button type="button" onClick={handleShowAnswers} className="w-48">
+            <Button type="button" onClick={handleShowAnswers} className="w-52">
               <span className="inline-flex items-center gap-2">
                 <SendHorizontalIcon className="size-3" />
                 Show Answers
@@ -271,9 +271,9 @@ export const CTest = ({ paragraphs, user, mode = "cloze" }: Props) => {
               type="submit"
               disabled={isPending || uiState === "showingAnswers"}
               pending={isPending}
-              className="w-48"
+              className="w-52"
             >
-              <span className="inline-flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 <ArrowRightIcon className="size-4" />
                 Continue to the textbook
               </span>

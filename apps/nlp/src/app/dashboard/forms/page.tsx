@@ -67,19 +67,19 @@ export default async function FormsPage() {
     {
       title: "Consent",
       description: "Learn about the study and give your consent.",
-      href: "/consent",
+      href: routes.consent(),
       status: consentStatus,
     },
     {
       title: "Intake Survey",
       description: "Tell us about yourself and customize your experience",
-      href: "/survey/intake",
+      href: routes.intakeSurvey(),
       status: intakeStatus,
     },
     {
       title: "Outake Survey",
       description: "Share your learning experience and help us improve iTELL",
-      href: "/survey/outtake",
+      href: routes.outtakeSurvey(),
       status: outtakeStatus,
     },
   ];
@@ -168,7 +168,7 @@ function FormCards({ items }: { items: FormEntry[] }) {
 
 function FormCard({ item }: { item: FormEntry }) {
   return (
-    <Link href={item.href} target="_blank">
+    <Link href={item.href}>
       <Card className="hover:bg-accent hover:text-accent-foreground transition-all">
         <CardHeader>
           <CardTitle>{item.title}</CardTitle>
