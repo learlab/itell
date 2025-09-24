@@ -1,7 +1,6 @@
 ---
 assignments:
 - summary
-- cloze
 chunks:
 - title: Abstract
   slug: Abstract-4797
@@ -177,49 +176,7 @@ chunks:
 - title: Conclusion
   slug: Conclusion-4862
   type: regular
-cloze_test:
-  original_text: The study introduces TAALES 2.0, an upgraded text analysis tool designed to measure lexical sophistication through 316 new indices, expanding its predecessor's capabilities. TAALES 2.0 is compatible with multiple operating systems and ensures secure data processing. It covers a broad spectrum of linguistic features, including word frequency, semantic networks, and n-gram association strength. Validation studies demonstrated the tool's ability to predict 58% of the variance in lexical proficiency and 32% in word-choice scores, outperforming previous models. The findings highlight TAALES 2.0's potential for enhancing research in educational psychology, cognitive science, and AI, as well as its implications for assessing text complexity and language production. The study emphasizes the multifaceted nature of lexical sophistication, suggesting new directions for research and application in text analysis, language assessment, and behavioral studies.
-  gaps:
-  - start: 213
-    end: 222
-    gapped_text: operating
-    original_word: null
-  - start: 344
-    end: 352
-    gapped_text: semantic
-    original_word: null
-  - start: 407
-    end: 414
-    gapped_text: studies
-    original_word: null
-  - start: 469
-    end: 477
-    gapped_text: variance
-    original_word: null
-  - start: 512
-    end: 516
-    gapped_text: word
-    original_word: null
-  - start: 567
-    end: 575
-    gapped_text: findings
-    original_word: null
-  - start: 659
-    end: 668
-    gapped_text: cognitive
-    original_word: null
-  - start: 733
-    end: 743
-    gapped_text: complexity
-    original_word: null
-  - start: 825
-    end: 839
-    gapped_text: sophistication
-    original_word: null
-  - start: 923
-    end: 933
-    gapped_text: assessment
-    original_word: null
+cloze_test: null
 cri:
 - question: What is the purpose of TAALES 2.0 as described in the passage?
   answer: TAALES 2.0 is a text analysis tool with added indices related to word frequency, n-grams, contextual distinctiveness, and more, used to model lexical proficiency and word choice in writing.
@@ -302,7 +259,7 @@ cri:
 - question: What is the main purpose of TAALES 2.0?
   answer: To allow for efficient and replicable analysis of lexical sophistication in various domains.
   slug: Conclusion-4862
-next_slug: the-tool-for-the-automatic-analysis-of-cohesion-2-0-integrating-semantic-similarity-and-text-overlap
+next_slug: sentiment-analysis-and-social-cognition-engine-seance-an-automatic-tool-for-sentiment-social-cognition-and-social-order-analysis
 order: 0
 parent: null
 quiz: null

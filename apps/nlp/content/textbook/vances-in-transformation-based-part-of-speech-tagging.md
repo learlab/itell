@@ -1,7 +1,6 @@
 ---
 assignments:
 - summary
-- cloze
 chunks:
 - title: Abstract
   slug: Abstract-2162
@@ -27,49 +26,7 @@ chunks:
 - title: Conclusions
   slug: Conclusions-5138
   type: regular
-cloze_test:
-  original_text: The evolution of part-of-speech tagging has transitioned from manually engineered rules to automated systems, with stochastic Markov-model based taggers initially demonstrating high accuracy by utilizing probabilities derived from large corpora. However, these systems capture linguistic information indirectly. In contrast, a trainable rule-based tagger, as described by Brill (1992), employs transformation-based error-driven learning to encode linguistic information directly through simple non-stochastic rules. This approach has been extended to include lexicalized transformations and methods for tagging unknown words, achieving competitive accuracy against stochastic models while using fewer rules. Additionally, this paradigm improves tagging by allowing multiple potential tags for words, enhancing accuracy while minimizing complexity. These advancements suggest the potential for broader application across various natural language processing tasks.
-  gaps:
-  - start: 277
-    end: 287
-    gapped_text: linguistic
-    original_word: null
-  - start: 348
-    end: 354
-    gapped_text: tagger
-    original_word: null
-  - start: 394
-    end: 408
-    gapped_text: transformation
-    original_word: null
-  - start: 447
-    end: 457
-    gapped_text: linguistic
-    original_word: null
-  - start: 539
-    end: 547
-    gapped_text: extended
-    original_word: null
-  - start: 603
-    end: 610
-    gapped_text: tagging
-    original_word: null
-  - start: 665
-    end: 675
-    gapped_text: stochastic
-    original_word: null
-  - start: 745
-    end: 752
-    gapped_text: tagging
-    original_word: null
-  - start: 810
-    end: 818
-    gapped_text: accuracy
-    original_word: null
-  - start: 945
-    end: 955
-    gapped_text: processing
-    original_word: null
+cloze_test: null
 cri:
 - question: What is the learning paradigm described in the passage for developing a trainable rule-based tagger?
   answer: Transformation-based error-driven learning.

@@ -47,8 +47,8 @@ cri:
 - question: What are the three branches of the U.S. government?
   answer: The Legislative Branch, the Executive Branch, and the Judicial Branch.
   slug: The-Federal-Government-4448
-- question: What is the role of the executive branch in a state government according to the Constitution?
-  answer: The person in charge of the executive branch for a state government is called a governor.
+- question: What is the person in charge of the executive branch for a state government called?
+  answer: A governor.
   slug: State-Governments-4457
 - question: How many states must approve an amendment for it to be added to the Constitution?
   answer: 38 out of the 50 states.
