@@ -2,10 +2,11 @@
 
 import "server-only";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { type Session as _Session, type User } from "lucia";
 import { memoize } from "nextjs-better-unstable-cache";
 
+import { env } from "@/env.mjs";
 import { Tags } from "../constants";
 import { lucia } from "./lucia";
 
@@ -24,26 +25,14 @@ export const getSession = memoize(
       };
     }
     const result = await lucia.validateSession(sessionId);
-    // next.js throws when you attempt to set cookie when rendering page
-    try {
-      if (result.session?.fresh) {
-        const sessionCookie = lucia.createSessionCookie(result.session.id);
-        c.set(
-          sessionCookie.name,
-          sessionCookie.value,
-          sessionCookie.attributes
-        );
-      }
-      if (!result.session) {
-        const sessionCookie = lucia.createBlankSessionCookie();
-        c.set(
-          sessionCookie.name,
-          sessionCookie.value,
-          sessionCookie.attributes
-        );
-      }
-    } catch (err) {
-      console.log("get session", err);
+    if ((result && result.session?.fresh) || !result.session) {
+      const headersList = await headers();
+      const referer = headersList.get("referer");
+      const url = new URL(
+        "/api/auth/refresh-token?redirect_to=" + referer,
+        env.NEXT_PUBLIC_HOST
+      );
+      await fetch(url);
     }
     return result;
   },

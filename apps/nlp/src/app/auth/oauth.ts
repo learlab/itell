@@ -5,7 +5,6 @@ import { allPagesSorted } from "tests/utils";
 
 import { createTeacher, findTeacherByClass } from "@/db/teacher";
 import { createUser, findUserByProvider, updateUser } from "@/db/user";
-import { teachers } from "@/drizzle/schema";
 import { env } from "@/env.mjs";
 import { lucia } from "@/lib/auth";
 import { getPageConditions } from "@/lib/auth/conditions";
@@ -34,7 +33,7 @@ type OAuthUser = {
   image?: string;
 };
 
-export type OAuthProviderId = "google" | "azure" | "scorm";
+export type OAuthProviderId = "google" | "azure";
 
 /**
  * Factory function for creating oauth redirect handlers
@@ -187,13 +186,8 @@ export const createOAuthCallbackHandler = ({
                 : { search: { class_code_valid } }
             );
 
-      return new Response(null, {
-        status: 303,
-        // @ts-expect-error location mismtach
-        headers: {
-          Location: url,
-        },
-      });
+      const target = new URL(url ?? "/", env.NEXT_PUBLIC_HOST);
+      return Response.redirect(target);
     } catch (error) {
       if (error instanceof Error) {
         reportSentry("oauth error", {
@@ -201,7 +195,7 @@ export const createOAuthCallbackHandler = ({
           provider_id: providerId,
         });
       }
-      const url = new URL("/auth", env.NEXT_PUBLIC_HOST);
+      const url = new URL(routes.auth(), env.NEXT_PUBLIC_HOST);
       url.searchParams.append("error", "oauth");
       return Response.redirect(url.toString());
     }

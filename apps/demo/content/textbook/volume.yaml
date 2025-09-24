@@ -1,5 +1,6 @@
 description: Permanent US Civics Textbook Demo
 free_pages: []
+login_methods: ["outlook", "google"]
 slug: one-nation-one-people-the-uscis-civics-test-textbook
 summary: The text provides a comprehensive overview of the U.S. government's structure and functions, beginning with the Legislative Branch, which comprises the House of Representatives and the Senate, responsible for creating federal laws. The Executive Branch is headed by the President, supported by the Vice President and Cabinet, and is tasked with enforcing laws and managing national affairs. The Judicial Branch, led by the Supreme Court, interprets laws and ensures they align with the Constitution. Additionally, the text covers the Bill of Rights, emphasizing the rights and responsibilities of U.S. residents and citizens, including fundamental freedoms and the importance of voting. This framework underscores the separation of powers and the rule of law, foundational to American democracy.
-title: 'One Nation, One People: The USCIS Civics Test Textbook'
+title: "One Nation, One People: The USCIS Civics Test Textbook"

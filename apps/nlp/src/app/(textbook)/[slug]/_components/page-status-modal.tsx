@@ -60,7 +60,7 @@ export function PageStatusModal({ user, pageStatus, fallbackPageSlug }: Props) {
     <Modal
       title="Log in to access the textbook"
       icon={<CommandIcon className="size-4" />}
-      description="We collects anonymous data to improve learning experience."
+      description="We collect anonymous data to improve learning experience."
     >
       <DialogFooter className="sm:justify-start">
         <AuthForm />
