@@ -143,6 +143,12 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
+      <style>{`
+            fieldset button[role="combobox"] span {
+              display: block;
+              white-space: normal;
+            }
+          `}</style>
       <SheetTrigger asChild>
         <AdminButton
           variant="ghost"
@@ -211,7 +217,7 @@ export function AdminToolsClient({ user, pageSlug, pages }: Props) {
                 <SelectTrigger className="h-fit text-left">
                   <SelectValue placeholder="Select page" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-w-80">
                   <SelectGroup>
                     <SelectLabel>Page</SelectLabel>
                     <ScrollArea className="h-[300px] max-w-80">
