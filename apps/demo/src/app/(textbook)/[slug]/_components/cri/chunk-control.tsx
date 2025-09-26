@@ -45,7 +45,6 @@ export function ChunkControl({
   // Safety check refs - prevent users from getting locked
   const autoAdvanceAttempts = useRef(0);
   const isAutoAdvancing = useRef(false);
-  const MAX_AUTO_ADVANCE_ATTEMPTS = 3;
 
   const { portals, addPortal, removePortal, removePortals } = usePortal();
 
