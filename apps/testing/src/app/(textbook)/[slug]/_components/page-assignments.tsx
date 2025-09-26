@@ -148,14 +148,14 @@ function PageSummary({
         <CardDescription>
           {!pageStatus.unlocked ? (
             <p>
-              You can unlock the next page by submitting{" "}
+              Please summarize or explain the page you just read. See what makes
+              a good{" "}
               <Link
                 href={`#${SUMMARY_DESCRIPTION_ID}`}
                 className="text-info font-semibold underline underline-offset-4"
               >
-                a good summary
+                submission.
               </Link>{" "}
-              of this page
             </p>
           ) : (
             <p>
