@@ -4,6 +4,7 @@ import { generateIdFromEntropySize } from "lucia";
 import { allPagesSorted } from "tests/utils";
 
 import { createUser, findUserByProvider } from "@/db/user";
+import { env } from "@/env.mjs";
 import { lucia } from "@/lib/auth";
 import { getPageConditions } from "@/lib/auth/conditions";
 import { routes } from "@/lib/navigation";
@@ -41,7 +42,7 @@ export async function GET(request: NextRequest) {
           email: null,
           image: null,
           conditionAssignments: pageConditions,
-          classId: null,
+          classId: env.DEFAULT_CLASS_ID ?? null,
         },
         provider_id: "scorm",
         provider_user_id: scormUserId,
