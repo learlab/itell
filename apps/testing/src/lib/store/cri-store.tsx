@@ -58,9 +58,28 @@ const validateAndFixState = (
   }
 
   // Validate that all chunks before currentChunk are completed (except first)
+  // AND that hasQuestion fields match current deterministic CRI assignment
   const fixedChunkStatus = { ...state.chunkStatus };
   let needsFix = false;
 
+  // First, validate hasQuestion fields for all chunks against current CRI assignment
+  for (const chunkSlug of slugs) {
+    const currentHasQuestion = Boolean(status[chunkSlug]);
+    const storedChunkStatus = fixedChunkStatus[chunkSlug];
+
+    if (!storedChunkStatus || storedChunkStatus.hasQuestion !== currentHasQuestion) {
+      console.warn(
+        `[CRI] Chunk ${chunkSlug} hasQuestion mismatch (stored: ${storedChunkStatus?.hasQuestion}, current: ${currentHasQuestion}), fixing...`
+      );
+      fixedChunkStatus[chunkSlug] = {
+        hasQuestion: currentHasQuestion,
+        status: storedChunkStatus?.status || (chunks.find(c => c.slug === chunkSlug)?.type === "regular" ? undefined : "completed"),
+      };
+      needsFix = true;
+    }
+  }
+
+  // Then, validate completion status for chunks before currentChunk
   for (let i = 0; i < currentIndex; i++) {
     const chunkSlug = slugs[i];
     const chunkData = chunks[i];
@@ -77,7 +96,7 @@ const validateAndFixState = (
         `[CRI] Chunk ${chunkSlug} before current should be completed, fixing...`
       );
       fixedChunkStatus[chunkSlug] = {
-        hasQuestion: Boolean(status[chunkSlug]),
+        ...fixedChunkStatus[chunkSlug],
         status: "completed",
       };
       needsFix = true;

@@ -243,32 +243,23 @@ const getPageCRIStatus = (page: Page): PageCRIStatus => {
   );
 
   if (page.chunks.length > 0) {
-    let withCRI = false;
-    page.cri.forEach((item) => {
-      const baseProb = 1 / 3;
+    // Use page.order for deterministic selection
+    const pageIndex = page.order;
 
-      // adjust the probability of cri based on the current streak
-      // if (answerStreak >= 7) {
-      //   baseProb = baseProb * 0.3;
-      // } else if (answerStreak >= 5) {
-      //   baseProb = baseProb * 0.5;
-      // } else if (answerStreak >= 2) {
-      //   baseProb = baseProb * 0.7;
-      // }
-
-      if (Math.random() < baseProb) {
+    // For each CRI, use deterministic formula to decide if it should be active
+    // This targets ~1/3 probability per CRI
+    page.cri.forEach((item, index) => {
+      // Use a different offset for each CRI to spread distribution
+      if ((pageIndex + index) % 3 === 0) {
         status[item.slug] = true;
-        if (!withCRI) {
-          withCRI = true;
-        }
       }
     });
 
-    // Each page will have at least one CRI
-    if (!withCRI) {
-      const randomCRI = page.cri[Math.floor(Math.random() * page.cri.length)];
-
-      status[randomCRI.slug] = true;
+    // Ensure at least one CRI per page if none were selected
+    const hasAnyCRI = Object.values(status).some(Boolean);
+    if (!hasAnyCRI) {
+      const guaranteedCRIIndex = pageIndex % page.cri.length;
+      status[page.cri[guaranteedCRIIndex].slug] = true;
     }
   }
 
