@@ -42,6 +42,11 @@ export function ChunkControl({
   const prevChunkIdx = useRef(0);
   const isInitialized = useRef(false);
 
+  // Safety check refs - prevent users from getting locked
+  const autoAdvanceAttempts = useRef(0);
+  const isAutoAdvancing = useRef(false);
+  const MAX_AUTO_ADVANCE_ATTEMPTS = 3;
+
   const { portals, addPortal, removePortal, removePortals } = usePortal();
 
   const portalIds = useRef<PortalIds>({} as PortalIds);
@@ -195,6 +200,100 @@ export function ChunkControl({
       removePortal(portalIds.current.continueReading);
     };
   }, [currentChunk, status]);
+
+  // Check if user can progress from current chunk
+  const checkUserCanProgress = () => {
+    const currentChunkElement = getChunkElement(
+      currentChunk,
+      "data-chunk-slug"
+    );
+    if (!currentChunkElement) return true; // Assume can progress if element not found
+
+    const hasQuestion = status[currentChunk]?.hasQuestion;
+    const isLastChunk = currentChunk === chunks[chunks.length - 1];
+
+    // Check DOM for progression elements
+    const hasContinueButton = !!document.querySelector(
+      ".continue-reading-button-container"
+    );
+    const hasQuestionElement = !!currentChunkElement.querySelector(
+      ".question-container"
+    );
+    const hasUnlockButton = !!document.querySelector(
+      ".unlock-summary-button-container"
+    );
+
+    return (
+      hasQuestion ||
+      hasContinueButton ||
+      hasQuestionElement ||
+      hasUnlockButton ||
+      isLastChunk
+    );
+  };
+
+  // Handle locked state by auto-advancing to next chunk
+  const handleLockedState = () => {
+    // If we're at the last chunk, there's nothing more we can do
+    const isLastChunk = currentChunk === chunks[chunks.length - 1];
+    if (isLastChunk) {
+      console.error(
+        `[CRI Safety] Last chunk reached but appears locked. ` +
+          `This should not happen as last chunk should have unlock buttons.`
+      );
+      return;
+    }
+
+    // Log the auto-advance (keep counter for debugging/metrics)
+    autoAdvanceAttempts.current++;
+
+    console.warn(
+      `[CRI Safety] Locked state detected at chunk: ${currentChunk} ` +
+        `(auto-advance #${autoAdvanceAttempts.current}). ` +
+        `Auto-advancing to next chunk...`
+    );
+
+    // Set flag to prevent concurrent auto-advances
+    isAutoAdvancing.current = true;
+
+    // Use existing advanceChunk logic to move forward
+    store.trigger.advanceChunk({ chunkSlug: currentChunk });
+
+    // Reset flag after a delay to allow state updates to complete
+    setTimeout(() => {
+      isAutoAdvancing.current = false;
+    }, 500);
+  };
+
+  // Reset attempt counter when valid state is found
+  const handleValidState = () => {
+    if (autoAdvanceAttempts.current > 0) {
+      console.log(
+        `[CRI Safety] Valid state reached. Resetting auto-advance counter.`
+      );
+      autoAdvanceAttempts.current = 0;
+    }
+  };
+
+  // Safety check: Detect and recover from locked states
+  useEffect(() => {
+    // Skip checks if page is unlocked or we're already auto-advancing
+    if (pageStatus.unlocked || isAutoAdvancing.current || !shouldBlur) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      const canProgress = checkUserCanProgress();
+
+      if (!canProgress) {
+        handleLockedState();
+      } else {
+        handleValidState();
+      }
+    }, 100); // Small delay to allow DOM updates to complete
+
+    return () => clearTimeout(timeoutId);
+  }, [currentChunk, status, store, pageStatus, shouldBlur, chunks]);
 
   return <PortalContainer portals={portals} />;
 }
