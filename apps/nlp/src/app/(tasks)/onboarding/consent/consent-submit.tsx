@@ -61,7 +61,7 @@ export function ConsentSubmit({
         >
           <span>
             I have read and understood the information above, I am 18 years or
-            older, and I agree to participate in this study.{" "}
+            older, and I agree to having my data used in the study.{" "}
           </span>
           <RadioGroupItem
             className="size-5 shrink-0"
@@ -74,7 +74,7 @@ export function ConsentSubmit({
             has-[:checked]:decoration-2 has-[:checked]:underline-offset-4 xl:text-lg"
         >
           <span>
-            I am under 18 and/or I do not agree to participate in the study.
+            I am under 18 and/or I do not agree to having my data used in the study.
           </span>
           <RadioGroupItem
             className="size-5 shrink-0"
