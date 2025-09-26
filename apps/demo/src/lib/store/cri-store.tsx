@@ -113,6 +113,7 @@ const validateAndFixState = (
       .filter((slug) => status[slug]) // Only chunks that have CRI questions
       .every((slug) => fixedChunkStatus[slug]?.status === "completed");
 
+    const lastIndex = slugs.length - 1;
     const isAtOrPastLastChunk = currentIndex >= lastIndex;
 
     if (allRequiredCRICompleted && isAtOrPastLastChunk) {
