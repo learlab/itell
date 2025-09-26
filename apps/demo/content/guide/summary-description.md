@@ -4,9 +4,9 @@ condition: summary_description_stairs
 
 <i-accordion value="first">
 
-<i-accordion-item value='first' title="What makes a successful summary">
+<i-accordion-item value='first' title="What makes a successful submission">
 
-A successful summary will
+A successful submission will summarize or explain the page and
 
 - Be within 50 ~ 200 words long
 
