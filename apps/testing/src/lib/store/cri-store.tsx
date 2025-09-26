@@ -103,10 +103,32 @@ const validateAndFixState = (
     }
   }
 
+  // Validate isAssignmentReady - only fix from false to true if conditions are met
+  let validatedIsAssignmentReady = state.isAssignmentReady;
+
+  if (!state.isAssignmentReady) {
+    // Check if assignments should be ready based on current progression
+    const allRequiredCRICompleted = slugs
+      .slice(0, currentIndex) // Only check chunks before current
+      .filter((slug) => status[slug]) // Only chunks that have CRI questions
+      .every((slug) => fixedChunkStatus[slug]?.status === "completed");
+
+    const isAtOrPastLastChunk = currentIndex >= lastIndex;
+
+    if (allRequiredCRICompleted && isAtOrPastLastChunk) {
+      console.warn(
+        "[CRI] User has completed progression but isAssignmentReady is false, fixing..."
+      );
+      validatedIsAssignmentReady = true;
+      needsFix = true;
+    }
+  }
+
   return needsFix
     ? {
         ...state,
         chunkStatus: fixedChunkStatus,
+        isAssignmentReady: validatedIsAssignmentReady,
       }
     : state;
 };

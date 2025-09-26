@@ -55,6 +55,11 @@ const validateSnapshot = (
       return undefined;
     }
 
+    // Ensure isAssignmentReady field exists (provide default for backward compatibility)
+    if (typeof snapshot.isAssignmentReady !== "boolean") {
+      snapshot.isAssignmentReady = false;
+    }
+
     // Check if currentChunk exists in current chunks
     if (!chunks.includes(snapshot.currentChunk)) {
       return undefined;
