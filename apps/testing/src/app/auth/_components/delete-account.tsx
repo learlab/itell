@@ -21,6 +21,7 @@ import { logout } from "@/lib/auth/actions";
 
 export function DeleteAccount(props: React.ComponentProps<typeof AdminButton>) {
   const [pending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -45,6 +46,7 @@ export function DeleteAccount(props: React.ComponentProps<typeof AdminButton>) {
                 localStorage.clear();
                 await deleteUserAction();
                 await logout();
+                router.refresh();
               });
             }}
           >

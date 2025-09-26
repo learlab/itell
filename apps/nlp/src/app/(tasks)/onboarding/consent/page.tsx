@@ -51,7 +51,7 @@ function ConsentDocument() {
             <p>Vanderbilt University</p>
           </h1>
           <h1 className="text-center text-3xl font-medium">Consent Form</h1>
-          <div className="flex flex-col items-center justify-center gap-1.5 text-muted-foreground">
+          <div className="text-muted-foreground flex flex-col items-center justify-center gap-1.5">
             <p>
               <span className="font-bold">Title:</span> Intelligent Textbook
               Assessment
@@ -120,9 +120,7 @@ function ConsentDocument() {
           id="voluntary-participation"
           title="Voluntary Participation and Withdrawal"
         >
-          <p>
-            You can opt out of having your data used for analysis.
-          </p>
+          <p>You can opt out of having your data used for analysis.</p>
         </FormSection>
 
         <FormSection id="contact" title="Contact">
